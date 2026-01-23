@@ -31,10 +31,10 @@ export default function NotFound() {
 
       <div className="flex flex-col sm:flex-row gap-4">
         <Link href="/">
-          <Button className="">Retour à l'accueil</Button>
+          <Button className="w-48">Retour à l'accueil</Button>
         </Link>
         <Link href="/contact">
-          <Button variant="outline">Contacter le support</Button>
+          <Button className="w-48" variant="outline">Contacter le support</Button>
         </Link>
       </div>
     </div>
