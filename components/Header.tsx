@@ -63,7 +63,7 @@ export default function Header() {
           ) : session?.user ? (
             <>
               {session.user.role === "VENDOR" && (
-                <Link href="/vendor">
+                <Link href="/vendor/dashboard">
                   <Button className="bg-principale-600 hover:bg-principale-500">
                     <Store className="h-4 w-4" />
                     Mon commerce
@@ -182,7 +182,7 @@ export default function Header() {
                   </Link>
                   {session.user.role === "VENDOR" && (
                     <Link
-                      href="/vendor"
+                      href="/vendor/dashboard"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-principale-100 transition-colors"
                     >

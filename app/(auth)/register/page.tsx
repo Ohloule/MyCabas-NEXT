@@ -164,7 +164,7 @@ function RegisterForm() {
         // Inscription réussie mais connexion échouée
         router.push("/login");
       } else {
-        router.push(role === "VENDOR" ? "/vendor" : "/");
+        router.push(role === "VENDOR" ? "/vendor/dashboard" : "/");
         router.refresh();
       }
     } catch {
