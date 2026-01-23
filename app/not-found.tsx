@@ -16,10 +16,10 @@ export default function NotFound() {
 
       <div className="w-96 h-96 relative mb-8">
         <Image
-          src={"/images/404.png"}
+          src={"/images/404.svg"}
           alt="Illustration parrainage commerçant"
-          width={80000}
-          height={1}
+          width={500}
+          height={500}
           className="w-full"
         ></Image>
       </div>

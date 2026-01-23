@@ -219,7 +219,7 @@ export default function MarketsPage() {
     if (value.length >= 2) {
       debounceRef.current = setTimeout(() => {
         searchAddresses(value);
-      }, 300);
+      }, 50);
     } else {
       setSuggestions([]);
       setShowSuggestions(false);
