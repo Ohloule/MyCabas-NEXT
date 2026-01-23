@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center bg-background text-foreground p-4">
       <h1 className="text-8xl font-bold text-principale-700 my-8 mb-4 animate-bounce font-special">
-       Erreur 404
+        Erreur 404
       </h1>
       <h2 className="text-3xl md:text-4xl font-semibold mb-6">
         Oups ! On dirait que cette page est partie faire les courses sans
@@ -24,7 +24,7 @@ export default function NotFound() {
         ></Image>
       </div>
       <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl">
-        On a fait tout l'arrière-boutique, mais impossible de remettre la main
+        On a fait toute l'arrière-boutique, mais impossible de remettre la main
         sur cette page. Elle a dû être vendue à la criée ce matin. <br />{" "}
         Vérifiez l'adresse ou laissez-nous vous ramener vers des produits plus
         connus.
