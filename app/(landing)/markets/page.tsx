@@ -1,5 +1,6 @@
 "use client";
 
+import HeadingPage from "@/components/HeadingPage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -110,7 +111,7 @@ export default function MarketsPage() {
 
   // Jours disponibles dans les résultats de recherche
   const availableDays = new Set(
-    allMarkets.flatMap((market) => market.openings.map((o) => o.day))
+    allMarkets.flatMap((market) => market.openings.map((o) => o.day)),
   );
 
   // Fermer les suggestions quand on clique en dehors
@@ -341,12 +342,17 @@ export default function MarketsPage() {
   const isLocationSearch = userLocation || selectedLocation;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-secondaire-50/50">
+      <HeadingPage title="Trouver un marché près de chez vous !">
+        {" "}
+        <p className="text-lg ">
+          Votre marché, ses commercants, ses étals, ses discussions.. La vie
+          n'attend que vous
+        </p>
+      </HeadingPage>
       <main className="container mx-auto px-4 py-8 align-center ">
         {/* Titre et recherche */}
         <div className="mb-8">
-          <h1 className="mb-4 text-3xl font-bold">Trouvez un marché</h1>
-
           {/* Barre de recherche */}
           <div className="flex flex-col gap-4 sm:flex-row">
             <div className="relative flex-1" ref={searchRef}>
