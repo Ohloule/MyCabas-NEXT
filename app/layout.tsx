@@ -40,7 +40,10 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://use.typekit.net/sxt2uac.css" />
       </head>
       {/* On utilise nunito.className ici */}
-      <body className={`${nunito.className} antialiased`}>
+      <body
+        className={`${nunito.className} antialiased`}
+        suppressHydrationWarning={true}
+      >
         <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
