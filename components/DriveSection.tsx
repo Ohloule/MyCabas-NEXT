@@ -4,7 +4,7 @@ export default function DriveSection() {
   return (
     <section>
       <div className="align-center pt-32 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div className="md:w-[50%] lg:h-[400px] bg-principale-50 p-6 rounded-4xl shadow-2xl ">
+        <div className="md:w-[50%] lg:h-100 bg-principale-50 p-6 rounded-4xl shadow-2xl ">
           <h1 className="font-special text-center text-4xl lg:text-6xl text-principale-700 py-6">
             Préparez le marché. Gagnez du temps.
           </h1>
@@ -24,7 +24,7 @@ export default function DriveSection() {
           <Image
             src="/images/market3.png"
             alt="illustration d'un marché"
-            className="rounded-4xl shadow-2xl h-[400px] object-contain object-right"
+            className="rounded-4xl shadow-2xl h-100 object-contain object-right"
             height={400}
             width={600}
           />

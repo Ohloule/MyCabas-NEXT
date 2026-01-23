@@ -28,20 +28,37 @@ export async function GET(request: NextRequest) {
     const lng = searchParams.get("lng");
     const radius = searchParams.get("radius") || "20"; // Rayon par défaut: 20km
     const town = searchParams.get("town");
+    const zip = searchParams.get("zip");
+    const search = searchParams.get("search"); // Recherche générale (ville ou code postal)
     const day = searchParams.get("day");
+
+    // Construire les conditions de recherche
+    const whereConditions: Record<string, unknown>[] = [];
+
+    if (search) {
+      // Recherche par ville OU code postal
+      whereConditions.push(
+        { town: { contains: search, mode: "insensitive" } },
+        { zip: { startsWith: search } }
+      );
+    } else {
+      if (town) {
+        whereConditions.push({ town: { contains: town, mode: "insensitive" } });
+      }
+      if (zip) {
+        whereConditions.push({ zip: { startsWith: zip } });
+      }
+    }
 
     // Récupérer tous les marchés avec leurs horaires
     const markets = await prisma.market.findMany({
       include: {
         openings: true,
       },
-      ...(town
+      ...(whereConditions.length > 0
         ? {
             where: {
-              town: {
-                contains: town,
-                mode: "insensitive",
-              },
+              OR: whereConditions,
             },
           }
         : {}),

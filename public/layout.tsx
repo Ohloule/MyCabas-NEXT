@@ -1,6 +1,5 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import "leaflet/dist/leaflet.css";
 import { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import Header from "../components/Header";
@@ -44,7 +43,7 @@ export default function RootLayout({
         ></link>
       </head>
       <body className={`${nunito} antialiased `}>
-        <div className=" bg-principale-50/20 text-noir h-full min-h-[100vh] w-full flex flex-col">
+        <div className=" bg-principale-50/20 text-noir h-full min-h-screen w-full flex flex-col">
           <Header />
           <Navbar />
           {children}

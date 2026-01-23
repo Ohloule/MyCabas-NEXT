@@ -102,10 +102,15 @@ async function seedMarkets() {
     });
 
     for (const opening of market.openings) {
+      const day = dayMapping[opening.day];
+      if (!day) {
+        console.log(`    ⚠️ Jour invalide ignoré: ${opening.day}`);
+        continue;
+      }
       await prisma.marketOpening.create({
         data: {
           marketId: createdMarket.id,
-          day: dayMapping[opening.day],
+          day,
           start: opening.start,
           end: opening.end,
         },
