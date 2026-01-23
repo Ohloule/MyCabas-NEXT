@@ -1,5 +1,4 @@
 import { SessionProvider } from "@/components/providers/session-provider";
-
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
@@ -21,17 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    // suppressHydrationWarning est indispensable quand on a des extensions
+    // ou des scripts qui modifient le DOM au chargement
+    <html lang="fr" suppressHydrationWarning>
       <head>
-        <link
-          rel="stylesheet"
-          href="https://use.typekit.net/sxt2uac.css"
-        ></link>
+        <link rel="stylesheet" href="https://use.typekit.net/sxt2uac.css" />
       </head>
-      <body className={`${nunito} antialiased `}>
-        <SessionProvider>
-          <>{children}</>
-        </SessionProvider>
+      {/* On utilise nunito.className ici */}
+      <body className={`${nunito.className} antialiased`}>
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );

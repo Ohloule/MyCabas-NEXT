@@ -1,0 +1,42 @@
+// app/not-found.tsx
+import { Button } from "@/components/ui/button";
+import Image from "next/image"; // N'oubliez pas d'importer Image de next/image
+import Link from "next/link";
+
+export default function NotFound() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen text-center bg-background text-foreground p-4">
+      <h1 className="text-8xl font-bold text-primary mb-4 animate-bounce font-special">
+        404
+      </h1>
+      <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+        Oups ! On dirait que cette page est partie faire les courses sans
+        nous...
+      </h2>
+
+      <div className="w-96 h-96 relative mb-8">
+        <Image
+          src={"/images/404.png"}
+          alt="Illustration parrainage commerçant"
+          width={80000}
+          height={1}
+          className="w-full"
+        ></Image>
+      </div>
+      <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl">
+        Ne vous inquiétez pas, même le meilleur des paniers peut parfois perdre
+        un article. Vérifiez l'adresse ou laissez-nous vous ramener vers des
+        produits plus connus.
+      </p>
+
+      <div className="flex flex-col sm:flex-row gap-4">
+        <Link href="/">
+          <Button className="">Retour à l'accueil</Button>
+        </Link>
+        <Link href="/contact">
+          <Button variant="outline">Contacter le support</Button>
+        </Link>
+      </div>
+    </div>
+  );
+}
