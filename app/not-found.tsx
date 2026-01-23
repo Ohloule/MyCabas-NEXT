@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center bg-background text-foreground p-4">
       <h1 className="text-8xl font-bold text-principale-700 my-8 mb-4 animate-bounce font-special">
-        404
+       Erreur 404
       </h1>
       <h2 className="text-3xl md:text-4xl font-semibold mb-6">
         Oups ! On dirait que cette page est partie faire les courses sans
