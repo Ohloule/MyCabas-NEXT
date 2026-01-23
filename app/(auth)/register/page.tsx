@@ -1,12 +1,6 @@
 "use client";
 
-import { useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -15,16 +9,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
-  ShoppingBasket,
-  Loader2,
   AlertCircle,
-  User,
-  Store,
   ArrowLeft,
   ArrowRight,
   Check,
+  Loader2,
+  Store,
+  User,
 } from "lucide-react";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 
 type UserRole = "CLIENT" | "VENDOR";
 
@@ -87,7 +86,7 @@ function RegisterForm() {
 
     try {
       const response = await fetch(
-        `https://recherche-entreprises.api.gouv.fr/search?q=${formData.siret}&page=1&per_page=1`
+        `https://recherche-entreprises.api.gouv.fr/search?q=${formData.siret}&page=1&per_page=1`,
       );
       const data = await response.json();
 
@@ -176,12 +175,13 @@ function RegisterForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4 py-8">
+    <div className="flex min-h-screen items-center justify-center px-4 py-8 bg-CardSection">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link href="/" className="mx-auto mb-4 flex items-center gap-2">
-            <ShoppingBasket className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold">MyCabas</span>
+            <span className="text-7xl font-bold font-special text-principale-700 ">
+              MyCabas
+            </span>
           </Link>
           <CardTitle className="text-2xl">Créer un compte</CardTitle>
           <CardDescription>
@@ -492,5 +492,3 @@ export default function RegisterPage() {
     </Suspense>
   );
 }
-
-
