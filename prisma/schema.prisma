@@ -1,0 +1,274 @@
+// MyCabas - Prisma Schema
+// Marketplace pour marchés locaux
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum Role {
+  CLIENT
+  VENDOR
+  ADMIN
+}
+
+enum Day {
+  LUNDI
+  MARDI
+  MERCREDI
+  JEUDI
+  VENDREDI
+  SAMEDI
+  DIMANCHE
+}
+
+// ============================================
+// USER & AUTH
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  firstName     String
+  lastName      String
+  phone         String?
+  role          Role      @default(CLIENT)
+  avatarUrl     String?
+
+  // Relations
+  address       Address?
+  vendor        Vendor?
+  accounts      Account[]
+  sessions      Session[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("users")
+}
+
+// NextAuth.js models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ============================================
+// ADDRESS
+// ============================================
+
+model Address {
+  id        String  @id @default(cuid())
+  street    String
+  zip       String
+  town      String
+  country   String  @default("France")
+
+  // Relation
+  userId    String  @unique
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("addresses")
+}
+
+// ============================================
+// VENDOR
+// ============================================
+
+model Vendor {
+  id            String   @id @default(cuid())
+  stallName     String   // Nom du stand/commerce
+  siret         String   @unique
+  companyName   String   // Nom complet de l'entreprise (API gouv)
+  description   String?  @db.Text
+
+  // Relation User
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relations
+  products      Product[]
+  marketVendors MarketVendor[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("vendors")
+}
+
+// ============================================
+// MARKET
+// ============================================
+
+model Market {
+  id            String          @id @default(cuid())
+  name          String
+  address       String
+  zip           String
+  town          String
+  lat           Float
+  lng           Float
+
+  // Relations
+  openings      MarketOpening[]
+  marketVendors MarketVendor[]
+  productPrices ProductPrice[]
+  productStocks ProductStock[]
+
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@map("markets")
+}
+
+model MarketOpening {
+  id        String  @id @default(cuid())
+  day       Day
+  start     String  // Format "HH:MM"
+  end       String  // Format "HH:MM"
+
+  // Relation
+  marketId  String
+  market    Market  @relation(fields: [marketId], references: [id], onDelete: Cascade)
+
+  @@map("market_openings")
+}
+
+// Table de jonction Vendor <-> Market
+model MarketVendor {
+  id        String   @id @default(cuid())
+
+  vendorId  String
+  vendor    Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+
+  marketId  String
+  market    Market   @relation(fields: [marketId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([vendorId, marketId])
+  @@map("market_vendors")
+}
+
+// ============================================
+// CATEGORY
+// ============================================
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  icon        String?   // Nom de l'icône (ex: "apple", "fish", etc.)
+
+  // Relations
+  products    Product[]
+
+  createdAt   DateTime  @default(now())
+
+  @@map("categories")
+}
+
+// ============================================
+// PRODUCT
+// ============================================
+
+model Product {
+  id              String         @id @default(cuid())
+  name            String
+  description     String?        @db.Text
+  imageUrl        String?
+  unit            String         @default("kg") // kg, pièce, botte, etc.
+  isNewProduct    Boolean        @default(true)
+  hasPromotion    Boolean        @default(false)
+  isAvailable     Boolean        @default(true)
+
+  // Relation Vendor
+  vendorId        String
+  vendor          Vendor         @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+
+  // Relation Category
+  categoryId      String
+  category        Category       @relation(fields: [categoryId], references: [id])
+
+  // Prix et stocks par marché
+  pricesByMarket  ProductPrice[]
+  stocksByMarket  ProductStock[]
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@map("products")
+}
+
+// Prix d'un produit pour un marché spécifique
+model ProductPrice {
+  id        String  @id @default(cuid())
+  price     Float
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  marketId  String
+  market    Market  @relation(fields: [marketId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, marketId])
+  @@map("product_prices")
+}
+
+// Stock d'un produit pour un marché spécifique
+model ProductStock {
+  id        String  @id @default(cuid())
+  stock     Int
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  marketId  String
+  market    Market  @relation(fields: [marketId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, marketId])
+  @@map("product_stocks")
+}

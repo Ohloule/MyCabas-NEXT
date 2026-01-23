@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Marché de Bourg-en-Bresse",
+    "address": "Place du Champ de Foire",
+    "town": "Bourg-en-Bresse",
+    "zip": "01000",
+    "lat": 46.270825,
+    "lng": 5.368134,
+    "openings": [
+      { "day": "MERCREDI", "start": "08:00", "end": "13:00" },
+      { "day": "SAMEDI", "start": "08:00", "end": "13:00" }
+    ]
+  },
+  {
+    "name": "Marché Jean Macé",
+    "address": "Place Jean Macé",
+    "town": "Bourg-en-Bresse",
+    "zip": "01000",
+    "lat": 46.1931776,
+    "lng": 5.225604,
+    "openings": [
+      { "day": "MARDI", "start": "08:00", "end": "13:00" },
+      { "day": "MERCREDI", "start": "08:00", "end": "13:00" },
+      { "day": "JEUDI", "start": "08:00", "end": "13:00" },
+      { "day": "VENDREDI", "start": "08:00", "end": "13:00" },
+      { "day": "SAMEDI", "start": "08:00", "end": "13:00" },
+      { "day": "DIMANCHE", "start": "08:00", "end": "13:00" }
+    ]
+  },
+  {
+    "name": "Marché Bio de Saint-Denis-lès-Bourg",
+    "address": "Place de la Mairie",
+    "town": "Saint-Denis-lès-Bourg",
+    "zip": "01000",
+    "lat": 46.2023804,
+    "lng": 5.1897742,
+    "openings": [
+      { "day": "VENDREDI", "start": "15:30", "end": "18:30" }
+    ]
+  },
+  {
+    "name": "Marché de Lent",
+    "address": "Place du Village",
+    "town": "Lent",
+    "zip": "01240",
+    "lat": 46.120192,
+    "lng": 5.1956369,
+    "openings": [
+      { "day": "SAMEDI", "start": "08:00", "end": "12:00" }
+    ]
+  },
+  {
+    "name": "Marché de Villereversure",
+    "address": "Place du Village",
+    "town": "Villereversure",
+    "zip": "01250",
+    "lat": 46.184865,
+    "lng": 5.3834669,
+    "openings": [
+      { "day": "VENDREDI", "start": "08:00", "end": "13:00" }
+    ]
+  }
+]

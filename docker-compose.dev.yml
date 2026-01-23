@@ -1,0 +1,45 @@
+# ===========================================
+# MyCabas - Docker Compose pour DEV LOCAL
+# Démarre uniquement PostgreSQL pour le dev
+# ===========================================
+
+services:
+  # -----------------------------------------
+  # PostgreSQL pour développement local
+  # -----------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: mycabas-db-dev
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: mycabas
+      POSTGRES_PASSWORD: mycabas_dev_password
+      POSTGRES_DB: mycabas_dev
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mycabas -d mycabas_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_dev_data:
+
+# ===========================================
+# USAGE:
+# -----------------------------------------
+# Démarrer la DB:
+#   docker-compose -f docker-compose.dev.yml up -d
+#
+# Arrêter la DB:
+#   docker-compose -f docker-compose.dev.yml down
+#
+# Voir les logs:
+#   docker-compose -f docker-compose.dev.yml logs -f
+#
+# URL de connexion pour .env:
+#   DATABASE_URL="postgresql://mycabas:mycabas_dev_password@localhost:5432/mycabas_dev"
+# ===========================================

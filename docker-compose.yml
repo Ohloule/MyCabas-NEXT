@@ -1,0 +1,64 @@
+# ===========================================
+# MyCabas - Docker Compose
+# Pour développement local et déploiement VPS
+# ===========================================
+
+services:
+  # -----------------------------------------
+  # Application Next.js
+  # -----------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mycabas-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - mycabas-network
+
+  # -----------------------------------------
+  # PostgreSQL (pour dev local / VPS)
+  # Note: En prod Vercel, utiliser Supabase
+  # -----------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: mycabas-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-mycabas}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mycabas_password}
+      POSTGRES_DB: ${POSTGRES_DB:-mycabas}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-mycabas} -d ${POSTGRES_DB:-mycabas}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mycabas-network
+
+# -----------------------------------------
+# Volumes persistants
+# -----------------------------------------
+volumes:
+  postgres_data:
+
+# -----------------------------------------
+# Réseau
+# -----------------------------------------
+networks:
+  mycabas-network:
+    driver: bridge

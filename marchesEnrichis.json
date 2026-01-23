@@ -1,0 +1,117 @@
+[
+  {
+    "name": "Marché de Bourg-en-Bresse",
+    "address": "Place du champ de foire",
+    "town": "Bourg-en-Bresse",
+    "zip": "01000",
+    "openings": [
+      {
+        "day": "mercredi",
+        "start": "08:00",
+        "end": "13:00"
+      },
+      {
+        "day": "samedi",
+        "start": "08:00",
+        "end": "13:00"
+      }
+    ],
+    "location": {
+      "lat": 46.270825,
+      "lng": 5.368134
+    }
+  },
+  {
+    "name": "ALIMENTAIRE",
+    "address": "JEAN MACE",
+    "town": "Bourg-en-Bresse",
+    "zip": "01000",
+    "openings": [
+      {
+        "day": "mardi",
+        "start": "08:00",
+        "end": "13:00"
+      },
+      {
+        "day": "mercredi",
+        "start": "08:00",
+        "end": "13:00"
+      },
+      {
+        "day": "jeudi",
+        "start": "08:00",
+        "end": "13:00"
+      },
+      {
+        "day": "vendredi",
+        "start": "08:00",
+        "end": "13:00"
+      },
+      {
+        "day": "samedi",
+        "start": "08:00",
+        "end": "13:00"
+      },
+      {
+        "day": "dimanche",
+        "start": "08:00",
+        "end": "13:00"
+      }
+    ],
+    "location": {
+      "lat": 46.1931776,
+      "lng": 5.225604
+    }
+  },
+  {
+    "name": "Marché bio de Saint-Denis-lès-Bourg",
+    "address": "Centre ville",
+    "town": "Saint-Denis-lès-Bourg",
+    "zip": "01000",
+    "openings": [
+      {
+        "day": "vendredi",
+        "start": "15:30",
+        "end": "18:30"
+      }
+    ],
+    "location": {
+      "lat": 46.2023804,
+      "lng": 5.1897742
+    }
+  },
+  {
+    "name": "Marché de Lent",
+    "address": "Centre ville",
+    "town": "Lent",
+    "zip": "01240",
+    "openings": [
+      {
+        "day": "samedi",
+        "start": "08:00",
+        "end": "12:00"
+      }
+    ],
+    "location": {
+      "lat": 46.120192,
+      "lng": 5.195636899999999
+    }
+  },
+  {
+    "name": "Marché de Villereversure",
+    "address": "Centre ville",
+    "town": "Villereversure",
+    "zip": "01250",
+    "openings": [
+      {
+        "day": "vendredi",
+        "start": "08:00",
+        "end": "13:00"
+      }
+    ],
+    "location": {
+      "lat": 46.18486499999999,
+      "lng": 5.3834669
+    }
+  }
+]

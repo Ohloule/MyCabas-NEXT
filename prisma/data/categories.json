@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Fruits & Légumes",
+    "slug": "fruits-legumes",
+    "description": "Fruits et légumes frais de saison",
+    "icon": "apple"
+  },
+  {
+    "name": "Viandes & Charcuterie",
+    "slug": "viandes-charcuterie",
+    "description": "Viandes, volailles et charcuteries artisanales",
+    "icon": "beef"
+  },
+  {
+    "name": "Poissons & Fruits de mer",
+    "slug": "poissons-fruits-de-mer",
+    "description": "Poissons frais et fruits de mer",
+    "icon": "fish"
+  },
+  {
+    "name": "Fromages & Produits laitiers",
+    "slug": "fromages-produits-laitiers",
+    "description": "Fromages, yaourts et produits laitiers",
+    "icon": "milk"
+  },
+  {
+    "name": "Boulangerie & Pâtisserie",
+    "slug": "boulangerie-patisserie",
+    "description": "Pains, viennoiseries et pâtisseries",
+    "icon": "croissant"
+  },
+  {
+    "name": "Épicerie & Condiments",
+    "slug": "epicerie-condiments",
+    "description": "Huiles, épices, miels et produits d'épicerie",
+    "icon": "jar"
+  },
+  {
+    "name": "Boissons",
+    "slug": "boissons",
+    "description": "Vins, jus de fruits et boissons artisanales",
+    "icon": "wine"
+  },
+  {
+    "name": "Bio & Nature",
+    "slug": "bio-nature",
+    "description": "Produits biologiques et naturels",
+    "icon": "leaf"
+  }
+]
