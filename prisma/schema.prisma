@@ -221,9 +221,10 @@ model Product {
   description     String?        @db.Text
   imageUrl        String?
   unit            String         @default("kg") // kg, pièce, botte, etc.
-  isNewProduct    Boolean        @default(true)
-  hasPromotion    Boolean        @default(false)
-  isAvailable     Boolean        @default(true)
+  basePrice       Float          // Prix de référence
+  isOrganic       Boolean        @default(false) // Produit bio
+  isLocal         Boolean        @default(false) // Produit local
+  isActive        Boolean        @default(true)  // Produit actif/inactif globalement
 
   // Relation Vendor
   vendorId        String
@@ -245,14 +246,15 @@ model Product {
 
 // Prix d'un produit pour un marché spécifique
 model ProductPrice {
-  id        String  @id @default(cuid())
-  price     Float
+  id          String  @id @default(cuid())
+  price       Float?  // null = utiliser basePrice du produit
+  isAvailable Boolean @default(true) // Disponible sur ce marché
 
-  productId String
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  marketId  String
-  market    Market  @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  marketId    String
+  market      Market  @relation(fields: [marketId], references: [id], onDelete: Cascade)
 
   @@unique([productId, marketId])
   @@map("product_prices")
@@ -260,14 +262,15 @@ model ProductPrice {
 
 // Stock d'un produit pour un marché spécifique
 model ProductStock {
-  id        String  @id @default(cuid())
-  stock     Int
+  id          String  @id @default(cuid())
+  quantity    Int?    // null = stock illimité
+  isUnlimited Boolean @default(true) // Stock illimité par défaut
 
-  productId String
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  marketId  String
-  market    Market  @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  marketId    String
+  market      Market  @relation(fields: [marketId], references: [id], onDelete: Cascade)
 
   @@unique([productId, marketId])
   @@map("product_stocks")
