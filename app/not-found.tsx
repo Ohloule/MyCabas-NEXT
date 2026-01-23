@@ -24,9 +24,10 @@ export default function NotFound() {
         ></Image>
       </div>
       <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl">
-        Ne vous inquiétez pas, même le meilleur des paniers peut parfois perdre
-        un article. Vérifiez l'adresse ou laissez-nous vous ramener vers des
-        produits plus connus.
+        On a fait tout l'arrière-boutique, mais impossible de remettre la main
+        sur cette page. Elle a dû être vendue à la criée ce matin. <br />{" "}
+        Vérifiez l'adresse ou laissez-nous vous ramener vers des produits plus
+        connus.
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4">
