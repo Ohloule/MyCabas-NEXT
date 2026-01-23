@@ -1,13 +1,19 @@
 import CardSection from "@/components/CardSection";
 import DriveSection from "@/components/DriveSection";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import Navbar from "@/components/Navbar";
 import ParrainageSection from "@/components/ParrainageSection";
 import QualiteProductSection from "@/components/QualiteProductSection";
 import TransparenceSection from "@/components/TransparenceSection";
 
+
 export default function HomePage() {
   return (
     <>
+      <Header />
+      <Navbar />
       <HeroSection />
       <div className="bg-CardSection">
         <DriveSection />
@@ -16,6 +22,7 @@ export default function HomePage() {
       <QualiteProductSection />
       <ParrainageSection />
       <TransparenceSection />
+      <Footer />
     </>
     /*     <div className="min-h-screen">
       

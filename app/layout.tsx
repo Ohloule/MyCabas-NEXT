@@ -1,11 +1,8 @@
 import { SessionProvider } from "@/components/providers/session-provider";
 
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -33,12 +30,7 @@ export default function RootLayout({
       </head>
       <body className={`${nunito} antialiased `}>
         <SessionProvider>
-          <>
-            <Header />
-            <Navbar />
-            {children}
-            <Footer />
-          </>
+          <>{children}</>
         </SessionProvider>
       </body>
     </html>
