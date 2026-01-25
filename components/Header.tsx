@@ -43,7 +43,7 @@ export default function Header() {
             href="/"
             className="flex items-center cursor-pointer justify-center "
           >
-            <div className="h-20 w-20 hidden md:flex items-center  justify-center">
+            <div className="h-20 w-20 hidden md:flex items-center mt-4 justify-center">
               <Image
                 src="/images/Logo2_Plan de travail 2.svg"
                 alt="MyCabas Logo"

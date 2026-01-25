@@ -151,6 +151,8 @@ body {
 .bg-CardSection {
   background-image: url("/patterns/food2.svg");
   background-repeat: repeat;
+  background-color: rgba(245, 254, 248, 0.762);
+  background-blend-mode: lighten;
   background-size: 550px;
 }
 .bg-pricing {
