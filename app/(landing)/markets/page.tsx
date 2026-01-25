@@ -195,7 +195,17 @@ export default function MarketsPage() {
           }),
         );
 
-        setSuggestions(results);
+        // Filtrer les doublons basés sur la ville et le code postal
+        const uniqueResults = results.filter(
+          (suggestion, index, self) =>
+            index ===
+            self.findIndex(
+              (s) =>
+                s.city === suggestion.city && s.postcode === suggestion.postcode,
+            ),
+        );
+
+        setSuggestions(uniqueResults);
         setShowSuggestions(true);
       } else {
         setSuggestions([]);
