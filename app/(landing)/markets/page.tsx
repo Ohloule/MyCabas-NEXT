@@ -19,6 +19,7 @@ import {
   Navigation,
   Search,
 } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 interface MarketOpening {
@@ -547,18 +548,36 @@ export default function MarketsPage() {
           <>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {displayedMarkets.map((market) => (
-                <Card key={market.id} className="overflow-hidden">
+                <Card
+                  key={market.id}
+                  className="overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl will-change-transform"
+                >
                   <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between">
-                      <div>
+                    <div className="flex items-start justify-between ">
+                      <div className="">
                         <CardTitle className="text-lg">{market.name}</CardTitle>
-                        <CardDescription className="mt-1 flex items-center gap-1">
+                        <CardDescription className="mt-1 flex items-center gap-1 min-h-12">
+                          {/* L'icône doit être fermée ici */}
                           <MapPin className="h-3 w-3" />
-                          {market.address}, {market.zip} {market.town}
+
+                          {/* Le Link vient APRÈS, il ne doit pas entourer l'icône si tu as ce bug */}
+                          <Link
+                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                              `${market.address}, ${market.zip} ${market.town}`,
+                            )}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="  hover:underline"
+                          >
+                            {market.address}, {market.zip} {market.town}
+                          </Link>
                         </CardDescription>
                       </div>
                       {market.distance !== undefined && (
-                        <Badge variant="secondary">
+                        <Badge
+                          variant="secondary"
+                          className="whitespace-nowrap min-w-fit flex justify-end"
+                        >
                           {market.distance.toFixed(1)} km
                         </Badge>
                       )}
@@ -570,11 +589,20 @@ export default function MarketsPage() {
                         <Clock className="h-4 w-4 text-muted-foreground" />
                         Horaires
                       </div>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         {sortOpenings(market.openings).map((opening) => (
-                          <Badge key={opening.id} variant="outline">
-                            {DAYS_FR[opening.day]} {opening.start}-{opening.end}
-                          </Badge>
+                          <Link
+                            key={opening.id}
+                            href={`/markets/${market.id}?day=${opening.day.toLowerCase()}`}
+                          >
+                            <Badge
+                              variant="outline"
+                              className="justify-center py-1 w-full cursor-pointer hover:bg-principale-50 hover:border-principale-300 transition-colors"
+                            >
+                              {DAYS_FR[opening.day]}
+                              <br /> {opening.start}-{opening.end}
+                            </Badge>
+                          </Link>
                         ))}
                       </div>
                     </div>

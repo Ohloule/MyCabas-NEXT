@@ -2,7 +2,7 @@ import "dotenv/config";
 import { PrismaClient, Day } from "@prisma/client";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
-import marketsData from "./data/markets.json";
+import marketsData from "../marches-V4.json";
 import categoriesData from "./data/categories.json";
 
 // Création du client Prisma avec l'adapter pg
@@ -12,15 +12,15 @@ const pool = new Pool({
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
-// Mapping des jours français vers l'enum Prisma
+// Mapping des jours anglais vers l'enum Prisma
 const dayMapping: Record<string, Day> = {
-  LUNDI: Day.LUNDI,
-  MARDI: Day.MARDI,
-  MERCREDI: Day.MERCREDI,
-  JEUDI: Day.JEUDI,
-  VENDREDI: Day.VENDREDI,
-  SAMEDI: Day.SAMEDI,
-  DIMANCHE: Day.DIMANCHE,
+  monday: Day.LUNDI,
+  tuesday: Day.MARDI,
+  wednesday: Day.MERCREDI,
+  thursday: Day.JEUDI,
+  friday: Day.VENDREDI,
+  saturday: Day.SAMEDI,
+  sunday: Day.DIMANCHE,
 };
 
 interface MarketData {
@@ -28,8 +28,10 @@ interface MarketData {
   address: string;
   town: string;
   zip: string;
-  lat: number;
-  lng: number;
+  location?: {
+    lat: number;
+    lng: number;
+  };
   openings: Array<{
     day: string;
     start: string;
@@ -71,56 +73,83 @@ async function seedCategories() {
 async function seedMarkets() {
   console.log("🏪 Seeding markets...");
 
-  for (const market of marketsData as MarketData[]) {
-    // Créer ou mettre à jour le marché
-    const createdMarket = await prisma.market.upsert({
-      where: {
-        id: `market-${market.name.toLowerCase().replace(/\s+/g, "-")}`,
-      },
-      update: {
-        name: market.name,
-        address: market.address,
-        town: market.town,
-        zip: market.zip,
-        lat: market.lat,
-        lng: market.lng,
-      },
-      create: {
-        id: `market-${market.name.toLowerCase().replace(/\s+/g, "-")}`,
-        name: market.name,
-        address: market.address,
-        town: market.town,
-        zip: market.zip,
-        lat: market.lat,
-        lng: market.lng,
-      },
-    });
+  const allMarkets = marketsData as MarketData[];
 
-    // Supprimer les anciennes ouvertures et créer les nouvelles
-    await prisma.marketOpening.deleteMany({
-      where: { marketId: createdMarket.id },
+  // Filtrer les marchés sans coordonnées GPS
+  const markets = allMarkets.filter(m => m.location && m.location.lat && m.location.lng);
+  const skipped = allMarkets.length - markets.length;
+
+  if (skipped > 0) {
+    console.log(`  ⚠️ ${skipped} marchés sans coordonnées GPS ignorés`);
+  }
+
+  // Préparer les données pour createMany
+  const marketsToCreate: Array<{
+    id: string;
+    name: string;
+    address: string;
+    town: string;
+    zip: string;
+    lat: number;
+    lng: number;
+  }> = [];
+
+  const openingsToCreate: Array<{
+    marketId: string;
+    day: Day;
+    start: string;
+    end: string;
+  }> = [];
+
+  for (const market of markets) {
+    const marketId = `market-${market.name.toLowerCase().replace(/\s+/g, "-")}-${market.zip}`;
+
+    marketsToCreate.push({
+      id: marketId,
+      name: market.name,
+      address: market.address,
+      town: market.town,
+      zip: market.zip,
+      lat: market.location!.lat,
+      lng: market.location!.lng,
     });
 
     for (const opening of market.openings) {
-      const day = dayMapping[opening.day];
-      if (!day) {
-        console.log(`    ⚠️ Jour invalide ignoré: ${opening.day}`);
-        continue;
-      }
-      await prisma.marketOpening.create({
-        data: {
-          marketId: createdMarket.id,
+      const day = dayMapping[opening.day.toLowerCase()];
+      if (day) {
+        openingsToCreate.push({
+          marketId,
           day,
           start: opening.start,
           end: opening.end,
-        },
-      });
+        });
+      }
     }
-
-    console.log(`  ✅ ${market.name} (${market.openings.length} horaires)`);
   }
 
-  console.log(`📦 ${marketsData.length} markets seeded\n`);
+  // Insérer les marchés par batch
+  const BATCH_SIZE = 1000;
+
+  console.log(`  📦 Insertion de ${marketsToCreate.length} marchés...`);
+  for (let i = 0; i < marketsToCreate.length; i += BATCH_SIZE) {
+    const batch = marketsToCreate.slice(i, i + BATCH_SIZE);
+    await prisma.market.createMany({
+      data: batch,
+      skipDuplicates: true,
+    });
+    console.log(`    → ${Math.min(i + BATCH_SIZE, marketsToCreate.length)}/${marketsToCreate.length}`);
+  }
+
+  console.log(`  📦 Insertion de ${openingsToCreate.length} horaires...`);
+  for (let i = 0; i < openingsToCreate.length; i += BATCH_SIZE) {
+    const batch = openingsToCreate.slice(i, i + BATCH_SIZE);
+    await prisma.marketOpening.createMany({
+      data: batch,
+    });
+    console.log(`    → ${Math.min(i + BATCH_SIZE, openingsToCreate.length)}/${openingsToCreate.length}`);
+  }
+
+  console.log(`\n✅ ${marketsToCreate.length} markets seeded (${openingsToCreate.length} openings)\n`);
 }
 
 async function main() {

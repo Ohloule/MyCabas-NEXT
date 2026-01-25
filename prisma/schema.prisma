@@ -160,6 +160,9 @@ model Market {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 
+  @@index([town])
+  @@index([zip])
+  @@index([lat, lng])
   @@map("markets")
 }
 

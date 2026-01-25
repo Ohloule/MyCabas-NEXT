@@ -9,7 +9,13 @@
       "Bash(npm run db:push:*)",
       "Bash(git clone:*)",
       "Bash(node scripts/convert-markets.js:*)",
-      "Bash(del \"c:\\\\Users\\\\PC_DIR_1\\\\Documents\\\\CCC\\\\Nouveau dossier\\\\mycabasapp_2026\\\\middleware.ts\")"
+      "Bash(del \"c:\\\\Users\\\\PC_DIR_1\\\\Documents\\\\CCC\\\\Nouveau dossier\\\\mycabasapp_2026\\\\middleware.ts\")",
+      "Bash(npm run dev:*)",
+      "Bash(npm run db:generate:*)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"oui\" npx prisma migrate reset:*)",
+      "Bash(npm run db:seed:*)",
+      "Bash(node:*)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"Recommence stp\" npx prisma migrate reset:*)"
     ]
   }
 }

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
+const MAX_RESULTS = 200;
+
 // Calcul de la distance entre deux points GPS (formule de Haversine)
 function calculateDistance(
   lat1: number,
@@ -21,6 +23,21 @@ function calculateDistance(
   return R * c;
 }
 
+// Calcul du bounding box pour pré-filtrer en SQL
+function getBoundingBox(lat: number, lng: number, radiusKm: number) {
+  // 1 degré de latitude ≈ 111 km
+  const latDelta = radiusKm / 111;
+  // 1 degré de longitude varie selon la latitude
+  const lngDelta = radiusKm / (111 * Math.cos((lat * Math.PI) / 180));
+
+  return {
+    minLat: lat - latDelta,
+    maxLat: lat + latDelta,
+    minLng: lng - lngDelta,
+    maxLng: lng + lngDelta,
+  };
+}
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -32,11 +49,58 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get("search"); // Recherche générale (ville ou code postal)
     const day = searchParams.get("day");
 
-    // Construire les conditions de recherche
+    // Recherche par coordonnées GPS avec bounding box
+    if (lat && lng) {
+      const userLat = parseFloat(lat);
+      const userLng = parseFloat(lng);
+      const radiusKm = parseFloat(radius);
+
+      // Calculer le bounding box pour pré-filtrer en SQL
+      const bbox = getBoundingBox(userLat, userLng, radiusKm);
+
+      // Requête avec pré-filtrage géographique
+      const markets = await prisma.market.findMany({
+        where: {
+          lat: { gte: bbox.minLat, lte: bbox.maxLat },
+          lng: { gte: bbox.minLng, lte: bbox.maxLng },
+        },
+        include: {
+          openings: true,
+        },
+      });
+
+      // Calcul de la distance exacte et filtrage final
+      let filteredMarkets = markets
+        .map((market) => ({
+          ...market,
+          distance: calculateDistance(userLat, userLng, market.lat, market.lng),
+        }))
+        .filter((market) => market.distance <= radiusKm)
+        .sort((a, b) => a.distance - b.distance);
+
+      // Filtrer par jour si spécifié
+      if (day) {
+        filteredMarkets = filteredMarkets.filter((market) =>
+          market.openings.some(
+            (opening) => opening.day.toLowerCase() === day.toLowerCase()
+          )
+        );
+      }
+
+      // Limiter les résultats
+      const limitedMarkets = filteredMarkets.slice(0, MAX_RESULTS);
+
+      return NextResponse.json({
+        markets: limitedMarkets,
+        total: filteredMarkets.length,
+        limited: filteredMarkets.length > MAX_RESULTS,
+      });
+    }
+
+    // Recherche par ville/code postal
     const whereConditions: Record<string, unknown>[] = [];
 
     if (search) {
-      // Recherche par ville OU code postal
       whereConditions.push(
         { town: { contains: search, mode: "insensitive" } },
         { zip: { startsWith: search } }
@@ -50,7 +114,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Récupérer tous les marchés avec leurs horaires
+    // Récupérer les marchés avec limite
     const markets = await prisma.market.findMany({
       include: {
         openings: true,
@@ -62,24 +126,11 @@ export async function GET(request: NextRequest) {
             },
           }
         : {}),
+      take: MAX_RESULTS,
+      orderBy: { name: "asc" },
     });
 
     let filteredMarkets = markets;
-
-    // Filtrer par proximité si coordonnées fournies
-    if (lat && lng) {
-      const userLat = parseFloat(lat);
-      const userLng = parseFloat(lng);
-      const radiusKm = parseFloat(radius);
-
-      filteredMarkets = markets
-        .map((market) => ({
-          ...market,
-          distance: calculateDistance(userLat, userLng, market.lat, market.lng),
-        }))
-        .filter((market) => market.distance <= radiusKm)
-        .sort((a, b) => a.distance - b.distance);
-    }
 
     // Filtrer par jour si spécifié
     if (day) {
