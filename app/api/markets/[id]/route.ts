@@ -2,13 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
-    const searchParams = request.nextUrl.searchParams;
-    const day = searchParams.get("day");
 
     const market = await prisma.market.findUnique({
       where: { id },
@@ -46,14 +44,6 @@ export async function GET(
       );
     }
 
-    // Filtrer les horaires par jour si spécifié
-    let openings = market.openings;
-    if (day) {
-      openings = market.openings.filter(
-        (opening) => opening.day.toUpperCase() === day.toUpperCase()
-      );
-    }
-
     // Transformer les données pour le frontend
     const vendors = market.marketVendors.map((mv) => ({
       id: mv.vendor.id,
@@ -73,7 +63,7 @@ export async function GET(
         town: market.town,
         lat: market.lat,
         lng: market.lng,
-        openings,
+        openings: market.openings,
       },
       vendors,
       totalVendors: vendors.length,

@@ -210,16 +210,6 @@ export default function MarketDetailPage() {
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {/* Bouton "Tous les jours" */}
-              <Link href={`/markets/${marketId}`}>
-                <Badge
-                  variant={!selectedDay ? "default" : "outline"}
-                  className="cursor-pointer py-2 px-4 text-sm hover:bg-principale-100"
-                >
-                  Tous les jours
-                </Badge>
-              </Link>
-
               {sortOpenings(market.openings).map((opening) => (
                 <Link
                   key={opening.id}
@@ -238,13 +228,13 @@ export default function MarketDetailPage() {
               ))}
             </div>
 
-            {selectedOpening && (
-              <div className="mt-4 p-3 bg-principale-50 rounded-lg">
-                <p className="text-sm text-principale-700">
-                  Affichage des commerçants présents le{" "}
-                  <strong>{DAYS_FR[selectedOpening.day]}</strong> de{" "}
-                  <strong>{selectedOpening.start}</strong> à{" "}
-                  <strong>{selectedOpening.end}</strong>
+            {selectedOpening ? (
+              <span></span>
+            ) : (
+              <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                <p className="text-sm text-amber-700">
+                  Sélectionnez un jour pour voir la liste des commerçants
+                  présents.
                 </p>
               </div>
             )}
@@ -252,96 +242,96 @@ export default function MarketDetailPage() {
         </Card>
 
         {/* Liste des commerçants */}
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
-            <Store className="h-5 w-5" />
-            Commerçants présents
-            {selectedDay && ` le ${DAYS_FR[selectedDay]}`}
-            <Badge variant="secondary" className="ml-2">
-              {vendors.length} commerçant{vendors.length > 1 ? "s" : ""}
-            </Badge>
-          </h2>
+        {selectedDay && (
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
+              <Store className="h-5 w-5" />
+              Commerçants présents le {DAYS_FR[selectedDay]}
+              <Badge variant="secondary" className="ml-2">
+                {vendors.length} commerçant{vendors.length > 1 ? "s" : ""}
+              </Badge>
+            </h2>
 
-          {vendors.length === 0 ? (
-            <div className="rounded-lg border border-dashed p-12 text-center">
-              <Store className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
-              <h3 className="mb-2 text-lg font-semibold">
-                Aucun commerçant inscrit
-              </h3>
-              <p className="text-muted-foreground">
-                {selectedDay
-                  ? `Aucun commerçant n'est inscrit pour le ${DAYS_FR[selectedDay]} sur ce marché.`
-                  : "Aucun commerçant n'est encore inscrit sur ce marché."}
-              </p>
-            </div>
-          ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {vendors.map((vendor) => (
-                <Card
-                  key={vendor.id}
-                  className="overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl will-change-transform"
-                >
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start gap-3">
-                      {vendor.user.avatarUrl ? (
-                        <img
-                          src={vendor.user.avatarUrl}
-                          alt={vendor.stallName}
-                          className="h-12 w-12 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div className="h-12 w-12 rounded-full bg-principale-100 flex items-center justify-center">
-                          <User className="h-6 w-6 text-principale-600" />
+            {vendors.length === 0 ? (
+              <div className="rounded-lg border border-dashed p-12 text-center">
+                <Store className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
+                <h3 className="mb-2 text-lg font-semibold">
+                  Aucun commerçant inscrit
+                </h3>
+                <p className="text-muted-foreground">
+                  Aucun commerçant n'est inscrit pour le {DAYS_FR[selectedDay]}{" "}
+                  sur ce marché.
+                </p>
+              </div>
+            ) : (
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {vendors.map((vendor) => (
+                  <Card
+                    key={vendor.id}
+                    className="overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl will-change-transform"
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start gap-3">
+                        {vendor.user.avatarUrl ? (
+                          <img
+                            src={vendor.user.avatarUrl}
+                            alt={vendor.stallName}
+                            className="h-12 w-12 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="h-12 w-12 rounded-full bg-principale-100 flex items-center justify-center">
+                            <User className="h-6 w-6 text-principale-600" />
+                          </div>
+                        )}
+                        <div className="flex-1">
+                          <CardTitle className="text-lg">
+                            {vendor.stallName}
+                          </CardTitle>
+                          <CardDescription>
+                            {vendor.user.firstName} {vendor.user.lastName}
+                          </CardDescription>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      {vendor.description && (
+                        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                          {vendor.description}
+                        </p>
+                      )}
+
+                      {/* Aperçu des produits */}
+                      {vendor.products.length > 0 && (
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 text-sm font-medium">
+                            <Package className="h-4 w-4 text-muted-foreground" />
+                            Produits ({vendor.productCount})
+                          </div>
+                          <div className="flex flex-wrap gap-1">
+                            {vendor.products.slice(0, 4).map((product) => (
+                              <Badge
+                                key={product.id}
+                                variant="secondary"
+                                className="text-xs"
+                              >
+                                {product.name}
+                              </Badge>
+                            ))}
+                            {vendor.productCount > 4 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{vendor.productCount - 4}
+                              </Badge>
+                            )}
+                          </div>
                         </div>
                       )}
-                      <div className="flex-1">
-                        <CardTitle className="text-lg">
-                          {vendor.stallName}
-                        </CardTitle>
-                        <CardDescription>
-                          {vendor.user.firstName} {vendor.user.lastName}
-                        </CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    {vendor.description && (
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                        {vendor.description}
-                      </p>
-                    )}
-
-                    {/* Aperçu des produits */}
-                    {vendor.products.length > 0 && (
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2 text-sm font-medium">
-                          <Package className="h-4 w-4 text-muted-foreground" />
-                          Produits ({vendor.productCount})
-                        </div>
-                        <div className="flex flex-wrap gap-1">
-                          {vendor.products.slice(0, 4).map((product) => (
-                            <Badge
-                              key={product.id}
-                              variant="secondary"
-                              className="text-xs"
-                            >
-                              {product.name}
-                            </Badge>
-                          ))}
-                          {vendor.productCount > 4 && (
-                            <Badge variant="outline" className="text-xs">
-                              +{vendor.productCount - 4}
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
-        </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </main>
     </div>
   );
