@@ -1,20 +1,21 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   ArrowLeft,
-  Save,
+  Check,
   ImageIcon,
+  Infinity,
   Leaf,
   MapPin,
-  Infinity,
-  Check,
+  Save,
 } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import IngredientImagePicker from "../IngredientImagePicker";
 
 interface Category {
   id: string;
@@ -84,17 +85,23 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
   // Formulaire - Infos générales
   const [name, setName] = useState(initialData?.name || "");
-  const [description, setDescription] = useState(initialData?.description || "");
+  const [description, setDescription] = useState(
+    initialData?.description || "",
+  );
   const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || "");
   const [unit, setUnit] = useState(initialData?.unit || "kg");
-  const [basePrice, setBasePrice] = useState(initialData?.basePrice?.toString() || "");
+  const [basePrice, setBasePrice] = useState(
+    initialData?.basePrice?.toString() || "",
+  );
   const [categoryId, setCategoryId] = useState(initialData?.categoryId || "");
   const [isOrganic, setIsOrganic] = useState(initialData?.isOrganic || false);
   const [isLocal, setIsLocal] = useState(initialData?.isLocal || false);
   const [isActive, setIsActive] = useState(initialData?.isActive !== false);
 
   // Formulaire - Prix/Stock par marché
-  const [marketPrices, setMarketPrices] = useState<Record<string, MarketPriceData>>({});
+  const [marketPrices, setMarketPrices] = useState<
+    Record<string, MarketPriceData>
+  >({});
   const [activeMarketTab, setActiveMarketTab] = useState<string | null>(null);
 
   // Charger les données
@@ -119,10 +126,10 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
       const initialPrices: Record<string, MarketPriceData> = {};
       marketsData.forEach((market: Market) => {
         const existingPrice = initialData?.pricesByMarket?.find(
-          (p) => p.market.id === market.id
+          (p) => p.market.id === market.id,
         );
         const existingStock = initialData?.stocksByMarket?.find(
-          (s) => s.market.id === market.id
+          (s) => s.market.id === market.id,
         );
 
         initialPrices[market.id] = {
@@ -152,7 +159,10 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
   }, [fetchData]);
 
   // Mettre à jour les données d'un marché
-  const updateMarketData = (marketId: string, data: Partial<MarketPriceData>) => {
+  const updateMarketData = (
+    marketId: string,
+    data: Partial<MarketPriceData>,
+  ) => {
     setMarketPrices((prev) => ({
       ...prev,
       [marketId]: {
@@ -221,7 +231,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
       router.push("/vendor/dashboard/etal");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur lors de l'enregistrement");
+      setError(
+        err instanceof Error ? err.message : "Erreur lors de l'enregistrement",
+      );
     } finally {
       setSaving(false);
     }
@@ -237,7 +249,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
   }
 
   const activeMarket = markets.find((m) => m.id === activeMarketTab);
-  const activeMarketData = activeMarketTab ? marketPrices[activeMarketTab] : null;
+  const activeMarketData = activeMarketTab
+    ? marketPrices[activeMarketTab]
+    : null;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -257,11 +271,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
           </h1>
         </div>
         <div className="flex items-center gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => router.back()}
-          >
+          <Button type="button" variant="outline" onClick={() => router.back()}>
             Annuler
           </Button>
           <Button type="submit" disabled={saving}>
@@ -486,12 +496,15 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                               name={`price-type-${activeMarket.id}`}
                               checked={activeMarketData.price === null}
                               onChange={() =>
-                                updateMarketData(activeMarket.id, { price: null })
+                                updateMarketData(activeMarket.id, {
+                                  price: null,
+                                })
                               }
                               className="w-4 h-4 border-gray-300 text-principale-600 focus:ring-principale-500"
                             />
                             <span className="text-sm">
-                              Utiliser le prix de référence ({basePrice || "0"}€/{unit})
+                              Utiliser le prix de référence ({basePrice || "0"}
+                              €/{unit})
                             </span>
                           </label>
                           <label className="flex items-center gap-2 cursor-pointer">
@@ -598,7 +611,8 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
             <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg">
               <p className="font-medium">Aucun marché configuré</p>
               <p className="text-sm mt-1">
-                Vous devez d&apos;abord vous inscrire à des marchés pour configurer les prix et stocks.
+                Vous devez d&apos;abord vous inscrire à des marchés pour
+                configurer les prix et stocks.
               </p>
             </div>
           )}
@@ -644,6 +658,10 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
               <p className="text-xs text-gray-500 mt-2">
                 Laissez vide pour utiliser l&apos;image par défaut
               </p>
+              <IngredientImagePicker
+                onImageSelect={setImageUrl}
+                defaultQuery={name}
+              />
             </div>
           </div>
 

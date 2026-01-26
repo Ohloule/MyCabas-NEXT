@@ -69,6 +69,17 @@ const DAY_ORDER = [
   "DIMANCHE",
 ];
 
+interface VendorLocation {
+  lat: number;
+  lng: number;
+  address: {
+    street: string;
+    zip: string;
+    town: string;
+  };
+  source?: "address" | "siret";
+}
+
 export default function MarchesPage() {
   const [myMarkets, setMyMarkets] = useState<Market[]>([]);
   const [availableMarkets, setAvailableMarkets] = useState<Market[]>([]);
@@ -78,6 +89,10 @@ export default function MarchesPage() {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+
+  // État pour la localisation du vendeur
+  const [vendorLocation, setVendorLocation] = useState<VendorLocation | null>(null);
+  const [locationError, setLocationError] = useState<string | null>(null);
 
   // État pour l'autocomplétion
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
@@ -106,13 +121,41 @@ export default function MarchesPage() {
     }
   }, []);
 
+  // Charger la localisation du vendeur
+  const fetchVendorLocation = useCallback(async () => {
+    try {
+      const response = await fetch("/api/vendor/location");
+      if (response.ok) {
+        const data = await response.json();
+        setVendorLocation(data);
+        return data;
+      } else if (response.status === 404) {
+        setLocationError("Ajoutez une adresse à votre profil pour voir les marchés proches de vous.");
+      }
+      return null;
+    } catch (err) {
+      console.error("Error fetching vendor location:", err);
+      return null;
+    }
+  }, []);
+
   // Charger tous les marchés disponibles
-  const fetchAvailableMarkets = useCallback(async () => {
+  const fetchAvailableMarkets = useCallback(async (location?: VendorLocation | null) => {
     setSearchLoading(true);
     try {
-      const url = searchQuery
-        ? `/api/markets?search=${encodeURIComponent(searchQuery)}`
-        : "/api/markets";
+      let url: string;
+
+      if (searchQuery) {
+        // Recherche textuelle
+        url = `/api/markets?search=${encodeURIComponent(searchQuery)}`;
+      } else if (location) {
+        // Recherche par proximité (9 marchés les plus proches)
+        url = `/api/markets?lat=${location.lat}&lng=${location.lng}&radius=100`;
+      } else {
+        // Fallback: tous les marchés
+        url = "/api/markets";
+      }
+
       const response = await fetch(url);
       if (!response.ok) throw new Error("Erreur lors du chargement");
       const data = await response.json();
@@ -130,7 +173,8 @@ export default function MarchesPage() {
     const init = async () => {
       setLoading(true);
       await fetchMyMarkets();
-      await fetchAvailableMarkets();
+      const location = await fetchVendorLocation();
+      await fetchAvailableMarkets(location);
       setLoading(false);
     };
     init();
@@ -165,10 +209,10 @@ export default function MarchesPage() {
   // Recherche des marchés avec debounce
   useEffect(() => {
     const timer = setTimeout(() => {
-      fetchAvailableMarkets();
+      fetchAvailableMarkets(searchQuery ? null : vendorLocation);
     }, 300);
     return () => clearTimeout(timer);
-  }, [searchQuery]);
+  }, [searchQuery, vendorLocation, fetchAvailableMarkets]);
 
   // Fermer les suggestions en cliquant à l'extérieur
   useEffect(() => {
@@ -548,6 +592,26 @@ export default function MarchesPage() {
           Trouver un marché
         </h2>
 
+        {/* Message d'info sur la localisation */}
+        {locationError && !searchQuery && (
+          <div className="bg-amber-50 border border-amber-200 text-amber-700 px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
+            <MapPin className="h-5 w-5 shrink-0" />
+            <span>{locationError}</span>
+          </div>
+        )}
+
+        {vendorLocation && !searchQuery && (
+          <div className="bg-principale-50 border border-principale-200 text-principale-700 px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
+            <MapPin className="h-5 w-5 shrink-0" />
+            <span>
+              Marchés les plus proches de <strong>{vendorLocation.address.town}</strong>
+              {vendorLocation.source === "siret" && (
+                <span className="text-sm opacity-75"> (adresse SIRET)</span>
+              )}
+            </span>
+          </div>
+        )}
+
         <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
@@ -616,7 +680,7 @@ export default function MarchesPage() {
           </Card>
         ) : (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filteredMarkets.slice(0, 12).map((market) => {
+            {filteredMarkets.slice(0, 9).map((market) => {
               const selectedDays = selectedDaysMap[market.id] || [];
 
               return (
@@ -691,9 +755,9 @@ export default function MarchesPage() {
           </div>
         )}
 
-        {filteredMarkets.length > 12 && (
+        {filteredMarkets.length > 9 && (
           <p className="text-center text-sm text-gray-500 mt-4">
-            {filteredMarkets.length - 12} autres marchés disponibles. Affinez
+            {filteredMarkets.length - 9} autres marchés disponibles. Affinez
             votre recherche.
           </p>
         )}
