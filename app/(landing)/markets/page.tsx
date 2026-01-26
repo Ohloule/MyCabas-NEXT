@@ -201,7 +201,8 @@ export default function MarketsPage() {
             index ===
             self.findIndex(
               (s) =>
-                s.city === suggestion.city && s.postcode === suggestion.postcode,
+                s.city === suggestion.city &&
+                s.postcode === suggestion.postcode,
             ),
         );
 
@@ -494,7 +495,7 @@ export default function MarketsPage() {
                     size="sm"
                     variant={isSelected ? "default" : "outline"}
                     onClick={() => toggleDay(day)}
-                    className={!hasMarkets ? "opacity-50" : ""}
+                    className={!hasMarkets ? "opacity-50 bg-principale-400 hover:bg-principale-400 cursor-not-allowed" : ""}
                   >
                     <span className={!hasMarkets ? "line-through" : ""}>
                       {DAYS_FR[day].slice(0, 3)}
@@ -560,7 +561,7 @@ export default function MarketsPage() {
               {displayedMarkets.map((market) => (
                 <Card
                   key={market.id}
-                  className="overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl will-change-transform"
+                  className="overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl transform-gpu backface-hidden antialiased"
                 >
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between ">

@@ -6,19 +6,17 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { VendorCard } from "@/components/vendor/VendorCard";
 import {
   ArrowLeft,
   Calendar,
   Clock,
   Loader2,
   MapPin,
-  Package,
   Store,
-  User,
 } from "lucide-react";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
@@ -41,10 +39,23 @@ interface Product {
   };
 }
 
+interface SocialLinks {
+  instagram?: string;
+  facebook?: string;
+  tiktok?: string;
+}
+
 interface Vendor {
   id: string;
   stallName: string;
   description: string | null;
+  phone: string | null;
+  email: string | null;
+  logoUrl: string | null;
+  website: string | null;
+  socialLinks: SocialLinks | null;
+  paymentMethods: string[];
+  labels: string[];
   user: {
     firstName: string;
     lastName: string;
@@ -128,7 +139,7 @@ export default function MarketDetailPage() {
   // Trier les horaires par jour de la semaine
   const sortOpenings = (openings: MarketOpening[]) => {
     return [...openings].sort(
-      (a, b) => DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day),
+      (a, b) => DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day)
     );
   };
 
@@ -178,7 +189,7 @@ export default function MarketDetailPage() {
           <MapPin className="h-5 w-5" />
           <Link
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-              `${market.address}, ${market.zip} ${market.town}`,
+              `${market.address}, ${market.zip} ${market.town}`
             )}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -266,67 +277,7 @@ export default function MarketDetailPage() {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {vendors.map((vendor) => (
-                  <Card
-                    key={vendor.id}
-                    className="overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl will-change-transform"
-                  >
-                    <CardHeader className="pb-3">
-                      <div className="flex items-start gap-3">
-                        {vendor.user.avatarUrl ? (
-                          <img
-                            src={vendor.user.avatarUrl}
-                            alt={vendor.stallName}
-                            className="h-12 w-12 rounded-full object-cover"
-                          />
-                        ) : (
-                          <div className="h-12 w-12 rounded-full bg-principale-100 flex items-center justify-center">
-                            <User className="h-6 w-6 text-principale-600" />
-                          </div>
-                        )}
-                        <div className="flex-1">
-                          <CardTitle className="text-lg">
-                            {vendor.stallName}
-                          </CardTitle>
-                          <CardDescription>
-                            {vendor.user.firstName} {vendor.user.lastName}
-                          </CardDescription>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      {vendor.description && (
-                        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                          {vendor.description}
-                        </p>
-                      )}
-
-                      {/* Aperçu des produits */}
-                      {vendor.products.length > 0 && (
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2 text-sm font-medium">
-                            <Package className="h-4 w-4 text-muted-foreground" />
-                            Produits ({vendor.productCount})
-                          </div>
-                          <div className="flex flex-wrap gap-1">
-                            {vendor.products.slice(0, 4).map((product) => (
-                              <Badge
-                                key={product.id}
-                                variant="secondary"
-                                className="text-xs"
-                              >
-                                {product.name}
-                              </Badge>
-                            ))}
-                            {vendor.productCount > 4 && (
-                              <Badge variant="outline" className="text-xs">
-                                +{vendor.productCount - 4}
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
+                  <VendorCard key={vendor.id} vendor={vendor} />
                 ))}
               </div>
             )}

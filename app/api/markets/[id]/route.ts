@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Day } from "@prisma/client";
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
+    const searchParams = request.nextUrl.searchParams;
+    const dayParam = searchParams.get("day")?.toUpperCase() as Day | undefined;
 
     const market = await prisma.market.findUnique({
       where: { id },
@@ -44,11 +47,26 @@ export async function GET(
       );
     }
 
+    // Filtrer les vendors par jour si spécifié
+    let filteredMarketVendors = market.marketVendors;
+    if (dayParam) {
+      filteredMarketVendors = market.marketVendors.filter((mv) =>
+        mv.days.includes(dayParam)
+      );
+    }
+
     // Transformer les données pour le frontend
-    const vendors = market.marketVendors.map((mv) => ({
+    const vendors = filteredMarketVendors.map((mv) => ({
       id: mv.vendor.id,
       stallName: mv.vendor.stallName,
       description: mv.vendor.description,
+      phone: mv.vendor.phone,
+      email: mv.vendor.email,
+      logoUrl: mv.vendor.logoUrl,
+      website: mv.vendor.website,
+      socialLinks: mv.vendor.socialLinks,
+      paymentMethods: mv.vendor.paymentMethods,
+      labels: mv.vendor.labels,
       user: mv.vendor.user,
       products: mv.vendor.products,
       productCount: mv.vendor.products.length,

@@ -29,6 +29,23 @@ enum Day {
   DIMANCHE
 }
 
+enum PaymentMethod {
+  CASH        // Espèces
+  CARD        // Carte bancaire
+  CHECK       // Chèque
+  TRANSFER    // Virement
+}
+
+enum VendorLabel {
+  BIO           // Agriculture biologique
+  LOCAL         // Producteur local
+  ARTISAN       // Artisan
+  FERMIER       // Producteur fermier
+  AOC_AOP       // Appellation d'origine
+  LABEL_ROUGE   // Label Rouge
+  FAIR_TRADE    // Commerce équitable
+}
+
 // ============================================
 // USER & AUTH
 // ============================================
@@ -124,6 +141,17 @@ model Vendor {
   companyName   String   // Nom complet de l'entreprise (API gouv)
   description   String?  @db.Text
 
+  // Informations de contact professionnel
+  phone         String?           // Téléphone professionnel
+  email         String?           // Email de contact pro
+  logoUrl       String?           // Logo/image de la boutique
+  website       String?           // Site web
+  socialLinks   Json?             // { instagram?: string, facebook?: string, tiktok?: string }
+
+  // Labels et paiements
+  paymentMethods PaymentMethod[]  // Modes de paiement acceptés
+  labels         VendorLabel[]    // Certifications/labels du commerçant
+
   // Relation User
   userId        String   @unique
   user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -189,7 +217,10 @@ model MarketVendor {
   marketId  String
   market    Market   @relation(fields: [marketId], references: [id], onDelete: Cascade)
 
+  days      Day[]    // Jours où le vendor est présent sur ce marché
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([vendorId, marketId])
   @@map("market_vendors")
