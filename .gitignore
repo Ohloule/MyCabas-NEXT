@@ -9,9 +9,9 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-
 # testing
 /coverage
+/.vscode/mcp.json
 
 # next.js
 /.next/
