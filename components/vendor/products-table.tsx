@@ -1,20 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Pencil,
-  Trash2,
+  Check,
   Copy,
-  MoreHorizontal,
+  Infinity,
   Leaf,
   MapPin,
-  Check,
+  MoreHorizontal,
+  Pencil,
+  Trash2,
   X,
-  Infinity
 } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 
 interface Category {
   id: string;
@@ -71,18 +71,23 @@ const categoryColors: Record<string, string> = {
   "fromages-produits-laitiers": "bg-yellow-100 text-yellow-800",
   "boulangerie-patisserie": "bg-amber-100 text-amber-800",
   "epicerie-condiments": "bg-orange-100 text-orange-800",
-  "boissons": "bg-purple-100 text-purple-800",
+  boissons: "bg-purple-100 text-purple-800",
   "bio-nature": "bg-emerald-100 text-emerald-800",
 };
 
-export function ProductsTable({ products, onEdit, onDelete, onDuplicate }: ProductsTableProps) {
+export function ProductsTable({
+  products,
+  onEdit,
+  onDelete,
+  onDuplicate,
+}: ProductsTableProps) {
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   // Calculer la fourchette de prix
   const getPriceRange = (product: Product) => {
     const prices = product.pricesByMarket
-      .filter(p => p.price !== null)
-      .map(p => p.price as number);
+      .filter((p) => p.price !== null)
+      .map((p) => p.price as number);
 
     if (prices.length === 0) {
       return `${product.basePrice.toFixed(2)}€`;
@@ -103,18 +108,23 @@ export function ProductsTable({ products, onEdit, onDelete, onDuplicate }: Produ
 
   // Calculer le stock total
   const getTotalStock = (product: Product) => {
-    const hasUnlimited = product.stocksByMarket.some(s => s.isUnlimited);
+    const hasUnlimited = product.stocksByMarket.some((s) => s.isUnlimited);
     if (hasUnlimited || product.stocksByMarket.length === 0) {
       return <Infinity className="w-4 h-4 text-gray-400" />;
     }
 
-    const total = product.stocksByMarket.reduce((acc, s) => acc + (s.quantity || 0), 0);
+    const total = product.stocksByMarket.reduce(
+      (acc, s) => acc + (s.quantity || 0),
+      0,
+    );
     return total;
   };
 
   // Compter les marchés disponibles
   const getAvailableMarkets = (product: Product) => {
-    const available = product.pricesByMarket.filter(p => p.isAvailable).length;
+    const available = product.pricesByMarket.filter(
+      (p) => p.isAvailable,
+    ).length;
     const total = product.pricesByMarket.length;
     if (total === 0) return "—";
     return `${available}/${total}`;
@@ -143,8 +153,8 @@ export function ProductsTable({ products, onEdit, onDelete, onDuplicate }: Produ
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-      <div className="overflow-x-auto">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+      <div className="overflow-x-auto rounded-xl">
         <table className="w-full">
           <thead className="bg-gray-50 border-b border-gray-100">
             <tr>
@@ -173,11 +183,14 @@ export function ProductsTable({ products, onEdit, onDelete, onDuplicate }: Produ
           </thead>
           <tbody className="divide-y divide-gray-100">
             {products.map((product) => (
-              <tr key={product.id} className="hover:bg-gray-50 transition-colors">
+              <tr
+                key={product.id}
+                className="hover:bg-gray-50 transition-colors "
+              >
                 {/* Produit (image + nom + badges) */}
-                <td className="px-4 py-4">
+                <td className="px-4 py-4 ">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                    <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 shrink-0">
                       <Image
                         src={product.imageUrl || "/images/ingredients.jpg"}
                         alt={product.name}
@@ -188,7 +201,9 @@ export function ProductsTable({ products, onEdit, onDelete, onDuplicate }: Produ
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-gray-900">{product.name}</span>
+                        <span className="font-medium text-gray-900">
+                          {product.name}
+                        </span>
                         {product.isOrganic && (
                           <span title="Bio">
                             <Leaf className="w-4 h-4 text-green-600" />
@@ -200,7 +215,9 @@ export function ProductsTable({ products, onEdit, onDelete, onDuplicate }: Produ
                           </span>
                         )}
                       </div>
-                      <span className="text-sm text-gray-500">/{product.unit}</span>
+                      <span className="text-sm text-gray-500">
+                        /{product.unit}
+                      </span>
                     </div>
                   </div>
                 </td>
@@ -208,7 +225,10 @@ export function ProductsTable({ products, onEdit, onDelete, onDuplicate }: Produ
                 {/* Catégorie */}
                 <td className="px-4 py-4">
                   <Badge
-                    className={categoryColors[product.category.slug] || "bg-gray-100 text-gray-800"}
+                    className={
+                      categoryColors[product.category.slug] ||
+                      "bg-gray-100 text-gray-800"
+                    }
                   >
                     {product.category.name}
                   </Badge>
@@ -234,7 +254,9 @@ export function ProductsTable({ products, onEdit, onDelete, onDuplicate }: Produ
 
                 {/* Marchés disponibles */}
                 <td className="px-4 py-4">
-                  <span className="text-gray-700">{getAvailableMarkets(product)}</span>
+                  <span className="text-gray-700">
+                    {getAvailableMarkets(product)}
+                  </span>
                 </td>
 
                 {/* Statut */}
@@ -267,17 +289,21 @@ export function ProductsTable({ products, onEdit, onDelete, onDuplicate }: Produ
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => setOpenMenuId(openMenuId === product.id ? null : product.id)}
+                        onClick={() =>
+                          setOpenMenuId(
+                            openMenuId === product.id ? null : product.id,
+                          )
+                        }
                       >
                         <MoreHorizontal className="w-4 h-4" />
                       </Button>
                       {openMenuId === product.id && (
                         <>
                           <div
-                            className="fixed inset-0 z-10"
+                            className="fixed inset-0 z-10 "
                             onClick={() => setOpenMenuId(null)}
                           />
-                          <div className="absolute right-0 top-full mt-1 z-20 bg-white rounded-lg shadow-lg border border-gray-100 py-1 min-w-[140px]">
+                          <div className="absolute right-10 -top-8  z-20 bg-white rounded-lg shadow-lg border border-gray-100 py-1 min-w-35">
                             <button
                               onClick={() => {
                                 onDuplicate(product);
