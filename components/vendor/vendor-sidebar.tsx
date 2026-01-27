@@ -34,14 +34,19 @@ const menuItems = [
     icon: LayoutDashboard,
   },
   {
-    label: "Mon étal",
-    href: "/vendor/dashboard/etal",
-    icon: Carrot,
+    label: "Mes informations",
+    href: "/vendor/dashboard/profil",
+    icon: User,
   },
   {
     label: "Mes marchés",
     href: "/vendor/dashboard/marches",
     icon: MapPin,
+  },
+  {
+    label: "Mon étal",
+    href: "/vendor/dashboard/etal",
+    icon: Carrot,
   },
   {
     label: "Commandes à venir",
@@ -52,11 +57,6 @@ const menuItems = [
     label: "Facturations",
     href: "/vendor/dashboard/facturations",
     icon: Receipt,
-  },
-  {
-    label: "Mes informations",
-    href: "/vendor/dashboard/profil",
-    icon: User,
   },
   {
     label: "Notifications",

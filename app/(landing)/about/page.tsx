@@ -19,6 +19,8 @@ export default function Page() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
+  const [isResumeRevealed, setIsResumeRevealed] = React.useState(false);
+  const resumeRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (!api) {
@@ -32,6 +34,24 @@ export default function Page() {
       setCurrent(api.selectedScrollSnap() + 1);
     });
   }, [api]);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsResumeRevealed(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (resumeRef.current) {
+      observer.observe(resumeRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -162,7 +182,12 @@ export default function Page() {
             </div>
           </div>
 
-          <div className=" text-white food-motif bg-principale-700 rounded-2xl shadow-xl p-8 space-y-4 text-lg max-w-175 mx-auto animate-scroll">
+          <div
+            ref={resumeRef}
+            className={`text-white food-motif bg-principale-700 rounded-2xl shadow-xl p-8 space-y-4 text-lg max-w-175 mx-auto transition-all duration-700 ${
+              isResumeRevealed ? "opacity-100 scale-100" : "opacity-0 scale-0"
+            }`}
+          >
             <h3 className="text-4xl text-center font-bold  font-special">
               Résumé
             </h3>

@@ -164,7 +164,7 @@ function RegisterForm() {
         // Inscription réussie mais connexion échouée
         router.push("/login");
       } else {
-        router.push(role === "VENDOR" ? "/vendor/dashboard" : "/");
+        router.push(role === "VENDOR" ? "/vendor/dashboard/profil" : "/");
         router.refresh();
       }
     } catch {
@@ -273,7 +273,7 @@ function RegisterForm() {
                       />
                       <Button
                         type="button"
-                        variant="secondary"
+                        variant="default"
                         onClick={searchSiret}
                         disabled={siretLoading || loading}
                       >
