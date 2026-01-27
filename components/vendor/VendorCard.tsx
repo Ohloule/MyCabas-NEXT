@@ -94,6 +94,8 @@ export function VendorCard({ vendor, isPreview = false }: VendorCardProps) {
       vendor.socialLinks.facebook ||
       vendor.socialLinks.tiktok);
 
+      console.log(vendor);
+
   return (
     <Card className="overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl">
       {/* Bannière */}
