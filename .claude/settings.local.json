@@ -15,7 +15,8 @@
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"oui\" npx prisma migrate reset:*)",
       "Bash(npm run db:seed:*)",
       "Bash(node:*)",
-      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"Recommence stp\" npx prisma migrate reset:*)"
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"Recommence stp\" npx prisma migrate reset:*)",
+      "Bash(npx shadcn@latest add:*)"
     ]
   }
 }

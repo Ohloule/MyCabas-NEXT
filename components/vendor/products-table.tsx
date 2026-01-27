@@ -132,7 +132,7 @@ export function ProductsTable({
 
   if (products.length === 0) {
     return (
-      <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-100 text-center">
+      <div className="bg-white rounded-xl p-8 sm:p-12 shadow-sm border border-gray-100 text-center">
         <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <Image
             src="/images/ingredients.jpg"
@@ -152,189 +152,312 @@ export function ProductsTable({
     );
   }
 
+  // Composant carte pour mobile
+  const ProductCard = ({ product }: { product: Product }) => (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+      <div className="flex items-start gap-3">
+        {/* Image */}
+        <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+          <Image
+            src={product.imageUrl || "/images/ingredients.jpg"}
+            alt={product.name}
+            width={64}
+            height={64}
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        {/* Infos principales */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className="font-medium text-gray-900 text-sm">
+                  {product.name}
+                </span>
+                {product.isOrganic && (
+                  <Leaf className="w-3.5 h-3.5 text-green-600 shrink-0" />
+                )}
+                {product.isLocal && (
+                  <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                )}
+              </div>
+              <span className="text-xs text-gray-500">/{product.unit}</span>
+            </div>
+
+            {/* Statut */}
+            {product.isActive ? (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 shrink-0">
+                <Check className="w-3 h-3" />
+                Actif
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 shrink-0">
+                <X className="w-3 h-3" />
+                Inactif
+              </span>
+            )}
+          </div>
+
+          {/* Catégorie */}
+          <div className="mt-2">
+            <Badge
+              className={`text-xs ${
+                categoryColors[product.category.slug] ||
+                "bg-gray-100 text-gray-800"
+              }`}
+            >
+              {product.category.name}
+            </Badge>
+          </div>
+        </div>
+      </div>
+
+      {/* Infos secondaires */}
+      <div className="mt-3 pt-3 border-t border-gray-100 grid grid-cols-3 gap-2 text-center">
+        <div>
+          <p className="text-xs text-gray-500">Prix</p>
+          <p className="text-sm font-medium text-gray-900">
+            {getPriceRange(product)}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-gray-500">Stock</p>
+          <div className="flex items-center justify-center gap-1 text-sm font-medium text-gray-900">
+            {getTotalStock(product)}
+          </div>
+        </div>
+        <div>
+          <p className="text-xs text-gray-500">Marchés</p>
+          <p className="text-sm font-medium text-gray-900">
+            {getAvailableMarkets(product)}
+          </p>
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-end gap-1">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => onEdit(product)}
+          className="flex-1 sm:flex-none"
+        >
+          <Pencil className="w-4 h-4" />
+          <span className="sm:hidden">Modifier</span>
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => onDuplicate(product)}
+        >
+          <Copy className="w-4 h-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => onDelete(product.id)}
+          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+        >
+          <Trash2 className="w-4 h-4" />
+        </Button>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-      <div className="overflow-x-auto rounded-xl">
-        <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-100">
-            <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Produit
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Catégorie
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Prix
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Stock
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Marchés
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Statut
-              </th>
-              <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {products.map((product) => (
-              <tr
-                key={product.id}
-                className="hover:bg-gray-50 transition-colors "
-              >
-                {/* Produit (image + nom + badges) */}
-                <td className="px-4 py-4 ">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 shrink-0">
-                      <Image
-                        src={product.imageUrl || "/images/ingredients.jpg"}
-                        alt={product.name}
-                        width={48}
-                        height={48}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-gray-900">
-                          {product.name}
-                        </span>
-                        {product.isOrganic && (
-                          <span title="Bio">
-                            <Leaf className="w-4 h-4 text-green-600" />
-                          </span>
-                        )}
-                        {product.isLocal && (
-                          <span title="Local">
-                            <MapPin className="w-4 h-4 text-blue-600" />
-                          </span>
-                        )}
+    <>
+      {/* Vue mobile - Cartes */}
+      <div className="lg:hidden space-y-3">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+
+      {/* Vue desktop - Tableau */}
+      <div className="hidden lg:block bg-white rounded-xl shadow-sm border border-gray-100">
+        <div className="overflow-x-auto rounded-xl">
+          <table className="w-full">
+            <thead className="bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Produit
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Catégorie
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Prix
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Stock
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Marchés
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Statut
+                </th>
+                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {products.map((product) => (
+                <tr
+                  key={product.id}
+                  className="hover:bg-gray-50 transition-colors"
+                >
+                  {/* Produit (image + nom + badges) */}
+                  <td className="px-4 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+                        <Image
+                          src={product.imageUrl || "/images/ingredients.jpg"}
+                          alt={product.name}
+                          width={48}
+                          height={48}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                      <span className="text-sm text-gray-500">
-                        /{product.unit}
-                      </span>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-gray-900">
+                            {product.name}
+                          </span>
+                          {product.isOrganic && (
+                            <span title="Bio">
+                              <Leaf className="w-4 h-4 text-green-600" />
+                            </span>
+                          )}
+                          {product.isLocal && (
+                            <span title="Local">
+                              <MapPin className="w-4 h-4 text-blue-600" />
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-sm text-gray-500">
+                          /{product.unit}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </td>
+                  </td>
 
-                {/* Catégorie */}
-                <td className="px-4 py-4">
-                  <Badge
-                    className={
-                      categoryColors[product.category.slug] ||
-                      "bg-gray-100 text-gray-800"
-                    }
-                  >
-                    {product.category.name}
-                  </Badge>
-                </td>
-
-                {/* Prix */}
-                <td className="px-4 py-4">
-                  <span className="font-medium text-gray-900">
-                    {getPriceRange(product)}
-                  </span>
-                  <span className="text-gray-500">/{product.unit}</span>
-                </td>
-
-                {/* Stock */}
-                <td className="px-4 py-4">
-                  <div className="flex items-center gap-1 text-gray-700">
-                    {getTotalStock(product)}
-                    {typeof getTotalStock(product) === "number" && (
-                      <span className="text-gray-500">{product.unit}</span>
-                    )}
-                  </div>
-                </td>
-
-                {/* Marchés disponibles */}
-                <td className="px-4 py-4">
-                  <span className="text-gray-700">
-                    {getAvailableMarkets(product)}
-                  </span>
-                </td>
-
-                {/* Statut */}
-                <td className="px-4 py-4">
-                  {product.isActive ? (
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                      <Check className="w-3 h-3" />
-                      Actif
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
-                      <X className="w-3 h-3" />
-                      Inactif
-                    </span>
-                  )}
-                </td>
-
-                {/* Actions */}
-                <td className="px-4 py-4">
-                  <div className="flex items-center justify-end gap-1">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => onEdit(product)}
-                      title="Modifier"
+                  {/* Catégorie */}
+                  <td className="px-4 py-4">
+                    <Badge
+                      className={
+                        categoryColors[product.category.slug] ||
+                        "bg-gray-100 text-gray-800"
+                      }
                     >
-                      <Pencil className="w-4 h-4" />
-                    </Button>
-                    <div className="relative">
+                      {product.category.name}
+                    </Badge>
+                  </td>
+
+                  {/* Prix */}
+                  <td className="px-4 py-4">
+                    <span className="font-medium text-gray-900">
+                      {getPriceRange(product)}
+                    </span>
+                    <span className="text-gray-500">/{product.unit}</span>
+                  </td>
+
+                  {/* Stock */}
+                  <td className="px-4 py-4">
+                    <div className="flex items-center gap-1 text-gray-700">
+                      {getTotalStock(product)}
+                      {typeof getTotalStock(product) === "number" && (
+                        <span className="text-gray-500">{product.unit}</span>
+                      )}
+                    </div>
+                  </td>
+
+                  {/* Marchés disponibles */}
+                  <td className="px-4 py-4">
+                    <span className="text-gray-700">
+                      {getAvailableMarkets(product)}
+                    </span>
+                  </td>
+
+                  {/* Statut */}
+                  <td className="px-4 py-4">
+                    {product.isActive ? (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <Check className="w-3 h-3" />
+                        Actif
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                        <X className="w-3 h-3" />
+                        Inactif
+                      </span>
+                    )}
+                  </td>
+
+                  {/* Actions */}
+                  <td className="px-4 py-4">
+                    <div className="flex items-center justify-end gap-1">
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() =>
-                          setOpenMenuId(
-                            openMenuId === product.id ? null : product.id,
-                          )
-                        }
+                        onClick={() => onEdit(product)}
+                        title="Modifier"
                       >
-                        <MoreHorizontal className="w-4 h-4" />
+                        <Pencil className="w-4 h-4" />
                       </Button>
-                      {openMenuId === product.id && (
-                        <>
-                          <div
-                            className="fixed inset-0 z-10 "
-                            onClick={() => setOpenMenuId(null)}
-                          />
-                          <div className="absolute right-10 -top-8  z-20 bg-white rounded-lg shadow-lg border border-gray-100 py-1 min-w-35">
-                            <button
-                              onClick={() => {
-                                onDuplicate(product);
-                                setOpenMenuId(null);
-                              }}
-                              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                            >
-                              <Copy className="w-4 h-4" />
-                              Dupliquer
-                            </button>
-                            <button
-                              onClick={() => {
-                                onDelete(product.id);
-                                setOpenMenuId(null);
-                              }}
-                              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                              Supprimer
-                            </button>
-                          </div>
-                        </>
-                      )}
+                      <div className="relative">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() =>
+                            setOpenMenuId(
+                              openMenuId === product.id ? null : product.id,
+                            )
+                          }
+                        >
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                        {openMenuId === product.id && (
+                          <>
+                            <div
+                              className="fixed inset-0 z-10"
+                              onClick={() => setOpenMenuId(null)}
+                            />
+                            <div className="absolute right-10 -top-8 z-20 bg-white rounded-lg shadow-lg border border-gray-100 py-1 min-w-35">
+                              <button
+                                onClick={() => {
+                                  onDuplicate(product);
+                                  setOpenMenuId(null);
+                                }}
+                                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                              >
+                                <Copy className="w-4 h-4" />
+                                Dupliquer
+                              </button>
+                              <button
+                                onClick={() => {
+                                  onDelete(product.id);
+                                  setOpenMenuId(null);
+                                }}
+                                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                                Supprimer
+                              </button>
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

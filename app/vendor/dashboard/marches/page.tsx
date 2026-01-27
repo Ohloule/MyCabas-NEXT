@@ -600,17 +600,7 @@ export default function MarchesPage() {
           </div>
         )}
 
-        {vendorLocation && !searchQuery && (
-          <div className="bg-principale-50 border border-principale-200 text-principale-700 px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
-            <MapPin className="h-5 w-5 shrink-0" />
-            <span>
-              Marchés les plus proches de <strong>{vendorLocation.address.town}</strong>
-              {vendorLocation.source === "siret" && (
-                <span className="text-sm opacity-75"> (adresse SIRET)</span>
-              )}
-            </span>
-          </div>
-        )}
+        
 
         <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
           <div className="relative">

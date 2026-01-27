@@ -2,10 +2,18 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Carrot, Plus, Search, Filter, X } from "lucide-react";
+import { Carrot, Plus, Search, Filter, X, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ProductsTable } from "@/components/vendor/products-table";
+import { ProductsTableEditable } from "@/components/vendor/products-table-editable";
 
 interface Category {
   id: string;
@@ -52,8 +60,12 @@ export default function EtalPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [markets, setMarkets] = useState<Market[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Sélection du marché (null = TOUS)
+  const [selectedMarket, setSelectedMarket] = useState<string>("all");
 
   // Filtres
   const [searchQuery, setSearchQuery] = useState("");
@@ -89,10 +101,23 @@ export default function EtalPage() {
     }
   }, []);
 
+  // Charger les marchés du vendor
+  const fetchMarkets = useCallback(async () => {
+    try {
+      const response = await fetch("/api/vendor/markets");
+      if (!response.ok) throw new Error("Erreur lors du chargement");
+      const data = await response.json();
+      setMarkets(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   useEffect(() => {
     fetchProducts();
     fetchCategories();
-  }, [fetchProducts, fetchCategories]);
+    fetchMarkets();
+  }, [fetchProducts, fetchCategories, fetchMarkets]);
 
   // Appliquer les filtres
   useEffect(() => {
@@ -208,6 +233,38 @@ export default function EtalPage() {
         </Button>
       </div>
 
+      {/* Sélecteur de marché */}
+      <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border border-gray-100 mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2">
+            <Store className="w-5 h-5 text-principale-600 shrink-0" />
+            <span className="text-sm font-medium text-gray-700 hidden sm:inline">Vue par marché :</span>
+          </div>
+          <div className="flex items-center gap-2 flex-1">
+            <Select value={selectedMarket} onValueChange={setSelectedMarket}>
+              <SelectTrigger className="w-full sm:w-64">
+                <SelectValue placeholder="Sélectionner un marché" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">
+                  Tous les marchés (synthèse)
+                </SelectItem>
+                {markets.map((market) => (
+                  <SelectItem key={market.id} value={market.id}>
+                    {market.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {selectedMarket !== "all" && (
+              <span className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded whitespace-nowrap">
+                Mode édition
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* Barre de recherche et filtres */}
       <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-6">
         <div className="flex flex-col sm:flex-row gap-3">
@@ -291,12 +348,19 @@ export default function EtalPage() {
             Réessayer
           </Button>
         </div>
-      ) : (
+      ) : selectedMarket === "all" ? (
         <ProductsTable
           products={filteredProducts}
           onEdit={handleEdit}
           onDelete={handleDelete}
           onDuplicate={handleDuplicate}
+        />
+      ) : (
+        <ProductsTableEditable
+          products={filteredProducts}
+          marketId={selectedMarket}
+          marketName={markets.find((m) => m.id === selectedMarket)?.name || ""}
+          onSaveSuccess={fetchProducts}
         />
       )}
     </div>
