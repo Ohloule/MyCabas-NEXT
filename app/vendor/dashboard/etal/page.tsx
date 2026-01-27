@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Carrot, Plus, Search, Filter, X, Store } from "lucide-react";
+import { Carrot, Plus, Search, Filter, X, Store, FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { ProductsTable } from "@/components/vendor/products-table";
 import { ProductsTableEditable } from "@/components/vendor/products-table-editable";
+import { ImportProductsDialog } from "@/components/vendor/import-products-dialog";
 
 interface Category {
   id: string;
@@ -227,10 +228,19 @@ export default function EtalPage() {
             </p>
           </div>
         </div>
-        <Button onClick={() => router.push("/vendor/dashboard/etal/nouveau")}>
-          <Plus className="w-4 h-4" />
-          Ajouter un produit
-        </Button>
+        <div className="flex items-center gap-2">
+          <ImportProductsDialog onImportSuccess={fetchProducts}>
+            <Button variant="outline">
+              <FileSpreadsheet className="w-4 h-4" />
+              <span className="hidden sm:inline">Importer</span>
+            </Button>
+          </ImportProductsDialog>
+          <Button onClick={() => router.push("/vendor/dashboard/etal/nouveau")}>
+            <Plus className="w-4 h-4" />
+            <span className="hidden sm:inline">Ajouter un produit</span>
+            <span className="sm:hidden">Ajouter</span>
+          </Button>
+        </div>
       </div>
 
       {/* Sélecteur de marché */}

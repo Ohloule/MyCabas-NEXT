@@ -228,7 +228,9 @@ export function VendorCard({ vendor, isPreview = false }: VendorCardProps) {
                 onClick={isPreview ? (e) => e.preventDefault() : undefined}
               >
                 <Globe className="h-4 w-4" />
-                Voir le site web
+                {vendor.website.length > 30
+                  ? "Voir le site web"
+                  : vendor.website}
               </a>
             )}
           </div>

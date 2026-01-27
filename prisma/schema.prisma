@@ -152,6 +152,12 @@ model Vendor {
   paymentMethods PaymentMethod[]  // Modes de paiement acceptés
   labels         VendorLabel[]    // Certifications/labels du commerçant
 
+  // Informations bancaires (chiffrées)
+  encryptedIban       String?    // IBAN chiffré avec AES-256-GCM
+  encryptedBic        String?    // BIC/SWIFT chiffré
+  encryptedBankHolder String?    // Titulaire du compte chiffré
+  bankInfoUpdatedAt   DateTime?  // Date de dernière mise à jour des infos bancaires
+
   // Relation User
   userId        String   @unique
   user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
