@@ -64,6 +64,11 @@ const menuItems = [
     icon: Bell,
   },
   {
+    label: "Ma vitrine",
+    href: "/vendor/dashboard/vitrine",
+    icon: Store,
+  },
+  {
     label: "Paramètres boutique",
     href: "/vendor/dashboard/parametres",
     icon: Settings,

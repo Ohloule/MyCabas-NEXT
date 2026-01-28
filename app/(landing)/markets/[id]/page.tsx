@@ -254,7 +254,7 @@ export default function MarketDetailPage() {
         {/* Liste des commerçants */}
         {selectedDay && (
           <div className="mb-6">
-            <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
+            <h2 className="text-xl font-semibold flex items-center gap-2 mb-8">
               <Store className="h-5 w-5" />
               Commerçants présents le {DAYS_FR[selectedDay]}
               <Badge variant="secondary" className="ml-2">
@@ -283,16 +283,19 @@ export default function MarketDetailPage() {
                 </div>
 
                 {/* Overlay avec bouton de connexion */}
-                <div className="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-[2px]">
+                <div className="absolute -top-3 -bottom-2 -right-4 -left-4 flex items-center justify-center rounded-4xl bg-white/60 backdrop-blur-[2px]">
                   <div className="text-center p-8 bg-white rounded-xl shadow-lg border max-w-md mx-4">
                     <Store className="mx-auto mb-4 h-12 w-12 text-principale-600" />
                     <h3 className="text-xl font-semibold mb-2">
                       Connectez-vous pour voir les commerçants
                     </h3>
                     <p className="text-muted-foreground mb-6">
-                      Créez un compte gratuitement pour découvrir tous les commerçants présents sur ce marché.
+                      Créez un compte gratuitement pour découvrir tous les
+                      commerçants présents sur ce marché.
                     </p>
-                    <Link href={`/login?callbackUrl=/markets/${marketId}?day=${selectedDay?.toLowerCase()}`}>
+                    <Link
+                      href={`/login?callbackUrl=/markets/${marketId}?day=${selectedDay?.toLowerCase()}`}
+                    >
                       <Button size="lg" className="gap-2">
                         <LogIn className="h-5 w-5" />
                         Se connecter
@@ -300,7 +303,10 @@ export default function MarketDetailPage() {
                     </Link>
                     <p className="text-sm text-muted-foreground mt-4">
                       Pas encore de compte ?{" "}
-                      <Link href="/register" className="text-principale-600 hover:underline font-medium">
+                      <Link
+                        href="/register"
+                        className="text-principale-600 hover:underline font-medium"
+                      >
                         Créer un compte
                       </Link>
                     </p>
