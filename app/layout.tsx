@@ -1,11 +1,16 @@
 import { SessionProvider } from "@/components/providers/session-provider";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
+import { Merienda } from "next/font/google";
 import "./globals.css";
 
 const nunito = Nunito({
   subsets: ["latin"],
   variable: "--font-nunito",
+});
+const merienda = Merienda({
+  subsets: ["latin"],
+  variable: "--font-merienda",
 });
 
 export const metadata: Metadata = {
@@ -41,7 +46,7 @@ export default function RootLayout({
       </head>
       {/* On utilise nunito.className ici */}
       <body
-        className={`${nunito.className} antialiased`}
+        className={`${nunito.className} ${merienda.variable} antialiased`}
         suppressHydrationWarning={true}
       >
         <SessionProvider>{children}</SessionProvider>

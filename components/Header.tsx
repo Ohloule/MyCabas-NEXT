@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Avis from "./Avis";
+import SearchBar from "./SearchBar";
 import { Button } from "./ui/button";
 
 export default function Header() {
@@ -21,7 +22,10 @@ export default function Header() {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
       }
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
+      ) {
         setIsMobileMenuOpen(false);
       }
     }
@@ -37,13 +41,14 @@ export default function Header() {
 
   return (
     <header className="w-full food-motif bg-principale-700 py-2">
-      <div className="align-center h-full flex flex-row justify-between items-center">
-        <div className="h-full place-content-center">
+      <div className="align-center h-full flex flex-row justify-between items-center gap-4">
+        {/* Logo */}
+        <div className="h-full place-content-center shrink-0">
           <Link
             href="/"
-            className="flex items-center cursor-pointer justify-center "
+            className="flex items-center cursor-pointer justify-center"
           >
-            <div className="h-20 w-20 hidden md:flex items-center mt-4 justify-center">
+            <div className="h-20 w-20 hidden lg:flex items-center mt-4 justify-center">
               <Image
                 src="/images/Logo2_Plan de travail 2.svg"
                 alt="MyCabas Logo"
@@ -55,7 +60,14 @@ export default function Header() {
             <p className="font-special text-blanc text-5xl">MyCabas</p>
           </Link>
         </div>
-        <div className="hidden md:flex flex-row gap-4 items-center">
+
+        {/* Barre de recherche - visible sur desktop */}
+        <div className="hidden lg:block flex-1 mx-4 max-w-xl">
+          <SearchBar />
+        </div>
+
+        {/* Actions utilisateur */}
+        <div className="hidden lg:flex flex-row gap-4 items-center shrink-0">
           <Avis />
 
           {isLoading ? (
@@ -137,7 +149,7 @@ export default function Header() {
         </div>
 
         {/* Version mobile */}
-        <div className="flex md:hidden items-center">
+        <div className="flex lg:hidden items-center">
           {isLoading ? (
             <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
           ) : session?.user ? (
@@ -162,7 +174,7 @@ export default function Header() {
                     </span>
                   )}
                 </div>
-               {/*  <ChevronDown
+                {/*  <ChevronDown
                   className={`h-4 w-4 text-principale-100 transition-transform duration-200 ${
                     isMobileMenuOpen ? "rotate-180" : ""
                   }`}

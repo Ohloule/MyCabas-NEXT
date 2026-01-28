@@ -138,13 +138,12 @@ body {
     to {
       transform: translateY(0%);
       opacity: 1;
-      
-      
     }
   }
 }
 
 .font-special {
+  /* font-family: var(--font-merienda); */
   font-family: "active-one";
 }
 

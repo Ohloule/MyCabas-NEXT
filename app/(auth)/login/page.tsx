@@ -14,11 +14,13 @@ import { Label } from "@/components/ui/label";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -39,8 +41,8 @@ export default function LoginPage() {
       if (result?.error) {
         setError("Email ou mot de passe incorrect");
       } else {
-        // Rediriger vers la page appropriée selon le rôle
-        router.push("/");
+        // Rediriger vers le callbackUrl ou la page d'accueil
+        router.push(callbackUrl);
         router.refresh();
       }
     } catch {

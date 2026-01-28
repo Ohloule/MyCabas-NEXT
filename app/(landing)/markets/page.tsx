@@ -12,14 +12,18 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
+  AlertCircle,
   Calendar,
   Clock,
+  Heart,
   Loader2,
   MapPin,
   Navigation,
   Search,
+  X,
 } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 interface MarketOpening {
@@ -73,6 +77,12 @@ const PAGE_SIZE = 30;
 const RADIUS_OPTIONS = [2, 5, 10, 20, 50];
 
 export default function MarketsPage() {
+  const searchParams = useSearchParams();
+  const needFavorite = searchParams.get("needFavorite") === "true";
+  const pendingQuery = searchParams.get("q") || "";
+  const pendingCategory = searchParams.get("category") || "";
+
+  const [showFavoriteAlert, setShowFavoriteAlert] = useState(needFavorite);
   const [allMarkets, setAllMarkets] = useState<Market[]>([]);
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE);
   const [loading, setLoading] = useState(false);
@@ -363,6 +373,35 @@ export default function MarketsPage() {
         </p>
       </HeadingPage>
       <main className="container mx-auto px-4 py-8 align-center ">
+        {/* Alerte si l'utilisateur doit choisir un marché favori */}
+        {showFavoriteAlert && (
+          <div className="mb-6 relative">
+            <div className="flex items-start gap-3 p-4 rounded-lg bg-amber-50 border border-amber-200">
+              <AlertCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-amber-800">
+                  Choisissez votre marché favori
+                </h3>
+                <p className="text-sm text-amber-700 mt-1">
+                  Pour accéder à la recherche de produits, vous devez d&apos;abord ajouter au moins un marché à vos favoris.
+                  Trouvez un marché près de chez vous et cliquez sur le bouton <Heart className="inline h-4 w-4 text-red-500" /> pour l&apos;ajouter.
+                </p>
+                {(pendingQuery || pendingCategory) && (
+                  <p className="text-xs text-amber-600 mt-2">
+                    Votre recherche {pendingQuery && <>&quot;{pendingQuery}&quot;</>} {pendingCategory && `(catégorie: ${pendingCategory})`} sera conservée.
+                  </p>
+                )}
+              </div>
+              <button
+                onClick={() => setShowFavoriteAlert(false)}
+                className="text-amber-600 hover:text-amber-800 p-1"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Titre et recherche */}
         <div className="mb-8">
           {/* Barre de recherche */}

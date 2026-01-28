@@ -16,7 +16,8 @@
       "Bash(npm run db:seed:*)",
       "Bash(node:*)",
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"Recommence stp\" npx prisma migrate reset:*)",
-      "Bash(npx shadcn@latest add:*)"
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(npx eslint:*)"
     ]
   }
 }

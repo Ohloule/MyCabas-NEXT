@@ -61,10 +61,11 @@ model User {
   avatarUrl     String?
 
   // Relations
-  address       Address?
-  vendor        Vendor?
-  accounts      Account[]
-  sessions      Session[]
+  address         Address?
+  vendor          Vendor?
+  accounts        Account[]
+  sessions        Session[]
+  favoriteMarkets FavoriteMarket[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -186,10 +187,11 @@ model Market {
   lng           Float
 
   // Relations
-  openings      MarketOpening[]
-  marketVendors MarketVendor[]
-  productPrices ProductPrice[]
-  productStocks ProductStock[]
+  openings        MarketOpening[]
+  marketVendors   MarketVendor[]
+  productPrices   ProductPrice[]
+  productStocks   ProductStock[]
+  favoritedBy     FavoriteMarket[]
 
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
@@ -198,6 +200,24 @@ model Market {
   @@index([zip])
   @@index([lat, lng])
   @@map("markets")
+}
+
+// Table de jonction User <-> Market (favoris par jour)
+model FavoriteMarket {
+  id        String   @id @default(cuid())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  marketId  String
+  market    Market   @relation(fields: [marketId], references: [id], onDelete: Cascade)
+
+  day       Day      // Jour spécifique (LUNDI, MARDI, etc.)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, marketId, day])
+  @@map("favorite_markets")
 }
 
 model MarketOpening {

@@ -9,6 +9,7 @@ import {
   ArrowLeft,
   Calendar,
   Clock,
+  Heart,
   Loader2,
   LogIn,
   MapPin,
@@ -105,6 +106,50 @@ export default function MarketDetailPage() {
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+
+  // Vérifier si le marché + jour est en favori
+  useEffect(() => {
+    const checkFavorite = async () => {
+      if (!isAuthenticated || !marketId || !selectedDay) {
+        setIsFavorite(false);
+        return;
+      }
+      try {
+        const response = await fetch(
+          `/api/favorites/markets/${marketId}?day=${selectedDay}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setIsFavorite(data.isFavorite);
+        }
+      } catch (error) {
+        console.error("Erreur vérification favori:", error);
+      }
+    };
+    checkFavorite();
+  }, [isAuthenticated, marketId, selectedDay]);
+
+  // Toggle favori pour ce marché + jour
+  const toggleFavorite = async () => {
+    if (!isAuthenticated || favoriteLoading || !selectedDay) return;
+    setFavoriteLoading(true);
+    try {
+      const response = await fetch(
+        `/api/favorites/markets/${marketId}?day=${selectedDay}`,
+        { method: "POST" }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setIsFavorite(data.isFavorite);
+      }
+    } catch (error) {
+      console.error("Erreur toggle favori:", error);
+    } finally {
+      setFavoriteLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchMarket = async () => {
@@ -184,6 +229,27 @@ export default function MarketDetailPage() {
   return (
     <div className="min-h-screen bg-secondaire-50/50">
       <HeadingPage title={market.name}>
+        {/* Bouton favori - visible uniquement si un jour est sélectionné */}
+        {isAuthenticated && selectedDay && (
+          <button
+            onClick={toggleFavorite}
+            disabled={favoriteLoading}
+            className={`mb-4 flex items-center gap-2 mx-auto px-4 py-2 rounded-full transition-all ${
+              isFavorite
+                ? "bg-red-500 text-white hover:bg-red-600"
+                : "bg-white/20 text-white hover:bg-white/30"
+            } ${favoriteLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+          >
+            <Heart
+              className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`}
+            />
+            <span className="text-sm font-medium">
+              {isFavorite
+                ? `Favori le ${DAYS_FR[selectedDay]}`
+                : `Ajouter le ${DAYS_FR[selectedDay]} aux favoris`}
+            </span>
+          </button>
+        )}
         <div className="flex items-center gap-2 text-sm sm:text-base bg-principale-50/10 text-principale-50 py-2 px-6 backdrop-blur-sm w-fit mx-auto">
           <MapPin className="h-5 w-5" />
           <Link
