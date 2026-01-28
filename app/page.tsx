@@ -8,13 +8,14 @@ import ParrainageSection from "@/components/ParrainageSection";
 import QualiteProductSection from "@/components/QualiteProductSection";
 import TransparenceSection from "@/components/TransparenceSection";
 
-
 export default function HomePage() {
   return (
     <>
-      <Header />
-      <Navbar />
-      <HeroSection />
+      <div className="flex flex-col min-h-screen bg-red-500">
+        <Header />
+        <Navbar />
+        <HeroSection />
+      </div>
       <div className="bg-CardSection">
         <DriveSection />
         <CardSection />

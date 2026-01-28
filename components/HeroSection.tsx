@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 export default function HeroSection() {
   return (
     <section
-      className="relative h-[70vh] max-h-150 min-h-125 w-full overflow-visible bg-cover bg-bottom flex items-center"
+      className="flex-1 relative  min-h-125 w-full overflow-visible bg-cover bg-bottom flex items-center"
       style={{ backgroundImage: "url('/images/bg-HeroSection.jpg')" }}
     >
       {/* Overlay pour améliorer la lisibilité si l'image est trop claire */}
@@ -24,8 +24,7 @@ export default function HeroSection() {
             des produits de qualité
           </h1>
           <p className="text-lg text-principale-900 mt-4 mb-8">
-            Découvrez les producteurs locaux et les marchés de votre région en
-            quelques clics.
+            Découvrez les producteurs locaux et les marchés de votre région en quelques clics.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link href="/markets">
@@ -37,7 +36,7 @@ export default function HeroSection() {
             <Link href="/register?role=vendor">
               <Button variant="outline" className="w-full">
                 <Store className="h-5 w-5" />
-                Je suis producteur
+                Je suis commerçant
               </Button>
             </Link>
           </div>
