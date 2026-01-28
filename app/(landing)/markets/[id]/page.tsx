@@ -3,21 +3,18 @@
 import HeadingPage from "@/components/HeadingPage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { VendorCard } from "@/components/vendor/VendorCard";
 import {
   ArrowLeft,
   Calendar,
   Clock,
   Loader2,
+  LogIn,
   MapPin,
   Store,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -99,6 +96,8 @@ const DAY_ORDER = [
 export default function MarketDetailPage() {
   const params = useParams();
   const searchParams = useSearchParams();
+  const { status } = useSession();
+  const isAuthenticated = status === "authenticated";
   const marketId = params.id as string;
   const selectedDay = searchParams.get("day")?.toUpperCase() || null;
 
@@ -139,7 +138,7 @@ export default function MarketDetailPage() {
   // Trier les horaires par jour de la semaine
   const sortOpenings = (openings: MarketOpening[]) => {
     return [...openings].sort(
-      (a, b) => DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day)
+      (a, b) => DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day),
     );
   };
 
@@ -189,7 +188,7 @@ export default function MarketDetailPage() {
           <MapPin className="h-5 w-5" />
           <Link
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-              `${market.address}, ${market.zip} ${market.town}`
+              `${market.address}, ${market.zip} ${market.town}`,
             )}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -216,7 +215,7 @@ export default function MarketDetailPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="h-5 w-5" />
-              Horaires d'ouverture
+              Horaires d'ouvertures
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -273,6 +272,40 @@ export default function MarketDetailPage() {
                   Aucun commerçant n'est inscrit pour le {DAYS_FR[selectedDay]}{" "}
                   sur ce marché.
                 </p>
+              </div>
+            ) : !isAuthenticated ? (
+              <div className="relative">
+                {/* Liste des commerçants floutée */}
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 blur-sm pointer-events-none select-none">
+                  {vendors.slice(0, 6).map((vendor) => (
+                    <VendorCard key={vendor.id} vendor={vendor} />
+                  ))}
+                </div>
+
+                {/* Overlay avec bouton de connexion */}
+                <div className="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-[2px]">
+                  <div className="text-center p-8 bg-white rounded-xl shadow-lg border max-w-md mx-4">
+                    <Store className="mx-auto mb-4 h-12 w-12 text-principale-600" />
+                    <h3 className="text-xl font-semibold mb-2">
+                      Connectez-vous pour voir les commerçants
+                    </h3>
+                    <p className="text-muted-foreground mb-6">
+                      Créez un compte gratuitement pour découvrir tous les commerçants présents sur ce marché.
+                    </p>
+                    <Link href={`/login?callbackUrl=/markets/${marketId}?day=${selectedDay?.toLowerCase()}`}>
+                      <Button size="lg" className="gap-2">
+                        <LogIn className="h-5 w-5" />
+                        Se connecter
+                      </Button>
+                    </Link>
+                    <p className="text-sm text-muted-foreground mt-4">
+                      Pas encore de compte ?{" "}
+                      <Link href="/register" className="text-principale-600 hover:underline font-medium">
+                        Créer un compte
+                      </Link>
+                    </p>
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
