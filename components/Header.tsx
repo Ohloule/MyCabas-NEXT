@@ -50,7 +50,7 @@ export default function Header() {
           >
             <div className="h-20 w-20 hidden lg:flex items-center mt-4 justify-center">
               <Image
-                src="/images/Logo2_Plan de travail 2.svg"
+                src="/logos/logo.svg"
                 alt="MyCabas Logo"
                 className="w-12 mb-4"
                 height={4}

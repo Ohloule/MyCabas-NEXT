@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="col-span-1">
           <Link href="/" className="flex justify-start gap-6">
             <Image
-              src="/images/Logo2_Plan de travail 2.svg"
+              src="/logos/logo.svg"
               alt="MyCabas Logo"
               className="w-12 mb-4"
               height={20}
