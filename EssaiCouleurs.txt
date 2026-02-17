@@ -1,4 +1,4 @@
-ORIGINALE : VERTE / TERRA COTTA
+ORIGINALE : VERTE / TERRA COTTAS
   --principale-50: oklch(98.687% 0.01171 145.932);
   --principale-100: oklch(91.846% 0.06887 144.579);
   --principale-200: oklch(84.179% 0.06887 144.579);
