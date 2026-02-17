@@ -1,7 +1,11 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Leaf, MapPin } from "lucide-react";
+import { Check, Leaf, Loader2, MapPin, Plus, ShoppingCart } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 interface ProductCardProps {
   product: {
@@ -21,6 +25,29 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const [adding, setAdding] = useState(false);
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCart = async () => {
+    setAdding(true);
+    try {
+      const response = await fetch("/api/cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId: product.id, quantity: 1 }),
+      });
+
+      if (response.ok) {
+        setAdded(true);
+        setTimeout(() => setAdded(false), 2000);
+      }
+    } catch (error) {
+      console.error("Erreur ajout panier:", error);
+    } finally {
+      setAdding(false);
+    }
+  };
+
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow">
       {/* Image du produit */}
@@ -75,6 +102,36 @@ export default function ProductCard({ product }: ProductCardProps) {
             / {product.unit}
           </span>
         </div>
+
+        {/* Bouton Ajouter au panier */}
+        <Button
+          onClick={handleAddToCart}
+          disabled={adding}
+          size="sm"
+          className={`w-full mt-3 gap-1.5 text-xs transition-colors ${
+            added
+              ? "bg-green-500 hover:bg-green-600"
+              : "bg-secondaire-500 hover:bg-secondaire-600"
+          }`}
+        >
+          {adding ? (
+            <>
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              Ajout...
+            </>
+          ) : added ? (
+            <>
+              <Check className="w-3.5 h-3.5" />
+              Ajouté !
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="w-3.5 h-3.5" />
+              <Plus className="w-3 h-3" />
+              Panier
+            </>
+          )}
+        </Button>
       </CardContent>
     </Card>
   );
