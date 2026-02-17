@@ -18,8 +18,8 @@ export default function Page() {
               Les présentes Conditions Générales de Vente (ci-après les « CGV »)
               régissent les relations contractuelles entre, d’une part,
               l&apos;utilisateur (ci-après « le Client ») et, d’autre part, la
-              plateforme myCabas (ci-après « la Plateforme »), exploitée par
-              MyCabas SAS, dans le cadre des commandes effectuées auprès de
+              plateforme <span className="font-mycabas">myCabas</span> (ci-après « la Plateforme »), exploitée par
+              <span className="font-mycabas">MyCabas</span> SAS, dans le cadre des commandes effectuées auprès de
               commerçants référencés sur les marchés partenaires.
             </p>
           </div>
@@ -30,13 +30,13 @@ export default function Page() {
               Article 2 – Fonctionnement du service
             </h2>
             <p>
-              MyCabas permet aux utilisateurs de passer commande en ligne auprès
+              <span className="font-mycabas">MyCabas</span> permet aux utilisateurs de passer commande en ligne auprès
               de commerçants locaux présents sur des marchés traditionnels. Le
               Client sélectionne ses produits, paie via la plateforme, et retire
               son panier le jour du marché.
             </p>
             <p className="mt-2">
-              MyCabas agit en tant qu’intermédiaire technique. Le contrat de
+              <span className="font-mycabas">MyCabas</span> agit en tant qu'intermédiaire technique. Le contrat de
               vente est conclu directement entre le Client et le Commerçant.
             </p>
           </div>
@@ -75,7 +75,7 @@ export default function Page() {
             <p>
               Le Client s’engage à venir retirer sa commande directement sur le
               stand du commerçant, durant les horaires indiqués. Passé ce délai,
-              ni le commerçant ni myCabas ne garantissent la disponibilité ou la
+              ni le commerçant ni <span className="font-mycabas">myCabas</span> ne garantissent la disponibilité ou la
               fraîcheur des produits.
             </p>
           </div>
@@ -112,7 +112,7 @@ export default function Page() {
               Article 8 – Responsabilité
             </h2>
             <p>
-              MyCabas ne saurait être tenue responsable des produits vendus par
+              <span className="font-mycabas">MyCabas</span> ne saurait être tenue responsable des produits vendus par
               les commerçants, ni des retards ou défauts de retrait. La
               responsabilité incombe au commerçant à partir du moment où le
               paiement est validé.
@@ -138,7 +138,7 @@ export default function Page() {
               Article 10 – Modification des CGV
             </h2>
             <p>
-              MyCabas se réserve le droit de modifier à tout moment les
+              <span className="font-mycabas">MyCabas</span> se réserve le droit de modifier à tout moment les
               présentes CGV. Les conditions applicables sont celles en vigueur à
               la date de la commande.
             </p>

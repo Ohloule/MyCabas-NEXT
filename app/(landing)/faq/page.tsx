@@ -8,7 +8,7 @@ import {
 
 const faqs = [
   {
-    question: "Comment passer une commande sur myCabas ?",
+    question: "Comment passer une commande sur MyCabas ?",
     answer:
       "Connectez-vous, choisissez votre marché local, parcourez les commerçants et ajoutez des produits à votre panier. Validez et payez avant la veille du marché à 22h.Connectez-vous, choisissez votre marché local, parcourez les commerçants et ajoutez des produits à votre panier. Validez et payez avant la veille du marché à 22h.",
   },
@@ -44,7 +44,7 @@ export default function Page() {
       <HeadingPage title=" Foire aux questions">
         <p className="text-lg">
           Vous avez des questions ? On vous répond. Découvrez comment fonctionne{" "}
-          <span className="font-special text-2xl">MyCabas</span>, comment
+          <span className="font-mycabas text-2xl">MyCabas</span>, comment
           commander, où récupérer vos produits, et bien plus encore.
         </p>
       </HeadingPage>

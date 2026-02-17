@@ -15,10 +15,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { VendorCard } from "@/components/vendor/VendorCard";
 import {
   AlertCircle,
+  Camera,
   CheckCircle,
   ExternalLink,
   Eye,
   Globe,
+  ImageIcon,
   Instagram,
   Loader2,
   Mail,
@@ -27,9 +29,12 @@ import {
   Settings,
   Store,
   Tag,
+  Trash2,
+  Upload,
   Wallet,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 // Types
 interface VendorSettings {
@@ -74,6 +79,10 @@ export default function ParametresPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [dragOver, setDragOver] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // États du formulaire
   const [formData, setFormData] = useState({
@@ -120,6 +129,102 @@ export default function ParametresPage() {
 
     fetchSettings();
   }, []);
+
+  // Upload de logo
+  const handleLogoUpload = useCallback(
+    async (file: File) => {
+      if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+        setError("Format non supporté. Utilisez JPG, PNG ou WebP.");
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        setError("Le fichier dépasse la taille maximale de 5 Mo.");
+        return;
+      }
+
+      setUploading(true);
+      setError(null);
+
+      // Aperçu local immédiat
+      const previewUrl = URL.createObjectURL(file);
+      setLogoPreview(previewUrl);
+
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await fetch("/api/vendor/upload-logo", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.error || "Erreur lors de l'upload");
+        }
+
+        const data = await response.json();
+        setSettings((prev) => (prev ? { ...prev, logoUrl: data.logoUrl } : prev));
+        setLogoPreview(null);
+        setSuccess("Photo mise à jour avec succès");
+        setTimeout(() => setSuccess(null), 3000);
+      } catch (err) {
+        setLogoPreview(null);
+        setError(
+          err instanceof Error ? err.message : "Erreur lors de l'upload",
+        );
+      } finally {
+        setUploading(false);
+      }
+    },
+    [],
+  );
+
+  const handleDeleteLogo = async () => {
+    setUploading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/vendor/upload-logo", {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de la suppression");
+      }
+
+      setSettings((prev) => (prev ? { ...prev, logoUrl: null } : prev));
+      setLogoPreview(null);
+      setSuccess("Photo supprimée");
+      setTimeout(() => setSuccess(null), 3000);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Erreur lors de la suppression",
+      );
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setDragOver(false);
+      const file = e.dataTransfer.files[0];
+      if (file) handleLogoUpload(file);
+    },
+    [handleLogoUpload],
+  );
+
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) handleLogoUpload(file);
+      // Reset pour pouvoir re-sélectionner le même fichier
+      e.target.value = "";
+    },
+    [handleLogoUpload],
+  );
 
   // Gérer les changements de texte
   const handleChange = (
@@ -211,6 +316,108 @@ export default function ParametresPage() {
           <span className="text-sm">{success}</span>
         </div>
       )}
+
+      {/* Photo de la boutique (en dehors du form car upload indépendant) */}
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Camera className="h-5 w-5" />
+            Photo de la boutique
+          </CardTitle>
+          <CardDescription>
+            Cette image sera affichée en bannière sur votre vitrine (JPG, PNG ou
+            WebP, 5 Mo max)
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col sm:flex-row items-start gap-6">
+            {/* Aperçu actuel */}
+            <div className="shrink-0">
+              <div className="w-40 h-28 rounded-lg overflow-hidden border-2 border-gray-200 bg-gray-50">
+                {logoPreview || settings?.logoUrl ? (
+                  <Image
+                    src={logoPreview || settings!.logoUrl!}
+                    alt="Logo de la boutique"
+                    width={160}
+                    height={112}
+                    className="w-full h-full object-cover"
+                    unoptimized
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center text-gray-400">
+                    <ImageIcon className="h-8 w-8 mb-1" />
+                    <span className="text-xs">Aucune photo</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Zone de drop / upload */}
+            <div className="flex-1 w-full">
+              <div
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setDragOver(true);
+                }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+                className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
+                  dragOver
+                    ? "border-principale-500 bg-principale-50"
+                    : "border-gray-300 hover:border-principale-400 hover:bg-gray-50"
+                }`}
+              >
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+                {uploading ? (
+                  <div className="flex flex-col items-center gap-2">
+                    <Loader2 className="h-8 w-8 animate-spin text-principale-600" />
+                    <span className="text-sm text-gray-600">
+                      Upload en cours...
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-2">
+                    <Upload className="h-8 w-8 text-gray-400" />
+                    <div>
+                      <span className="text-sm font-medium text-principale-600">
+                        Cliquez ou glissez
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {" "}
+                        une image ici
+                      </span>
+                    </div>
+                    <span className="text-xs text-gray-400">
+                      JPG, PNG ou WebP - 5 Mo max
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Bouton supprimer */}
+              {settings?.logoUrl && !uploading && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="mt-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+                  onClick={handleDeleteLogo}
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Supprimer la photo
+                </Button>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <form onSubmit={handleSubmit} className="space-y-6 ">
         {/* Informations de la boutique */}

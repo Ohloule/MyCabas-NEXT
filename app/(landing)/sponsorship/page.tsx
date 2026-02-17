@@ -8,7 +8,7 @@ export default function Page() {
       <HeadingPage title="Parrainage">
         {" "}
         <p className="text-lg">
-          Recommande <span className="font-special text-2xl">MyCabas</span>, à
+          Recommande <span className="font-mycabas text-2xl">MyCabas</span>, à
           tes proches ou à ton commerçant préféré, et gagne des récompenses
           quand ils deviennent actifs !
         </p>
@@ -22,11 +22,11 @@ export default function Page() {
               1. Parrainage Client → Commerçant
             </h2>
             <p className="text-muted-foreground">
-              Recommande MyCabas à ton commerçant de marché préféré. S’il
+              Recommande <span className="font-mycabas">MyCabas</span> à ton commerçant de marché préféré. S'il
               s’inscrit et réalise au moins 10 € de ventes, tu gagnes :
             </p>
             <p className="text-xl font-semibold text-principale-700">
-              🎁 10 € de crédit MyCabas
+              🎁 10 € de crédit <span className="font-mycabas">MyCabas</span>
             </p>
             <p className="text-sm text-muted-foreground">
               Un bonus commerçant est aussi possible s’il est actif.
@@ -100,8 +100,8 @@ export default function Page() {
         </section>
 
         {/* Tableau récapitulatif */}
-        <section className="align-center mt-24">
-          <h2 className="text-3xl md:text-7xl font-bold font-special text-principale-700 mb-6 text-center">
+        <section className="align-center mt-32">
+          <h2 className="text-3xl md:text-5xl font-bold font-special text-principale-700 mb-6 text-center">
             Récapitulatif des récompenses
           </h2>
           <div className="overflow-auto">
@@ -145,7 +145,7 @@ export default function Page() {
         {/* Bloc conclusion */}
         <div className="align-center text-center mt-24">
           <h2 className="text-2xl md:text-4xl font-bold font-special text-principale-700 mb-4">
-            MyCabas, c’est mieux à plusieurs !
+            <span className="font-mycabas">MyCabas</span>, c'est mieux à plusieurs !
           </h2>
           <p className="text-muted-foreground mb-8">
             Partage ton lien de parrainage depuis ton compte et fais rayonner ta

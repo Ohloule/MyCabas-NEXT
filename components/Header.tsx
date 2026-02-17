@@ -57,7 +57,7 @@ export default function Header() {
                 width={4}
               />
             </div>
-            <p className="font-special text-blanc text-5xl">MyCabas</p>
+            <p className="font-mycabas text-blanc text-5xl">MyCabas</p>
           </Link>
         </div>
 
@@ -122,7 +122,7 @@ export default function Header() {
                       className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-principale-100 transition-colors"
                     >
                       <UserPen className="h-4 w-4" />
-                      Modifier mon profil
+                      Mon profil client
                     </Link>
                     <button
                       onClick={() => {
@@ -190,7 +190,7 @@ export default function Header() {
                     className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-principale-100 transition-colors"
                   >
                     <UserPen className="h-4 w-4" />
-                    Modifier mon profil
+                    Mon profil client
                   </Link>
                   {session.user.role === "VENDOR" && (
                     <Link

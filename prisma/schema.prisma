@@ -67,6 +67,8 @@ model User {
   sessions        Session[]
   favoriteMarkets FavoriteMarket[]
 
+  cart            Cart?
+
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -192,6 +194,7 @@ model Market {
   productPrices   ProductPrice[]
   productStocks   ProductStock[]
   favoritedBy     FavoriteMarket[]
+  carts           Cart[]
 
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
@@ -297,6 +300,7 @@ model Product {
   // Prix et stocks par marché
   pricesByMarket  ProductPrice[]
   stocksByMarket  ProductStock[]
+  cartItems       CartItem[]
 
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
@@ -334,4 +338,43 @@ model ProductStock {
 
   @@unique([productId, marketId])
   @@map("product_stocks")
+}
+
+// ============================================
+// CART (Panier)
+// ============================================
+
+model Cart {
+  id        String     @id @default(cuid())
+
+  userId    String     @unique
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Marché associé au panier (un panier = un marché)
+  marketId  String?
+  market    Market?    @relation(fields: [marketId], references: [id], onDelete: SetNull)
+
+  items     CartItem[]
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  quantity  Float    @default(1) // Float pour supporter les quantités en kg
+
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId]) // Un produit ne peut apparaître qu'une fois par panier
+  @@map("cart_items")
 }

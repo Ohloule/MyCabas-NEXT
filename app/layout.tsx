@@ -1,16 +1,22 @@
 import { SessionProvider } from "@/components/providers/session-provider";
 import type { Metadata } from "next";
-import { Nunito } from "next/font/google";
-import { Merienda } from "next/font/google";
+import { Kaushan_Script, Nunito } from "next/font/google";
 import "./globals.css";
+//Lobster_Two
+//Caveat
+//Satisfy
+//Kalam !
+//Kaushan_Script !!
+
 
 const nunito = Nunito({
   subsets: ["latin"],
   variable: "--font-nunito",
 });
-const merienda = Merienda({
+const MarkoOne = Kaushan_Script({
+  weight: "400",
   subsets: ["latin"],
-  variable: "--font-merienda",
+  variable: "--font-MarkoOne", // C'est cette variable qu'on va lier à Tailwind
 });
 
 export const metadata: Metadata = {
@@ -46,7 +52,7 @@ export default function RootLayout({
       </head>
       {/* On utilise nunito.className ici */}
       <body
-        className={`${nunito.className} ${merienda.variable} antialiased`}
+        className={`${nunito.className} ${MarkoOne.variable} antialiased`}
         suppressHydrationWarning={true}
       >
         <SessionProvider>{children}</SessionProvider>

@@ -402,6 +402,12 @@ export default function ProfilPage() {
               </>
             ) : (
               <form onSubmit={handleSaveBankInfo} className="space-y-4">
+                <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 flex items-start gap-2">
+                  <ShieldCheck className="h-5 w-5 text-orange-600 shrink-0 mt-0.5" />
+                  <p className="text-sm text-orange-800">
+                   Ce RIB ne sert qu&apos;à vous envoyer de l&apos;argent, ce n&apos;est en aucun cas une autorisation de prélèvement. <span className="font-mycabas">MyCabas</span> ne vous prélèvera jamais !
+                  </p>
+                </div>
                 {/* Titulaire */}
                 <div className="space-y-2">
                   <Label htmlFor="bankHolder">
@@ -477,6 +483,7 @@ export default function ProfilPage() {
                     Elles ne sont jamais transmises en clair.
                   </p>
                 </div>
+                
 
                 {/* Actions */}
                 <div className="flex gap-2 pt-2">

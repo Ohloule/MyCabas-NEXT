@@ -15,11 +15,11 @@ export default function Footer() {
               height={20}
               width={20}
             />
-            <h1 className="font-special text-4xl ">MyCabas</h1>
+            <h1 className="font-mycabas text-4xl ">MyCabas</h1>
           </Link>
           <p className="text-sm text-justify lg:pr-12">
-            MyCabas vous permet de commander sur les marchés près de chez vous.
-            Frais, local, pratique.
+            <span className="font-mycabas">MyCabas</span> vous permet de
+            commander sur les marchés près de chez vous. Frais, local, pratique.
           </p>
         </div>
 
@@ -82,11 +82,6 @@ export default function Footer() {
           <h4 className="font-semibold mb-2">Infos pratiques</h4>
           <ul className="text-sm space-y-1">
             <li>
-              <Link href="/about" className="hover:underline">
-                À propos de MyCabas
-              </Link>
-            </li>
-            <li>
               <Link href="/contact" className="hover:underline">
                 Contact
               </Link>
@@ -101,13 +96,20 @@ export default function Footer() {
                 Politique de confidentialité
               </Link>
             </li>
+            <li>
+              <Link href="/about" className="hover:underline">
+                À propos de{" "}
+                <span className="font-mycabas text-xl">MyCabas</span>
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
 
       {/* Bas de page */}
       <div className="mt-10 border-t border-principale-300 pt-6 text-center text-sm">
-        © {new Date().getFullYear()} MyCabas – Tous droits réservés •
+        © {new Date().getFullYear()}{" "}
+        <span className="font-mycabas">MyCabas</span> – Tous droits réservés •
         <Link
           href="/confidentialite"
           className="ml-1 underline hover:text-principale-100"

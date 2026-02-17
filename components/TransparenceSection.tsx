@@ -12,7 +12,7 @@ export default function TransparenceSection() {
           <p className="text-lg mb-4 text-justify">
             Sur{" "}
             <strong>
-              <span className="font-special text-xl">MyCabas</span>
+              <span className="font-mycabas text-xl">MyCabas</span>
             </strong>
             , vous payez exactement le même prix qu’au marché. Des tarifs
             simples, équitables et transparents. Aucun surcoût, aucune
@@ -26,7 +26,7 @@ export default function TransparenceSection() {
           </p>
           <p className="text-sm md:text-lg  mb-8 text-center bg-principale-50  p-3 rounded-2xl shadow-2xl">
             Un marché sans commande{" "}
-            <span className="font-special text-xl">MyCabas</span> = 0€ <br />
+            <span className="font-mycabas text-xl">MyCabas</span> = 0€ <br />
             Un marché avec 100€ de commande = 5€
             <br />
             Un marché avec 1000€ de commande = 5€
@@ -44,7 +44,7 @@ export default function TransparenceSection() {
           </p>
           <p className="text-lg font-medium text-principale-900 mt-6">
             🍅 Acheter local, sans surprise, c’est aussi ça l’esprit{" "}
-            <span className="font-special text-xl">MyCabas</span>.
+            <span className="font-mycabas text-xl">MyCabas</span>.
           </p>
         </div>
         {/* Illustration ou visuel */}

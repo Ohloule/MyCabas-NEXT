@@ -11,7 +11,7 @@ export default function QualiteProductSection() {
           </h2>
 
           <p className="text-lg mb-4 text-justify">
-            Chez <strong><span className="font-special text-xl">MyCabas</span></strong>, vous commandez directement auprès de
+            Chez <strong><span className="font-mycabas text-xl">MyCabas</span></strong>, vous commandez directement auprès de
             commerçants passionnés, sur les marchés près de chez vous. Pas
             d’intermédiaire, pas de plateforme opaque : ici,{" "}
             <strong>vous savez d’où viennent vos produits</strong>, et surtout,

@@ -322,7 +322,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
               {/* Description */}
               <div>
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">Description / Origine</Label>
                 <textarea
                   id="description"
                   value={description}

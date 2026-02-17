@@ -9,5 +9,6 @@ export default defineConfig({
   },
   migrations: {
     path: path.join(__dirname, "prisma", "migrations"),
+    seed: "npx tsx prisma/seed.ts",
   },
 });

@@ -14,7 +14,7 @@ export default function Page() {
               Préambule
             </h2>
             <p>
-              La présente politique de confidentialité décrit comment MyCabas
+              La présente politique de confidentialité décrit comment <span className="font-mycabas">MyCabas</span>
               collecte, utilise et protège les données personnelles des
               utilisateurs de sa plateforme.
             </p>
@@ -44,7 +44,7 @@ export default function Page() {
             </h2>
             <p>
               Les données collectées sont utilisées exclusivement pour
-              l’exécution des services proposés par MyCabas :
+              l'exécution des services proposés par <span className="font-mycabas">MyCabas</span> :
             </p>
             <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>Création de compte et gestion du profil utilisateur</li>
@@ -73,7 +73,7 @@ export default function Page() {
             </h2>
             <p>
               Les paiements sont traités via Stripe, qui agit en tant que
-              responsable de traitement pour les données bancaires. MyCabas ne
+              responsable de traitement pour les données bancaires. <span className="font-mycabas">MyCabas</span> ne
               conserve aucune information liée aux cartes de paiement.
             </p>
           </div>
@@ -110,7 +110,7 @@ export default function Page() {
               Article 7 – Cookies
             </h2>
             <p>
-              MyCabas utilise des cookies strictement nécessaires au bon
+              <span className="font-mycabas">MyCabas</span> utilise des cookies strictement nécessaires au bon
               fonctionnement du service (authentification, panier…). Aucune
               publicité ou tracking tiers n’est déployé sans consentement.
             </p>
@@ -123,7 +123,7 @@ export default function Page() {
             </h2>
             <p>
               Toutes les données sont hébergées en France ou dans l’Union
-              Européenne sur des serveurs sécurisés. MyCabas s’engage à mettre
+              Européenne sur des serveurs sécurisés. <span className="font-mycabas">MyCabas</span> s'engage à mettre
               en œuvre les moyens techniques et organisationnels appropriés
               contre toute violation de données.
             </p>
@@ -135,7 +135,7 @@ export default function Page() {
               Article 9 – Modification de la politique
             </h2>
             <p>
-              MyCabas se réserve le droit de modifier la présente politique à
+              <span className="font-mycabas">MyCabas</span> se réserve le droit de modifier la présente politique à
               tout moment. Toute mise à jour sera signalée sur cette page avec
               sa date d’entrée en vigueur.
             </p>

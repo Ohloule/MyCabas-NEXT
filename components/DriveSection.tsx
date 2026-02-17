@@ -9,7 +9,7 @@ export default function DriveSection() {
             Préparez le marché. Gagnez du temps.
           </h1>
           <p className="text-center mb-4">
-            Avec <span className="font-special text-xl">MyCabas</span>, repérez
+            Avec <span className="font-mycabas text-xl">MyCabas</span>, repérez
             les marchés autour de vous, découvrez les commerçants, commandez
             leurs produits… et récupérez votre panier tout prêt le matin. Frais,
             local, rapide. <br />

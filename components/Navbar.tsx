@@ -12,6 +12,7 @@ import {
   MapPin,
   Menu,
   Milk,
+  ShoppingCart,
   Store,
   UserPlus,
   UtensilsCrossed,
@@ -19,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import CategoriesMenu from "./CategoriesMenu";
 import SearchBar from "./SearchBar";
@@ -46,6 +48,7 @@ interface Category {
 }
 
 export default function Navbar() {
+  const { data: session } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [showCategories, setShowCategories] = useState(false);
@@ -108,11 +111,20 @@ export default function Navbar() {
             >
               Tarifs & fonctionnement
             </Link>
-            <Link href="/register">
-              <Button className="bg-secondaire-500 hover:bg-secondaire-600">
-                Inscription Gratuite
-              </Button>
-            </Link>
+            {session ? (
+              <Link href="/panier">
+                <Button className="bg-secondaire-500 hover:bg-secondaire-600 gap-2">
+                  <ShoppingCart className="h-4 w-4" />
+                  Mon Panier
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/register">
+                <Button className="bg-secondaire-500 hover:bg-secondaire-600">
+                  Inscription Gratuite
+                </Button>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Navigation */}
@@ -155,7 +167,7 @@ export default function Navbar() {
       >
         {/* Header du drawer */}
         <div className="flex items-center justify-between p-4 bg-principale-700">
-          <span className="font-special text-blanc text-2xl">MyCabas</span>
+          <span className="font-mycabas text-blanc text-2xl">MyCabas</span>
           <button
             onClick={closeMobileMenu}
             className="p-2 text-blanc hover:bg-principale-600 rounded-lg cursor-pointer"
@@ -253,14 +265,23 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Bouton d'inscription en bas */}
+          {/* Bouton en bas du drawer */}
           <div className="p-4 border-t mt-auto">
-            <Link href="/register" onClick={closeMobileMenu}>
-              <Button className="w-full bg-secondaire-500 hover:bg-secondaire-600 gap-2">
-                <UserPlus className="h-4 w-4" />
-                Inscription Gratuite
-              </Button>
-            </Link>
+            {session ? (
+              <Link href="/panier" onClick={closeMobileMenu}>
+                <Button className="w-full bg-secondaire-500 hover:bg-secondaire-600 gap-2">
+                  <ShoppingCart className="h-4 w-4" />
+                  Mon Panier
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/register" onClick={closeMobileMenu}>
+                <Button className="w-full bg-secondaire-500 hover:bg-secondaire-600 gap-2">
+                  <UserPlus className="h-4 w-4" />
+                  Inscription Gratuite
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

@@ -137,7 +137,7 @@ export async function PUT(request: NextRequest) {
       }
     }
 
-    // Mise à jour du profil
+    // Mise à jour du profil (logoUrl géré séparément par /api/vendor/upload-logo)
     const updatedVendor = await prisma.vendor.update({
       where: { id: session.user.vendorId },
       data: {
@@ -145,7 +145,7 @@ export async function PUT(request: NextRequest) {
         description: description || null,
         phone: phone || null,
         email: email || null,
-        logoUrl: logoUrl || null,
+        ...(logoUrl !== undefined && { logoUrl: logoUrl || null }),
         website: website || null,
         socialLinks: socialLinks || null,
         paymentMethods: paymentMethods || [],

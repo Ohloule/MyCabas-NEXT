@@ -30,7 +30,7 @@ export default function ParrainageSection() {
           </h1>
           <p className="text-justify">
             Vous connaissez un commerçant de marché qui pourrait rejoindre{" "}
-            <span className="font-special text-xl">MyCabas</span> ? Parlez-lui
+            <span className="font-mycabas text-xl">MyCabas</span> ? Parlez-lui
             de nous ! Lorsqu’il s’inscrit avec votre lien ou votre code de
             parrainage et qu’il commence à vendre, vous recevez automatiquement
             10 € à utiliser pour vos prochaines courses.

@@ -58,7 +58,7 @@ export default function Page() {
       <HeadingPage title="Comment ça marche ?">
         {" "}
         <p className="text-lg ">
-          Manger mieux, soutenir nos commerçants, retrouver du bon sens. MyCabas
+          Manger mieux, soutenir nos commerçants, retrouver du bon sens. <span className="font-mycabas">MyCabas</span>{" "}
           remet le marché au cœur de la ville..
         </p>
       </HeadingPage>
@@ -68,7 +68,7 @@ export default function Page() {
           <div className="grid md:grid-cols-2 gap-10 items-center mb-16">
             <div className="space-y-6 text-lg text-justify">
               <p>
-                <span className="font-special text-xl">MyCabas</span> est né
+                <span className="font-mycabas text-xl">MyCabas</span> est né
                 d’un constat simple : faire son marché devrait être facile,
                 moderne et ancré dans nos habitudes numériques. L’idée est née
                 sur un marché local, en observant les difficultés des
@@ -170,7 +170,7 @@ export default function Page() {
               <p>
                 Les commerçants peuvent mettre en avant leurs recettes, idées de
                 préparation et produits de saison.{" "}
-                <span className="font-special text-xl">MyCabas</span> leur donne
+                <span className="font-mycabas text-xl">MyCabas</span> leur donne
                 la possibilité de se distinguer, même en ligne.
               </p>
               <p>
@@ -219,7 +219,7 @@ export default function Page() {
                 Rejoignez le mouvement.
               </Link>{" "}
               Redonnez du sens à vos courses.{" "}
-              <span className="font-special text-2xl">MyCabas</span>, c’est
+              <span className="font-mycabas text-2xl">MyCabas</span>, c'est
               votre marché… dans votre poche.
             </p>
           </div>

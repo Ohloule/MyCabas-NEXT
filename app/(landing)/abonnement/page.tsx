@@ -6,7 +6,7 @@ export default function Page() {
       <HeadingPage title="Abonnement repas">
         {" "}
         <p className="text-lg">
-          Fini le casse-tête des repas ! MyCabas vous aide à planifier vos
+          Fini le casse-tête des repas ! <span className="font-mycabas">MyCabas</span> vous aide à planifier vos
           menus, à manger équilibré, et à faire vos courses locales en quelques
           clics — tout en soutenant les commerçants de votre marché. <br />
           Moins de charge mentale, plus de bon sens.
@@ -17,7 +17,7 @@ export default function Page() {
         <div className="align-center text-justify ">
           <p className="text-lg bg-principale-50 shadow rounded-lg p-6 border space-y-4 mb-8">
             Gagnez du temps, mangez mieux, tout en soutenant les commerçants de
-            votre marché local. L’abonnement repas MyCabas vous aide à planifier
+            votre marché local. L'abonnement repas <span className="font-mycabas">MyCabas</span> vous aide à planifier
             vos menus de la semaine, à accéder à des recettes saines avec leurs
             informations nutritionnelles détaillées, et à faire vos courses en
             un clic — directement auprès des artisans près de chez vous.
@@ -28,17 +28,17 @@ export default function Page() {
               Ce que comprend l’abonnement
             </h3>
             <ul className="list-none list-inside text-center space-y-2 max-w-xl mx-auto">
-              <li className="border-b-1 pb-1">
+              <li className="border-b pb-1">
                 Un accès à des recettes variées, locales et de saison
               </li>
-              <li className="border-b-1 pb-1">
+              <li className="border-b pb-1">
                 Le calcul automatique des apports nutritionnels par repas ou sur
                 la semaine
               </li>
-              <li className="border-b-1 pb-1">
+              <li className="border-b pb-1">
                 Un calendrier intelligent de planification des repas
               </li>
-              <li className="border-b-1 pb-1">
+              <li className="border-b pb-1">
                 Un panier de courses généré automatiquement à partir de vos
                 menus
               </li>
@@ -55,7 +55,7 @@ export default function Page() {
             </h3>
             <p>
               L’abonnement est proposé à <strong>20 €/mois</strong>. Mais il
-              devient plus avantageux à chaque commande passée sur MyCabas :
+              devient plus avantageux à chaque commande passée sur <span className="font-mycabas">MyCabas</span> :
               plus vous achetez d’ingrédients chez vos commerçants locaux, plus
               le prix baisse.
             </p>
@@ -88,7 +88,7 @@ export default function Page() {
             </div>
 
             <p className="mt-4 text-principale-800 font-medium">
-              Vous êtes libre de planifier vos repas sans acheter via MyCabas…
+              Vous êtes libre de planifier vos repas sans acheter via <span className="font-mycabas">MyCabas</span>…
               mais l’abonnement vous encourage à soutenir les producteurs et
               commerçants locaux en vous récompensant quand vous commandez chez
               eux.

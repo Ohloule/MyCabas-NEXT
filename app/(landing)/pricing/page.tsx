@@ -18,7 +18,7 @@ export default function Page() {
               Transparence totale sur les prix <hr />
             </h2>
             <p>
-              Sur <span className="font-special text-xl">MyCabas</span>, les
+              Sur <span className="font-mycabas text-xl">MyCabas</span>, les
               prix affichés sont exactement les mêmes que sur le marché. Aucune
               majoration, aucun frais caché pour l’utilisateur. Nous pensons que
               le circuit court ne doit pas coûter plus cher – ni au client, ni
@@ -32,10 +32,10 @@ export default function Page() {
             </h2>
             <p>
               L’inscription sur{" "}
-              <span className="font-special text-xl">MyCabas</span> est
+              <span className="font-mycabas text-xl">MyCabas</span> est
               gratuite. Les commerçants ne paient que lorsqu’ils reçoivent des
               commandes via l’application. À chaque marché, une commission de{" "}
-              <strong>10 % du chiffre d’affaires généré via MyCabas</strong> est
+              <strong>10 % du chiffre d’affaires généré via</strong> <span className="font-mycabas text-xl">MyCabas</span> est
               appliquée, mais elle est <strong>plafonnée à 5 € maximum</strong>{" "}
               quel que soit le nombre de commandes.
             </p>
@@ -48,7 +48,7 @@ export default function Page() {
               <li className="text-right">
                 <strong>
                   0 commande = 0€ pour{" "}
-                  <span className="font-special text-xl">MyCabas</span>
+                  <span className="font-mycabas text-xl">MyCabas</span>
                 </strong>
               </li>
               <li className="text-right">
@@ -84,7 +84,7 @@ export default function Page() {
               <li>
                 À la fin du marché, vous recevez un récapitulatif et la
                 facturation{" "}
-                <span className="font-special text-xl">MyCabas</span> si besoin
+                <span className="font-mycabas text-xl">MyCabas</span> si besoin
               </li>
             </ol>
           </div>
@@ -94,7 +94,7 @@ export default function Page() {
               Frais de service côté client <hr />
             </h2>
             <p>
-              <span className="font-special text-xl">MyCabas</span> est
+              <span className="font-mycabas text-xl">MyCabas</span> est
               entièrement gratuit pour les clients. Aucun frais de service,
               aucun surcoût : juste le prix du marché, avec la tranquillité
               d’esprit de récupérer son panier sans faire la queue.
@@ -109,7 +109,7 @@ export default function Page() {
             🔐 Une tarification pensée pour vous, pas contre vous
           </h2>
           <p>
-            <span className="font-special text-xl">MyCabas</span> ne gagne de
+            <span className="font-mycabas text-xl">MyCabas</span> ne gagne de
             l’argent que si vous en gagnez. C’est notre manière de rester
             alignés avec les commerçants de marché. Pas de piège, pas
             d’engagement. Essayez, testez, et développez votre clientèle locale
@@ -136,7 +136,7 @@ export default function Page() {
             </CardHeader>
             <CardContent className="text-gray-700">
               Même si vous faites 500€ ou 5000€ de vente, vous ne paierez jamais
-              plus de 5€ à <span className="font-special text-xl">MyCabas</span>{" "}
+              plus de 5€ à <span className="font-mycabas text-xl">MyCabas</span>{" "}
               pour ce marché.
             </CardContent>
           </Card>
@@ -160,9 +160,9 @@ export default function Page() {
 
           <p>
             Pour gérer les paiements en ligne de manière sécurisée,{" "}
-            <span className="font-special text-xl">MyCabas</span>
-            utilise la solution Stripe, leader mondial des paiements. Stripe
-            applique des frais bancaires sur chaque transaction :
+            <span className="font-mycabas text-xl">MyCabas</span> utilise la
+            solution Stripe, leader mondial des paiements. Stripe applique des
+            frais bancaires sur chaque transaction :
           </p>
 
           <ul className="list-none list-inside text-gray-800">
@@ -218,7 +218,7 @@ export default function Page() {
               <div className="bg-principale-100 p-4 rounded-lg">
                 <strong>
                   Partage des frais avec{" "}
-                  <span className="font-special text-xl">MyCabas</span> :
+                  <span className="font-mycabas text-xl">MyCabas</span> :
                 </strong>
                 <ul className="list-disc list-inside mt-2">
                   <li className="flex flex-row justify-between">
@@ -289,7 +289,7 @@ export default function Page() {
 
             <p className="mt-4 text-green-700 font-semibold">
               ✅ Résultat : grâce à{" "}
-              <span className="font-special text-xl">MyCabas</span>, les
+              <span className="font-mycabas text-xl">MyCabas</span>, les
               commerçants paient ensemble
               <strong className="font-bold">
                 {" "}
