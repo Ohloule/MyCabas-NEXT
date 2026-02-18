@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import HeadingPage from "@/components/HeadingPage";
+import { useCart } from "@/components/providers/cart-provider";
 import {
   Loader2,
   MapPin,
@@ -16,83 +17,29 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { useCallback, useEffect, useState } from "react";
-
-interface CartProduct {
-  id: string;
-  name: string;
-  imageUrl: string | null;
-  unit: string;
-  basePrice: number;
-  vendor: {
-    id: string;
-    stallName: string;
-  };
-}
-
-interface CartItem {
-  id: string;
-  quantity: number;
-  product: CartProduct;
-}
-
-interface CartMarket {
-  id: string;
-  name: string;
-  address: string;
-  town: string;
-}
-
-interface Cart {
-  id: string;
-  market: CartMarket | null;
-  items: CartItem[];
-}
+import { useState } from "react";
 
 export default function PanierPage() {
   const { status } = useSession();
-  const [cart, setCart] = useState<Cart | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { cart, isLoading: loading, updateQuantity, removeItem, clearCart } = useCart();
   const [updatingItems, setUpdatingItems] = useState<Set<string>>(new Set());
   const [clearing, setClearing] = useState(false);
 
-  const fetchCart = useCallback(async () => {
-    try {
-      const res = await fetch("/api/cart");
-      if (res.ok) {
-        const data = await res.json();
-        setCart(data);
-      }
-    } catch (err) {
-      console.error("Erreur chargement panier:", err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      fetchCart();
-    } else if (status === "unauthenticated") {
-      setLoading(false);
-    }
-  }, [status, fetchCart]);
-
-  const updateQuantity = async (item: CartItem, delta: number) => {
-    const newQuantity = item.quantity + delta;
+  const handleUpdateQuantity = async (item: { id: string; quantity: number; product: { id: string; minOrderQty: number } }, direction: "up" | "down") => {
+    const moq = item.product.minOrderQty || 1;
+    const newQuantity = direction === "up" ? item.quantity + moq : item.quantity - moq;
     setUpdatingItems((prev) => new Set(prev).add(item.id));
 
     try {
-      if (newQuantity <= 0) {
-        await fetch(`/api/cart?itemId=${item.id}`, { method: "DELETE" });
+      if (newQuantity < moq) {
+        await removeItem(item.id);
       } else {
-        await fetch("/api/cart", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ itemId: item.id, quantity: newQuantity }),
-        });
+        // Arrondir au multiple de MOQ le plus proche
+        const rounded = Math.round(newQuantity / moq) * moq;
+        const decimals = (moq.toString().split(".")[1] || "").length;
+        const validQty = Math.max(moq, parseFloat(rounded.toFixed(decimals)));
+        await updateQuantity(item.product.id, validQty);
       }
-      await fetchCart();
     } catch (err) {
       console.error("Erreur mise à jour quantité:", err);
     } finally {
@@ -104,11 +51,10 @@ export default function PanierPage() {
     }
   };
 
-  const removeItem = async (itemId: string) => {
+  const handleRemoveItem = async (itemId: string) => {
     setUpdatingItems((prev) => new Set(prev).add(itemId));
     try {
-      await fetch(`/api/cart?itemId=${itemId}`, { method: "DELETE" });
-      await fetchCart();
+      await removeItem(itemId);
     } catch (err) {
       console.error("Erreur suppression:", err);
     } finally {
@@ -120,11 +66,10 @@ export default function PanierPage() {
     }
   };
 
-  const clearCart = async () => {
+  const handleClearCart = async () => {
     setClearing(true);
     try {
-      await fetch("/api/cart", { method: "DELETE" });
-      await fetchCart();
+      await clearCart();
     } catch (err) {
       console.error("Erreur vidage panier:", err);
     } finally {
@@ -214,7 +159,7 @@ export default function PanierPage() {
     },
     {} as Record<
       string,
-      { vendor: CartProduct["vendor"]; items: CartItem[] }
+      { vendor: { id: string; stallName: string }; items: typeof cart.items }
     >
   );
 
@@ -243,7 +188,7 @@ export default function PanierPage() {
                 {itemCount} {itemCount > 1 ? "produits" : "produit"}
               </p>
               <button
-                onClick={clearCart}
+                onClick={handleClearCart}
                 disabled={clearing}
                 className="text-sm text-red-500 hover:text-red-700 flex items-center gap-1 cursor-pointer disabled:opacity-50"
               >
@@ -302,11 +247,15 @@ export default function PanierPage() {
                       {/* Contrôles quantité */}
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={() => updateQuantity(item, -1)}
+                          onClick={() => handleUpdateQuantity(item, "down")}
                           disabled={updatingItems.has(item.id)}
                           className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 cursor-pointer disabled:opacity-50"
                         >
-                          <Minus className="h-3 w-3" />
+                          {item.quantity <= (item.product.minOrderQty || 1) ? (
+                            <Trash2 className="h-3 w-3" />
+                          ) : (
+                            <Minus className="h-3 w-3" />
+                          )}
                         </button>
                         <span className="w-8 text-center font-medium">
                           {updatingItems.has(item.id) ? (
@@ -316,7 +265,7 @@ export default function PanierPage() {
                           )}
                         </span>
                         <button
-                          onClick={() => updateQuantity(item, 1)}
+                          onClick={() => handleUpdateQuantity(item, "up")}
                           disabled={updatingItems.has(item.id)}
                           className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 cursor-pointer disabled:opacity-50"
                         >
@@ -333,7 +282,7 @@ export default function PanierPage() {
 
                       {/* Supprimer */}
                       <button
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => handleRemoveItem(item.id)}
                         disabled={updatingItems.has(item.id)}
                         className="p-1 text-gray-400 hover:text-red-500 cursor-pointer disabled:opacity-50"
                         title="Supprimer"

@@ -1,19 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Infinity,
-  Leaf,
-  Loader2,
-  MapPin,
-  Save,
-  X,
-} from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Infinity, Leaf, Loader2, MapPin, Save, X } from "lucide-react";
 import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
 
 interface Category {
   id: string;
@@ -88,7 +81,9 @@ export function ProductsTableEditable({
   marketName,
   onSaveSuccess,
 }: ProductsTableEditableProps) {
-  const [editableRows, setEditableRows] = useState<Record<string, EditableRow>>({});
+  const [editableRows, setEditableRows] = useState<Record<string, EditableRow>>(
+    {},
+  );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -98,10 +93,10 @@ export function ProductsTableEditable({
     const rows: Record<string, EditableRow> = {};
     products.forEach((product) => {
       const priceData = product.pricesByMarket.find(
-        (p) => p.market.id === marketId
+        (p) => p.market.id === marketId,
       );
       const stockData = product.stocksByMarket.find(
-        (s) => s.market.id === marketId
+        (s) => s.market.id === marketId,
       );
 
       rows[product.id] = {
@@ -123,7 +118,7 @@ export function ProductsTableEditable({
   const handleFieldChange = (
     productId: string,
     field: keyof EditableRow,
-    value: string | boolean
+    value: string | boolean,
   ) => {
     setEditableRows((prev) => ({
       ...prev,
@@ -154,7 +149,11 @@ export function ProductsTableEditable({
         productId: row.productId,
         marketId,
         price: row.price ? parseFloat(row.price) : null,
-        quantity: row.isUnlimited ? null : (row.quantity ? parseInt(row.quantity) : null),
+        quantity: row.isUnlimited
+          ? null
+          : row.quantity
+            ? parseInt(row.quantity)
+            : null,
         isAvailable: row.isAvailable,
         isUnlimited: row.isUnlimited,
       }));
@@ -182,7 +181,9 @@ export function ProductsTableEditable({
       setSuccessMessage(`${dirtyRows.length} produit(s) mis à jour`);
       onSaveSuccess();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur lors de la sauvegarde");
+      setError(
+        err instanceof Error ? err.message : "Erreur lors de la sauvegarde",
+      );
     } finally {
       setSaving(false);
     }
@@ -339,7 +340,8 @@ export function ProductsTableEditable({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white rounded-xl p-3 sm:p-4 shadow-sm border border-gray-100">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-sm text-gray-600">
-            Marché : <strong className="text-principale-700">{marketName}</strong>
+            Marché :{" "}
+            <strong className="text-principale-700">{marketName}</strong>
           </span>
           {dirtyCount > 0 && (
             <Badge variant="secondary" className="bg-amber-100 text-amber-800">
@@ -349,7 +351,12 @@ export function ProductsTableEditable({
         </div>
         <div className="flex items-center gap-2">
           {dirtyCount > 0 && (
-            <Button variant="outline" size="sm" onClick={handleReset} disabled={saving}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleReset}
+              disabled={saving}
+            >
               <X className="w-4 h-4" />
               <span className="hidden sm:inline">Annuler</span>
             </Button>
@@ -479,8 +486,23 @@ export function ProductsTableEditable({
                           min="0"
                           value={row.price}
                           onChange={(e) =>
-                            handleFieldChange(product.id, "price", e.target.value)
+                            handleFieldChange(
+                              product.id,
+                              "price",
+                              e.target.value,
+                            )
                           }
+                          // On formate la valeur quand l'utilisateur quitte le champ
+                          onBlur={(e) => {
+                            const formattedValue = parseFloat(
+                              e.target.value,
+                            ).toFixed(2);
+                            handleFieldChange(
+                              product.id,
+                              "price",
+                              formattedValue,
+                            );
+                          }}
                           className="w-24 h-8 text-sm"
                           placeholder="Prix"
                         />
@@ -501,14 +523,20 @@ export function ProductsTableEditable({
                             min="0"
                             value={row.quantity}
                             onChange={(e) =>
-                              handleFieldChange(product.id, "quantity", e.target.value)
+                              handleFieldChange(
+                                product.id,
+                                "quantity",
+                                e.target.value,
+                              )
                             }
                             className="w-20 h-8 text-sm"
                             placeholder="Qté"
                           />
                         )}
                         {!row.isUnlimited && (
-                          <span className="text-xs text-gray-500">{product.unit}</span>
+                          <span className="text-xs text-gray-500">
+                            {product.unit}
+                          </span>
                         )}
                       </div>
                     </td>
@@ -518,7 +546,11 @@ export function ProductsTableEditable({
                       <Checkbox
                         checked={row.isUnlimited}
                         onCheckedChange={(checked) =>
-                          handleFieldChange(product.id, "isUnlimited", !!checked)
+                          handleFieldChange(
+                            product.id,
+                            "isUnlimited",
+                            !!checked,
+                          )
                         }
                       />
                     </td>
@@ -528,7 +560,11 @@ export function ProductsTableEditable({
                       <Checkbox
                         checked={row.isAvailable}
                         onCheckedChange={(checked) =>
-                          handleFieldChange(product.id, "isAvailable", !!checked)
+                          handleFieldChange(
+                            product.id,
+                            "isAvailable",
+                            !!checked,
+                          )
                         }
                       />
                     </td>

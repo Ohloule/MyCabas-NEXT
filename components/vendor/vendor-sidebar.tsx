@@ -39,6 +39,11 @@ const menuItems = [
     icon: User,
   },
   {
+    label: "Ma vitrine",
+    href: "/vendor/dashboard/vitrine",
+    icon: Store,
+  },
+  {
     label: "Mes marchés",
     href: "/vendor/dashboard/marches",
     icon: MapPin,
@@ -62,11 +67,6 @@ const menuItems = [
     label: "Notifications",
     href: "/vendor/dashboard/notifications",
     icon: Bell,
-  },
-  {
-    label: "Ma vitrine",
-    href: "/vendor/dashboard/vitrine",
-    icon: Store,
   },
   {
     label: "Paramètres boutique",

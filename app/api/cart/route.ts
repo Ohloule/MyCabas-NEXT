@@ -25,6 +25,7 @@ export async function GET() {
                 name: true,
                 imageUrl: true,
                 unit: true,
+                minOrderQty: true,
                 basePrice: true,
                 vendor: {
                   select: { id: true, stallName: true },
@@ -60,6 +61,27 @@ export async function POST(request: NextRequest) {
         { error: "productId requis" },
         { status: 400 }
       );
+    }
+
+    // Valider la quantité par rapport au MOQ du produit
+    if (quantity > 0) {
+      const product = await prisma.product.findUnique({
+        where: { id: productId },
+        select: { minOrderQty: true },
+      });
+
+      if (product && product.minOrderQty > 0) {
+        const moq = product.minOrderQty;
+        const rounded = Math.round(quantity / moq) * moq;
+        const decimals = (moq.toString().split(".")[1] || "").length;
+        const validQty = Math.max(moq, parseFloat(rounded.toFixed(decimals)));
+        if (Math.abs(quantity - validQty) > 0.001) {
+          return NextResponse.json(
+            { error: `La quantité doit être un multiple de ${moq}`, validQuantity: validQty },
+            { status: 400 }
+          );
+        }
+      }
     }
 
     // Upsert du panier

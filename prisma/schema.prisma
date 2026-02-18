@@ -284,6 +284,7 @@ model Product {
   description     String?        @db.Text
   imageUrl        String?
   unit            String         @default("kg") // kg, pièce, botte, etc.
+  minOrderQty     Float          @default(1)    // Quantité minimum de commande (ex: 0.2 pour 200g min si vendu au kg)
   basePrice       Float          // Prix de référence
   isOrganic       Boolean        @default(false) // Produit bio
   isLocal         Boolean        @default(false) // Produit local

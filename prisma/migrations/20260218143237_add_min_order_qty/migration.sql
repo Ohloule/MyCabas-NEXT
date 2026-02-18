@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "products" ADD COLUMN     "minOrderQty" DOUBLE PRECISION NOT NULL DEFAULT 1;

@@ -1,3 +1,4 @@
+import { CartProvider } from "@/components/providers/cart-provider";
 import { SessionProvider } from "@/components/providers/session-provider";
 import type { Metadata } from "next";
 import { Kaushan_Script, Nunito } from "next/font/google";
@@ -55,7 +56,9 @@ export default function RootLayout({
         className={`${nunito.className} ${MarkoOne.variable} antialiased`}
         suppressHydrationWarning={true}
       >
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <CartProvider>{children}</CartProvider>
+        </SessionProvider>
       </body>
     </html>
   );

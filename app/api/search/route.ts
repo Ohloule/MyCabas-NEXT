@@ -22,9 +22,35 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    // Récupérer les marchés favoris de l'utilisateur
+    const favoriteMarkets = await prisma.favoriteMarket.findMany({
+      where: { userId: session.user.id },
+      select: { marketId: true },
+    });
+
+    const favoriteMarketIds = favoriteMarkets.map((f) => f.marketId);
+
+    // Si pas de marchés favoris, retourner vide
+    if (favoriteMarketIds.length === 0) {
+      return NextResponse.json({
+        results: [],
+        total: 0,
+        vendorCount: 0,
+      });
+    }
+
+    // Récupérer les vendors inscrits aux marchés favoris
+    const marketVendors = await prisma.marketVendor.findMany({
+      where: { marketId: { in: favoriteMarketIds } },
+      select: { vendorId: true },
+    });
+
+    const vendorIds = [...new Set(marketVendors.map((mv) => mv.vendorId))];
+
     // Construire les conditions de recherche
     const whereConditions: Record<string, unknown> = {
       isActive: true,
+      vendorId: { in: vendorIds },
     };
 
     // Filtre par catégorie

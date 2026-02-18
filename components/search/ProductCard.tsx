@@ -3,9 +3,10 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Check, Leaf, Loader2, MapPin, Plus, ShoppingCart } from "lucide-react";
+import { useCart } from "@/components/providers/cart-provider";
+import { Leaf, Loader2, MapPin, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ProductCardProps {
   product: {
@@ -14,6 +15,7 @@ interface ProductCardProps {
     description: string | null;
     imageUrl: string | null;
     unit: string;
+    minOrderQty: number;
     basePrice: number;
     isOrganic: boolean;
     isLocal: boolean;
@@ -24,28 +26,31 @@ interface ProductCardProps {
   };
 }
 
+// Arrondir au multiple de MOQ le plus proche
+function roundToMoq(value: number, moq: number): number {
+  if (moq <= 0) return value;
+  const rounded = Math.round(value / moq) * moq;
+  // Éviter les erreurs de virgule flottante
+  const decimals = (moq.toString().split(".")[1] || "").length;
+  return Math.max(moq, parseFloat(rounded.toFixed(decimals)));
+}
+
 export default function ProductCard({ product }: ProductCardProps) {
-  const [adding, setAdding] = useState(false);
-  const [added, setAdded] = useState(false);
+  const { getQuantity, updateQuantity, isLoading: cartLoading } = useCart();
+  const quantity = getQuantity(product.id);
+  const moq = product.minOrderQty || 1;
+  const [inputValue, setInputValue] = useState(String(quantity));
+  const [loading, setLoading] = useState(false);
 
-  const handleAddToCart = async () => {
-    setAdding(true);
-    try {
-      const response = await fetch("/api/cart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId: product.id, quantity: 1 }),
-      });
+  // Synchroniser l'input quand le panier est chargé
+  useEffect(() => {
+    setInputValue(String(quantity));
+  }, [quantity]);
 
-      if (response.ok) {
-        setAdded(true);
-        setTimeout(() => setAdded(false), 2000);
-      }
-    } catch (error) {
-      console.error("Erreur ajout panier:", error);
-    } finally {
-      setAdding(false);
-    }
+  const handleUpdate = async (newQuantity: number) => {
+    setLoading(true);
+    await updateQuantity(product.id, newQuantity);
+    setLoading(false);
   };
 
   return (
@@ -82,7 +87,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
 
-      <CardContent className="p-3">
+      <CardContent className="p-3 flex flex-col">
         {/* Nom du produit */}
         <h4 className="font-medium text-gray-900 truncate" title={product.name}>
           {product.name}
@@ -94,7 +99,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </p>
 
         {/* Prix */}
-        <div className="mt-2 flex items-baseline gap-1">
+        <div className="mt-2 flex items-baseline gap-1 ">
           <span className="text-lg font-bold text-principale-600">
             {product.basePrice.toFixed(2)} €
           </span>
@@ -103,35 +108,86 @@ export default function ProductCard({ product }: ProductCardProps) {
           </span>
         </div>
 
-        {/* Bouton Ajouter au panier */}
-        <Button
-          onClick={handleAddToCart}
-          disabled={adding}
-          size="sm"
-          className={`w-full mt-3 gap-1.5 text-xs transition-colors ${
-            added
-              ? "bg-green-500 hover:bg-green-600"
-              : "bg-secondaire-500 hover:bg-secondaire-600"
-          }`}
-        >
-          {adding ? (
-            <>
+        {/* Bouton Panier */}
+        {quantity === 0 ? (
+          <Button
+            onClick={() => handleUpdate(moq)}
+            disabled={loading || cartLoading}
+            size="sm"
+            className="w-16 self-end mt-3 gap-1.5 text-xs bg-principale-600 hover:bg-principale-500 transition-colors"
+          >
+            {loading || cartLoading ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
-              Ajout...
-            </>
-          ) : added ? (
-            <>
-              <Check className="w-3.5 h-3.5" />
-              Ajouté !
-            </>
-          ) : (
-            <>
+            ) : (
+              <>
               <ShoppingCart className="w-3.5 h-3.5" />
-              <Plus className="w-3 h-3" />
-              Panier
-            </>
-          )}
-        </Button>
+
+              </>
+            )}
+          </Button>
+        ) : (
+          <div className="flex items-center self-end mt-3 rounded-full overflow-hidden  border border-gray-200">
+            {/* Bouton moins / supprimer */}
+            <button
+              onClick={() => {
+                const next = quantity - moq;
+                handleUpdate(next < moq ? 0 : roundToMoq(next, moq));
+              }}
+              disabled={loading}
+              className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-gray-900 text-white transition-colors disabled:opacity-50 cursor-pointer"
+            >
+              {loading ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : quantity <= moq ? (
+                <Trash2 className="w-4 h-4" />
+              ) : (
+                <Minus className="w-4 h-4" />
+              )}
+            </button>
+
+            {/* Quantité */}
+            <input
+              type="text"
+              inputMode="decimal"
+              value={inputValue}
+              onChange={(e) => {
+                const raw = e.target.value.replaceAll(",", ".").replace(/[^\d.]/g, "");
+                // Un seul point autorisé
+                const parts = raw.split(".");
+                const sanitized = parts.length > 2 ? parts[0] + "." + parts.slice(1).join("") : raw;
+                // Max 2 décimales
+                if (parts.length === 2 && parts[1].length > 2) return;
+                if (sanitized === "" || sanitized === ".") {
+                  setInputValue(sanitized);
+                  return;
+                }
+                setInputValue(sanitized);
+              }}
+              onBlur={() => {
+                const num = parseFloat(inputValue);
+                if (isNaN(num) || num < moq) {
+                  handleUpdate(moq);
+                } else {
+                  handleUpdate(Math.min(roundToMoq(num, moq), 99));
+                }
+              }}
+              className="w-18 h-9 bg-white text-sm font-bold text-gray-800 text-center outline-none border-x border-gray-200"
+            />
+
+            {/* Bouton plus */}
+            <button
+              onClick={() => handleUpdate(roundToMoq(quantity + moq, moq))}
+              disabled={loading}
+              className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-principale-700 text-white transition-colors disabled:opacity-50 cursor-pointer"
+            >
+              {loading ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Plus className="w-4 h-4" />
+              )}
+            </button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

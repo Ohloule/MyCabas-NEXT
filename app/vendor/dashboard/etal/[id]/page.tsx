@@ -35,6 +35,7 @@ interface Product {
   description: string | null;
   imageUrl: string | null;
   unit: string;
+  minOrderQty: number;
   basePrice: number;
   isOrganic: boolean;
   isLocal: boolean;
@@ -109,6 +110,7 @@ export default function EditProductPage({
         description: product.description,
         imageUrl: product.imageUrl,
         unit: product.unit,
+        minOrderQty: product.minOrderQty,
         basePrice: product.basePrice,
         categoryId: product.category.id,
         isOrganic: product.isOrganic,

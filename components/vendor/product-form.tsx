@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import {
   ArrowLeft,
   Check,
+  HelpCircle,
   ImageIcon,
   Infinity,
   Leaf,
@@ -44,6 +45,7 @@ interface ProductFormProps {
     description: string | null;
     imageUrl: string | null;
     unit: string;
+    minOrderQty: number;
     basePrice: number;
     categoryId: string;
     isOrganic: boolean;
@@ -90,6 +92,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
   );
   const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || "");
   const [unit, setUnit] = useState(initialData?.unit || "kg");
+  const [minOrderQty, setMinOrderQty] = useState(
+    initialData?.minOrderQty?.toString() || "1",
+  );
   const [basePrice, setBasePrice] = useState(
     initialData?.basePrice?.toString() || "",
   );
@@ -199,6 +204,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         description: description.trim() || null,
         imageUrl: imageUrl.trim() || null,
         unit,
+        minOrderQty: parseFloat(minOrderQty) || 1,
         basePrice: parseFloat(basePrice),
         categoryId,
         isOrganic,
@@ -369,29 +375,83 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                 </div>
               </div>
 
-              {/* Prix de référence */}
-              <div>
-                <Label htmlFor="basePrice">Prix de référence *</Label>
-                <div className="mt-1 relative">
-                  <Input
-                    id="basePrice"
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    value={basePrice}
-                    onChange={(e) => setBasePrice(e.target.value)}
-                    placeholder="0.00"
-                    className="pr-16"
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    €/{unit}
-                  </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
+                {/* Quantité minimum de commande */}
+                <div className="">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="minOrderQty">Quantité minimum *</Label>
+                    <div className="relative group">
+                      <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" />
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 pointer-events-none">
+                        <p className="font-medium mb-1">
+                          Quantité minimum de commande
+                        </p>
+                        <ul className="space-y-1 text-gray-300">
+                          <li>
+                            Vendu au kg, min 200g → mettre{" "}
+                            <strong className="text-white">0.2</strong>
+                          </li>
+                          <li>
+                            Vendu à la pièce entière → mettre{" "}
+                            <strong className="text-white">1</strong>
+                          </li>
+                          <li>
+                            Vendu par demi-pièce (pastèque) → mettre{" "}
+                            <strong className="text-white">0.5</strong>
+                          </li>
+                        </ul>
+                        <p className="mt-1 text-gray-300">
+                          Le client ne pourra commander que des multiples de
+                          cette valeur.
+                        </p>
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-1 relative">
+                    <Input
+                      id="minOrderQty"
+                      type="number"
+                      step="0.01"
+                      min="0.01"
+                      value={minOrderQty}
+                      onChange={(e) => setMinOrderQty(e.target.value)}
+                      placeholder="1"
+                      className="pr-16"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                      {unit}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Le client ne pourra commander que des multiples de cette
+                    quantité
+                  </p>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  Ce prix sera utilisé par défaut pour tous les marchés
-                </p>
-              </div>
 
+                {/* Prix de référence */}
+                <div className="">
+                  <div className="flex items-center gap-1.5"><Label htmlFor="basePrice">Prix de référence *</Label></div>
+                  <div className="mt-1 relative">
+                    <Input
+                      id="basePrice"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={basePrice}
+                      onChange={(e) => setBasePrice(e.target.value)}
+                      placeholder="0.00"
+                      className="pr-16"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                      €/{unit}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Ce prix sera utilisé par défaut pour tous les marchés
+                  </p>
+                </div>
+              </div>
               {/* Options Bio / Local */}
               <div className="flex flex-wrap gap-4 pt-2">
                 <label className="flex items-center gap-2 cursor-pointer">

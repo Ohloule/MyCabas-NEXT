@@ -10,6 +10,7 @@ interface Product {
   description: string | null;
   imageUrl: string | null;
   unit: string;
+  minOrderQty: number;
   basePrice: number;
   isOrganic: boolean;
   isLocal: boolean;

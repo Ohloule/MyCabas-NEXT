@@ -18,7 +18,7 @@ export default function Footer() {
             <h1 className="font-mycabas text-4xl ">MyCabas</h1>
           </Link>
           <p className="text-sm text-justify lg:pr-12">
-            <span className="font-mycabas">MyCabas</span> vous permet de
+            <span className="font-mycabas text-xl">MyCabas</span> vous permet de
             commander sur les marchés près de chez vous. Frais, local, pratique.
           </p>
         </div>
@@ -109,7 +109,7 @@ export default function Footer() {
       {/* Bas de page */}
       <div className="mt-10 border-t border-principale-300 pt-6 text-center text-sm">
         © {new Date().getFullYear()}{" "}
-        <span className="font-mycabas">MyCabas</span> – Tous droits réservés •
+        <span className="font-mycabas  text-xl">MyCabas</span> – Tous droits réservés •
         <Link
           href="/confidentialite"
           className="ml-1 underline hover:text-principale-100"
