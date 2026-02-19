@@ -46,6 +46,27 @@ enum VendorLabel {
   FAIR_TRADE    // Commerce équitable
 }
 
+enum OrderStatus {
+  PENDING_PAYMENT   // En attente d'autorisation carte
+  AUTHORIZED        // Carte pré-autorisée, en attente confirmation vendor
+  CONFIRMED         // Vendor a confirmé la commande
+  ADJUSTED          // Vendor a ajusté les quantités/prix
+  CAPTURED          // Paiement capturé
+  PICKED_UP         // Client a récupéré au marché
+  CANCELLED         // Annulé (autorisation relâchée)
+  EXPIRED           // Expiré (vendor n'a pas confirmé avant le marché)
+  REFUNDED          // Remboursé après capture
+}
+
+enum PaymentStatus {
+  PENDING
+  AUTHORIZED
+  CAPTURED
+  CANCELLED
+  FAILED
+  REFUNDED
+}
+
 // ============================================
 // USER & AUTH
 // ============================================
@@ -68,6 +89,7 @@ model User {
   favoriteMarkets FavoriteMarket[]
 
   cart            Cart?
+  orders          Order[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -161,6 +183,10 @@ model Vendor {
   encryptedBankHolder String?    // Titulaire du compte chiffré
   bankInfoUpdatedAt   DateTime?  // Date de dernière mise à jour des infos bancaires
 
+  // Stripe Connect
+  stripeConnectAccountId    String?   @unique  // ID du compte Stripe Express (acct_...)
+  stripeOnboardingComplete  Boolean   @default(false) // Onboarding terminé et charges activées
+
   // Relation User
   userId        String   @unique
   user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -168,6 +194,7 @@ model Vendor {
   // Relations
   products      Product[]
   marketVendors MarketVendor[]
+  orderItems    OrderItem[]
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -195,6 +222,7 @@ model Market {
   productStocks   ProductStock[]
   favoritedBy     FavoriteMarket[]
   carts           Cart[]
+  orders          Order[]
 
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
@@ -302,6 +330,7 @@ model Product {
   pricesByMarket  ProductPrice[]
   stocksByMarket  ProductStock[]
   cartItems       CartItem[]
+  orderItems      OrderItem[]
 
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
@@ -378,4 +407,124 @@ model CartItem {
 
   @@unique([cartId, productId]) // Un produit ne peut apparaître qu'une fois par panier
   @@map("cart_items")
+}
+
+// ============================================
+// ORDER (Commande)
+// ============================================
+
+model Order {
+  id                String      @id @default(cuid())
+  orderNumber       String      @unique  // Format: MYC-YYYYMMDD-XXXX
+
+  status            OrderStatus @default(PENDING_PAYMENT)
+
+  // Client
+  userId            String
+  user              User        @relation(fields: [userId], references: [id])
+
+  // Marché et jour
+  marketId          String
+  market            Market      @relation(fields: [marketId], references: [id])
+  marketDay         Day         // Jour du marché (LUNDI, MARDI, etc.)
+  marketDate        DateTime    // Date exacte du jour de marché
+
+  // Montants en euros (Float, cohérent avec le reste du schema)
+  subtotalEuros     Float       // Somme des items avant commission
+  totalEuros        Float       // Montant payé par le client (= subtotalEuros)
+
+  // Commissions par vendor (JSON: { vendorId: commissionEuros })
+  commissionsByVendor Json      @default("{}")
+
+  // Montants ajustés par le vendor
+  adjustedSubtotalEuros Float?  // Après ajustement vendor
+  adjustedTotalEuros    Float?
+  vendorNote            String? @db.Text // Note du vendor (ex: ajustement de poids)
+
+  // Deadline de capture (début du marché)
+  captureDeadline   DateTime
+
+  // Timestamps
+  confirmedAt       DateTime?
+  capturedAt        DateTime?
+  cancelledAt       DateTime?
+  pickedUpAt        DateTime?
+
+  // Relations
+  items             OrderItem[]
+  payment           Payment?
+
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([marketId, marketDate])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id                String    @id @default(cuid())
+
+  // Snapshot du produit au moment de la commande
+  productName       String
+  productUnit       String    // kg, pièce, botte...
+  productImageUrl   String?
+  unitPriceEuros    Float     // Prix résolu au checkout (ProductPrice.price ?? basePrice)
+  quantity          Float     // Quantité commandée
+  totalEuros        Float     // unitPriceEuros * quantity
+
+  // Ajustement vendor
+  adjustedQuantity    Float?
+  adjustedTotalEuros  Float?
+
+  // Référence produit (pour lien, pas pour le prix)
+  productId         String
+  product           Product   @relation(fields: [productId], references: [id])
+
+  // Référence vendor (pour grouper et calculer les commissions/transfers)
+  vendorId          String
+  vendor            Vendor    @relation(fields: [vendorId], references: [id])
+
+  // Commande parente
+  orderId           String
+  order             Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  createdAt         DateTime  @default(now())
+
+  @@map("order_items")
+}
+
+// ============================================
+// PAYMENT (Paiement Stripe)
+// ============================================
+
+model Payment {
+  id                      String        @id @default(cuid())
+  status                  PaymentStatus @default(PENDING)
+
+  // Stripe
+  stripePaymentIntentId   String        @unique
+  stripeClientSecret      String?       // Temporaire, pour le frontend
+  amountCents             Int           // Montant en centimes pour Stripe
+  currency                String        @default("eur")
+
+  // Commission totale (somme de toutes les commissions vendors)
+  applicationFeeCents     Int?
+
+  // Timestamps Stripe
+  authorizedAt            DateTime?
+  capturedAt              DateTime?
+  cancelledAt             DateTime?
+  failedAt                DateTime?
+
+  // Relation 1:1 avec Order
+  orderId                 String        @unique
+  order                   Order         @relation(fields: [orderId], references: [id])
+
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
+
+  @@index([stripePaymentIntentId])
+  @@map("payments")
 }

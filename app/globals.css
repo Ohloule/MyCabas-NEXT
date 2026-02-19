@@ -9,7 +9,7 @@
   --principale-200: oklch(89% 0.065 175);
   --principale-300: oklch(80% 0.095 175);
   --principale-400: oklch(70% 0.12 175);
-  --principale-500: oklch(58% 0.14 175); /* Vert Signature - Très frais */
+  --principale-500: oklch(59.336% 0.11612 171.119); /* Vert Signature - Très frais */
   --principale-600: oklch(48% 0.125 175);
   --principale-700: oklch(38% 0.105 175);
   --principale-800: oklch(28% 0.085 175);
@@ -21,7 +21,7 @@
   --secondaire-200: oklch(92% 0.055 60);
   --secondaire-300: oklch(86% 0.085 60);
   --secondaire-400: oklch(78% 0.115 60);
-  --secondaire-500: oklch(70% 0.135 60); /* Beige avec du caractère */
+  --secondaire-500: #db883c; /* Beige avec du caractère */
   --secondaire-600: oklch(60% 0.115 60);
   --secondaire-700: oklch(50% 0.095 60);
   --secondaire-800: oklch(38% 0.075 60);

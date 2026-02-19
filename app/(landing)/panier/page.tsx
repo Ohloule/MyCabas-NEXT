@@ -16,11 +16,13 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 export default function PanierPage() {
   const { status } = useSession();
+  const router = useRouter();
   const { cart, isLoading: loading, updateQuantity, removeItem, clearCart } = useCart();
   const [updatingItems, setUpdatingItems] = useState<Set<string>>(new Set());
   const [clearing, setClearing] = useState(false);
@@ -167,7 +169,7 @@ export default function PanierPage() {
     <>
       <HeadingPage title="Mon Panier" />
 
-      <div className="align-center py-8">
+      <div className="align-center py-8 pb-28 lg:pb-8">
         {/* Infos marché */}
         {cart.market && (
           <div className="flex items-center gap-2 text-sm text-gray-600 mb-6 bg-principale-50 rounded-lg px-4 py-3">
@@ -179,9 +181,9 @@ export default function PanierPage() {
           </div>
         )}
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Liste des produits */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Header avec compteur et bouton vider */}
             <div className="flex items-center justify-between">
               <p className="text-gray-600">
@@ -214,81 +216,97 @@ export default function PanierPage() {
                   {items.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center gap-4 p-4"
+                      className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-4"
                     >
-                      {/* Image produit */}
-                      <div className="w-16 h-16 rounded-lg bg-gray-100 overflow-hidden shrink-0">
-                        {item.product.imageUrl ? (
-                          <Image
-                            src={item.product.imageUrl}
-                            alt={item.product.name}
-                            width={64}
-                            height={64}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <ShoppingCart className="h-6 w-6 text-gray-300" />
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Infos produit */}
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-gray-900 truncate">
-                          {item.product.name}
-                        </h3>
-                        <p className="text-sm text-gray-500">
-                          {item.product.basePrice.toFixed(2)} € /{" "}
-                          {item.product.unit}
-                        </p>
-                      </div>
-
-                      {/* Contrôles quantité */}
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => handleUpdateQuantity(item, "down")}
-                          disabled={updatingItems.has(item.id)}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 cursor-pointer disabled:opacity-50"
-                        >
-                          {item.quantity <= (item.product.minOrderQty || 1) ? (
-                            <Trash2 className="h-3 w-3" />
+                      {/* Ligne 1 mobile : image + infos + supprimer */}
+                      <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                        {/* Image produit */}
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg bg-gray-100 overflow-hidden shrink-0">
+                          {item.product.imageUrl ? (
+                            <Image
+                              src={item.product.imageUrl}
+                              alt={item.product.name}
+                              width={64}
+                              height={64}
+                              className="w-full h-full object-cover"
+                            />
                           ) : (
-                            <Minus className="h-3 w-3" />
+                            <div className="w-full h-full flex items-center justify-center">
+                              <ShoppingCart className="h-6 w-6 text-gray-300" />
+                            </div>
                           )}
-                        </button>
-                        <span className="w-8 text-center font-medium">
-                          {updatingItems.has(item.id) ? (
-                            <Loader2 className="h-4 w-4 animate-spin mx-auto" />
-                          ) : (
-                            item.quantity
-                          )}
-                        </span>
+                        </div>
+
+                        {/* Infos produit */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-medium text-gray-900 truncate text-sm sm:text-base">
+                            {item.product.name}
+                          </h3>
+                          <p className="text-xs sm:text-sm text-gray-500">
+                            {item.product.basePrice.toFixed(2)} € /{" "}
+                            {item.product.unit}
+                          </p>
+                        </div>
+
+                        {/* Supprimer - visible uniquement sur mobile en haut à droite */}
                         <button
-                          onClick={() => handleUpdateQuantity(item, "up")}
+                          onClick={() => handleRemoveItem(item.id)}
                           disabled={updatingItems.has(item.id)}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 cursor-pointer disabled:opacity-50"
+                          className="sm:hidden p-1 text-gray-400 hover:text-red-500 cursor-pointer disabled:opacity-50"
+                          title="Supprimer"
                         >
-                          <Plus className="h-3 w-3" />
+                          <X className="h-4 w-4" />
                         </button>
                       </div>
 
-                      {/* Prix total item */}
-                      <div className="text-right shrink-0 w-20">
-                        <p className="font-semibold text-gray-900">
-                          {(item.product.basePrice * item.quantity).toFixed(2)} €
-                        </p>
-                      </div>
+                      {/* Ligne 2 mobile : quantité + prix + supprimer desktop */}
+                      <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4 pl-17 sm:pl-0">
+                        {/* Contrôles quantité */}
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleUpdateQuantity(item, "down")}
+                            disabled={updatingItems.has(item.id)}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 cursor-pointer disabled:opacity-50"
+                          >
+                            {item.quantity <= (item.product.minOrderQty || 1) ? (
+                              <Trash2 className="h-3 w-3" />
+                            ) : (
+                              <Minus className="h-3 w-3" />
+                            )}
+                          </button>
+                          <span className="w-8 text-center font-medium">
+                            {updatingItems.has(item.id) ? (
+                              <Loader2 className="h-4 w-4 animate-spin mx-auto" />
+                            ) : (
+                              item.quantity
+                            )}
+                          </span>
+                          <button
+                            onClick={() => handleUpdateQuantity(item, "up")}
+                            disabled={updatingItems.has(item.id)}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 cursor-pointer disabled:opacity-50"
+                          >
+                            <Plus className="h-3 w-3" />
+                          </button>
+                        </div>
 
-                      {/* Supprimer */}
-                      <button
-                        onClick={() => handleRemoveItem(item.id)}
-                        disabled={updatingItems.has(item.id)}
-                        className="p-1 text-gray-400 hover:text-red-500 cursor-pointer disabled:opacity-50"
-                        title="Supprimer"
-                      >
-                        <X className="h-4 w-4" />
-                      </button>
+                        {/* Prix total item */}
+                        <div className="text-right shrink-0">
+                          <p className="font-semibold text-gray-900">
+                            {(item.product.basePrice * item.quantity).toFixed(2)} €
+                          </p>
+                        </div>
+
+                        {/* Supprimer - visible uniquement sur desktop */}
+                        <button
+                          onClick={() => handleRemoveItem(item.id)}
+                          disabled={updatingItems.has(item.id)}
+                          className="hidden sm:block p-1 text-gray-400 hover:text-red-500 cursor-pointer disabled:opacity-50"
+                          title="Supprimer"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </CardContent>
@@ -299,10 +317,10 @@ export default function PanierPage() {
           {/* Récapitulatif */}
           <div className="lg:col-span-1">
             <Card className="sticky top-4">
-              <CardContent className="p-6 space-y-4">
+              <CardContent className="p-4 sm:p-6 space-y-4">
                 <h2 className="font-semibold text-lg">Récapitulatif</h2>
 
-                <div className="space-y-2 text-sm">
+                <div className="space-y-2 text-sm hidden sm:block">
                   {cart.items.map((item) => (
                     <div
                       key={item.id}
@@ -326,16 +344,32 @@ export default function PanierPage() {
                     </span>
                   </div>
                   <p className="text-xs text-gray-500 mt-1">
-                    Prix indicatifs, le prix final sera confirmé par le
-                    commerçant
+                    Montant pré-autorisé. Le commerçant pourra ajuster les
+                    quantités avant le marché.
                   </p>
                 </div>
 
-                <Button className="w-full bg-secondaire-500 hover:bg-secondaire-600 mt-4">
+                <Button
+                  onClick={() => router.push("/checkout")}
+                  className="w-full bg-secondaire-500 hover:bg-secondaire-600 mt-4"
+                >
                   Passer la commande
                 </Button>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Barre fixe en bas sur mobile */}
+          <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 lg:hidden z-50">
+            <div className="flex items-center justify-between gap-4 max-w-screen-sm mx-auto">
+              <div>
+                <p className="text-xs text-gray-500">{itemCount} {itemCount > 1 ? "produits" : "produit"}</p>
+                <p className="font-semibold text-lg text-principale-600">{total.toFixed(2)} €</p>
+              </div>
+              <Button className="bg-secondaire-500 hover:bg-secondaire-600 flex-1 max-w-50">
+                Passer la commande
+              </Button>
+            </div>
           </div>
         </div>
       </div>

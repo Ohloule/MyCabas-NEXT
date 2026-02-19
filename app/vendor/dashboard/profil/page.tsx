@@ -25,6 +25,7 @@ import {
   User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import StripeConnectCard from "@/components/vendor/stripe-connect-card";
 
 interface VendorProfile {
   id: string;
@@ -287,6 +288,9 @@ export default function ProfilPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Paiements en ligne Stripe */}
+        <StripeConnectCard />
 
         {/* Informations bancaires */}
         <Card>

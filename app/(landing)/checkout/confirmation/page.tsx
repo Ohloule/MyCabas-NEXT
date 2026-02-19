@@ -1,0 +1,126 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import HeadingPage from "@/components/HeadingPage";
+import { useCart } from "@/components/providers/cart-provider";
+import { CheckCircle, Clock, Loader2, ShoppingBag, XCircle } from "lucide-react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+
+export default function ConfirmationPage() {
+  const searchParams = useSearchParams();
+  const orderNumber = searchParams.get("order");
+  const redirectStatus = searchParams.get("redirect_status");
+  const { clearCart } = useCart();
+  const cartCleared = useRef(false);
+  const [clearing, setClearing] = useState(false);
+
+  // Vider le panier après paiement réussi
+  useEffect(() => {
+    if (redirectStatus === "succeeded" && !cartCleared.current) {
+      cartCleared.current = true;
+      setClearing(true);
+      clearCart().finally(() => setClearing(false));
+    }
+  }, [redirectStatus, clearCart]);
+
+  if (clearing) {
+    return (
+      <>
+        <HeadingPage title="Confirmation" />
+        <div className="align-center py-24 flex flex-col items-center gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-principale-500" />
+          <p className="text-gray-600">Finalisation de votre commande...</p>
+        </div>
+      </>
+    );
+  }
+
+  const isSuccess = redirectStatus === "succeeded";
+  const isFailed = redirectStatus === "failed";
+
+  return (
+    <>
+      <HeadingPage title="Confirmation" />
+
+      <div className="align-center py-16">
+        <Card className="max-w-lg mx-auto">
+          <CardContent className="p-8 text-center space-y-6">
+            {isSuccess ? (
+              <>
+                <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                    Commande confirmée !
+                  </h2>
+                  {orderNumber && (
+                    <p className="text-principale-600 font-mono font-semibold text-lg">
+                      {orderNumber}
+                    </p>
+                  )}
+                </div>
+                <p className="text-gray-600">
+                  Votre paiement a été pré-autorisé. Le commerçant va confirmer
+                  votre commande avant le jour du marché. Vous ne serez débité
+                  qu&apos;après sa confirmation.
+                </p>
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3 text-left">
+                  <Clock className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+                  <div className="text-sm text-amber-800">
+                    <p className="font-medium">En attente de confirmation</p>
+                    <p>
+                      Le commerçant peut ajuster les quantités (ex: poids exact
+                      au gramme près). Le montant final sera ajusté en
+                      conséquence.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 pt-2">
+                  <Link href="/profil/orders">
+                    <Button className="w-full bg-principale-500 hover:bg-principale-600 gap-2">
+                      <ShoppingBag className="h-4 w-4" />
+                      Voir mes commandes
+                    </Button>
+                  </Link>
+                  <Link href="/search">
+                    <Button variant="outline" className="w-full">
+                      Continuer mes achats
+                    </Button>
+                  </Link>
+                </div>
+              </>
+            ) : isFailed ? (
+              <>
+                <XCircle className="h-16 w-16 text-red-500 mx-auto" />
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                    Paiement échoué
+                  </h2>
+                  <p className="text-gray-600">
+                    Le paiement n&apos;a pas pu être autorisé. Aucun montant n&apos;a
+                    été prélevé. Vérifiez vos informations de carte et
+                    réessayez.
+                  </p>
+                </div>
+                <Link href="/panier">
+                  <Button className="bg-principale-500 hover:bg-principale-600">
+                    Retour au panier
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Loader2 className="h-16 w-16 text-gray-300 mx-auto animate-spin" />
+                <p className="text-gray-600">
+                  Vérification du paiement en cours...
+                </p>
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </>
+  );
+}
