@@ -8,6 +8,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { Lock } from "lucide-react";
 import { useState } from "react";
+import Loader from "../Loader";
 
 interface CheckoutFormProps {
   totalEuros: number;

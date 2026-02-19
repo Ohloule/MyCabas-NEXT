@@ -101,7 +101,7 @@ export default function IngredientImagePicker({
       <div className="relative min-h-75 border rounded-xl p-2 bg-gray-50">
         {loading && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/60 backdrop-blur-[1px]">
-            <Loader taille={45} />
+              <Loader taille={45} />
           </div>
         )}
 
