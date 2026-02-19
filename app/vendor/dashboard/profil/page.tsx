@@ -219,7 +219,7 @@ export default function ProfilPage() {
 
       {/* Messages */}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
           <AlertCircle className="h-5 w-5 shrink-0" />
           <span className="text-sm">{error}</span>
         </div>
@@ -379,7 +379,7 @@ export default function ProfilPage() {
                         variant="ghost"
                         onClick={handleDeleteBankInfo}
                         disabled={deleting}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-red-600 hover:text-red-700 hover:bg-secondaire-50"
                       >
                         {deleting ? (
                           <Loader taille={45} />

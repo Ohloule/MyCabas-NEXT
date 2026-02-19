@@ -455,7 +455,7 @@ export default function MarchesPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
           {error}
         </div>
       )}
@@ -589,7 +589,7 @@ export default function MarchesPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="w-full text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="w-full text-red-600 hover:text-red-700 hover:bg-secondaire-50"
                         onClick={() => handleUnregister(market.id)}
                         disabled={actionLoading === market.id}
                       >

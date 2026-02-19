@@ -18,6 +18,7 @@
   --principale-900: oklch(18% 0.065 175);
 
   /* Sable Cuivré - Teinte (h) autour de 60 */
+  --secondaire-25: oklch(97.512% 0.00674 67.377);
   --secondaire-50: oklch(98.8% 0.012 60);
   --secondaire-100: oklch(96% 0.03 60);
   --secondaire-200: oklch(92% 0.055 60);
@@ -81,6 +82,7 @@
   --color-blanc: var(--blanc);
   --color-noir: var(--noir);
 
+  --color-secondaire-25: var(--secondaire-25);
   --color-secondaire-50: var(--secondaire-50);
   --color-secondaire-100: var(--secondaire-100);
   --color-secondaire-200: var(--secondaire-200);
@@ -168,6 +170,7 @@ body {
 
 .bg-heroSection {
   background-image: url("/images/bg-HeroSection.jpg");
+  background-color: rgba(245, 254, 248, 0.762);
   background-size: cover;
   background-position: bottom;
 }
@@ -177,7 +180,6 @@ body {
   background-color: rgba(245, 254, 248, 0.762);
   background-blend-mode: lighten;
   background-size: 550px;
-  
 }
 .bg-pricing {
   background-image: url("/patterns/pricing-01.svg");

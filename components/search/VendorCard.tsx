@@ -10,7 +10,7 @@ const labelConfig: Record<string, { label: string; color: string }> = {
   LOCAL: { label: "Local", color: "bg-amber-500" },
   ARTISAN: { label: "Artisan", color: "bg-purple-500" },
   FERMIER: { label: "Fermier", color: "bg-orange-500" },
-  AOC_AOP: { label: "AOC/AOP", color: "bg-red-500" },
+  AOC_AOP: { label: "AOC/AOP", color: "bg-secondaire-500" },
   LABEL_ROUGE: { label: "Label Rouge", color: "bg-red-600" },
   FAIR_TRADE: { label: "Commerce équitable", color: "bg-teal-500" },
 };

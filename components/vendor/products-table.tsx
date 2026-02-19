@@ -246,18 +246,14 @@ export function ProductsTable({
           <Pencil className="w-4 h-4" />
           <span className="sm:hidden">Modifier</span>
         </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => onDuplicate(product)}
-        >
+        <Button variant="ghost" size="sm" onClick={() => onDuplicate(product)}>
           <Copy className="w-4 h-4" />
         </Button>
         <Button
           variant="ghost"
           size="sm"
           onClick={() => onDelete(product.id)}
-          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+          className="text-red-600 hover:text-red-700 hover:bg-secondaire-50"
         >
           <Trash2 className="w-4 h-4" />
         </Button>
@@ -441,7 +437,7 @@ export function ProductsTable({
                                   onDelete(product.id);
                                   setOpenMenuId(null);
                                 }}
-                                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+                                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-secondaire-50"
                               >
                                 <Trash2 className="w-4 h-4" />
                                 Supprimer

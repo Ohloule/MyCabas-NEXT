@@ -93,7 +93,7 @@ export default function ProfilInfosPage() {
   return (
     <>
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
           <AlertCircle className="h-5 w-5 shrink-0" />
           <span className="text-sm">{error}</span>
         </div>

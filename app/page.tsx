@@ -11,7 +11,7 @@ import TransparenceSection from "@/components/TransparenceSection";
 export default function HomePage() {
   return (
     <>
-      <div className="flex flex-col min-h-screen bg-red-500">
+      <div className="flex flex-col min-h-screen bg-principale-500">
         <Header />
         <Navbar />
         <HeroSection />

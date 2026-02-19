@@ -35,6 +35,17 @@ interface ProductCardProps {
   };
 }
 
+const CATEGORY_COLORS: Record<string, string> = {
+  "Fruits & Légumes": "bg-green-100 text-green-800 hover:bg-green-100",
+  "Viandes & Charcuterie": "bg-red-100 text-red-800 hover:bg-red-100",
+  "Poissons & Fruits de mer": "bg-blue-100 text-blue-800 hover:bg-blue-100",
+  "Fromages & Produits laitiers": "bg-amber-100 text-amber-800 hover:bg-amber-100",
+  "Boulangerie & Pâtisserie": "bg-orange-100 text-orange-800 hover:bg-orange-100",
+  "Épicerie & Condiments": "bg-purple-100 text-purple-800 hover:bg-purple-100",
+  "Boissons": "bg-indigo-100 text-indigo-800 hover:bg-indigo-100",
+  "Bio & Nature": "bg-emerald-100 text-emerald-800 hover:bg-emerald-100",
+};
+
 // Arrondir au multiple de MOQ le plus proche
 function roundToMoq(value: number, moq: number): number {
   if (moq <= 0) return value;
@@ -103,7 +114,18 @@ export default function ProductCard({ product }: ProductCardProps) {
         </h4>
 
         {/* Catégorie */}
-        <p className="text-xs text-gray-500 mt-1">{product.category.name}</p>
+        <Badge
+          className={`mt-1 w-fit text-xs font-normal ${CATEGORY_COLORS[product.category.name] ?? "bg-gray-100 text-gray-700 hover:bg-gray-100"}`}
+        >
+          {product.category.name}
+        </Badge>
+
+        {/* Description */}
+        {product.description && (
+          <p className="text-xs text-gray-500 mt-1.5 line-clamp-2">
+            {product.description}
+          </p>
+        )}
 
         {/* Prix */}
         <div className="mt-2 flex items-baseline gap-1 ">

@@ -251,7 +251,7 @@ export default function CommandesPage() {
                       variant="ghost"
                       onClick={() => handleCancel(order.id)}
                       disabled={actionLoading === order.id}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50 gap-2"
+                      className="text-red-600 hover:text-red-700 hover:bg-secondaire-50 gap-2"
                     >
                       <XCircle className="h-4 w-4" />
                       Annuler

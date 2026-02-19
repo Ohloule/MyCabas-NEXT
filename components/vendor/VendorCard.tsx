@@ -23,6 +23,10 @@ interface SocialLinks {
 interface Product {
   id: string;
   name: string;
+  category?: {
+    name: string;
+    icon?: string | null;
+  };
 }
 
 export interface VendorCardData {
@@ -88,6 +92,15 @@ export function VendorCard({ vendor, isPreview = false }: VendorCardProps) {
   // Utiliser le logo de la boutique en priorité, sinon l'avatar
   const bannerImage = vendor.logoUrl || vendor.user?.avatarUrl;
   const hasProducts = vendor.products && vendor.products.length > 0;
+  const uniqueCategories = vendor.products
+    ? [
+        ...new Map(
+          vendor.products
+            .filter((p) => p.category)
+            .map((p) => [p.category!.name, p.category!]),
+        ).values(),
+      ]
+    : [];
   const hasSocialLinks =
     vendor.socialLinks &&
     (vendor.socialLinks.instagram ||
@@ -270,18 +283,15 @@ export function VendorCard({ vendor, isPreview = false }: VendorCardProps) {
               <Package className="h-4 w-4 text-muted-foreground" />
               Produits ({vendor.productCount || vendor.products?.length})
             </div>
-            <div className="flex flex-wrap gap-1">
-              {vendor.products?.slice(0, 4).map((product) => (
-                <Badge key={product.id} variant="secondary" className="text-xs">
-                  {product.name}
-                </Badge>
-              ))}
-              {(vendor.productCount || 0) > 4 && (
-                <Badge variant="outline" className="text-xs">
-                  +{(vendor.productCount || 0) - 4}
-                </Badge>
-              )}
-            </div>
+            {uniqueCategories.length > 0 && (
+              <div className="flex flex-wrap gap-1">
+                {uniqueCategories.map((cat) => (
+                  <Badge key={cat.name} variant="secondary" className="text-xs">
+                    {cat.name}
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

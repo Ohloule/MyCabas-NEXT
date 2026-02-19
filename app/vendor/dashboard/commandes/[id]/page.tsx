@@ -216,7 +216,7 @@ export default function OrderDetailPage() {
 
       {/* Messages */}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
+        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
           {error}
         </div>
       )}
@@ -339,7 +339,7 @@ export default function OrderDetailPage() {
             variant="ghost"
             onClick={handleCancel}
             disabled={actionLoading}
-            className="text-red-600 hover:text-red-700 hover:bg-red-50 gap-2"
+            className="text-red-600 hover:text-red-700 hover:bg-secondaire-50 gap-2"
           >
             <XCircle className="h-4 w-4" />
             Annuler

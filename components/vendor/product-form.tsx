@@ -298,7 +298,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
       {/* Erreur */}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
           {error}
         </div>
       )}
@@ -431,7 +431,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
                 {/* Prix de référence */}
                 <div className="">
-                  <div className="flex items-center gap-1.5"><Label htmlFor="basePrice">Prix de référence *</Label></div>
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="basePrice">Prix de référence *</Label>
+                  </div>
                   <div className="mt-1 relative">
                     <Input
                       id="basePrice"

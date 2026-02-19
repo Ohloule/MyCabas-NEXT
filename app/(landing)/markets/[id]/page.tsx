@@ -13,6 +13,7 @@ import {
   Heart,
   LogIn,
   MapPin,
+  ShoppingBasket,
   Store,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -231,22 +232,31 @@ export default function MarketDetailPage() {
       <HeadingPage title={market.name}>
         {/* Bouton favori - visible uniquement si un jour est sélectionné */}
         {isAuthenticated && selectedDay && (
-          <button
-            onClick={toggleFavorite}
-            disabled={favoriteLoading}
-            className={`mb-4 flex min-w-64 justify-center items-center gap-2 mx-auto px-4 py-2 rounded-full transition-all ${
-              isFavorite
-                ? "bg-secondaire-500 text-white hover:bg-principale-800"
-                : "bg-principale-50 text-black  hover:bg-secondaire-200"
-            } ${favoriteLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-          >
-            <Heart className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`} />
-            <span className="text-sm font-medium">
-              {isFavorite
-                ? `Favori le ${DAYS_FR[selectedDay]}`
-                : `Ajouter le ${DAYS_FR[selectedDay]} aux favoris`}
-            </span>
-          </button>
+          <div className="mb-4 flex flex-wrap justify-center gap-3">
+            <button
+              onClick={toggleFavorite}
+              disabled={favoriteLoading}
+              className={`flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full transition-all ${
+                isFavorite
+                  ? "bg-secondaire-500 text-white hover:bg-principale-800"
+                  : "bg-principale-50 text-black hover:bg-secondaire-200"
+              } ${favoriteLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+            >
+              <Heart className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`} />
+              <span className="text-sm font-medium">
+                {isFavorite
+                  ? `Favori le ${DAYS_FR[selectedDay]}`
+                  : `Ajouter le ${DAYS_FR[selectedDay]} aux favoris`}
+              </span>
+            </button>
+            <Link
+              href={`/markets/${marketId}/shop?day=${selectedDay.toLowerCase()}`}
+              className="flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full bg-principale-600 text-white hover:bg-principale-500 transition-colors cursor-pointer"
+            >
+              <ShoppingBasket className="h-5 w-5" />
+              <span className="text-sm font-medium">Faire son marché</span>
+            </Link>
+          </div>
         )}
         <div className="flex items-center gap-2 text-sm sm:text-base bg-principale-50/10 text-principale-50 py-2 px-6 backdrop-blur-sm w-fit mx-auto">
           <MapPin className="h-5 w-5" />

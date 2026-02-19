@@ -31,7 +31,11 @@ export async function GET(
                   include: {
                     category: true,
                   },
-                  take: 5,
+                },
+                _count: {
+                  select: {
+                    products: { where: { isActive: true } },
+                  },
                 },
               },
             },
@@ -69,7 +73,7 @@ export async function GET(
       labels: mv.vendor.labels,
       user: mv.vendor.user,
       products: mv.vendor.products,
-      productCount: mv.vendor.products.length,
+      productCount: mv.vendor._count.products,
     }));
 
     return NextResponse.json({

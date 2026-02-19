@@ -3,14 +3,14 @@
 import {
   Apple,
   Beef,
-  Fish,
-  Milk,
-  Croissant,
-  Wine,
-  Leaf,
   ChevronDown,
+  Croissant,
+  Fish,
+  Leaf,
+  Milk,
   Store,
   UtensilsCrossed,
+  Wine,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -31,19 +31,19 @@ const iconMap: Record<string, React.ReactNode> = {
   "fromages-produits-laitiers": <Milk className="h-5 w-5" />,
   "boulangerie-patisserie": <Croissant className="h-5 w-5" />,
   "epicerie-condiments": <UtensilsCrossed className="h-5 w-5" />,
-  "boissons": <Wine className="h-5 w-5" />,
+  boissons: <Wine className="h-5 w-5" />,
   "bio-nature": <Leaf className="h-5 w-5" />,
 };
 
 // Couleurs par catégorie
 const colorMap: Record<string, string> = {
   "fruits-legumes": "text-green-600 bg-green-50",
-  "viandes-charcuterie": "text-red-600 bg-red-50",
+  "viandes-charcuterie": "text-red-600 bg-secondaire-50",
   "poissons-fruits-de-mer": "text-blue-600 bg-blue-50",
   "fromages-produits-laitiers": "text-yellow-600 bg-yellow-50",
   "boulangerie-patisserie": "text-amber-600 bg-amber-50",
   "epicerie-condiments": "text-orange-600 bg-orange-50",
-  "boissons": "text-purple-600 bg-purple-50",
+  boissons: "text-purple-600 bg-purple-50",
   "bio-nature": "text-emerald-600 bg-emerald-50",
 };
 
