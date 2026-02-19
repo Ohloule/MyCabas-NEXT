@@ -16,7 +16,7 @@ export default function HomePage() {
         <Navbar />
         <HeroSection />
       </div>
-      <div className="bg-CardSection">
+      <div className="bg-CardSection py-8 sm:py-32">
         <DriveSection />
         <CardSection />
       </div>

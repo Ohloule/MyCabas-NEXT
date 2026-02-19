@@ -4,9 +4,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Infinity, Leaf, Loader2, MapPin, Save, X } from "lucide-react";
+import { Infinity, Leaf, MapPin, Save, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+import Loader from "../Loader";
 
 interface Category {
   id: string;
@@ -367,11 +368,7 @@ export function ProductsTableEditable({
             disabled={dirtyCount === 0 || saving}
             className="flex-1 sm:flex-none"
           >
-            {saving ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <Save className="w-4 h-4" />
-            )}
+            {saving ? <Loader taille={45} /> : <Save className="w-4 h-4" />}
             Enregistrer
           </Button>
         </div>

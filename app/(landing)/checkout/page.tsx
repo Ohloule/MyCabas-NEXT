@@ -1,24 +1,18 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import HeadingPage from "@/components/HeadingPage";
+import Loader from "@/components/Loader";
 import CheckoutForm from "@/components/checkout/checkout-form";
+import { useCart } from "@/components/providers/cart-provider";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { getStripe } from "@/lib/stripe-client";
 import { Elements } from "@stripe/react-stripe-js";
-import {
-  AlertCircle,
-  ArrowLeft,
-  Loader2,
-  MapPin,
-  ShoppingCart,
-  Store,
-} from "lucide-react";
+import { AlertCircle, ArrowLeft, MapPin, Store } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { useCart } from "@/components/providers/cart-provider";
 
 interface CheckoutData {
   orderId: string;
@@ -90,7 +84,7 @@ export default function CheckoutPage() {
       <>
         <HeadingPage title="Paiement" />
         <div className="align-center py-24 flex flex-col items-center gap-4">
-          <Loader2 className="h-8 w-8 animate-spin text-principale-500" />
+          <Loader taille={45} />
           <p className="text-gray-600">Préparation de votre commande...</p>
         </div>
       </>
@@ -108,10 +102,7 @@ export default function CheckoutPage() {
           </h2>
           <p className="text-gray-500 mb-6 max-w-md mx-auto">{error}</p>
           <Link href="/panier">
-            <Button
-              variant="outline"
-              className="gap-2"
-            >
+            <Button variant="outline" className="gap-2">
               <ArrowLeft className="h-4 w-4" />
               Retour au panier
             </Button>
@@ -217,7 +208,9 @@ export default function CheckoutPage() {
           <div className="lg:col-span-1">
             <Card className="sticky top-4">
               <CardContent className="p-6">
-                <h2 className="font-semibold text-lg mb-1">Paiement sécurisé</h2>
+                <h2 className="font-semibold text-lg mb-1">
+                  Paiement sécurisé
+                </h2>
                 <p className="text-sm text-gray-500 mb-6">
                   Commande n° {checkoutData.orderNumber}
                 </p>

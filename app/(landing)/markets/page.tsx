@@ -1,6 +1,7 @@
 "use client";
 
 import HeadingPage from "@/components/HeadingPage";
+import Loader from "@/components/Loader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +17,6 @@ import {
   Calendar,
   Clock,
   Heart,
-  Loader2,
   MapPin,
   Navigation,
   Search,
@@ -383,12 +383,18 @@ export default function MarketsPage() {
                   Choisissez votre marché favori
                 </h3>
                 <p className="text-sm text-amber-700 mt-1">
-                  Pour accéder à la recherche de produits, vous devez d&apos;abord ajouter au moins un marché à vos favoris.
-                  Trouvez un marché près de chez vous et cliquez sur le bouton <Heart className="inline h-4 w-4 text-red-500" /> pour l&apos;ajouter.
+                  Pour accéder à la recherche de produits, vous devez
+                  d&apos;abord ajouter au moins un marché à vos favoris. Trouvez
+                  un marché près de chez vous et cliquez sur le bouton{" "}
+                  <Heart className="inline h-4 w-4 text-red-500" /> pour
+                  l&apos;ajouter.
                 </p>
                 {(pendingQuery || pendingCategory) && (
                   <p className="text-xs text-amber-600 mt-2">
-                    Votre recherche {pendingQuery && <>&quot;{pendingQuery}&quot;</>} {pendingCategory && `(catégorie: ${pendingCategory})`} sera conservée.
+                    Votre recherche{" "}
+                    {pendingQuery && <>&quot;{pendingQuery}&quot;</>}{" "}
+                    {pendingCategory && `(catégorie: ${pendingCategory})`} sera
+                    conservée.
                   </p>
                 )}
               </div>
@@ -421,7 +427,7 @@ export default function MarketsPage() {
                   />
                   {suggestionsLoading && (
                     <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                      <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+                      <Loader taille={45} />
                     </div>
                   )}
 
@@ -430,7 +436,7 @@ export default function MarketsPage() {
                     <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-auto rounded-lg border bg-white shadow-lg">
                       {suggestionsLoading ? (
                         <div className="flex items-center justify-center py-4">
-                          <Loader2 className="h-5 w-5 animate-spin text-gray-400" />
+                          <Loader taille={45} />
                         </div>
                       ) : suggestions.length > 0 ? (
                         suggestions.map((suggestion, index) => (
@@ -473,7 +479,7 @@ export default function MarketsPage() {
                 variant="outline"
               >
                 {locationLoading ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader taille={45} />
                 ) : (
                   <Navigation className="mr-2 h-4 w-4" />
                 )}
@@ -534,7 +540,11 @@ export default function MarketsPage() {
                     size="sm"
                     variant={isSelected ? "default" : "outline"}
                     onClick={() => toggleDay(day)}
-                    className={!hasMarkets ? "opacity-50 bg-principale-400 hover:bg-principale-400 cursor-not-allowed" : ""}
+                    className={
+                      !hasMarkets
+                        ? "opacity-50 bg-principale-400 hover:bg-principale-400 cursor-not-allowed"
+                        : ""
+                    }
                   >
                     <span className={!hasMarkets ? "line-through" : ""}>
                       {DAYS_FR[day].slice(0, 3)}
@@ -563,7 +573,7 @@ export default function MarketsPage() {
         {/* Résultats */}
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <Loader taille={45} />
           </div>
         ) : !hasSearched ? (
           <div className="rounded-lg border border-dashed p-12 text-center">

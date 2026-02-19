@@ -1,16 +1,10 @@
 "use client";
 
+import Loader from "@/components/Loader";
+import OrderStatusBadge from "@/components/orders/order-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import OrderStatusBadge from "@/components/orders/order-status-badge";
-import {
-  ClipboardList,
-  Clock,
-  Loader2,
-  MapPin,
-  Package,
-  Store,
-} from "lucide-react";
+import { ClipboardList, Clock, MapPin, Package, Store } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -46,7 +40,7 @@ export default function OrdersClosedPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <Loader2 className="h-8 w-8 animate-spin text-principale-500" />
+        <Loader taille={45} />
       </div>
     );
   }
@@ -113,7 +107,7 @@ export default function OrdersClosedPage() {
                             weekday: "long",
                             day: "numeric",
                             month: "long",
-                          }
+                          },
                         )}
                       </span>
                     </div>

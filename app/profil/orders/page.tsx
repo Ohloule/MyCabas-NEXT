@@ -1,16 +1,10 @@
 "use client";
 
+import Loader from "@/components/Loader";
+import OrderStatusBadge from "@/components/orders/order-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import OrderStatusBadge from "@/components/orders/order-status-badge";
-import {
-  ClipboardList,
-  Clock,
-  Loader2,
-  MapPin,
-  ShoppingBag,
-  Store,
-} from "lucide-react";
+import { ClipboardList, Clock, MapPin, ShoppingBag, Store } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -50,7 +44,7 @@ export default function OrdersPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <Loader2 className="h-8 w-8 animate-spin text-principale-500" />
+        <Loader taille={45} />
       </div>
     );
   }
@@ -67,8 +61,8 @@ export default function OrdersPage() {
               Aucune commande en cours
             </h3>
             <p className="text-sm text-gray-500 mb-4">
-              Quand vous passerez une commande, elle apparaîtra ici
-              jusqu&apos;à ce que vous la récupériez au marché.
+              Quand vous passerez une commande, elle apparaîtra ici jusqu&apos;à
+              ce que vous la récupériez au marché.
             </p>
             <Link href="/search">
               <Button
@@ -119,7 +113,7 @@ export default function OrdersPage() {
                             weekday: "long",
                             day: "numeric",
                             month: "long",
-                          }
+                          },
                         )}
                       </span>
                     </div>

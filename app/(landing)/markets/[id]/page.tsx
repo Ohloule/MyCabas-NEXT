@@ -1,6 +1,7 @@
 "use client";
 
 import HeadingPage from "@/components/HeadingPage";
+import Loader from "@/components/Loader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +11,6 @@ import {
   Calendar,
   Clock,
   Heart,
-  Loader2,
   LogIn,
   MapPin,
   Store,
@@ -118,7 +118,7 @@ export default function MarketDetailPage() {
       }
       try {
         const response = await fetch(
-          `/api/favorites/markets/${marketId}?day=${selectedDay}`
+          `/api/favorites/markets/${marketId}?day=${selectedDay}`,
         );
         if (response.ok) {
           const data = await response.json();
@@ -138,7 +138,7 @@ export default function MarketDetailPage() {
     try {
       const response = await fetch(
         `/api/favorites/markets/${marketId}?day=${selectedDay}`,
-        { method: "POST" }
+        { method: "POST" },
       );
       if (response.ok) {
         const data = await response.json();
@@ -196,7 +196,7 @@ export default function MarketDetailPage() {
     return (
       <div className="min-h-screen bg-secondaire-50/50">
         <div className="flex items-center justify-center py-24">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <Loader taille={45} />
         </div>
       </div>
     );
@@ -234,15 +234,13 @@ export default function MarketDetailPage() {
           <button
             onClick={toggleFavorite}
             disabled={favoriteLoading}
-            className={`mb-4 flex items-center gap-2 mx-auto px-4 py-2 rounded-full transition-all ${
+            className={`mb-4 flex min-w-64 justify-center items-center gap-2 mx-auto px-4 py-2 rounded-full transition-all ${
               isFavorite
-                ? "bg-red-500 text-white hover:bg-red-600"
-                : "bg-white/20 text-white hover:bg-white/30"
+                ? "bg-secondaire-500 text-white hover:bg-principale-800"
+                : "bg-principale-50 text-black  hover:bg-secondaire-200"
             } ${favoriteLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
           >
-            <Heart
-              className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`}
-            />
+            <Heart className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`} />
             <span className="text-sm font-medium">
               {isFavorite
                 ? `Favori le ${DAYS_FR[selectedDay]}`

@@ -40,7 +40,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full food-motif bg-principale-700 py-2">
+    <header className="w-full food-motif bg-principale-700 py-5 sm:py-2">
       <div className="align-center h-full flex flex-row justify-between items-center gap-4">
         {/* Logo */}
         <div className="h-full place-content-center shrink-0">

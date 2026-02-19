@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,7 +17,6 @@ import {
   ArrowLeft,
   ArrowRight,
   Check,
-  Loader2,
   Store,
   User,
 } from "lucide-react";
@@ -277,11 +277,7 @@ function RegisterForm() {
                         onClick={searchSiret}
                         disabled={siretLoading || loading}
                       >
-                        {siretLoading ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          "Vérifier"
-                        )}
+                        {siretLoading ? <Loader taille={45} /> : "Vérifier"}
                       </Button>
                     </div>
                   </div>
@@ -441,7 +437,7 @@ function RegisterForm() {
                 <Button type="submit" className="flex-1" disabled={loading}>
                   {loading ? (
                     <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      <Loader taille={45} />
                       Inscription...
                     </>
                   ) : (
@@ -484,7 +480,7 @@ export default function RegisterPage() {
     <Suspense
       fallback={
         <div className="flex min-h-screen items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <Loader taille={45} />
         </div>
       }
     >

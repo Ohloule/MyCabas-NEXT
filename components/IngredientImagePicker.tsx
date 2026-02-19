@@ -2,13 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  Loader2,
-  Search,
-} from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 interface IngredientImagePickerProps {
@@ -34,7 +28,7 @@ export default function IngredientImagePicker({
       setError(null);
       try {
         const response = await fetch(
-          `/api/unsplash/search?query=${encodeURIComponent(searchQuery)}&page=${pageNum}`
+          `/api/unsplash/search?query=${encodeURIComponent(searchQuery)}&page=${pageNum}`,
         );
         const data = await response.json();
 
@@ -54,7 +48,7 @@ export default function IngredientImagePicker({
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   // Synchroniser avec defaultQuery quand il change
@@ -106,7 +100,7 @@ export default function IngredientImagePicker({
       <div className="relative min-h-75 border rounded-xl p-2 bg-gray-50">
         {loading && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/60 backdrop-blur-[1px]">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <Loader taille={45} />
           </div>
         )}
 

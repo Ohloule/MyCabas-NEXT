@@ -1,8 +1,9 @@
 "use client";
 
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Loader2, MapPin } from "lucide-react";
+import { Heart, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -60,7 +61,7 @@ export default function MarchesFavorisPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Loader2 className="h-8 w-8 animate-spin text-principale-500" />
+        <Loader taille={45} />
       </div>
     );
   }
@@ -76,7 +77,7 @@ export default function MarchesFavorisPage() {
       }
       return acc;
     },
-    [] as { market: Market; days: string[] }[]
+    [] as { market: Market; days: string[] }[],
   );
 
   if (grouped.length === 0) {

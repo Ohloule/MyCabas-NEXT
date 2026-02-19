@@ -1,18 +1,29 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import Loader from "@/components/Loader";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
-  MapPin,
-  Search,
-  Clock,
-  Plus,
-  Check,
-  X,
-  Loader2,
-  Store,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
   Calendar,
+  Check,
+  Clock,
   Edit2,
+  Loader,
+  MapPin,
+  Plus,
+  Search,
+  Store,
+  X,
 } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface Suggestion {
   id: string;
@@ -21,16 +32,6 @@ interface Suggestion {
   town: string;
   zip: string;
 }
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 interface MarketOpening {
   id: string;
@@ -91,7 +92,9 @@ export default function MarchesPage() {
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   // État pour la localisation du vendeur
-  const [vendorLocation, setVendorLocation] = useState<VendorLocation | null>(null);
+  const [vendorLocation, setVendorLocation] = useState<VendorLocation | null>(
+    null,
+  );
   const [locationError, setLocationError] = useState<string | null>(null);
 
   // État pour l'autocomplétion
@@ -102,7 +105,9 @@ export default function MarchesPage() {
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
   // État pour la sélection des jours (inscription)
-  const [selectedDaysMap, setSelectedDaysMap] = useState<Record<string, string[]>>({});
+  const [selectedDaysMap, setSelectedDaysMap] = useState<
+    Record<string, string[]>
+  >({});
 
   // État pour l'édition des jours (marchés existants)
   const [editingMarketId, setEditingMarketId] = useState<string | null>(null);
@@ -130,7 +135,9 @@ export default function MarchesPage() {
         setVendorLocation(data);
         return data;
       } else if (response.status === 404) {
-        setLocationError("Ajoutez une adresse à votre profil pour voir les marchés proches de vous.");
+        setLocationError(
+          "Ajoutez une adresse à votre profil pour voir les marchés proches de vous.",
+        );
       }
       return null;
     } catch (err) {
@@ -140,33 +147,36 @@ export default function MarchesPage() {
   }, []);
 
   // Charger tous les marchés disponibles
-  const fetchAvailableMarkets = useCallback(async (location?: VendorLocation | null) => {
-    setSearchLoading(true);
-    try {
-      let url: string;
+  const fetchAvailableMarkets = useCallback(
+    async (location?: VendorLocation | null) => {
+      setSearchLoading(true);
+      try {
+        let url: string;
 
-      if (searchQuery) {
-        // Recherche textuelle
-        url = `/api/markets?search=${encodeURIComponent(searchQuery)}`;
-      } else if (location) {
-        // Recherche par proximité (9 marchés les plus proches)
-        url = `/api/markets?lat=${location.lat}&lng=${location.lng}&radius=100`;
-      } else {
-        // Fallback: tous les marchés
-        url = "/api/markets";
+        if (searchQuery) {
+          // Recherche textuelle
+          url = `/api/markets?search=${encodeURIComponent(searchQuery)}`;
+        } else if (location) {
+          // Recherche par proximité (9 marchés les plus proches)
+          url = `/api/markets?lat=${location.lat}&lng=${location.lng}&radius=100`;
+        } else {
+          // Fallback: tous les marchés
+          url = "/api/markets";
+        }
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Erreur lors du chargement");
+        const data = await response.json();
+        setAvailableMarkets(data.markets || []);
+        setFilteredMarkets(data.markets || []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setSearchLoading(false);
       }
-
-      const response = await fetch(url);
-      if (!response.ok) throw new Error("Erreur lors du chargement");
-      const data = await response.json();
-      setAvailableMarkets(data.markets || []);
-      setFilteredMarkets(data.markets || []);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setSearchLoading(false);
-    }
-  }, [searchQuery]);
+    },
+    [searchQuery],
+  );
 
   // Chargement initial
   useEffect(() => {
@@ -188,7 +198,9 @@ export default function MarchesPage() {
     }
 
     try {
-      const response = await fetch(`/api/markets/suggestions?q=${encodeURIComponent(query)}`);
+      const response = await fetch(
+        `/api/markets/suggestions?q=${encodeURIComponent(query)}`,
+      );
       if (response.ok) {
         const data = await response.json();
         setSuggestions(data.suggestions || []);
@@ -247,7 +259,7 @@ export default function MarchesPage() {
       case "ArrowDown":
         e.preventDefault();
         setSelectedSuggestionIndex((prev) =>
-          prev < suggestions.length - 1 ? prev + 1 : prev
+          prev < suggestions.length - 1 ? prev + 1 : prev,
         );
         break;
       case "ArrowUp":
@@ -256,7 +268,10 @@ export default function MarchesPage() {
         break;
       case "Enter":
         e.preventDefault();
-        if (selectedSuggestionIndex >= 0 && suggestions[selectedSuggestionIndex]) {
+        if (
+          selectedSuggestionIndex >= 0 &&
+          suggestions[selectedSuggestionIndex]
+        ) {
           handleSelectSuggestion(suggestions[selectedSuggestionIndex]);
         }
         break;
@@ -327,7 +342,9 @@ export default function MarchesPage() {
       });
     } catch (err) {
       console.error(err);
-      alert(err instanceof Error ? err.message : "Erreur lors de l'inscription");
+      alert(
+        err instanceof Error ? err.message : "Erreur lors de l'inscription",
+      );
     } finally {
       setActionLoading(null);
     }
@@ -361,13 +378,15 @@ export default function MarchesPage() {
 
       const updatedMarket = await response.json();
       setMyMarkets((prev) =>
-        prev.map((m) => (m.id === marketId ? updatedMarket : m))
+        prev.map((m) => (m.id === marketId ? updatedMarket : m)),
       );
       setEditingMarketId(null);
       setEditDays([]);
     } catch (err) {
       console.error(err);
-      alert(err instanceof Error ? err.message : "Erreur lors de la mise à jour");
+      alert(
+        err instanceof Error ? err.message : "Erreur lors de la mise à jour",
+      );
     } finally {
       setActionLoading(null);
     }
@@ -381,7 +400,8 @@ export default function MarchesPage() {
 
   // Se désinscrire d'un marché
   const handleUnregister = async (marketId: string) => {
-    if (!confirm("Voulez-vous vraiment vous désinscrire de ce marché ?")) return;
+    if (!confirm("Voulez-vous vraiment vous désinscrire de ce marché ?"))
+      return;
 
     setActionLoading(marketId);
     try {
@@ -398,7 +418,7 @@ export default function MarchesPage() {
     } catch (err) {
       console.error(err);
       alert(
-        err instanceof Error ? err.message : "Erreur lors de la désinscription"
+        err instanceof Error ? err.message : "Erreur lors de la désinscription",
       );
     } finally {
       setActionLoading(null);
@@ -408,14 +428,14 @@ export default function MarchesPage() {
   // Trier les horaires
   const sortOpenings = (openings: MarketOpening[]) => {
     return [...openings].sort(
-      (a, b) => DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day)
+      (a, b) => DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day),
     );
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Loader2 className="h-8 w-8 animate-spin text-principale-600" />
+        <Loader taille={45} />
       </div>
     );
   }
@@ -428,7 +448,9 @@ export default function MarchesPage() {
           <MapPin className="w-6 h-6 text-principale-600" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-principale-800">Mes marchés</h1>
+          <h1 className="text-3xl font-bold text-principale-800">
+            Mes marchés
+          </h1>
           <p className="text-gray-600">Gérez vos inscriptions aux marchés</p>
         </div>
       </div>
@@ -509,16 +531,19 @@ export default function MarchesPage() {
                           return (
                             <button
                               key={opening.id}
-                              onClick={() => isEditing && toggleEditDay(opening.day)}
+                              onClick={() =>
+                                isEditing && toggleEditDay(opening.day)
+                              }
                               disabled={!isEditing}
                               className={`
                                 px-3 py-2 rounded-lg text-sm font-medium transition-all
                                 ${isEditing ? "cursor-pointer" : "cursor-default"}
-                                ${isSelected
-                                  ? "bg-principale-600 text-white shadow-sm"
-                                  : isEditing
-                                    ? "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                                    : "bg-gray-100 text-gray-400"
+                                ${
+                                  isSelected
+                                    ? "bg-principale-600 text-white shadow-sm"
+                                    : isEditing
+                                      ? "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                      : "bg-gray-100 text-gray-400"
                                 }
                               `}
                             >
@@ -539,10 +564,12 @@ export default function MarchesPage() {
                           size="sm"
                           className="flex-1"
                           onClick={() => saveEditDays(market.id)}
-                          disabled={actionLoading === market.id || editDays.length === 0}
+                          disabled={
+                            actionLoading === market.id || editDays.length === 0
+                          }
                         >
                           {actionLoading === market.id ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <Loader taille={45} />
                           ) : (
                             <>
                               <Check className="h-4 w-4" />
@@ -568,7 +595,7 @@ export default function MarchesPage() {
                         disabled={actionLoading === market.id}
                       >
                         {actionLoading === market.id ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
+                          <Loader taille={45} />
                         ) : (
                           <>
                             <X className="h-4 w-4" />
@@ -599,8 +626,6 @@ export default function MarchesPage() {
             <span>{locationError}</span>
           </div>
         )}
-
-        
 
         <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
           <div className="relative">
@@ -634,7 +659,9 @@ export default function MarchesPage() {
                     key={suggestion.id}
                     onClick={() => handleSelectSuggestion(suggestion)}
                     className={`w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3 transition-colors ${
-                      index === selectedSuggestionIndex ? "bg-principale-50" : ""
+                      index === selectedSuggestionIndex
+                        ? "bg-principale-50"
+                        : ""
                     } ${index !== suggestions.length - 1 ? "border-b border-gray-100" : ""}`}
                   >
                     <MapPin className="w-4 h-4 text-principale-500 shrink-0" />
@@ -655,7 +682,7 @@ export default function MarchesPage() {
 
         {searchLoading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-6 w-6 animate-spin text-principale-600" />
+            <Loader taille={45} />
           </div>
         ) : filteredMarkets.length === 0 ? (
           <Card>
@@ -689,7 +716,9 @@ export default function MarchesPage() {
                     <div className="mb-3">
                       <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
                         <Clock className="h-4 w-4" />
-                        <span className="font-medium">Sélectionnez vos jours :</span>
+                        <span className="font-medium">
+                          Sélectionnez vos jours :
+                        </span>
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {sortOpenings(market.openings).map((opening) => {
@@ -701,9 +730,10 @@ export default function MarchesPage() {
                               onClick={() => toggleDay(market.id, opening.day)}
                               className={`
                                 px-3 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer
-                                ${isSelected
-                                  ? "bg-principale-600 text-white shadow-sm"
-                                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                ${
+                                  isSelected
+                                    ? "bg-principale-600 text-white shadow-sm"
+                                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                                 }
                               `}
                             >
@@ -722,17 +752,20 @@ export default function MarchesPage() {
                       size="sm"
                       className="w-full"
                       onClick={() => handleRegister(market.id)}
-                      disabled={actionLoading === market.id || selectedDays.length === 0}
+                      disabled={
+                        actionLoading === market.id || selectedDays.length === 0
+                      }
                     >
                       {actionLoading === market.id ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <Loader taille={45} />
                       ) : (
                         <>
                           <Plus className="h-4 w-4" />
                           S'inscrire
                           {selectedDays.length > 0 && (
                             <span className="ml-1">
-                              ({selectedDays.length} jour{selectedDays.length > 1 ? "s" : ""})
+                              ({selectedDays.length} jour
+                              {selectedDays.length > 1 ? "s" : ""})
                             </span>
                           )}
                         </>

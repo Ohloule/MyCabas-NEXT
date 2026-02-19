@@ -6,7 +6,7 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { Loader2, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
 import { useState } from "react";
 
 interface CheckoutFormProps {
@@ -48,7 +48,10 @@ export default function CheckoutForm({
 
     // Si on arrive ici c'est qu'il y a eu une erreur (sinon redirect)
     if (confirmError) {
-      if (confirmError.type === "card_error" || confirmError.type === "validation_error") {
+      if (
+        confirmError.type === "card_error" ||
+        confirmError.type === "validation_error"
+      ) {
         setError(confirmError.message || "Erreur de paiement");
       } else {
         setError("Une erreur inattendue est survenue. Veuillez réessayer.");
@@ -77,11 +80,7 @@ export default function CheckoutForm({
         disabled={isProcessing || !stripe || !elements}
         className="w-full bg-secondaire-500 hover:bg-secondaire-600 h-12 text-base gap-2"
       >
-        {isProcessing ? (
-          <Loader2 className="h-5 w-5 animate-spin" />
-        ) : (
-          <Lock className="h-4 w-4" />
-        )}
+        {isProcessing ? <Loader taille={45} /> : <Lock className="h-4 w-4" />}
         {isProcessing
           ? "Traitement en cours..."
           : `Autoriser ${totalEuros.toFixed(2)} €`}

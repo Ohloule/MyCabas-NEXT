@@ -9,7 +9,9 @@
   --principale-200: oklch(89% 0.065 175);
   --principale-300: oklch(80% 0.095 175);
   --principale-400: oklch(70% 0.12 175);
-  --principale-500: oklch(59.336% 0.11612 171.119); /* Vert Signature - Très frais */
+  --principale-500: oklch(
+    59.336% 0.11612 171.119
+  ); /* Vert Signature - Très frais */
   --principale-600: oklch(48% 0.125 175);
   --principale-700: oklch(38% 0.105 175);
   --principale-800: oklch(28% 0.085 175);
@@ -175,6 +177,7 @@ body {
   background-color: rgba(245, 254, 248, 0.762);
   background-blend-mode: lighten;
   background-size: 550px;
+  
 }
 .bg-pricing {
   background-image: url("/patterns/pricing-01.svg");

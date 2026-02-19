@@ -1,11 +1,11 @@
 "use client";
 
+import HeadingPage from "@/components/HeadingPage";
+import Loader from "@/components/Loader";
+import { useCart } from "@/components/providers/cart-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import HeadingPage from "@/components/HeadingPage";
-import { useCart } from "@/components/providers/cart-provider";
 import {
-  Loader2,
   MapPin,
   Minus,
   Plus,
@@ -14,22 +14,36 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 export default function PanierPage() {
   const { status } = useSession();
   const router = useRouter();
-  const { cart, isLoading: loading, updateQuantity, removeItem, clearCart } = useCart();
+  const {
+    cart,
+    isLoading: loading,
+    updateQuantity,
+    removeItem,
+    clearCart,
+  } = useCart();
   const [updatingItems, setUpdatingItems] = useState<Set<string>>(new Set());
   const [clearing, setClearing] = useState(false);
 
-  const handleUpdateQuantity = async (item: { id: string; quantity: number; product: { id: string; minOrderQty: number } }, direction: "up" | "down") => {
+  const handleUpdateQuantity = async (
+    item: {
+      id: string;
+      quantity: number;
+      product: { id: string; minOrderQty: number };
+    },
+    direction: "up" | "down",
+  ) => {
     const moq = item.product.minOrderQty || 1;
-    const newQuantity = direction === "up" ? item.quantity + moq : item.quantity - moq;
+    const newQuantity =
+      direction === "up" ? item.quantity + moq : item.quantity - moq;
     setUpdatingItems((prev) => new Set(prev).add(item.id));
 
     try {
@@ -82,7 +96,7 @@ export default function PanierPage() {
   const total =
     cart?.items.reduce(
       (sum, item) => sum + item.product.basePrice * item.quantity,
-      0
+      0,
     ) ?? 0;
 
   const itemCount = cart?.items.length ?? 0;
@@ -116,7 +130,7 @@ export default function PanierPage() {
       <>
         <HeadingPage title="Mon Panier" />
         <div className="flex items-center justify-center py-24">
-          <Loader2 className="h-8 w-8 animate-spin text-principale-500" />
+          <Loader taille={45} />
         </div>
       </>
     );
@@ -162,7 +176,7 @@ export default function PanierPage() {
     {} as Record<
       string,
       { vendor: { id: string; stallName: string }; items: typeof cart.items }
-    >
+    >,
   );
 
   return (
@@ -195,7 +209,7 @@ export default function PanierPage() {
                 className="text-sm text-red-500 hover:text-red-700 flex items-center gap-1 cursor-pointer disabled:opacity-50"
               >
                 {clearing ? (
-                  <Loader2 className="h-3 w-3 animate-spin" />
+                  <Loader taille={45} />
                 ) : (
                   <Trash2 className="h-3 w-3" />
                 )}
@@ -268,7 +282,8 @@ export default function PanierPage() {
                             disabled={updatingItems.has(item.id)}
                             className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 cursor-pointer disabled:opacity-50"
                           >
-                            {item.quantity <= (item.product.minOrderQty || 1) ? (
+                            {item.quantity <=
+                            (item.product.minOrderQty || 1) ? (
                               <Trash2 className="h-3 w-3" />
                             ) : (
                               <Minus className="h-3 w-3" />
@@ -276,7 +291,7 @@ export default function PanierPage() {
                           </button>
                           <span className="w-8 text-center font-medium">
                             {updatingItems.has(item.id) ? (
-                              <Loader2 className="h-4 w-4 animate-spin mx-auto" />
+                              <Loader taille={45} />
                             ) : (
                               item.quantity
                             )}
@@ -293,7 +308,10 @@ export default function PanierPage() {
                         {/* Prix total item */}
                         <div className="text-right shrink-0">
                           <p className="font-semibold text-gray-900">
-                            {(item.product.basePrice * item.quantity).toFixed(2)} €
+                            {(item.product.basePrice * item.quantity).toFixed(
+                              2,
+                            )}{" "}
+                            €
                           </p>
                         </div>
 
@@ -363,8 +381,12 @@ export default function PanierPage() {
           <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 lg:hidden z-50">
             <div className="flex items-center justify-between gap-4 max-w-screen-sm mx-auto">
               <div>
-                <p className="text-xs text-gray-500">{itemCount} {itemCount > 1 ? "produits" : "produit"}</p>
-                <p className="font-semibold text-lg text-principale-600">{total.toFixed(2)} €</p>
+                <p className="text-xs text-gray-500">
+                  {itemCount} {itemCount > 1 ? "produits" : "produit"}
+                </p>
+                <p className="font-semibold text-lg text-principale-600">
+                  {total.toFixed(2)} €
+                </p>
               </div>
               <Button className="bg-secondaire-500 hover:bg-secondaire-600 flex-1 max-w-50">
                 Passer la commande

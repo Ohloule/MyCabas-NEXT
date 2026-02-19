@@ -1,19 +1,12 @@
 "use client";
 
+import Loader from "@/components/Loader";
+import OrderStatusBadge from "@/components/orders/order-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Check,
-  Clock,
-  Loader2,
-  MapPin,
-  Package,
-  User,
-  XCircle,
-} from "lucide-react";
+import { Check, Clock, MapPin, Package, User, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import OrderStatusBadge from "@/components/orders/order-status-badge";
 
 interface OrderItem {
   id: string;
@@ -87,7 +80,12 @@ export default function CommandesPage() {
   };
 
   const handleCancel = async (orderId: string) => {
-    if (!confirm("Êtes-vous sûr de vouloir annuler cette commande ? L'autorisation sera relâchée.")) return;
+    if (
+      !confirm(
+        "Êtes-vous sûr de vouloir annuler cette commande ? L'autorisation sera relâchée.",
+      )
+    )
+      return;
 
     setActionLoading(orderId);
     try {
@@ -148,7 +146,7 @@ export default function CommandesPage() {
       {/* Liste des commandes */}
       {loading ? (
         <div className="flex items-center justify-center py-16">
-          <Loader2 className="h-8 w-8 animate-spin text-principale-500" />
+          <Loader taille={45} />
         </div>
       ) : orders.length === 0 ? (
         <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 text-center">
@@ -179,11 +177,14 @@ export default function CommandesPage() {
                       </span>
                       <span className="flex items-center gap-1">
                         <Clock className="h-3.5 w-3.5" />
-                        {new Date(order.marketDate).toLocaleDateString("fr-FR", {
-                          weekday: "long",
-                          day: "numeric",
-                          month: "long",
-                        })}
+                        {new Date(order.marketDate).toLocaleDateString(
+                          "fr-FR",
+                          {
+                            weekday: "long",
+                            day: "numeric",
+                            month: "long",
+                          },
+                        )}
                       </span>
                     </div>
                   </div>
@@ -192,7 +193,8 @@ export default function CommandesPage() {
                       {getVendorSubtotal(order).toFixed(2)} €
                     </p>
                     <p className="text-xs text-gray-500">
-                      {order.items.length} article{order.items.length > 1 ? "s" : ""}
+                      {order.items.length} article
+                      {order.items.length > 1 ? "s" : ""}
                     </p>
                   </div>
                 </div>
@@ -207,18 +209,23 @@ export default function CommandesPage() {
                       <span className="text-gray-700">
                         {item.productName} —{" "}
                         <span className="text-gray-500">
-                          {item.adjustedQuantity ?? item.quantity} {item.productUnit}
+                          {item.adjustedQuantity ?? item.quantity}{" "}
+                          {item.productUnit}
                         </span>
                       </span>
                       <span className="font-medium">
-                        {(item.adjustedTotalEuros ?? item.totalEuros).toFixed(2)} €
+                        {(item.adjustedTotalEuros ?? item.totalEuros).toFixed(
+                          2,
+                        )}{" "}
+                        €
                       </span>
                     </div>
                   ))}
                 </div>
 
                 {/* Actions */}
-                {(order.status === "AUTHORIZED" || order.status === "ADJUSTED") && (
+                {(order.status === "AUTHORIZED" ||
+                  order.status === "ADJUSTED") && (
                   <div className="border-t mt-4 pt-4 flex flex-col sm:flex-row gap-2">
                     <Button
                       onClick={() => handleConfirm(order.id)}
@@ -226,13 +233,16 @@ export default function CommandesPage() {
                       className="bg-green-600 hover:bg-green-700 gap-2 flex-1"
                     >
                       {actionLoading === order.id ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <Loader taille={45} />
                       ) : (
                         <Check className="h-4 w-4" />
                       )}
                       Confirmer
                     </Button>
-                    <Link href={`/vendor/dashboard/commandes/${order.id}`} className="flex-1">
+                    <Link
+                      href={`/vendor/dashboard/commandes/${order.id}`}
+                      className="flex-1"
+                    >
                       <Button variant="outline" className="w-full gap-2">
                         Ajuster les quantités
                       </Button>

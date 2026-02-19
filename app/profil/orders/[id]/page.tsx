@@ -1,14 +1,9 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Loader from "@/components/Loader";
 import OrderStatusBadge from "@/components/orders/order-status-badge";
-import {
-  ArrowLeft,
-  Clock,
-  Loader2,
-  MapPin,
-  Store,
-} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Clock, MapPin, Store } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -61,7 +56,7 @@ export default function OrderDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <Loader2 className="h-8 w-8 animate-spin text-principale-500" />
+        <Loader taille={45} />
       </div>
     );
   }
@@ -186,10 +181,7 @@ export default function OrderDetailPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <TimelineEntry
-            label="Commande passée"
-            date={order.createdAt}
-          />
+          <TimelineEntry label="Commande passée" date={order.createdAt} />
           {order.confirmedAt && (
             <TimelineEntry
               label="Confirmée par le commerçant"
@@ -197,10 +189,7 @@ export default function OrderDetailPage() {
             />
           )}
           {order.capturedAt && (
-            <TimelineEntry
-              label="Paiement débité"
-              date={order.capturedAt}
-            />
+            <TimelineEntry label="Paiement débité" date={order.capturedAt} />
           )}
         </CardContent>
       </Card>

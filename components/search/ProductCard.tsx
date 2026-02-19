@@ -1,12 +1,13 @@
 "use client";
 
+import { useCart } from "@/components/providers/cart-provider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useCart } from "@/components/providers/cart-provider";
-import { Leaf, Loader2, MapPin, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
+import { Leaf, MapPin, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Loader from "../Loader";
 
 interface ProductCardProps {
   product: {
@@ -94,18 +95,14 @@ export default function ProductCard({ product }: ProductCardProps) {
         </h4>
 
         {/* Catégorie */}
-        <p className="text-xs text-gray-500 mt-1">
-          {product.category.name}
-        </p>
+        <p className="text-xs text-gray-500 mt-1">{product.category.name}</p>
 
         {/* Prix */}
         <div className="mt-2 flex items-baseline gap-1 ">
           <span className="text-lg font-bold text-principale-600">
             {product.basePrice.toFixed(2)} €
           </span>
-          <span className="text-xs text-gray-500">
-            / {product.unit}
-          </span>
+          <span className="text-xs text-gray-500">/ {product.unit}</span>
         </div>
 
         {/* Bouton Panier */}
@@ -117,11 +114,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             className="w-16 self-end mt-3 gap-1.5 text-xs bg-principale-600 hover:bg-principale-500 transition-colors"
           >
             {loading || cartLoading ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              <Loader taille={45} />
             ) : (
               <>
-              <ShoppingCart className="w-3.5 h-3.5" />
-
+                <ShoppingCart className="w-3.5 h-3.5" />
               </>
             )}
           </Button>
@@ -137,7 +133,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-gray-900 text-white transition-colors disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader taille={45} />
               ) : quantity <= moq ? (
                 <Trash2 className="w-4 h-4" />
               ) : (
@@ -151,10 +147,15 @@ export default function ProductCard({ product }: ProductCardProps) {
               inputMode="decimal"
               value={inputValue}
               onChange={(e) => {
-                const raw = e.target.value.replaceAll(",", ".").replace(/[^\d.]/g, "");
+                const raw = e.target.value
+                  .replaceAll(",", ".")
+                  .replace(/[^\d.]/g, "");
                 // Un seul point autorisé
                 const parts = raw.split(".");
-                const sanitized = parts.length > 2 ? parts[0] + "." + parts.slice(1).join("") : raw;
+                const sanitized =
+                  parts.length > 2
+                    ? parts[0] + "." + parts.slice(1).join("")
+                    : raw;
                 // Max 2 décimales
                 if (parts.length === 2 && parts[1].length > 2) return;
                 if (sanitized === "" || sanitized === ".") {
@@ -180,11 +181,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               disabled={loading}
               className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-principale-700 text-white transition-colors disabled:opacity-50 cursor-pointer"
             >
-              {loading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Plus className="w-4 h-4" />
-              )}
+              {loading ? <Loader taille={45} /> : <Plus className="w-4 h-4" />}
             </button>
           </div>
         )}

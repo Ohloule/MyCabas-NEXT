@@ -1,7 +1,8 @@
 "use client";
 
-import { Loader2, SearchX } from "lucide-react";
+import { SearchX } from "lucide-react";
 import { useEffect, useState } from "react";
+import Loader from "../Loader";
 import VendorCard from "./VendorCard";
 
 interface Product {
@@ -42,7 +43,10 @@ interface SearchResultsProps {
   categorySlug: string;
 }
 
-export default function SearchResults({ query, categorySlug }: SearchResultsProps) {
+export default function SearchResults({
+  query,
+  categorySlug,
+}: SearchResultsProps) {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -74,7 +78,9 @@ export default function SearchResults({ query, categorySlug }: SearchResultsProp
         setResults(data.results);
         setTotalProducts(data.total);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Une erreur est survenue");
+        setError(
+          err instanceof Error ? err.message : "Une erreur est survenue",
+        );
       } finally {
         setLoading(false);
       }
@@ -87,7 +93,7 @@ export default function SearchResults({ query, categorySlug }: SearchResultsProp
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
-        <Loader2 className="w-12 h-12 text-principale-500 animate-spin" />
+        <Loader taille={45} />
         <p className="mt-4 text-gray-600">Recherche en cours...</p>
       </div>
     );
@@ -141,8 +147,10 @@ export default function SearchResults({ query, categorySlug }: SearchResultsProp
     <div>
       {/* Compteur de résultats */}
       <div className="mb-6 text-sm text-gray-600">
-        <span className="font-medium">{totalProducts}</span> produit{totalProducts > 1 ? "s" : ""} trouvé{totalProducts > 1 ? "s" : ""} chez{" "}
-        <span className="font-medium">{results.length}</span> commerçant{results.length > 1 ? "s" : ""}
+        <span className="font-medium">{totalProducts}</span> produit
+        {totalProducts > 1 ? "s" : ""} trouvé{totalProducts > 1 ? "s" : ""} chez{" "}
+        <span className="font-medium">{results.length}</span> commerçant
+        {results.length > 1 ? "s" : ""}
       </div>
 
       {/* Liste des vendors avec leurs produits */}

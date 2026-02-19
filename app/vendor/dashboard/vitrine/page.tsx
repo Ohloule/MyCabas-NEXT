@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,7 +23,6 @@ import {
   Globe,
   ImageIcon,
   Instagram,
-  Loader2,
   Mail,
   Phone,
   Save,
@@ -131,54 +131,49 @@ export default function ParametresPage() {
   }, []);
 
   // Upload de logo
-  const handleLogoUpload = useCallback(
-    async (file: File) => {
-      if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-        setError("Format non supporté. Utilisez JPG, PNG ou WebP.");
-        return;
-      }
-      if (file.size > 5 * 1024 * 1024) {
-        setError("Le fichier dépasse la taille maximale de 5 Mo.");
-        return;
-      }
+  const handleLogoUpload = useCallback(async (file: File) => {
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      setError("Format non supporté. Utilisez JPG, PNG ou WebP.");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Le fichier dépasse la taille maximale de 5 Mo.");
+      return;
+    }
 
-      setUploading(true);
-      setError(null);
+    setUploading(true);
+    setError(null);
 
-      // Aperçu local immédiat
-      const previewUrl = URL.createObjectURL(file);
-      setLogoPreview(previewUrl);
+    // Aperçu local immédiat
+    const previewUrl = URL.createObjectURL(file);
+    setLogoPreview(previewUrl);
 
-      try {
-        const formData = new FormData();
-        formData.append("file", file);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-        const response = await fetch("/api/vendor/upload-logo", {
-          method: "POST",
-          body: formData,
-        });
+      const response = await fetch("/api/vendor/upload-logo", {
+        method: "POST",
+        body: formData,
+      });
 
-        if (!response.ok) {
-          const data = await response.json();
-          throw new Error(data.error || "Erreur lors de l'upload");
-        }
-
+      if (!response.ok) {
         const data = await response.json();
-        setSettings((prev) => (prev ? { ...prev, logoUrl: data.logoUrl } : prev));
-        setLogoPreview(null);
-        setSuccess("Photo mise à jour avec succès");
-        setTimeout(() => setSuccess(null), 3000);
-      } catch (err) {
-        setLogoPreview(null);
-        setError(
-          err instanceof Error ? err.message : "Erreur lors de l'upload",
-        );
-      } finally {
-        setUploading(false);
+        throw new Error(data.error || "Erreur lors de l'upload");
       }
-    },
-    [],
-  );
+
+      const data = await response.json();
+      setSettings((prev) => (prev ? { ...prev, logoUrl: data.logoUrl } : prev));
+      setLogoPreview(null);
+      setSuccess("Photo mise à jour avec succès");
+      setTimeout(() => setSuccess(null), 3000);
+    } catch (err) {
+      setLogoPreview(null);
+      setError(err instanceof Error ? err.message : "Erreur lors de l'upload");
+    } finally {
+      setUploading(false);
+    }
+  }, []);
 
   const handleDeleteLogo = async () => {
     setUploading(true);
@@ -280,7 +275,7 @@ export default function ParametresPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Loader2 className="h-8 w-8 animate-spin text-principale-600" />
+        <Loader taille={45} />
       </div>
     );
   }
@@ -297,7 +292,8 @@ export default function ParametresPage() {
             Vitrine de la boutique
           </h1>
           <p className="text-gray-600">
-            Personnalisez votre vitrine et vos informations visible par le public
+            Personnalisez votre vitrine et vos informations visible par le
+            public
           </p>
         </div>
       </div>
@@ -377,7 +373,7 @@ export default function ParametresPage() {
                 />
                 {uploading ? (
                   <div className="flex flex-col items-center gap-2">
-                    <Loader2 className="h-8 w-8 animate-spin text-principale-600" />
+                    <Loader taille={45} />
                     <span className="text-sm text-gray-600">
                       Upload en cours...
                     </span>
@@ -736,11 +732,7 @@ export default function ParametresPage() {
         {/* Bouton de sauvegarde */}
         <div className="flex justify-end">
           <Button type="submit" disabled={saving} size="lg">
-            {saving ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Save className="h-4 w-4" />
-            )}
+            {saving ? <Loader taille={45} /> : <Save className="h-4 w-4" />}
             Enregistrer les modifications
           </Button>
         </div>

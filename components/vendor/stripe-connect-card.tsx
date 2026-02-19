@@ -3,14 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  CheckCircle,
-  ExternalLink,
-  Loader2,
-  CreditCard,
   AlertCircle,
+  CheckCircle,
+  CreditCard,
+  ExternalLink,
 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import Loader from "../Loader";
 
 type ConnectStatus = {
   connected: boolean;
@@ -78,7 +78,7 @@ export default function StripeConnectCard() {
     return (
       <Card>
         <CardContent className="flex items-center justify-center py-8">
-          <Loader2 className="h-6 w-6 animate-spin text-principale-500" />
+          <Loader taille={45} />
         </CardContent>
       </Card>
     );
@@ -114,9 +114,7 @@ export default function StripeConnectCard() {
                 {status.chargesEnabled ? (
                   <span className="text-green-600 font-medium">Activés</span>
                 ) : (
-                  <span className="text-amber-600 font-medium">
-                    En attente
-                  </span>
+                  <span className="text-amber-600 font-medium">En attente</span>
                 )}
               </span>
               <span>
@@ -124,9 +122,7 @@ export default function StripeConnectCard() {
                 {status.payoutsEnabled ? (
                   <span className="text-green-600 font-medium">Activés</span>
                 ) : (
-                  <span className="text-amber-600 font-medium">
-                    En attente
-                  </span>
+                  <span className="text-amber-600 font-medium">En attente</span>
                 )}
               </span>
             </div>
@@ -145,7 +141,7 @@ export default function StripeConnectCard() {
               className="bg-principale-500 hover:bg-principale-600 gap-2"
             >
               {connecting ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader taille={45} />
               ) : (
                 <ExternalLink className="h-4 w-4" />
               )}
@@ -166,7 +162,7 @@ export default function StripeConnectCard() {
               className="bg-principale-500 hover:bg-principale-600 gap-2"
             >
               {connecting ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader taille={45} />
               ) : (
                 <CreditCard className="h-4 w-4" />
               )}

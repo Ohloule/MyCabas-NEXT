@@ -15,7 +15,7 @@ export default function CardSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     if (titleRef.current) {
@@ -26,7 +26,7 @@ export default function CardSection() {
   }, []);
 
   return (
-    <section className="pt-8 pb-32">
+    <section className="pt-8">
       <h1
         ref={titleRef}
         className={`text-center font-special text-9xl text-principale-700 py-16 transition-all duration-700 ${
@@ -36,7 +36,7 @@ export default function CardSection() {
         Tout le monde y gagne
       </h1>
       <div className="align-center grid grid-cols-1 lg:grid-cols-3">
-        <Card className="col-span-1 my-3 w-[300px] mx-auto">
+        <Card className="col-span-1 my-3 w-75 mx-auto">
           <CardHeader>
             <CardTitle className="font-special text-principale-700 text-center text-4xl">
               Consommateurs
@@ -50,7 +50,7 @@ export default function CardSection() {
             <p>Confiance</p>
           </CardContent>
         </Card>
-        <Card className="col-span-1 my-3 w-[300px] mx-auto">
+        <Card className="col-span-1 my-3 w-75 mx-auto">
           {" "}
           <CardHeader>
             <CardTitle className="font-special text-principale-700 text-center text-4xl">
@@ -65,7 +65,7 @@ export default function CardSection() {
             <p>Zéro risque</p>
           </CardContent>
         </Card>
-        <Card className="col-span-1 my-3 w-[300px] mx-auto">
+        <Card className="col-span-1 my-3 w-75 mx-auto">
           <CardHeader>
             <CardTitle className="font-special text-principale-700 text-center text-4xl">
               Planète

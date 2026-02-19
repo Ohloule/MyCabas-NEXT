@@ -1,10 +1,11 @@
 "use client";
 
+import HeadingPage from "@/components/HeadingPage";
+import Loader from "@/components/Loader";
+import { useCart } from "@/components/providers/cart-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import HeadingPage from "@/components/HeadingPage";
-import { useCart } from "@/components/providers/cart-provider";
-import { CheckCircle, Clock, Loader2, ShoppingBag, XCircle } from "lucide-react";
+import { CheckCircle, Clock, ShoppingBag, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -31,7 +32,7 @@ export default function ConfirmationPage() {
       <>
         <HeadingPage title="Confirmation" />
         <div className="align-center py-24 flex flex-col items-center gap-4">
-          <Loader2 className="h-8 w-8 animate-spin text-principale-500" />
+          <Loader taille={45} />
           <p className="text-gray-600">Finalisation de votre commande...</p>
         </div>
       </>
@@ -99,8 +100,8 @@ export default function ConfirmationPage() {
                     Paiement échoué
                   </h2>
                   <p className="text-gray-600">
-                    Le paiement n&apos;a pas pu être autorisé. Aucun montant n&apos;a
-                    été prélevé. Vérifiez vos informations de carte et
+                    Le paiement n&apos;a pas pu être autorisé. Aucun montant
+                    n&apos;a été prélevé. Vérifiez vos informations de carte et
                     réessayez.
                   </p>
                 </div>
@@ -112,7 +113,7 @@ export default function ConfirmationPage() {
               </>
             ) : (
               <>
-                <Loader2 className="h-16 w-16 text-gray-300 mx-auto animate-spin" />
+                <Loader taille={45} />
                 <p className="text-gray-600">
                   Vérification du paiement en cours...
                 </p>

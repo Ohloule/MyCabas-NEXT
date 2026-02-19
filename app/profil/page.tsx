@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,14 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  AlertCircle,
-  CheckCircle,
-  Loader2,
-  MapPin,
-  Save,
-  User,
-} from "lucide-react";
+import { AlertCircle, CheckCircle, MapPin, Save, User } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function ProfilInfosPage() {
@@ -85,7 +79,7 @@ export default function ProfilInfosPage() {
       setSuccess("Profil mis à jour avec succès");
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Erreur lors de la sauvegarde"
+        err instanceof Error ? err.message : "Erreur lors de la sauvegarde",
       );
     } finally {
       setSaving(false);
@@ -93,11 +87,7 @@ export default function ProfilInfosPage() {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center py-24">
-        <Loader2 className="h-8 w-8 animate-spin text-principale-500" />
-      </div>
-    );
+    return <Loader taille={45} />;
   }
 
   return (
@@ -253,11 +243,7 @@ export default function ProfilInfosPage() {
           disabled={saving}
           className="bg-principale-500 hover:bg-principale-600 text-white"
         >
-          {saving ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Save className="h-4 w-4" />
-          )}
+          {saving ? <Loader taille={45} /> : <Save className="h-4 w-4" />}
           Enregistrer les modifications
         </Button>
       </form>

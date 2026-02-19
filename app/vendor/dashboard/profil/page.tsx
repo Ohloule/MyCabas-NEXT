@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import StripeConnectCard from "@/components/vendor/stripe-connect-card";
 import {
   AlertCircle,
   Building2,
@@ -17,7 +19,6 @@ import {
   CreditCard,
   Eye,
   EyeOff,
-  Loader2,
   Lock,
   Save,
   ShieldCheck,
@@ -25,7 +26,6 @@ import {
   User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import StripeConnectCard from "@/components/vendor/stripe-connect-card";
 
 interface VendorProfile {
   id: string;
@@ -195,7 +195,7 @@ export default function ProfilPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Loader2 className="h-8 w-8 animate-spin text-principale-600" />
+        <Loader taille={45} />
       </div>
     );
   }
@@ -382,7 +382,7 @@ export default function ProfilPage() {
                         className="text-red-600 hover:text-red-700 hover:bg-red-50"
                       >
                         {deleting ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
+                          <Loader taille={45} />
                         ) : (
                           <Trash2 className="h-4 w-4" />
                         )}
@@ -409,7 +409,10 @@ export default function ProfilPage() {
                 <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 flex items-start gap-2">
                   <ShieldCheck className="h-5 w-5 text-orange-600 shrink-0 mt-0.5" />
                   <p className="text-sm text-orange-800">
-                   Ce RIB ne sert qu&apos;à vous envoyer de l&apos;argent, ce n&apos;est en aucun cas une autorisation de prélèvement. <span className="font-mycabas">MyCabas</span> ne vous prélèvera jamais !
+                    Ce RIB ne sert qu&apos;à vous envoyer de l&apos;argent, ce
+                    n&apos;est en aucun cas une autorisation de prélèvement.{" "}
+                    <span className="font-mycabas">MyCabas</span> ne vous
+                    prélèvera jamais !
                   </p>
                 </div>
                 {/* Titulaire */}
@@ -487,7 +490,6 @@ export default function ProfilPage() {
                     Elles ne sont jamais transmises en clair.
                   </p>
                 </div>
-                
 
                 {/* Actions */}
                 <div className="flex gap-2 pt-2">
@@ -508,7 +510,7 @@ export default function ProfilPage() {
                   </Button>
                   <Button type="submit" disabled={saving} className="flex-1">
                     {saving ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <Loader taille={45} />
                     ) : (
                       <Save className="h-4 w-4" />
                     )}

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,17 +10,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   AlertCircle,
   CheckCircle2,
   Download,
   FileSpreadsheet,
-  Loader2,
   Upload,
   X,
 } from "lucide-react";
+import { useCallback, useState } from "react";
+import Loader from "../Loader";
 
 interface ParsedRow {
   rowNumber: number;
@@ -195,7 +195,8 @@ export function ImportProductsDialog({
                   Étape 1 : Téléchargez le template
                 </h4>
                 <p className="text-sm text-blue-700 mb-3">
-                  Utilisez notre fichier Excel pré-formaté pour remplir vos produits facilement.
+                  Utilisez notre fichier Excel pré-formaté pour remplir vos
+                  produits facilement.
                 </p>
                 <Button variant="outline" size="sm" onClick={downloadTemplate}>
                   <Download className="w-4 h-4" />
@@ -249,7 +250,7 @@ export function ImportProductsDialog({
           {/* Chargement */}
           {loading && (
             <div className="text-center py-8">
-              <Loader2 className="w-8 h-8 text-principale-600 animate-spin mx-auto mb-3" />
+              <Loader taille={45} />
               <p className="text-gray-600">Analyse du fichier en cours...</p>
             </div>
           )}
@@ -365,7 +366,9 @@ export function ImportProductsDialog({
                             {row.category || "—"}
                           </td>
                           <td className="px-3 py-2 text-gray-600">
-                            {row.price > 0 ? `${row.price.toFixed(2)}€/${row.unit}` : "—"}
+                            {row.price > 0
+                              ? `${row.price.toFixed(2)}€/${row.unit}`
+                              : "—"}
                           </td>
                           <td className="px-3 py-2">
                             {row.isValid ? (
@@ -390,7 +393,8 @@ export function ImportProductsDialog({
 
               {preview.errorCount > 0 && (
                 <p className="text-sm text-amber-600">
-                  Les {preview.errorCount} ligne(s) avec erreurs seront ignorées lors de l&apos;import.
+                  Les {preview.errorCount} ligne(s) avec erreurs seront ignorées
+                  lors de l&apos;import.
                 </p>
               )}
             </div>
@@ -405,11 +409,12 @@ export function ImportProductsDialog({
           {preview && !success && preview.validCount > 0 && (
             <Button onClick={handleImport} disabled={importing}>
               {importing ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader taille={45} />
               ) : (
                 <Upload className="w-4 h-4" />
               )}
-              Importer {preview.validCount} produit{preview.validCount > 1 ? "s" : ""}
+              Importer {preview.validCount} produit
+              {preview.validCount > 1 ? "s" : ""}
             </Button>
           )}
         </div>

@@ -1,14 +1,14 @@
 "use client";
 
+import Loader from "@/components/Loader";
+import OrderStatusBadge from "@/components/orders/order-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import OrderStatusBadge from "@/components/orders/order-status-badge";
 import {
   ArrowLeft,
   Check,
   Clock,
-  Loader2,
   MapPin,
   Save,
   User,
@@ -158,7 +158,7 @@ export default function OrderDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Loader2 className="h-8 w-8 animate-spin text-principale-500" />
+        <Loader taille={45} />
       </div>
     );
   }
@@ -234,12 +234,11 @@ export default function OrderDetailPage() {
         <CardContent className="p-0">
           <div className="divide-y">
             {order.items.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center gap-4 px-6 py-4"
-              >
+              <div key={item.id} className="flex items-center gap-4 px-6 py-4">
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-900">{item.productName}</p>
+                  <p className="font-medium text-gray-900">
+                    {item.productName}
+                  </p>
                   <p className="text-sm text-gray-500">
                     {item.unitPriceEuros.toFixed(2)} € / {item.productUnit}
                   </p>
@@ -266,14 +265,16 @@ export default function OrderDetailPage() {
                   </div>
                 ) : (
                   <span className="text-sm text-gray-700">
-                    {(item.adjustedQuantity ?? item.quantity)} {item.productUnit}
+                    {item.adjustedQuantity ?? item.quantity} {item.productUnit}
                   </span>
                 )}
 
                 <span className="font-semibold w-20 text-right">
                   {(
                     item.unitPriceEuros *
-                    (editedQuantities[item.id] ?? item.adjustedQuantity ?? item.quantity)
+                    (editedQuantities[item.id] ??
+                      item.adjustedQuantity ??
+                      item.quantity)
                   ).toFixed(2)}{" "}
                   €
                 </span>
@@ -318,11 +319,7 @@ export default function OrderDetailPage() {
               disabled={saving}
               className="bg-purple-600 hover:bg-purple-700 gap-2 flex-1"
             >
-              {saving ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Save className="h-4 w-4" />
-              )}
+              {saving ? <Loader taille={45} /> : <Save className="h-4 w-4" />}
               Enregistrer les ajustements
             </Button>
           )}
@@ -332,7 +329,7 @@ export default function OrderDetailPage() {
             className="bg-green-600 hover:bg-green-700 gap-2 flex-1"
           >
             {actionLoading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <Loader taille={45} />
             ) : (
               <Check className="h-4 w-4" />
             )}
