@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/images/Logo2_Plan de travail 3.svg",
+    icon: "/favicon.svg",
   },
 };
 
