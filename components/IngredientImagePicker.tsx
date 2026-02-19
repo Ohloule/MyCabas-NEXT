@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Check, ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import Loader from "./Loader";
 
 interface IngredientImagePickerProps {
   onImageSelect?: (url: string) => void;

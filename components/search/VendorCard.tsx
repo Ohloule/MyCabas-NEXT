@@ -47,10 +47,10 @@ interface VendorCardProps {
 export default function VendorCard({ vendor, products }: VendorCardProps) {
   return (
     <Card className="overflow-hidden border-2 border-gray-100">
-      <CardHeader className="bg-gradient-to-r from-principale-50 to-white pb-4">
+      <CardHeader className="bg-linear-to-r from-principale-50 to-white pb-4">
         <div className="flex items-start gap-4">
           {/* Logo du vendor */}
-          <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-white shadow-sm flex-shrink-0">
+          <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-white shadow-sm shrink-0">
             {vendor.logoUrl ? (
               <Image
                 src={vendor.logoUrl}
@@ -94,7 +94,7 @@ export default function VendorCard({ vendor, products }: VendorCardProps) {
           </div>
 
           {/* Nombre de produits */}
-          <div className="text-right flex-shrink-0">
+          <div className="text-right shrink-0">
             <span className="text-2xl font-bold text-principale-600">
               {products.length}
             </span>

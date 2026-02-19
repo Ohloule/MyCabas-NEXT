@@ -6,6 +6,7 @@ import { useCart } from "@/components/providers/cart-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
+  Loader2,
   MapPin,
   Minus,
   Plus,
@@ -230,10 +231,10 @@ export default function PanierPage() {
                   {items.map((item) => (
                     <div
                       key={item.id}
-                      className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-4"
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-4 "
                     >
                       {/* Ligne 1 mobile : image + infos + supprimer */}
-                      <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                      <div className="flex items-center gap-3 sm:gap-4   min-w-0 ">
                         {/* Image produit */}
                         <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg bg-gray-100 overflow-hidden shrink-0">
                           {item.product.imageUrl ? (
@@ -274,7 +275,7 @@ export default function PanierPage() {
                       </div>
 
                       {/* Ligne 2 mobile : quantité + prix + supprimer desktop */}
-                      <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4 pl-17 sm:pl-0">
+                      <div className="flex items-center justify-between sm:justify-end sm:flex-1 gap-3 sm:gap-4 pl-17 sm:pl-0" >
                         {/* Contrôles quantité */}
                         <div className="flex items-center gap-2">
                           <button
@@ -289,9 +290,12 @@ export default function PanierPage() {
                               <Minus className="h-3 w-3" />
                             )}
                           </button>
-                          <span className="w-8 text-center font-medium">
+                          <span className="w-12 text-center font-medium">
                             {updatingItems.has(item.id) ? (
-                              <Loader taille={45} />
+                              <Loader2
+                                className="animate-spin text-principale-800"
+                                size={20}
+                              />
                             ) : (
                               item.quantity
                             )}
@@ -306,7 +310,7 @@ export default function PanierPage() {
                         </div>
 
                         {/* Prix total item */}
-                        <div className="text-right shrink-0">
+                        <div className="text-right shrink-0 min-w-24 ">
                           <p className="font-semibold text-gray-900">
                             {(item.product.basePrice * item.quantity).toFixed(
                               2,

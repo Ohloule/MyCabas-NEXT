@@ -16,7 +16,6 @@ import {
   Check,
   Clock,
   Edit2,
-  Loader,
   MapPin,
   Plus,
   Search,

@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import { Carrot, Plus, Search, Filter, X, Store, FileSpreadsheet } from "lucide-react";
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,9 +10,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ImportProductsDialog } from "@/components/vendor/import-products-dialog";
 import { ProductsTable } from "@/components/vendor/products-table";
 import { ProductsTableEditable } from "@/components/vendor/products-table-editable";
-import { ImportProductsDialog } from "@/components/vendor/import-products-dialog";
+import {
+  Carrot,
+  FileSpreadsheet,
+  Filter,
+  Plus,
+  Search,
+  Store,
+  X,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 interface Category {
   id: string;
@@ -130,7 +139,7 @@ export default function EtalPage() {
       result = result.filter(
         (p) =>
           p.name.toLowerCase().includes(query) ||
-          p.category.name.toLowerCase().includes(query)
+          p.category.name.toLowerCase().includes(query),
       );
     }
 
@@ -248,7 +257,9 @@ export default function EtalPage() {
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
           <div className="flex items-center gap-2">
             <Store className="w-5 h-5 text-principale-600 shrink-0" />
-            <span className="text-sm font-medium text-gray-700 hidden sm:inline">Vue par marché :</span>
+            <span className="text-sm font-medium text-gray-700 hidden sm:inline">
+              Vue par marché :
+            </span>
           </div>
           <div className="flex items-center gap-2 flex-1">
             <Select value={selectedMarket} onValueChange={setSelectedMarket}>
@@ -256,9 +267,7 @@ export default function EtalPage() {
                 <SelectValue placeholder="Sélectionner un marché" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">
-                  Tous les marchés (synthèse)
-                </SelectItem>
+                <SelectItem value="all">Tous les marchés (synthèse)</SelectItem>
                 {markets.map((market) => (
                   <SelectItem key={market.id} value={market.id}>
                     {market.name}
@@ -348,7 +357,8 @@ export default function EtalPage() {
       {/* Contenu */}
       {loading ? (
         <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-100 text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-principale-600 mx-auto"></div>
+          {/* <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-principale-600 mx-auto"></div> */}
+          <Loader taille={30} />
           <p className="mt-4 text-gray-500">Chargement des produits...</p>
         </div>
       ) : error ? (

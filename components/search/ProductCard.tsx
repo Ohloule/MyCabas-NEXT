@@ -4,7 +4,15 @@ import { useCart } from "@/components/providers/cart-provider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Leaf, MapPin, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
+import {
+  Leaf,
+  Loader2,
+  MapPin,
+  Minus,
+  Plus,
+  ShoppingCart,
+  Trash2,
+} from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Loader from "../Loader";
@@ -133,7 +141,10 @@ export default function ProductCard({ product }: ProductCardProps) {
               className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-gray-900 text-white transition-colors disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
-                <Loader taille={45} />
+                <Loader2
+                  className="animate-spin text-principale-100"
+                  size={20}
+                />
               ) : quantity <= moq ? (
                 <Trash2 className="w-4 h-4" />
               ) : (
@@ -181,7 +192,14 @@ export default function ProductCard({ product }: ProductCardProps) {
               disabled={loading}
               className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-principale-700 text-white transition-colors disabled:opacity-50 cursor-pointer"
             >
-              {loading ? <Loader taille={45} /> : <Plus className="w-4 h-4" />}
+              {loading ? (
+                <Loader2
+                  className="animate-spin text-principale-100"
+                  size={20}
+                />
+              ) : (
+                <Plus className="w-4 h-4" />
+              )}
             </button>
           </div>
         )}
