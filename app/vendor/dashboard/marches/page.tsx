@@ -16,12 +16,14 @@ import {
   Check,
   Clock,
   Edit2,
+  HelpCircle,
   MapPin,
   Plus,
   Search,
   Store,
   X,
 } from "lucide-react";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface Suggestion {
@@ -783,6 +785,16 @@ export default function MarchesPage() {
             votre recherche.
           </p>
         )}
+
+        {/* Bouton "marché introuvable" */}
+        <div className="mt-8 flex justify-center">
+          <Link href="/vendor/dashboard/marches/nouveau">
+            <Button variant="outline" className="gap-2 text-principale-700 border-principale-300 hover:bg-principale-50">
+              <HelpCircle className="h-4 w-4" />
+              Vous ne trouvez pas votre marché ? Proposez-le !
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

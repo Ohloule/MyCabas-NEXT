@@ -6,12 +6,14 @@ import { useCart } from "@/components/providers/cart-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
+  Layers,
   Loader2,
   MapPin,
   Minus,
   Plus,
   ShoppingCart,
   Store,
+  Tag,
   Trash2,
   X,
 } from "lucide-react";
@@ -33,6 +35,7 @@ export default function PanierPage() {
   } = useCart();
   const [updatingItems, setUpdatingItems] = useState<Set<string>>(new Set());
   const [clearing, setClearing] = useState(false);
+  const [recapView, setRecapView] = useState<"vendor" | "category">("vendor");
 
   const handleUpdateQuantity = async (
     item: {
@@ -178,6 +181,20 @@ export default function PanierPage() {
       string,
       { vendor: { id: string; stallName: string }; items: typeof cart.items }
     >,
+  );
+
+  // Grouper les items par catégorie
+  const itemsByCategory = cart.items.reduce(
+    (acc, item) => {
+      const catId = item.product.category?.id ?? "__sans_categorie__";
+      const catName = item.product.category?.name ?? "Sans catégorie";
+      if (!acc[catId]) {
+        acc[catId] = { name: catName, items: [] };
+      }
+      acc[catId].items.push(item);
+      return acc;
+    },
+    {} as Record<string, { name: string; items: typeof cart.items }>,
   );
 
   return (
@@ -340,22 +357,108 @@ export default function PanierPage() {
           <div className="lg:col-span-1">
             <Card className="sticky top-4">
               <CardContent className="p-4 sm:p-6 space-y-4">
-                <h2 className="font-semibold text-lg">Récapitulatif</h2>
-
-                <div className="space-y-2 text-sm hidden sm:block">
-                  {cart.items.map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex justify-between text-gray-600"
+                <div className="flex items-center justify-between">
+                  <h2 className="font-semibold text-lg">Récapitulatif</h2>
+                  <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+                    <button
+                      onClick={() => setRecapView("vendor")}
+                      className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+                        recapView === "vendor"
+                          ? "bg-white text-principale-700 shadow-sm"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                      title="Par commerçant"
                     >
-                      <span className="truncate mr-2">
-                        {item.product.name} x{item.quantity}
-                      </span>
-                      <span className="shrink-0">
-                        {(item.product.basePrice * item.quantity).toFixed(2)} €
-                      </span>
-                    </div>
-                  ))}
+                      <Store className="h-3 w-3" />
+                      Commerçants
+                    </button>
+                    <button
+                      onClick={() => setRecapView("category")}
+                      className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+                        recapView === "category"
+                          ? "bg-white text-principale-700 shadow-sm"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                      title="Par catégorie"
+                    >
+                      <Tag className="h-3 w-3" />
+                      Catégories
+                    </button>
+                  </div>
+                </div>
+
+                <div className="space-y-3 text-sm hidden sm:block">
+                  {recapView === "vendor"
+                    ? Object.values(itemsByVendor).map(({ vendor, items }) => {
+                        const subtotal = items.reduce(
+                          (s, i) => s + i.product.basePrice * i.quantity,
+                          0,
+                        );
+                        return (
+                          <div key={vendor.id}>
+                            <div className="flex items-center justify-between font-medium text-gray-700 mb-1">
+                              <span className="flex items-center gap-1">
+                                <Store className="h-3 w-3 text-principale-500 shrink-0" />
+                                {vendor.stallName}
+                              </span>
+                              <span className="shrink-0 text-principale-600">
+                                {subtotal.toFixed(2)} €
+                              </span>
+                            </div>
+                            {items.map((item) => (
+                              <div
+                                key={item.id}
+                                className="flex justify-between text-gray-500 pl-4"
+                              >
+                                <span className="truncate mr-2">
+                                  {item.product.name} x{item.quantity}
+                                </span>
+                                <span className="shrink-0">
+                                  {(
+                                    item.product.basePrice * item.quantity
+                                  ).toFixed(2)}{" "}
+                                  €
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        );
+                      })
+                    : Object.values(itemsByCategory).map(({ name, items }) => {
+                        const subtotal = items.reduce(
+                          (s, i) => s + i.product.basePrice * i.quantity,
+                          0,
+                        );
+                        return (
+                          <div key={name}>
+                            <div className="flex items-center justify-between font-medium text-gray-700 mb-1">
+                              <span className="flex items-center gap-1">
+                                <Tag className="h-3 w-3 text-principale-500 shrink-0" />
+                                {name}
+                              </span>
+                              <span className="shrink-0 text-principale-600">
+                                {subtotal.toFixed(2)} €
+                              </span>
+                            </div>
+                            {items.map((item) => (
+                              <div
+                                key={item.id}
+                                className="flex justify-between text-gray-500 pl-4"
+                              >
+                                <span className="truncate mr-2">
+                                  {item.product.name} x{item.quantity}
+                                </span>
+                                <span className="shrink-0">
+                                  {(
+                                    item.product.basePrice * item.quantity
+                                  ).toFixed(2)}{" "}
+                                  €
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        );
+                      })}
                 </div>
 
                 <div className="border-t pt-4">

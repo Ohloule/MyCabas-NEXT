@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "./ui/button";
@@ -12,14 +12,40 @@ interface SearchBarProps {
 export default function SearchBar({ className }: SearchBarProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!query.trim()) return;
+    const trimmedQuery = query.trim();
+    if (!trimmedQuery) return;
 
-    // Rediriger vers la page de recherche avec le query
-    router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+    setIsLoading(true);
+    let redirectUrl = `/search?q=${encodeURIComponent(trimmedQuery)}`;
+
+    try {
+      // Tenter de géocoder comme une commune (code postal ou nom de ville)
+      const response = await fetch(
+        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(trimmedQuery)}&type=municipality&limit=1`,
+      );
+      const data = await response.json();
+
+      if (data.features?.length > 0) {
+        const feature = data.features[0];
+        // Score > 0.6 = correspondance fiable avec une commune française
+        if (feature.properties.score > 0.6) {
+          const [lng, lat] = feature.geometry.coordinates;
+          const cityName = feature.properties.city || feature.properties.name;
+          redirectUrl = `/markets?lat=${lat}&lng=${lng}&radius=5&address=${encodeURIComponent(cityName)}`;
+        }
+      }
+    } catch {
+      // Erreur réseau : continuer avec la recherche produit par défaut
+    } finally {
+      setIsLoading(false);
+    }
+
+    router.push(redirectUrl);
   };
 
   return (
@@ -37,9 +63,14 @@ export default function SearchBar({ className }: SearchBarProps) {
         </div>
         <Button
           type="submit"
+          disabled={isLoading}
           className="h-10 px-6 rounded-r-full bg-principale-400 hover:bg-principale-500 text-white"
         >
-          <Search />
+          {isLoading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Search />
+          )}
         </Button>
       </form>
     </div>

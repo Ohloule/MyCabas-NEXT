@@ -23,7 +23,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 interface MarketOpening {
@@ -77,6 +77,7 @@ const PAGE_SIZE = 30;
 const RADIUS_OPTIONS = [2, 5, 10, 20, 50];
 
 export default function MarketsPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const needFavorite = searchParams.get("needFavorite") === "true";
   const pendingQuery = searchParams.get("q") || "";
@@ -139,6 +140,47 @@ export default function MarketsPage() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Mettre à jour l'URL sans recharger la page
+  const updateURL = (
+    locationInfo: {
+      lat?: number;
+      lng?: number;
+      address?: string;
+      search?: string;
+    } | null,
+    currentRadius: number,
+    currentDays: string[],
+    replace = false,
+  ) => {
+    const params = new URLSearchParams();
+
+    // Conserver les paramètres de redirection existants
+    if (needFavorite) params.set("needFavorite", "true");
+    if (pendingQuery) params.set("q", pendingQuery);
+    if (pendingCategory) params.set("category", pendingCategory);
+
+    if (locationInfo?.lat != null && locationInfo?.lng != null) {
+      params.set("lat", locationInfo.lat.toString());
+      params.set("lng", locationInfo.lng.toString());
+      params.set("radius", currentRadius.toString());
+      if (locationInfo.address) params.set("address", locationInfo.address);
+    } else if (locationInfo?.search) {
+      params.set("search", locationInfo.search);
+    }
+
+    // N'inclure les jours que si ce n'est pas tous les jours
+    if (currentDays.length > 0 && currentDays.length < DAY_ORDER.length) {
+      params.set("days", currentDays.join(","));
+    }
+
+    const url = `/markets?${params.toString()}`;
+    if (replace) {
+      router.replace(url);
+    } else {
+      router.push(url);
+    }
+  };
+
   // Charger les marchés
   const fetchMarkets = async (params: {
     lat?: number;
@@ -150,17 +192,17 @@ export default function MarketsPage() {
     setHasSearched(true);
     setDisplayCount(PAGE_SIZE); // Reset pagination
     try {
-      const searchParams = new URLSearchParams();
+      const searchParamsApi = new URLSearchParams();
       if (params.lat && params.lng) {
-        searchParams.set("lat", params.lat.toString());
-        searchParams.set("lng", params.lng.toString());
-        searchParams.set("radius", (params.radius || radius).toString());
+        searchParamsApi.set("lat", params.lat.toString());
+        searchParamsApi.set("lng", params.lng.toString());
+        searchParamsApi.set("radius", (params.radius || radius).toString());
       }
       if (params.search) {
-        searchParams.set("search", params.search);
+        searchParamsApi.set("search", params.search);
       }
 
-      const response = await fetch(`/api/markets?${searchParams.toString()}`);
+      const response = await fetch(`/api/markets?${searchParamsApi.toString()}`);
       const data = await response.json();
       setAllMarkets(data.markets || []);
     } catch (error) {
@@ -169,6 +211,45 @@ export default function MarketsPage() {
       setLoading(false);
     }
   };
+
+  // Synchroniser avec les paramètres URL (montage + changements depuis une autre page)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const urlSearch = searchParams.get("search");
+    const urlLat = searchParams.get("lat");
+    const urlLng = searchParams.get("lng");
+    const urlAddress = searchParams.get("address");
+    const urlRadius = searchParams.get("radius");
+    const urlDays = searchParams.get("days");
+
+    let initialRadius = 5;
+    if (urlRadius) {
+      initialRadius = parseInt(urlRadius);
+      setRadius(initialRadius);
+    }
+
+    if (urlDays) {
+      const days = urlDays.split(",").filter((d) => DAY_ORDER.includes(d));
+      if (days.length > 0) setSelectedDays(days);
+    }
+
+    if (urlLat && urlLng) {
+      const lat = parseFloat(urlLat);
+      const lng = parseFloat(urlLng);
+
+      if (urlAddress) {
+        setSearchValue(urlAddress);
+        setSelectedLocation({ label: urlAddress, lat, lng });
+      } else {
+        setUserLocation({ lat, lng });
+      }
+
+      fetchMarkets({ lat, lng, radius: initialRadius });
+    } else if (urlSearch) {
+      setSearchValue(urlSearch);
+      fetchMarkets({ search: urlSearch });
+    }
+  }, [searchParams]); // Re-exécuter si les paramètres URL changent
 
   // Recherche d'adresses avec l'API gouv.fr
   const searchAddresses = async (query: string) => {
@@ -262,6 +343,7 @@ export default function MarketsPage() {
       lng,
     });
 
+    updateURL({ lat, lng, address: suggestion.label }, radius, selectedDays);
     fetchMarkets({ lat, lng, radius });
   };
 
@@ -280,6 +362,7 @@ export default function MarketsPage() {
         setSelectedLocation(null);
         setSearchValue("");
         setSuggestions([]);
+        updateURL({ lat: latitude, lng: longitude }, radius, selectedDays);
         fetchMarkets({ lat: latitude, lng: longitude, radius });
         setLocationLoading(false);
       },
@@ -299,6 +382,7 @@ export default function MarketsPage() {
       setSuggestions([]);
       setUserLocation(null);
       setSelectedLocation(null);
+      updateURL({ search: searchValue.trim() }, radius, selectedDays);
       fetchMarkets({ search: searchValue.trim() });
     }
   };
@@ -312,6 +396,16 @@ export default function MarketsPage() {
     setAllMarkets([]);
     setHasSearched(false);
     setDisplayCount(PAGE_SIZE);
+    setSelectedDays(DAY_ORDER);
+    setRadius(5);
+
+    // Conserver uniquement les paramètres de redirection
+    const params = new URLSearchParams();
+    if (needFavorite) params.set("needFavorite", "true");
+    if (pendingQuery) params.set("q", pendingQuery);
+    if (pendingCategory) params.set("category", pendingCategory);
+    const paramStr = params.toString();
+    router.push(`/markets${paramStr ? `?${paramStr}` : ""}`);
   };
 
   // Trier les horaires par jour de la semaine
@@ -325,12 +419,28 @@ export default function MarketsPage() {
   const handleRadiusChange = (newRadius: number) => {
     setRadius(newRadius);
     if (userLocation) {
+      updateURL(
+        { lat: userLocation.lat, lng: userLocation.lng },
+        newRadius,
+        selectedDays,
+        true,
+      );
       fetchMarkets({
         lat: userLocation.lat,
         lng: userLocation.lng,
         radius: newRadius,
       });
     } else if (selectedLocation) {
+      updateURL(
+        {
+          lat: selectedLocation.lat,
+          lng: selectedLocation.lng,
+          address: selectedLocation.label,
+        },
+        newRadius,
+        selectedDays,
+        true,
+      );
       fetchMarkets({
         lat: selectedLocation.lat,
         lng: selectedLocation.lng,
@@ -346,19 +456,62 @@ export default function MarketsPage() {
 
   // Gestion des filtres par jour
   const toggleDay = (day: string) => {
-    setSelectedDays((prev) =>
-      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day],
-    );
+    const newDays = selectedDays.includes(day)
+      ? selectedDays.filter((d) => d !== day)
+      : [...selectedDays, day];
+    setSelectedDays(newDays);
     setDisplayCount(PAGE_SIZE);
+
+    if (userLocation) {
+      updateURL(
+        { lat: userLocation.lat, lng: userLocation.lng },
+        radius,
+        newDays,
+        true,
+      );
+    } else if (selectedLocation) {
+      updateURL(
+        {
+          lat: selectedLocation.lat,
+          lng: selectedLocation.lng,
+          address: selectedLocation.label,
+        },
+        radius,
+        newDays,
+        true,
+      );
+    } else if (hasSearched && searchValue) {
+      updateURL({ search: searchValue }, radius, newDays, true);
+    }
   };
 
   const toggleAllDays = () => {
-    if (selectedDays.length === DAY_ORDER.length) {
-      setSelectedDays([]);
-    } else {
-      setSelectedDays(DAY_ORDER);
-    }
+    const newDays =
+      selectedDays.length === DAY_ORDER.length ? [] : [...DAY_ORDER];
+    setSelectedDays(newDays);
     setDisplayCount(PAGE_SIZE);
+
+    if (userLocation) {
+      updateURL(
+        { lat: userLocation.lat, lng: userLocation.lng },
+        radius,
+        newDays,
+        true,
+      );
+    } else if (selectedLocation) {
+      updateURL(
+        {
+          lat: selectedLocation.lat,
+          lng: selectedLocation.lng,
+          address: selectedLocation.label,
+        },
+        radius,
+        newDays,
+        true,
+      );
+    } else if (hasSearched && searchValue) {
+      updateURL({ search: searchValue }, radius, newDays, true);
+    }
   };
 
   const isLocationSearch = userLocation || selectedLocation;

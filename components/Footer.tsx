@@ -26,7 +26,7 @@ export default function Footer() {
         {/* Découvrir */}
         <div>
           <h4 className="font-semibold mb-2">Découvrir</h4>
-          <ul className="text-sm space-y-1">
+          <ul className="text-sm space-y-4">
             <li>
               <Link href="/about" className="hover:underline">
                 Comment ça marche ?
@@ -53,7 +53,7 @@ export default function Footer() {
         {/* Commerçants */}
         <div>
           <h4 className="font-semibold mb-2">Pour les commerçants</h4>
-          <ul className="text-sm space-y-1">
+          <ul className="text-sm space-y-4">
             <li>
               <Link href={`/register?role=vendor`} className="hover:underline">
                 Rejoindre la plateforme
@@ -80,7 +80,7 @@ export default function Footer() {
         {/* Infos pratiques */}
         <div>
           <h4 className="font-semibold mb-2">Infos pratiques</h4>
-          <ul className="text-sm space-y-1">
+          <ul className="text-sm space-y-4">
             <li>
               <Link href="/contact" className="hover:underline">
                 Contact
@@ -98,8 +98,7 @@ export default function Footer() {
             </li>
             <li>
               <Link href="/about" className="hover:underline">
-                À propos de{" "}
-                <span className="font-mycabas text-xl">MyCabas</span>
+                À propos de <span className="font-mycabas text-xl">MyCabas</span>
               </Link>
             </li>
           </ul>
@@ -109,7 +108,8 @@ export default function Footer() {
       {/* Bas de page */}
       <div className="mt-10 border-t border-principale-300 pt-6 text-center text-sm">
         © {new Date().getFullYear()}{" "}
-        <span className="font-mycabas  text-xl">MyCabas</span> – Tous droits réservés •
+        <span className="font-mycabas  text-xl">MyCabas</span> – Tous droits
+        réservés •
         <Link
           href="/confidentialite"
           className="ml-1 underline hover:text-principale-100"

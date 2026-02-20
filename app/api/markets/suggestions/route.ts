@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { MarketStatus } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
@@ -13,6 +14,7 @@ export async function GET(request: NextRequest) {
     // Rechercher les marchés correspondants
     const markets = await prisma.market.findMany({
       where: {
+        status: MarketStatus.ACTIVE,
         OR: [
           { name: { contains: query, mode: "insensitive" } },
           { town: { contains: query, mode: "insensitive" } },

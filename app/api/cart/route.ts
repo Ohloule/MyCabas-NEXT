@@ -30,6 +30,9 @@ export async function GET() {
                 vendor: {
                   select: { id: true, stallName: true },
                 },
+                category: {
+                  select: { id: true, name: true },
+                },
               },
             },
           },

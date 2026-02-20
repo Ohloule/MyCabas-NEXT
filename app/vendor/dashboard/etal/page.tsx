@@ -241,7 +241,7 @@ export default function EtalPage() {
           <ImportProductsDialog onImportSuccess={fetchProducts}>
             <Button variant="outline">
               <FileSpreadsheet className="w-4 h-4" />
-              <span className="hidden sm:inline">Importer</span>
+              <span className="hidden md:inline">Importer</span>
             </Button>
           </ImportProductsDialog>
           <Button onClick={() => router.push("/vendor/dashboard/etal/nouveau")}>

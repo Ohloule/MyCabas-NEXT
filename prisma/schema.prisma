@@ -37,6 +37,7 @@ enum PaymentMethod {
 }
 
 enum VendorLabel {
+  HOME_MADE     // Fait maison
   BIO           // Agriculture biologique
   LOCAL         // Producteur local
   ARTISAN       // Artisan
@@ -44,6 +45,7 @@ enum VendorLabel {
   AOC_AOP       // Appellation d'origine
   LABEL_ROUGE   // Label Rouge
   FAIR_TRADE    // Commerce équitable
+  NO_ICE        // Aucun produit surgelé
 }
 
 enum OrderStatus {
@@ -65,6 +67,12 @@ enum PaymentStatus {
   CANCELLED
   FAILED
   REFUNDED
+}
+
+enum MarketStatus {
+  ACTIVE   // Marché validé, visible par tous
+  PENDING  // En attente de validation admin
+  REJECTED // Rejeté par l'admin
 }
 
 // ============================================
@@ -192,9 +200,10 @@ model Vendor {
   user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Relations
-  products      Product[]
-  marketVendors MarketVendor[]
-  orderItems    OrderItem[]
+  products          Product[]
+  marketVendors     MarketVendor[]
+  orderItems        OrderItem[]
+  submittedMarkets  Market[]       @relation("SubmittedMarkets")
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -215,6 +224,10 @@ model Market {
   lat           Float
   lng           Float
 
+  // Statut de validation
+  status              MarketStatus @default(ACTIVE)
+  submittedByVendorId String?      // null = ajouté par admin
+
   // Relations
   openings        MarketOpening[]
   marketVendors   MarketVendor[]
@@ -223,6 +236,7 @@ model Market {
   favoritedBy     FavoriteMarket[]
   carts           Cart[]
   orders          Order[]
+  submittedBy     Vendor?          @relation("SubmittedMarkets", fields: [submittedByVendorId], references: [id], onDelete: SetNull)
 
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
@@ -230,6 +244,7 @@ model Market {
   @@index([town])
   @@index([zip])
   @@index([lat, lng])
+  @@index([status])
   @@map("markets")
 }
 

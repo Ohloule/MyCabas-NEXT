@@ -22,14 +22,27 @@ export default function IngredientImagePicker({
   const [selectedUrl, setSelectedUrl] = useState("");
   const [error, setError] = useState<string | null>(null);
 
+  const translateToEnglish = async (text: string): Promise<string> => {
+    try {
+      const res = await fetch(
+        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=fr|en`,
+      );
+      const data = await res.json();
+      return data?.responseData?.translatedText || text;
+    } catch {
+      return text;
+    }
+  };
+
   const fetchImages = useCallback(
     async (searchQuery: string, pageNum: number) => {
       if (!searchQuery) return;
       setLoading(true);
       setError(null);
       try {
+        const englishQuery = await translateToEnglish(searchQuery);
         const response = await fetch(
-          `/api/unsplash/search?query=${encodeURIComponent(searchQuery)}&page=${pageNum}`,
+          `/api/unsplash/search?query=${encodeURIComponent(englishQuery)}&page=${pageNum}`,
         );
         const data = await response.json();
 
@@ -110,6 +123,7 @@ export default function IngredientImagePicker({
             <div className="grid grid-cols-3 gap-2">
               {images.map((img) => (
                 <button
+                  type="button"
                   key={img.id}
                   onClick={() => {
                     setSelectedUrl(img.urls.regular);
@@ -138,6 +152,7 @@ export default function IngredientImagePicker({
             {/* Pagination */}
             <div className="flex justify-between items-center mt-4 px-2">
               <Button
+                type="button"
                 variant="outline"
                 size="sm"
                 onClick={handlePrevPage}
@@ -146,7 +161,7 @@ export default function IngredientImagePicker({
                 <ChevronLeft className="h-4 w-4 mr-1" /> Précédent
               </Button>
               <span className="text-xs text-gray-500">Page {page}</span>
-              <Button variant="outline" size="sm" onClick={handleNextPage}>
+              <Button type="button" variant="outline" size="sm" onClick={handleNextPage}>
                 Suivant <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
             </div>

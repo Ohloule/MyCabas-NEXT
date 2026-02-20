@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { MarketStatus } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
 const MAX_RESULTS = 200;
@@ -61,6 +62,7 @@ export async function GET(request: NextRequest) {
       // Requête avec pré-filtrage géographique
       const markets = await prisma.market.findMany({
         where: {
+          status: MarketStatus.ACTIVE,
           lat: { gte: bbox.minLat, lte: bbox.maxLat },
           lng: { gte: bbox.minLng, lte: bbox.maxLng },
         },
@@ -114,18 +116,16 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Construire le filtre WHERE
+    const textWhere =
+      whereConditions.length > 0
+        ? { status: MarketStatus.ACTIVE, OR: whereConditions }
+        : { status: MarketStatus.ACTIVE };
+
     // Récupérer les marchés avec limite
     const markets = await prisma.market.findMany({
-      include: {
-        openings: true,
-      },
-      ...(whereConditions.length > 0
-        ? {
-            where: {
-              OR: whereConditions,
-            },
-          }
-        : {}),
+      where: textWhere,
+      include: { openings: true },
       take: MAX_RESULTS,
       orderBy: { name: "asc" },
     });
@@ -148,7 +148,10 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Markets fetch error:", error);
     return NextResponse.json(
-      { error: "Erreur lors de la récupération des marchés" },
+      {
+        error: "Erreur lors de la récupération des marchés",
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }

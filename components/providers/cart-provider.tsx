@@ -17,6 +17,10 @@ interface CartItemData {
       id: string;
       stallName: string;
     };
+    category: {
+      id: string;
+      name: string;
+    } | null;
   };
 }
 

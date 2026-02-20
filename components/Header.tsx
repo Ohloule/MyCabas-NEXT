@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Avis from "./Avis";
+import FavoriteMarketsSelect from "./FavoriteMarketsSelect";
 import SearchBar from "./SearchBar";
 import { Button } from "./ui/button";
 
@@ -68,7 +69,8 @@ export default function Header() {
 
         {/* Actions utilisateur */}
         <div className="hidden lg:flex flex-row gap-4 items-center shrink-0">
-          <Avis />
+          {/* Avis Trustpilot uniquement si non connecté */}
+          {!session?.user && <Avis />}
 
           {isLoading ? (
             <div className="h-9 w-24 animate-pulse rounded-md bg-muted" />
@@ -82,6 +84,8 @@ export default function Header() {
                   </Button>
                 </Link>
               )}
+
+              {session.user.role === "CLIENT" && <FavoriteMarketsSelect />}
 
               {/* Avatar avec menu déroulant */}
               <div className="relative" ref={menuRef}>

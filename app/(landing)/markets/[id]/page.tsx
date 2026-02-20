@@ -144,6 +144,7 @@ export default function MarketDetailPage() {
       if (response.ok) {
         const data = await response.json();
         setIsFavorite(data.isFavorite);
+        window.dispatchEvent(new CustomEvent("favoritemarkets:changed"));
       }
     } catch (error) {
       console.error("Erreur toggle favori:", error);

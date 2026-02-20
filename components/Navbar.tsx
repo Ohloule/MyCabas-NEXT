@@ -25,6 +25,7 @@ import { useEffect, useState } from "react";
 import CategoriesMenu from "./CategoriesMenu";
 import SearchBar from "./SearchBar";
 import { Button } from "./ui/button";
+import { useCart } from "./providers/cart-provider";
 
 // Icônes des catégories pour le menu mobile
 const categoryIcons: Record<string, React.ReactNode> = {
@@ -49,9 +50,18 @@ interface Category {
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const { cart } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [showCategories, setShowCategories] = useState(false);
+
+  const cartTotal = cart?.items.reduce(
+    (sum, item) => sum + item.quantity * item.product.basePrice,
+    0
+  ) ?? 0;
+  const cartTotalLabel = cartTotal > 0
+    ? cartTotal.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })
+    : null;
 
   // Charger les catégories pour le menu mobile
   useEffect(() => {
@@ -115,7 +125,7 @@ export default function Navbar() {
               <Link href="/panier">
                 <Button className="bg-secondaire-500 hover:bg-secondaire-600 gap-2">
                   <ShoppingCart className="h-4 w-4" />
-                  Mon Panier
+                  {cartTotalLabel ? `${cartTotalLabel}` : "Mon Panier"}
                 </Button>
               </Link>
             ) : (
@@ -271,7 +281,7 @@ export default function Navbar() {
               <Link href="/panier" onClick={closeMobileMenu}>
                 <Button className="w-full bg-secondaire-500 hover:bg-secondaire-600 gap-2">
                   <ShoppingCart className="h-4 w-4" />
-                  Mon Panier
+                  {cartTotalLabel ? `${cartTotalLabel}` : "Mon Panier"}
                 </Button>
               </Link>
             ) : (

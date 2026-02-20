@@ -175,7 +175,7 @@ export function ImportProductsDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+      <DialogContent className="w-[80vw] max-w-[80vw] sm:max-w-[80vw] max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <FileSpreadsheet className="w-5 h-5 text-principale-600" />
@@ -313,7 +313,7 @@ export function ImportProductsDialog({
 
               {/* Liste des produits */}
               <div className="border border-gray-200 rounded-lg overflow-hidden">
-                <div className="max-h-64 overflow-y-auto">
+                <div className="max-h-[50vh] overflow-y-auto">
                   <table className="w-full text-sm">
                     <thead className="bg-gray-50 sticky top-0">
                       <tr>
