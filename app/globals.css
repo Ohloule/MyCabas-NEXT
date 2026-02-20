@@ -9,10 +9,9 @@
   --principale-200: oklch(89% 0.065 175);
   --principale-300: oklch(80% 0.095 175);
   --principale-400: oklch(70% 0.12 175);
-  --principale-500: oklch(
-    59.336% 0.11612 171.119
-  ); /* Vert Signature - Très frais */
+  --principale-500: oklch(60% 0.115 175); /* Vert Signature - Très frais */
   --principale-600: oklch(48% 0.125 175);
+  --principale-650: oklch(43% 0.115 175);
   --principale-700: oklch(38% 0.105 175);
   --principale-800: oklch(28% 0.085 175);
   --principale-900: oklch(18% 0.065 175);
@@ -75,6 +74,7 @@
   --color-principale-400: var(--principale-400);
   --color-principale-500: var(--principale-500);
   --color-principale-600: var(--principale-600);
+  --color-principale-650: var(--principale-650);
   --color-principale-700: var(--principale-700);
   --color-principale-800: var(--principale-800);
   --color-principale-900: var(--principale-900);

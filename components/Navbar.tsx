@@ -3,6 +3,7 @@
 import {
   Apple,
   Beef,
+  BookOpen,
   ChevronRight,
   CreditCard,
   Croissant,
@@ -12,6 +13,7 @@ import {
   MapPin,
   Menu,
   Milk,
+  Receipt,
   ShoppingCart,
   Store,
   UserPlus,
@@ -19,13 +21,13 @@ import {
   Wine,
   X,
 } from "lucide-react";
-import Link from "next/link";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import CategoriesMenu from "./CategoriesMenu";
+import { useCart } from "./providers/cart-provider";
 import SearchBar from "./SearchBar";
 import { Button } from "./ui/button";
-import { useCart } from "./providers/cart-provider";
 
 // Icônes des catégories pour le menu mobile
 const categoryIcons: Record<string, React.ReactNode> = {
@@ -55,13 +57,18 @@ export default function Navbar() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [showCategories, setShowCategories] = useState(false);
 
-  const cartTotal = cart?.items.reduce(
-    (sum, item) => sum + item.quantity * item.product.basePrice,
-    0
-  ) ?? 0;
-  const cartTotalLabel = cartTotal > 0
-    ? cartTotal.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })
-    : null;
+  const cartTotal =
+    cart?.items.reduce(
+      (sum, item) => sum + item.quantity * item.product.basePrice,
+      0,
+    ) ?? 0;
+  const cartTotalLabel =
+    cartTotal > 0
+      ? cartTotal.toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "EUR",
+        })
+      : null;
 
   // Charger les catégories pour le menu mobile
   useEffect(() => {
@@ -109,18 +116,37 @@ export default function Navbar() {
             >
               Trouver un marché
             </Link>
-            <Link
-              href="/about"
-              className="text-blanc hover:text-principale-200 transition-colors"
-            >
-              Comment ça marche ?
-            </Link>
-            <Link
-              href="/pricing"
-              className="text-blanc hover:text-principale-200 transition-colors"
-            >
-              Tarifs & fonctionnement
-            </Link>
+            {session?.user?.role === "CLIENT" ? (
+              <>
+                <Link
+                  href="/livre-de-cuisine"
+                  className="text-blanc hover:text-principale-200 transition-colors"
+                >
+                  Idées de recettes
+                </Link>
+                <Link
+                  href="/ticket-de-caisse"
+                  className="text-blanc hover:text-principale-200 transition-colors"
+                >
+                  Comparer mon ticket de caisse
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/about"
+                  className="text-blanc hover:text-principale-200 transition-colors"
+                >
+                  Comment ça marche ?
+                </Link>
+                <Link
+                  href="/pricing"
+                  className="text-blanc hover:text-principale-200 transition-colors"
+                >
+                  Tarifs & fonctionnement
+                </Link>
+              </>
+            )}
             {session ? (
               <Link href="/panier">
                 <Button className="bg-secondaire-500 hover:bg-secondaire-600 gap-2">
@@ -252,27 +278,55 @@ export default function Navbar() {
               </span>
             </Link>
 
-            <Link
-              href="/about"
-              onClick={closeMobileMenu}
-              className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
-            >
-              <HelpCircle className="h-5 w-5 text-principale-600" />
-              <span className="font-medium text-gray-900">
-                Comment ça marche ?
-              </span>
-            </Link>
+            {session?.user?.role === "CLIENT" ? (
+              <>
+                <Link
+                  href="/livre-de-cuisine"
+                  onClick={closeMobileMenu}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
+                >
+                  <BookOpen className="h-5 w-5 text-principale-600" />
+                  <span className="font-medium text-gray-900">
+                    Idées de recettes
+                  </span>
+                </Link>
 
-            <Link
-              href="/pricing"
-              onClick={closeMobileMenu}
-              className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
-            >
-              <CreditCard className="h-5 w-5 text-principale-600" />
-              <span className="font-medium text-gray-900">
-                Tarifs & fonctionnement
-              </span>
-            </Link>
+                <Link
+                  href="/ticket-de-caisse"
+                  onClick={closeMobileMenu}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
+                >
+                  <Receipt className="h-5 w-5 text-principale-600" />
+                  <span className="font-medium text-gray-900">
+                    Comparer mon ticket de caisse
+                  </span>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/about"
+                  onClick={closeMobileMenu}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
+                >
+                  <HelpCircle className="h-5 w-5 text-principale-600" />
+                  <span className="font-medium text-gray-900">
+                    Comment ça marche ?
+                  </span>
+                </Link>
+
+                <Link
+                  href="/pricing"
+                  onClick={closeMobileMenu}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
+                >
+                  <CreditCard className="h-5 w-5 text-principale-600" />
+                  <span className="font-medium text-gray-900">
+                    Tarifs & fonctionnement
+                  </span>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Bouton en bas du drawer */}

@@ -26,7 +26,7 @@ export default function Footer() {
         {/* Découvrir */}
         <div>
           <h4 className="font-semibold mb-2">Découvrir</h4>
-          <ul className="text-sm space-y-4">
+          <ul className="text-sm space-y-1">
             <li>
               <Link href="/about" className="hover:underline">
                 Comment ça marche ?
@@ -53,7 +53,7 @@ export default function Footer() {
         {/* Commerçants */}
         <div>
           <h4 className="font-semibold mb-2">Pour les commerçants</h4>
-          <ul className="text-sm space-y-4">
+          <ul className="text-sm space-y-1">
             <li>
               <Link href={`/register?role=vendor`} className="hover:underline">
                 Rejoindre la plateforme
@@ -80,7 +80,12 @@ export default function Footer() {
         {/* Infos pratiques */}
         <div>
           <h4 className="font-semibold mb-2">Infos pratiques</h4>
-          <ul className="text-sm space-y-4">
+          <ul className="text-sm space-y-1">
+            <li>
+              <Link href="/about" className="hover:underline">
+                À propos
+              </Link>
+            </li>
             <li>
               <Link href="/contact" className="hover:underline">
                 Contact
@@ -94,11 +99,6 @@ export default function Footer() {
             <li>
               <Link href="/confidentialite" className="hover:underline">
                 Politique de confidentialité
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:underline">
-                À propos de <span className="font-mycabas text-xl">MyCabas</span>
               </Link>
             </li>
           </ul>
