@@ -5,11 +5,19 @@ import Loader from "@/components/Loader";
 import VendorCard from "@/components/search/VendorCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Search, ShoppingBasket, Store, X } from "lucide-react";
+import { useCart } from "@/components/providers/cart-provider";
+import {
+  ArrowLeft,
+  Search,
+  ShoppingBasket,
+  ShoppingCart,
+  Store,
+  X,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const DAYS_FR: Record<string, string> = {
   LUNDI: "Lundi",
@@ -70,6 +78,34 @@ export default function ShopPage() {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [isSticky, setIsSticky] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  const { cart } = useCart();
+  const cartTotal =
+    cart?.items.reduce(
+      (sum, item) => sum + item.quantity * item.product.basePrice,
+      0,
+    ) ?? 0;
+  const cartTotalLabel =
+    cartTotal > 0
+      ? cartTotal.toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "EUR",
+        })
+      : null;
+
+  // Détecter quand la barre de filtres devient sticky
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsSticky(!entry.isIntersecting),
+      { threshold: 0 },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [vendors.length]);
 
   // Rediriger si non connecté
   useEffect(() => {
@@ -198,27 +234,47 @@ export default function ShopPage() {
           </span>
         </div>
 
+        {/* Sentinelle pour détecter le sticky */}
+        {vendors.length > 0 && <div ref={sentinelRef} className="h-0" />}
+
         {/* Filtres sticky */}
         {vendors.length > 0 && (
           <div className="sticky top-0 z-20 -mx-4 px-4 py-3 mb-6 bg-secondaire-25/95 backdrop-blur-sm border-b border-gray-100 space-y-3">
-            {/* Barre de recherche */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-              <Input
-                type="text"
-                placeholder="Rechercher un produit ou un commerçant…"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 pr-9"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              )}
+            {/* Barre de recherche + bouton panier */}
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                <Input
+                  type="text"
+                  placeholder="Rechercher un produit ou un commerçant…"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9 pr-9"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+
+              {/* Bouton panier - visible uniquement en mode sticky */}
+              <Link
+                href="/panier"
+                className={`transition-all duration-300 overflow-hidden ${
+                  isSticky
+                    ? "w-auto opacity-100"
+                    : "w-0 opacity-0 pointer-events-none"
+                }`}
+              >
+                <Button className="bg-secondaire-500 hover:bg-secondaire-600 gap-2 whitespace-nowrap">
+                  <ShoppingCart className="h-4 w-4" />
+                  {cartTotalLabel ? cartTotalLabel : "Panier"}
+                </Button>
+              </Link>
             </div>
 
             {/* Filtres par catégorie */}

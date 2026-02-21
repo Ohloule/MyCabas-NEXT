@@ -1,12 +1,11 @@
-import { Receipt } from "lucide-react";
+import HeadingPage from "@/components/HeadingPage";
+
 
 export default function TicketDeCaissePage() {
   return (
+    <>
+    <HeadingPage title="Comparer mon ticket de caisse" />
     <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-      <Receipt className="h-16 w-16 text-principale-600 mb-6" />
-      <h1 className="text-3xl font-bold text-gray-900 mb-4">
-        Comparer mon ticket de caisse
-      </h1>
       <p className="text-gray-600 max-w-2xl leading-relaxed">
         On a souvent le réflexe du supermarché par peur pour notre budget,
         persuadés que les circuits courts sont un luxe.{"  "}
@@ -23,5 +22,6 @@ export default function TicketDeCaissePage() {
       </p>
       <p className="text-sm text-gray-400 mt-2">Fonctionnalité à venir.</p>
     </div>
+    </>
   );
 }

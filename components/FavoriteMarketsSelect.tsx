@@ -95,7 +95,7 @@ export default function FavoriteMarketsSelect() {
               key={f.id}
               onClick={() => {
                 setIsOpen(false);
-                router.push(`/markets/${f.market.id}?day=${f.day.toLowerCase()}`);
+                router.push(`/markets/${f.market.id}/shop?day=${f.day.toLowerCase()}`);
               }}
               className="flex flex-col w-full text-left px-4 py-2 hover:bg-principale-100 transition-colors"
             >
