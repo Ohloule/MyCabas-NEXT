@@ -134,7 +134,7 @@ export default function CommandesPage() {
             onClick={() => setActiveTab(tab.key)}
             className={`px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
               activeTab === tab.key
-                ? "bg-white text-principale-700 shadow-sm"
+                ? "bg-principale-700 text-white shadow-sm"
                 : "text-gray-600 hover:text-gray-900"
             }`}
           >

@@ -7,7 +7,7 @@ import {
   ArrowLeft,
   Check,
   HelpCircle,
-  ImageIcon,
+  Trash2,
   Infinity,
   Leaf,
   MapPin,
@@ -684,7 +684,21 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         <div className="space-y-6">
           {/* Image */}
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Image</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-900">Image</h2>
+              {imageUrl && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setImageUrl("")}
+                  className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                >
+                  <Trash2 className="w-4 h-4 mr-1" />
+                  Supprimer
+                </Button>
+              )}
+            </div>
 
             <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden mb-4">
               <Image
@@ -697,29 +711,6 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
             </div>
 
             <div>
-              <Label htmlFor="imageUrl">URL de l&apos;image</Label>
-              <div className="mt-1 flex gap-2">
-                <Input
-                  id="imageUrl"
-                  type="url"
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
-                  placeholder="https://..."
-                  className="flex-1"
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setImageUrl("")}
-                  title="Réinitialiser"
-                >
-                  <ImageIcon className="w-4 h-4" />
-                </Button>
-              </div>
-              <p className="text-xs text-gray-500 mt-2">
-                Laissez vide pour utiliser l&apos;image par défaut
-              </p>
               <IngredientImagePicker
                 onImageSelect={setImageUrl}
                 defaultQuery={name}

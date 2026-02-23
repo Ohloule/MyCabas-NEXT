@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Check, ChevronLeft, ChevronRight, Search } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { Check, ChevronLeft, ChevronRight, Search, Upload } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Loader from "./Loader";
 
 interface IngredientImagePickerProps {
@@ -21,6 +21,84 @@ export default function IngredientImagePicker({
   const [loading, setLoading] = useState(false);
   const [selectedUrl, setSelectedUrl] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [hoveredImg, setHoveredImg] = useState<string | null>(null);
+  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleMouseEnter = (url: string) => {
+    hoverTimerRef.current = setTimeout(() => setHoveredImg(url), 500);
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    setHoveredImg(null);
+  };
+
+  const compressImage = (file: File, maxDim = 1200): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => {
+            if (blob) resolve(blob);
+            else reject(new Error("Échec de la compression"));
+          },
+          "image/webp",
+          0.85,
+        );
+      };
+      img.onerror = () => reject(new Error("Impossible de lire l'image"));
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setError(null);
+    try {
+      const compressed = await compressImage(file);
+      const formData = new FormData();
+      formData.append("file", compressed, `image_${Date.now()}.webp`);
+
+      const res = await fetch("/api/upload-image", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Erreur lors de l'upload");
+        return;
+      }
+
+      setSelectedUrl(data.url);
+      onImageSelect?.(data.url);
+    } catch {
+      setError("Erreur lors de l'upload de l'image");
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
 
   const translateToEnglish = async (text: string): Promise<string> => {
     try {
@@ -99,15 +177,39 @@ export default function IngredientImagePicker({
 
   return (
     <div className="space-y-4 mt-4">
-      {/* Input de recherche */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-        <Input
-          placeholder="Rechercher une image..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="pl-10"
+      {/* Input de recherche + bouton importer */}
+      <div className="flex gap-2">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Input
+            placeholder="Rechercher une image..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          className="hidden"
+          onChange={handleFileUpload}
         />
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          disabled={uploading}
+          onClick={() => fileInputRef.current?.click()}
+          className="shrink-0 h-9"
+        >
+          {uploading ? (
+            <Loader taille={16} />
+          ) : (
+            <Upload className="h-4 w-4 mr-1" />
+          )}
+          Importer
+        </Button>
       </div>
 
       {/* Grille d'images */}
@@ -129,6 +231,8 @@ export default function IngredientImagePicker({
                     setSelectedUrl(img.urls.regular);
                     onImageSelect?.(img.urls.regular);
                   }}
+                  onMouseEnter={() => handleMouseEnter(img.urls.regular)}
+                  onMouseLeave={handleMouseLeave}
                   className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all hover:opacity-80 ${
                     selectedUrl === img.urls.regular
                       ? "border-blue-500 ring-2 ring-blue-200"
@@ -178,6 +282,19 @@ export default function IngredientImagePicker({
           </div>
         )}
       </div>
+
+      {/* Aperçu agrandi au survol */}
+      {hoveredImg && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+          <div className="rounded-xl overflow-hidden shadow-2xl border border-gray-200 bg-white">
+            <img
+              src={hoveredImg}
+              alt="Aperçu"
+              className="max-w-[80vw] max-h-[70vh] object-contain"
+            />
+          </div>
+        </div>
+      )}
 
       {/* Crédit Unsplash */}
       {selectedUrl && (

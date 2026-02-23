@@ -62,7 +62,7 @@ export default function LoginPage() {
               MyCabas
             </span>
           </Link>
-          <CardTitle className="text-2xl">Connexion</CardTitle>
+          <CardTitle className="text-4xl font-special mt-1 mb-8">Connexion</CardTitle>
           <CardDescription>
             Connectez-vous à votre compte{" "}
             <span className="font-mycabas">MyCabas</span>

@@ -130,6 +130,40 @@ export default function ParametresPage() {
     fetchSettings();
   }, []);
 
+  // Redimensionner et compresser l'image côté client
+  const compressImage = (file: File, maxDim = 1200): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const img = new window.Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => {
+            if (blob) resolve(blob);
+            else reject(new Error("Échec de la compression"));
+          },
+          "image/webp",
+          0.85,
+        );
+      };
+      img.onerror = () => reject(new Error("Impossible de lire l'image"));
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
   // Upload de logo
   const handleLogoUpload = useCallback(async (file: File) => {
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
@@ -149,8 +183,11 @@ export default function ParametresPage() {
     setLogoPreview(previewUrl);
 
     try {
+      // Redimensionner (max 1200px) et convertir en WebP
+      const compressed = await compressImage(file);
+
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", compressed, `logo_${Date.now()}.webp`);
 
       const response = await fetch("/api/vendor/upload-logo", {
         method: "POST",
@@ -313,6 +350,11 @@ export default function ParametresPage() {
         </div>
       )}
 
+      {/* Layout deux colonnes : formulaire + aperçu sticky */}
+      <div className="lg:flex lg:gap-6">
+        {/* Colonne gauche : formulaire */}
+        <div className="lg:flex-1 min-w-0">
+
       {/* Photo de la boutique (en dehors du form car upload indépendant) */}
       <Card className="mb-6">
         <CardHeader>
@@ -415,7 +457,7 @@ export default function ParametresPage() {
         </CardContent>
       </Card>
 
-      <form onSubmit={handleSubmit} className="space-y-6 ">
+      <form id="vitrine-form" onSubmit={handleSubmit} className="space-y-6 ">
         {/* Informations de la boutique */}
         <Card>
           <CardHeader>
@@ -694,49 +736,63 @@ export default function ParametresPage() {
           </CardContent>
         </Card>
 
-        {/* Aperçu */}
-        <Card className="bg-gray-50">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <Eye className="h-5 w-5" />
-              Aperçu de votre boutique
-            </CardTitle>
-            <CardDescription>
-              Voici comment vos clients verront votre boutique
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="max-w-md mx-auto">
-              <VendorCard
-                vendor={{
-                  stallName: formData.stallName || "Nom de votre boutique",
-                  description: formData.description || null,
-                  phone: formData.phone || null,
-                  email: formData.email || null,
-                  logoUrl: settings?.logoUrl || null,
-                  website: formData.website || null,
-                  socialLinks: {
-                    instagram: formData.instagram || undefined,
-                    facebook: formData.facebook || undefined,
-                    tiktok: formData.tiktok || undefined,
-                  },
-                  paymentMethods: formData.paymentMethods,
-                  labels: formData.labels,
-                }}
-                isPreview={true}
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Bouton de sauvegarde */}
-        <div className="flex justify-end">
+        {/* Bouton de sauvegarde (mobile uniquement) */}
+        <div className="flex justify-end lg:hidden">
           <Button type="submit" disabled={saving} size="lg">
             {saving ? <Loader taille={45} /> : <Save className="h-4 w-4" />}
             Enregistrer les modifications
           </Button>
         </div>
       </form>
+        </div>
+
+        {/* Colonne droite : aperçu sticky (desktop uniquement) */}
+        <div className="hidden lg:block lg:w-95 shrink-0">
+          <div className="sticky top-6">
+            <Card className="bg-gray-50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Eye className="h-5 w-5" />
+                  Aperçu de votre boutique
+                </CardTitle>
+                <CardDescription>
+                  Voici comment vos clients verront votre boutique
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <VendorCard
+                  vendor={{
+                    stallName: formData.stallName || "Nom de votre boutique",
+                    description: formData.description || null,
+                    phone: formData.phone || null,
+                    email: formData.email || null,
+                    logoUrl: settings?.logoUrl || null,
+                    website: formData.website || null,
+                    socialLinks: {
+                      instagram: formData.instagram || undefined,
+                      facebook: formData.facebook || undefined,
+                      tiktok: formData.tiktok || undefined,
+                    },
+                    paymentMethods: formData.paymentMethods,
+                    labels: formData.labels,
+                  }}
+                  isPreview={true}
+                />
+              </CardContent>
+            </Card>
+            <Button
+              type="submit"
+              form="vitrine-form"
+              disabled={saving}
+              size="lg"
+              className="w-full mt-4"
+            >
+              {saving ? <Loader taille={45} /> : <Save className="h-4 w-4" />}
+              Enregistrer les modifications
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

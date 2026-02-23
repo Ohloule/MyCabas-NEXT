@@ -183,7 +183,9 @@ function RegisterForm() {
               MyCabas
             </span>
           </Link>
-          <CardTitle className="text-2xl">Créer un compte</CardTitle>
+          <CardTitle className="text-4xl font-special mt-1 mb-8">
+            Créer un compte
+          </CardTitle>
           <CardDescription>
             {step === 1
               ? "Choisissez votre type de compte"

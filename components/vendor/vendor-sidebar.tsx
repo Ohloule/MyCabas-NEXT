@@ -171,7 +171,7 @@ export function VendorSidebar({ user }: VendorSidebarProps) {
           </Link>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-principale-200 hover:bg-red-600 hover:text-white transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-principale-200 hover:bg-secondaire-600 hover:text-white transition-colors cursor-pointer "
           >
             <LogOut className="w-5 h-5 shrink-0" />
             <span>Déconnexion</span>
