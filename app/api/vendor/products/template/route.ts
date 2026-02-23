@@ -286,7 +286,7 @@ export async function GET() {
     return new NextResponse(Buffer.from(buffer), {
       headers: {
         "Content-Type":        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "Content-Disposition": "attachment; filename=template_produits_mycabas.xlsx",
+        "Content-Disposition": "attachment; filename=myCabas_model_import.xlsx",
       },
     });
   } catch (error) {

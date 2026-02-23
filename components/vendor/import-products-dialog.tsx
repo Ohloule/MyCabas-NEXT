@@ -169,7 +169,7 @@ export function ImportProductsDialog({
   };
 
   const downloadTemplate = () => {
-    window.location.href = "/filesDownload/template_produits_mycabas.xlsx";
+    window.location.href = "/filesDownload/myCabas_model_import.xlsx";
   };
 
   return (
