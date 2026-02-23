@@ -14,7 +14,7 @@ export default function ParrainageSection() {
           height={300}
           width={400}
           alt="illustration d'un marché"
-          className="rounded-4xl max-h-[400px] w-full object-contain object-center"
+          className="rounded-4xl max-h-100 w-full object-contain object-center"
         />
 
         <h1 className="font-special text-center text-4xl lg:text-6xl text-secondaire-700 py-6">
@@ -23,7 +23,7 @@ export default function ParrainageSection() {
       </div>
 
       {/* Bloc Parrainages détaillés */}
-      <div className="bg-secondaire-100 py-6 px-2 md:px-6 rounded-4xl shadow-2xl flex flex-col md:flex-row lg:flex-col justify-center">
+      <div className="bg-secondaire-100 py-6 px-2 md:px-6 rounded-4xl shadow-2xl flex flex-col md:flex-row lg:flex-col justify-center selection:bg-secondaire-300">
         <div className="mb-6 mx-2 md:mx-6">
           <h1 className="font-special text-center text-4xl lg:text-6xl text-secondaire-700 py-6">
             Parrainer un commerçant

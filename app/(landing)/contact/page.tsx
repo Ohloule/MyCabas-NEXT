@@ -5,7 +5,7 @@ export default function Page() {
     <>
       <HeadingPage title="Contact">
         <p className="text-lg">
-          Une question, un souci ou une idée ? On est là.
+          Une question, un souci ? Mieux ! une idée ? On est là.
         </p>
       </HeadingPage>
 

@@ -123,8 +123,8 @@ export default function OrderDetailPage() {
 
       {/* Items par vendor */}
       {Object.entries(itemsByVendor).map(([vendorName, items]) => (
-        <Card key={vendorName} className="mb-4">
-          <CardHeader className="py-3 px-4 bg-gray-50 border-b">
+        <Card key={vendorName} className="mb-4 ">
+          <CardHeader className="py-3 px-4 bg-principale-50 border-b">
             <CardTitle className="flex items-center gap-2 text-sm font-medium text-gray-700">
               <Store className="h-4 w-4 text-principale-600" />
               {vendorName}

@@ -267,6 +267,12 @@ body {
 }
 
 @layer base {
+  ::selection {
+    background-color: var(
+      --color-principale-300
+    ); /* Utilise une variable de couleur Tailwind */
+    color: var(--color-principale-900);
+  }
   * {
     @apply border-border outline-ring/50;
   }

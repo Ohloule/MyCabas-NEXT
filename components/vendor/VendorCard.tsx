@@ -90,7 +90,11 @@ interface VendorCardProps {
   href?: string;
 }
 
-export function VendorCard({ vendor, isPreview = false, href }: VendorCardProps) {
+export function VendorCard({
+  vendor,
+  isPreview = false,
+  href,
+}: VendorCardProps) {
   // Utiliser le logo de la boutique en priorité, sinon l'avatar
   const bannerImage = vendor.logoUrl || vendor.user?.avatarUrl;
   const hasProducts = vendor.products && vendor.products.length > 0;
@@ -109,10 +113,12 @@ export function VendorCard({ vendor, isPreview = false, href }: VendorCardProps)
       vendor.socialLinks.facebook ||
       vendor.socialLinks.tiktok);
 
-      console.log(vendor);
+  console.log(vendor);
 
   const card = (
-    <Card className={`overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl${href && !isPreview ? " cursor-pointer" : ""}`}>
+    <Card
+      className={`overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl${href && !isPreview ? " cursor-pointer" : ""}`}
+    >
       {/* Bannière */}
       <div className="relative h-32 bg-linear-to-br from-principale-100 to-principale-200">
         {bannerImage ? (
@@ -156,7 +162,7 @@ export function VendorCard({ vendor, isPreview = false, href }: VendorCardProps)
           {hasSocialLinks && (
             <div className="flex items-center gap-2">
               {vendor.socialLinks?.instagram && (
-                <a
+                <Link
                   href={
                     vendor.socialLinks.instagram.startsWith("http")
                       ? vendor.socialLinks.instagram
@@ -168,10 +174,10 @@ export function VendorCard({ vendor, isPreview = false, href }: VendorCardProps)
                   title="Instagram"
                 >
                   <Instagram className="h-4 w-4" />
-                </a>
+                </Link>
               )}
               {vendor.socialLinks?.facebook && (
-                <a
+                <Link
                   href={
                     vendor.socialLinks.facebook.startsWith("http")
                       ? vendor.socialLinks.facebook
@@ -183,10 +189,10 @@ export function VendorCard({ vendor, isPreview = false, href }: VendorCardProps)
                   title="Facebook"
                 >
                   <Facebook className="h-4 w-4" />
-                </a>
+                </Link>
               )}
               {vendor.socialLinks?.tiktok && (
-                <a
+                <Link
                   href={
                     vendor.socialLinks.tiktok.startsWith("http")
                       ? vendor.socialLinks.tiktok
@@ -198,7 +204,7 @@ export function VendorCard({ vendor, isPreview = false, href }: VendorCardProps)
                   title="TikTok"
                 >
                   <TikTokIcon className="h-4 w-4" />
-                </a>
+                </Link>
               )}
             </div>
           )}
@@ -217,27 +223,27 @@ export function VendorCard({ vendor, isPreview = false, href }: VendorCardProps)
         {(vendor.phone || vendor.email || vendor.website) && (
           <div className="space-y-2">
             {vendor.phone && (
-              <a
+              <Link
                 href={isPreview ? "#" : `tel:${vendor.phone}`}
                 className="flex items-center gap-2 text-sm text-principale-600 hover:underline"
                 onClick={isPreview ? (e) => e.preventDefault() : undefined}
               >
                 <Phone className="h-4 w-4" />
                 {vendor.phone}
-              </a>
+              </Link>
             )}
             {vendor.email && (
-              <a
+              <Link
                 href={isPreview ? "#" : `mailto:${vendor.email}`}
                 className="flex items-center gap-2 text-sm text-principale-600 hover:underline"
                 onClick={isPreview ? (e) => e.preventDefault() : undefined}
               >
                 <Mail className="h-4 w-4" />
                 {vendor.email}
-              </a>
+              </Link>
             )}
             {vendor.website && (
-              <a
+              <Link
                 href={isPreview ? "#" : vendor.website}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -248,7 +254,7 @@ export function VendorCard({ vendor, isPreview = false, href }: VendorCardProps)
                 {vendor.website.length > 30
                   ? "Voir le site web"
                   : vendor.website}
-              </a>
+              </Link>
             )}
           </div>
         )}

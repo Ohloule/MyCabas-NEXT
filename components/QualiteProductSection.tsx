@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function QualiteProductSection() {
   return (
-    <section className="py-16 md:px-6 bg-secondaire-200">
+    <section className="py-16 md:px-6 bg-secondaire-200 selection:bg-secondaire-300">
       <div className="align-center grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Texte qualitatif */}
         <div>

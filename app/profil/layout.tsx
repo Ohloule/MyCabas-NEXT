@@ -29,7 +29,7 @@ export default async function ProfilLayout({
               <User className="w-6 h-6 text-principale-600" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-principale-800">
+              <h1 className="text-2xl sm:text-3xl font-special text-principale-800">
                 Mon profil
               </h1>
               <p className="text-gray-600">
