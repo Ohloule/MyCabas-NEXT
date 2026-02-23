@@ -41,6 +41,8 @@ interface Product {
   isOrganic: boolean;
   isLocal: boolean;
   isActive: boolean;
+  canSellByPiece: boolean;
+  approxWeightPerPiece: number | null;
   category: Category;
   pricesByMarket: ProductPrice[];
   stocksByMarket: ProductStock[];
@@ -118,6 +120,8 @@ export default function EditProductPage({
         isOrganic: product.isOrganic,
         isLocal: product.isLocal,
         isActive: product.isActive,
+        canSellByPiece: product.canSellByPiece,
+        approxWeightPerPiece: product.approxWeightPerPiece,
         pricesByMarket: product.pricesByMarket,
         stocksByMarket: product.stocksByMarket,
       }}

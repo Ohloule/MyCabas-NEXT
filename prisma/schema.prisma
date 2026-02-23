@@ -367,9 +367,15 @@ model Product {
   description     String?        @db.Text
   imageUrl        String?
   unit            String         @default("kg") // kg, pièce, botte, etc.
-  minOrderQty     Float          @default(1)    // Seuil minimum de commande (ex: 450 pour 450g min)
-  stepIncrement   Float          @default(1)    // Tranche d'augmentation par clic (ex: 150 pour +150g par unité)
+  minOrderQty     Float          @default(1)    // Dérivé automatiquement selon le type d'unité
+  stepIncrement   Float          @default(1)    // Dérivé automatiquement selon le type d'unité
   basePrice       Float          // Prix de référence
+
+  // Gestion des quantités simplifiée
+  canSellByPiece       Boolean  @default(false) // Unité continue vendable à la pièce (ex: pommes au kg)
+  approxWeightPerPiece Float?                   // Poids/volume approx d'une pièce dans l'unité du produit
+  pricePerPiece        Float?                   // Prix affiché à la pièce (mode "carrot")
+
   isOrganic       Boolean        @default(false) // Produit bio
   isLocal         Boolean        @default(false) // Produit local
   isActive        Boolean        @default(true)  // Produit actif/inactif globalement

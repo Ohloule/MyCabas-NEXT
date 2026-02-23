@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { useCart } from "@/components/providers/cart-provider";
 import {
   ArrowLeft,
+  CalendarDays,
   Search,
   ShoppingBasket,
   ShoppingCart,
@@ -30,6 +31,35 @@ const DAYS_FR: Record<string, string> = {
   DIMANCHE: "Dimanche",
 };
 
+// 0 = dimanche, JS convention
+const DAY_TO_JS: Record<string, number> = {
+  DIMANCHE: 0,
+  LUNDI: 1,
+  MARDI: 2,
+  MERCREDI: 3,
+  JEUDI: 4,
+  VENDREDI: 5,
+  SAMEDI: 6,
+};
+
+function getNextMarketDate(dayKey: string): string {
+  const targetDay = DAY_TO_JS[dayKey];
+  if (targetDay === undefined) return "";
+  const today = new Date();
+  const todayDay = today.getDay();
+  let daysUntil = targetDay - todayDay;
+  if (daysUntil < 0) daysUntil += 7;
+  const next = new Date(today);
+  next.setDate(today.getDate() + daysUntil);
+  const formatted = next.toLocaleDateString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+}
+
 interface Product {
   id: string;
   name: string;
@@ -41,6 +71,9 @@ interface Product {
   basePrice: number;
   isOrganic: boolean;
   isLocal: boolean;
+  canSellByPiece: boolean;
+  approxWeightPerPiece: number | null;
+  pricePerPiece: number | null;
   category: {
     name: string;
     icon: string | null;
@@ -219,6 +252,7 @@ export default function ShopPage() {
   }
 
   const dayLabel = selectedDay ? DAYS_FR[selectedDay] : "";
+  const nextMarketDate = selectedDay ? getNextMarketDate(selectedDay) : "";
 
   return (
     <div className="min-h-screen bg-secondaire-25">
@@ -239,6 +273,15 @@ export default function ShopPage() {
               Retour au marché
             </Button>
           </Link>
+          {nextMarketDate && (
+            <div className="flex items-center gap-2 rounded-lg border border-principale-200 bg-principale-50 px-3 py-1.5 text-sm text-principale-700">
+              <CalendarDays className="h-4 w-4 shrink-0" />
+              <span>
+                Prochain marché :{" "}
+                <span className="font-semibold">{nextMarketDate}</span>
+              </span>
+            </div>
+          )}
           <span className="text-sm text-gray-500">
             {vendors.length} commerçant{vendors.length > 1 ? "s" : ""} présent
             {vendors.length > 1 ? "s" : ""} le {dayLabel}

@@ -32,7 +32,8 @@
       "Bash(npm run db:migrate:*)",
       "mcp__supabase__apply_migration",
       "mcp__shadcn__search_items_in_registries",
-      "mcp__supabase__get_advisors"
+      "mcp__supabase__get_advisors",
+      "Bash(npm audit:*)"
     ]
   }
 }

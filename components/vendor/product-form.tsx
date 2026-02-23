@@ -6,12 +6,11 @@ import { Label } from "@/components/ui/label";
 import {
   ArrowLeft,
   Check,
-  HelpCircle,
-  Trash2,
   Infinity,
   Leaf,
   MapPin,
   Save,
+  Trash2,
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -53,6 +52,9 @@ interface ProductFormProps {
     isOrganic: boolean;
     isLocal: boolean;
     isActive: boolean;
+    canSellByPiece: boolean;
+    approxWeightPerPiece: number | null;
+    pricePerPiece: number | null;
     pricesByMarket: Array<{
       price: number | null;
       isAvailable: boolean;
@@ -66,54 +68,63 @@ interface ProductFormProps {
   };
 }
 
+// Unités continues (vendues en quantité pesée/mesurée)
+const CONTINUOUS_UNITS = ["kg", "g", "litre"];
+
+// Toutes les unités disponibles
 const UNITS = [
-  { value: "kg", label: "Kilogramme (kg)" },
-  { value: "g", label: "Gramme (g)" },
-  { value: "piece", label: "Pièce" },
-  { value: "botte", label: "Botte" },
-  { value: "lot", label: "Lot" },
-  { value: "barquette", label: "Barquette" },
-  { value: "litre", label: "Litre (L)" },
+  { value: "kg", label: "Kilogramme (kg)", group: "continuous" },
+  { value: "g", label: "Gramme (g)", group: "continuous" },
+  { value: "litre", label: "Litre (L)", group: "continuous" },
+  { value: "piece", label: "Pièce", group: "discrete" },
+  { value: "botte", label: "Botte", group: "discrete" },
+  { value: "lot", label: "Lot", group: "discrete" },
+  { value: "barquette", label: "Barquette", group: "discrete" },
 ];
 
 export function ProductForm({ productId, initialData }: ProductFormProps) {
   const router = useRouter();
   const isEditing = !!productId;
 
-  // Données de base
   const [categories, setCategories] = useState<Category[]>([]);
   const [markets, setMarkets] = useState<Market[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // Formulaire - Infos générales
+  // Infos générales
   const [name, setName] = useState(initialData?.name || "");
-  const [description, setDescription] = useState(
-    initialData?.description || "",
-  );
+  const [description, setDescription] = useState(initialData?.description || "");
   const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || "");
   const [unit, setUnit] = useState(initialData?.unit || "kg");
-  const [minOrderQty, setMinOrderQty] = useState(
-    initialData?.minOrderQty?.toString() || "1",
-  );
-  const [stepIncrement, setStepIncrement] = useState(
-    initialData?.stepIncrement?.toString() || "1",
-  );
-  const [basePrice, setBasePrice] = useState(
-    initialData?.basePrice?.toString() || "",
-  );
+  const [basePrice, setBasePrice] = useState(initialData?.basePrice?.toString() || "");
   const [categoryId, setCategoryId] = useState(initialData?.categoryId || "");
   const [isOrganic, setIsOrganic] = useState(initialData?.isOrganic || false);
   const [isLocal, setIsLocal] = useState(initialData?.isLocal || false);
   const [isActive, setIsActive] = useState(initialData?.isActive !== false);
 
-  // Formulaire - Prix/Stock par marché
-  const [marketPrices, setMarketPrices] = useState<
-    Record<string, MarketPriceData>
-  >({});
+  // Nouveaux champs simplifiés pour les quantités
+  const [canSellByPiece, setCanSellByPiece] = useState(initialData?.canSellByPiece || false);
+  const [approxWeightPerPiece, setApproxWeightPerPiece] = useState(
+    initialData?.approxWeightPerPiece?.toString() || ""
+  );
+  const [pricePerPiece, setPricePerPiece] = useState(
+    initialData?.pricePerPiece?.toString() || ""
+  );
+
+  // Prix/Stock par marché
+  const [marketPrices, setMarketPrices] = useState<Record<string, MarketPriceData>>({});
   const [activeMarketTab, setActiveMarketTab] = useState<string | null>(null);
 
-  // Charger les données
+  const isContinuousUnit = CONTINUOUS_UNITS.includes(unit);
+
+  // Quand l'unité change vers discontinue, réinitialiser canSellByPiece et pricePerPiece
+  useEffect(() => {
+    if (!isContinuousUnit) {
+      setCanSellByPiece(false);
+      setPricePerPiece("");
+    }
+  }, [unit, isContinuousUnit]);
+
   const fetchData = useCallback(async () => {
     try {
       const [categoriesRes, marketsRes] = await Promise.all([
@@ -131,7 +142,6 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
       setCategories(categoriesData);
       setMarkets(marketsData);
 
-      // Initialiser les prix/stocks par marché
       const initialPrices: Record<string, MarketPriceData> = {};
       marketsData.forEach((market: Market) => {
         const existingPrice = initialData?.pricesByMarket?.find(
@@ -151,7 +161,6 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
       });
       setMarketPrices(initialPrices);
 
-      // Sélectionner le premier marché par défaut
       if (marketsData.length > 0) {
         setActiveMarketTab(marketsData[0].id);
       }
@@ -167,25 +176,32 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
     fetchData();
   }, [fetchData]);
 
-  // Mettre à jour les données d'un marché
-  const updateMarketData = (
-    marketId: string,
-    data: Partial<MarketPriceData>,
-  ) => {
+  const updateMarketData = (marketId: string, data: Partial<MarketPriceData>) => {
     setMarketPrices((prev) => ({
       ...prev,
-      [marketId]: {
-        ...prev[marketId],
-        ...data,
-      },
+      [marketId]: { ...prev[marketId], ...data },
     }));
   };
 
-  // Soumettre le formulaire
+  // Calcule minOrderQty et stepIncrement à partir des nouveaux champs
+  function deriveQtyFields(): { minOrderQty: number; stepIncrement: number } {
+    if (!isContinuousUnit) {
+      // Unité discontinue : toujours 1 par 1
+      return { minOrderQty: 1, stepIncrement: 1 };
+    }
+    if (canSellByPiece && approxWeightPerPiece) {
+      const w = parseFloat(approxWeightPerPiece);
+      if (w > 0) return { minOrderQty: w, stepIncrement: w };
+    }
+    // Unité continue sans vente à la pièce : palier par défaut selon l'unité
+    const defaults: Record<string, number> = { kg: 0.1, g: 50, litre: 0.25 };
+    const d = defaults[unit] ?? 0.1;
+    return { minOrderQty: d, stepIncrement: d };
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation
     if (!name.trim()) {
       toast.error("Le nom du produit est requis");
       return;
@@ -198,22 +214,40 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
       toast.error("La catégorie est requise");
       return;
     }
+    if (isContinuousUnit && canSellByPiece && !approxWeightPerPiece) {
+      toast.error("Le poids approximatif d'une pièce est requis");
+      return;
+    }
+    if (isContinuousUnit && canSellByPiece && !pricePerPiece) {
+      toast.error("Le prix à la pièce est requis");
+      return;
+    }
+    if (!isContinuousUnit && !approxWeightPerPiece) {
+      toast.error("Le poids approximatif de l'unité est requis");
+      return;
+    }
+
+    const { minOrderQty, stepIncrement } = deriveQtyFields();
 
     setSaving(true);
-
     try {
       const payload = {
         name: name.trim(),
         description: description.trim() || null,
         imageUrl: imageUrl.trim() || null,
         unit,
-        minOrderQty: parseFloat(minOrderQty) || 1,
-        stepIncrement: parseFloat(stepIncrement) || 1,
+        minOrderQty,
+        stepIncrement,
         basePrice: parseFloat(basePrice),
         categoryId,
         isOrganic,
         isLocal,
         isActive,
+        canSellByPiece: isContinuousUnit ? canSellByPiece : false,
+        approxWeightPerPiece: approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null,
+        pricePerPiece: isContinuousUnit && canSellByPiece && pricePerPiece
+          ? parseFloat(pricePerPiece)
+          : null,
         marketPrices: Object.values(marketPrices).map((mp) => ({
           marketId: mp.marketId,
           price: mp.price,
@@ -223,9 +257,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         })),
       };
 
-      const url = isEditing
-        ? `/api/vendor/products/${productId}`
-        : "/api/vendor/products";
+      const url = isEditing ? `/api/vendor/products/${productId}` : "/api/vendor/products";
       const method = isEditing ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -257,21 +289,17 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
   }
 
   const activeMarket = markets.find((m) => m.id === activeMarketTab);
-  const activeMarketData = activeMarketTab
-    ? marketPrices[activeMarketTab]
-    : null;
+  const activeMarketData = activeMarketTab ? marketPrices[activeMarketTab] : null;
+
+  // Prévisualisation pour le client
+  const previewWeightStr = approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null;
 
   return (
     <form onSubmit={handleSubmit}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={() => router.back()}
-          >
+          <Button type="button" variant="ghost" size="icon" onClick={() => router.back()}>
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <h1 className="text-2xl font-bold text-principale-800">
@@ -303,9 +331,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         <div className="lg:col-span-2 space-y-6">
           {/* Informations générales */}
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Informations générales
-            </h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Informations générales</h2>
 
             <div className="space-y-4">
               {/* Nom */}
@@ -361,123 +387,181 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                     onChange={(e) => setUnit(e.target.value)}
                     className="mt-1 w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500"
                   >
-                    {UNITS.map((u) => (
-                      <option key={u.value} value={u.value}>
-                        {u.label}
-                      </option>
-                    ))}
+                    <optgroup label="Unités de poids / volume">
+                      {UNITS.filter((u) => u.group === "continuous").map((u) => (
+                        <option key={u.value} value={u.value}>
+                          {u.label}
+                        </option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="Unités discrètes">
+                      {UNITS.filter((u) => u.group === "discrete").map((u) => (
+                        <option key={u.value} value={u.value}>
+                          {u.label}
+                        </option>
+                      ))}
+                    </optgroup>
                   </select>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Seuil minimum de vente */}
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <Label htmlFor="minOrderQty">Seuil minimum de vente *</Label>
-                    <div className="relative group">
-                      <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" />
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 pointer-events-none">
-                        <p className="font-medium mb-1">Quantité minimale pour une commande</p>
-                        <ul className="space-y-1 text-gray-300">
-                          <li>3 pommes à 150g pièce → mettre <strong className="text-white">450</strong> (g)</li>
-                          <li>Vendu au kg, min 200g → mettre <strong className="text-white">0.2</strong> (kg)</li>
-                          <li>Vendu à la pièce entière → mettre <strong className="text-white">1</strong></li>
-                        </ul>
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-1 relative">
-                    <Input
-                      id="minOrderQty"
-                      type="number"
-                      step="0.01"
-                      min="0.01"
-                      value={minOrderQty}
-                      onChange={(e) => setMinOrderQty(e.target.value)}
-                      placeholder="1"
-                      className="pr-16"
-                    />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
-                      {unit}
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Quantité minimale pour une commande
-                  </p>
-                </div>
+              {/* ── Bloc quantités simplifié ── */}
+              <div className="border border-gray-100 rounded-lg p-4 bg-gray-50 space-y-4">
+                <p className="text-sm font-medium text-gray-700">Conditionnement</p>
 
-                {/* Tranche d'augmentation */}
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <Label htmlFor="stepIncrement">Tranche d&apos;augmentation *</Label>
-                    <div className="relative group">
-                      <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" />
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 pointer-events-none">
-                        <p className="font-medium mb-1">Ajouter par tranche de...</p>
-                        <ul className="space-y-1 text-gray-300">
-                          <li>1 pomme = 150g → mettre <strong className="text-white">150</strong> (g)</li>
-                          <li>Vendu au kg par 100g → mettre <strong className="text-white">0.1</strong> (kg)</li>
-                          <li>Vendu à la pièce entière → mettre <strong className="text-white">1</strong></li>
-                        </ul>
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                {isContinuousUnit ? (
+                  /* Unité continue (kg, g, L) */
+                  <div className="space-y-3">
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={canSellByPiece}
+                        onChange={(e) => {
+                          setCanSellByPiece(e.target.checked);
+                          if (!e.target.checked) {
+                            setApproxWeightPerPiece("");
+                            setPricePerPiece("");
+                          }
+                        }}
+                        className="mt-0.5 w-4 h-4 rounded border-gray-300 text-principale-600 focus:ring-principale-500"
+                      />
+                      <div>
+                        <span className="text-sm font-medium">Ce produit se vend à la pièce</span>
+                        <p className="text-xs text-gray-500">
+                          Ex : des pommes, des oranges… vendues au kg mais comptées à la pièce
+                        </p>
                       </div>
-                    </div>
-                  </div>
-                  <div className="mt-1 relative">
-                    <Input
-                      id="stepIncrement"
-                      type="number"
-                      step="0.01"
-                      min="0.01"
-                      value={stepIncrement}
-                      onChange={(e) => setStepIncrement(e.target.value)}
-                      placeholder="1"
-                      className="pr-16"
-                    />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
-                      {unit}
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Poids moyen d&apos;une unité (ex: 1 pomme)
-                  </p>
-                </div>
-              </div>
+                    </label>
 
-              {/* Prévisualisation dynamique */}
-              {(() => {
-                const min = parseFloat(minOrderQty);
-                const step = parseFloat(stepIncrement);
-                if (!min || !step || min <= 0 || step <= 0) return null;
-                const decimals = Math.max(
-                  (minOrderQty.split(".")[1] || "").length,
-                  (stepIncrement.split(".")[1] || "").length,
-                );
-                const ex2 = parseFloat((min + step).toFixed(decimals));
-                const ex3 = parseFloat((min + step * 2).toFixed(decimals));
-                return (
-                  <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
-                    <p className="text-sm text-blue-700">
-                      <span className="font-medium">Aperçu client :</span>{" "}
-                      commande au moins{" "}
-                      <strong>{min} {unit}</strong>, puis par paliers de{" "}
-                      <strong>{step} {unit}</strong>
-                      <span className="text-blue-500 ml-1">
-                        (ex : {min}, {ex2}, {ex3} {unit}...)
-                      </span>
+                    {canSellByPiece && (
+                      <div className="space-y-3">
+                        <div>
+                          <Label htmlFor="approxWeight">
+                            Poids approximatif d&apos;une pièce *
+                          </Label>
+                          <div className="mt-1 relative w-48">
+                            <Input
+                              id="approxWeight"
+                              type="number"
+                              step="0.001"
+                              min="0.001"
+                              value={approxWeightPerPiece}
+                              onChange={(e) => setApproxWeightPerPiece(e.target.value)}
+                              placeholder="0.150"
+                              className="pr-10"
+                            />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+                              {unit}
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-500 mt-1">
+                            Ex : 0.150 kg pour une pomme de 150 g
+                          </p>
+                        </div>
+
+                        <div>
+                          <Label htmlFor="pricePerPiece">
+                            Prix à la pièce *
+                          </Label>
+                          <div className="mt-1 relative w-48">
+                            <Input
+                              id="pricePerPiece"
+                              type="number"
+                              step="0.01"
+                              min="0.01"
+                              value={pricePerPiece}
+                              onChange={(e) => setPricePerPiece(e.target.value)}
+                              placeholder="0.30"
+                              className="pr-6"
+                            />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+                              €
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-500 mt-1">
+                            Prix affiché au client en mode &quot;à la pièce&quot;
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Prévisualisation */}
+                    {canSellByPiece && previewWeightStr && previewWeightStr > 0 && (
+                      <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
+                        <p className="text-sm text-blue-700">
+                          <span className="font-medium">Aperçu client :</span> commande au{" "}
+                          <strong>{unit}</strong> ou à la <strong>pièce</strong>
+                          <span className="text-blue-500">
+                            {" "}(1 pièce ≈ {previewWeightStr} {unit}
+                            {pricePerPiece && parseFloat(pricePerPiece) > 0
+                              ? ` · ${parseFloat(pricePerPiece).toFixed(2)} €/pièce`
+                              : ""})
+                          </span>
+                        </p>
+                      </div>
+                    )}
+
+                    {!canSellByPiece && (
+                      <div className="bg-gray-100 rounded-lg px-4 py-3">
+                        <p className="text-sm text-gray-600">
+                          Les clients commanderont directement en{" "}
+                          <strong>{unit}</strong>.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  /* Unité discontinue (pièce, botte, lot, barquette) */
+                  <div className="space-y-3">
+                    <p className="text-xs text-gray-500">
+                      Les clients commanderont par unité entière (1 {unit}, 2 {unit}s…).
                     </p>
+                    <div>
+                      <Label htmlFor="approxWeight">
+                        Poids / contenu approximatif par {unit} *
+                      </Label>
+                      <div className="mt-1 flex items-center gap-2">
+                        <div className="relative w-32">
+                          <Input
+                            id="approxWeight"
+                            type="number"
+                            step="0.001"
+                            min="0.001"
+                            value={approxWeightPerPiece}
+                            onChange={(e) => setApproxWeightPerPiece(e.target.value)}
+                            placeholder="500"
+                            className="pr-6"
+                          />
+                        </div>
+                        <select
+                          className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500"
+                          disabled
+                        >
+                          <option>g</option>
+                        </select>
+                        <span className="text-xs text-gray-400">(grammes)</span>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Ex : 500 g pour une barquette de fraises de 500 g
+                      </p>
+                    </div>
+
+                    {previewWeightStr && previewWeightStr > 0 && (
+                      <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
+                        <p className="text-sm text-blue-700">
+                          <span className="font-medium">Aperçu client :</span> 1 {unit} ≈{" "}
+                          <strong>{previewWeightStr} g</strong>
+                        </p>
+                      </div>
+                    )}
                   </div>
-                );
-              })()}
+                )}
+              </div>
 
               {/* Prix de référence */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <div className="flex items-center gap-1.5">
-                    <Label htmlFor="basePrice">Prix de référence *</Label>
-                  </div>
+                  <Label htmlFor="basePrice">Prix de référence *</Label>
                   <div className="mt-1 relative">
                     <Input
                       id="basePrice"
@@ -498,6 +582,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                   </p>
                 </div>
               </div>
+
               {/* Options Bio / Local */}
               <div className="flex flex-wrap gap-4 pt-2">
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -579,15 +664,11 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                       type="checkbox"
                       checked={activeMarketData.isAvailable}
                       onChange={(e) =>
-                        updateMarketData(activeMarket.id, {
-                          isAvailable: e.target.checked,
-                        })
+                        updateMarketData(activeMarket.id, { isAvailable: e.target.checked })
                       }
                       className="w-5 h-5 rounded border-gray-300 text-principale-600 focus:ring-principale-500"
                     />
-                    <span className="text-sm font-medium">
-                      Disponible sur ce marché
-                    </span>
+                    <span className="text-sm font-medium">Disponible sur ce marché</span>
                   </label>
 
                   {activeMarketData.isAvailable && (
@@ -602,15 +683,12 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                               name={`price-type-${activeMarket.id}`}
                               checked={activeMarketData.price === null}
                               onChange={() =>
-                                updateMarketData(activeMarket.id, {
-                                  price: null,
-                                })
+                                updateMarketData(activeMarket.id, { price: null })
                               }
                               className="w-4 h-4 border-gray-300 text-principale-600 focus:ring-principale-500"
                             />
                             <span className="text-sm">
-                              Utiliser le prix de référence ({basePrice || "0"}
-                              €/{unit})
+                              Utiliser le prix de référence ({basePrice || "0"}€/{unit})
                             </span>
                           </label>
                           <label className="flex items-center gap-2 cursor-pointer">
@@ -717,8 +795,8 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
             <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg">
               <p className="font-medium">Aucun marché configuré</p>
               <p className="text-sm mt-1">
-                Vous devez d&apos;abord vous inscrire à des marchés pour
-                configurer les prix et stocks.
+                Vous devez d&apos;abord vous inscrire à des marchés pour configurer les prix et
+                stocks.
               </p>
             </div>
           )}
@@ -755,10 +833,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
             </div>
 
             <div>
-              <IngredientImagePicker
-                onImageSelect={setImageUrl}
-                defaultQuery={name}
-              />
+              <IngredientImagePicker onImageSelect={setImageUrl} defaultQuery={name} />
             </div>
           </div>
 

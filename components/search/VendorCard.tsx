@@ -45,6 +45,9 @@ interface VendorCardProps {
     basePrice: number;
     isOrganic: boolean;
     isLocal: boolean;
+    canSellByPiece: boolean;
+    approxWeightPerPiece: number | null;
+    pricePerPiece: number | null;
     category: {
       name: string;
       icon: string | null;

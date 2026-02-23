@@ -91,6 +91,9 @@ export async function PUT(
       isOrganic,
       isLocal,
       isActive,
+      canSellByPiece,
+      approxWeightPerPiece,
+      pricePerPiece,
       marketPrices
     } = body;
 
@@ -107,10 +110,17 @@ export async function PUT(
           minOrderQty: minOrderQty !== undefined ? parseFloat(minOrderQty) : undefined,
           stepIncrement: stepIncrement !== undefined ? parseFloat(stepIncrement) : undefined,
           basePrice: basePrice ? parseFloat(basePrice) : undefined,
-          categoryId,
+          ...(categoryId ? { category: { connect: { id: categoryId } } } : {}),
           isOrganic,
           isLocal,
-          isActive
+          isActive,
+          canSellByPiece: canSellByPiece !== undefined ? canSellByPiece : undefined,
+          approxWeightPerPiece: approxWeightPerPiece !== undefined
+            ? (approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null)
+            : undefined,
+          pricePerPiece: pricePerPiece !== undefined
+            ? (pricePerPiece ? parseFloat(pricePerPiece) : null)
+            : undefined,
         }
       });
 

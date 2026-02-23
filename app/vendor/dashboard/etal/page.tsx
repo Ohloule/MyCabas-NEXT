@@ -10,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ImportProductsDialog } from "@/components/vendor/import-products-dialog";
 import { ProductsTable } from "@/components/vendor/products-table";
 import { ProductsTableEditable } from "@/components/vendor/products-table-editable";
 import {
@@ -60,6 +59,8 @@ interface Product {
   isOrganic: boolean;
   isLocal: boolean;
   isActive: boolean;
+  canSellByPiece: boolean;
+  approxWeightPerPiece: number | null;
   category: Category;
   pricesByMarket: ProductPrice[];
   stocksByMarket: ProductStock[];
@@ -204,12 +205,12 @@ export default function EtalPage() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <ImportProductsDialog onImportSuccess={fetchProducts}>
+          <a href="/filesDownload/myCabas_model_import.xlsx" download>
             <Button variant="outline">
               <FileSpreadsheet className="w-4 h-4" />
-              <span className="hidden md:inline">Importer</span>
+              <span className="hidden md:inline">Template</span>
             </Button>
-          </ImportProductsDialog>
+          </a>
           <Button onClick={() => router.push("/vendor/dashboard/etal/nouveau")}>
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">Ajouter un produit</span>

@@ -62,6 +62,9 @@ export async function POST(request: NextRequest) {
       categoryId,
       isOrganic,
       isLocal,
+      canSellByPiece,
+      approxWeightPerPiece,
+      pricePerPiece,
       marketPrices // Array of { marketId, price, isAvailable, quantity, isUnlimited }
     } = body;
 
@@ -87,6 +90,9 @@ export async function POST(request: NextRequest) {
         vendorId: session.user.vendorId,
         isOrganic: isOrganic || false,
         isLocal: isLocal || false,
+        canSellByPiece: canSellByPiece || false,
+        approxWeightPerPiece: approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null,
+        pricePerPiece: pricePerPiece ? parseFloat(pricePerPiece) : null,
         // Créer les prix par marché si fournis
         ...(marketPrices && marketPrices.length > 0 ? {
           pricesByMarket: {
