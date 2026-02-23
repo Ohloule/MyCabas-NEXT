@@ -180,40 +180,6 @@ export default function EtalPage() {
     }
   };
 
-  const handleDuplicate = async (product: Product) => {
-    try {
-      const newProduct = {
-        name: `${product.name} (copie)`,
-        description: product.description,
-        imageUrl: product.imageUrl,
-        unit: product.unit,
-        basePrice: product.basePrice,
-        categoryId: product.category.id,
-        isOrganic: product.isOrganic,
-        isLocal: product.isLocal,
-        marketPrices: product.pricesByMarket.map((p) => ({
-          marketId: p.market.id,
-          price: p.price,
-          isAvailable: p.isAvailable,
-        })),
-      };
-
-      const response = await fetch("/api/vendor/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newProduct),
-      });
-
-      if (!response.ok) throw new Error("Erreur lors de la duplication");
-
-      const created = await response.json();
-      setProducts((prev) => [created, ...prev]);
-    } catch (err) {
-      console.error(err);
-      alert("Erreur lors de la duplication du produit");
-    }
-  };
-
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedCategory(null);
@@ -373,7 +339,6 @@ export default function EtalPage() {
           products={filteredProducts}
           onEdit={handleEdit}
           onDelete={handleDelete}
-          onDuplicate={handleDuplicate}
         />
       ) : (
         <ProductsTableEditable

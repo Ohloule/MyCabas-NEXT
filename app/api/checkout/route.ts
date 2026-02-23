@@ -10,21 +10,13 @@ import {
 import { NextResponse } from "next/server";
 
 /**
- * Génère un numéro de commande unique : MYC-YYYYMMDD-XXXX
+ * Génère un numéro de commande : MYC-YYYYMMDD-XXXX
+ * Suffixe aléatoire 4 caractères alphanumériques — aucune lecture DB, aucune race condition.
  */
-async function generateOrderNumber(marketDate: Date): Promise<string> {
+function generateOrderNumber(marketDate: Date): string {
   const dateStr = marketDate.toISOString().slice(0, 10).replace(/-/g, "");
-  const prefix = `MYC-${dateStr}-`;
-
-  // Compter les commandes existantes pour cette date de marché
-  const count = await prisma.order.count({
-    where: {
-      orderNumber: { startsWith: prefix },
-    },
-  });
-
-  const seq = String(count + 1).padStart(4, "0");
-  return `${prefix}${seq}`;
+  const suffix = Math.random().toString(36).slice(2, 6).toUpperCase();
+  return `MYC-${dateStr}-${suffix}`;
 }
 
 /**
@@ -71,11 +63,58 @@ export async function POST() {
     return NextResponse.json({ error: "Panier vide" }, { status: 400 });
   }
 
-  if (!cart.market || !cart.marketId) {
-    return NextResponse.json(
-      { error: "Aucun marché associé au panier" },
-      { status: 400 }
+  // 1b. Résoudre le marketId et le marché (depuis le panier ou inféré depuis les vendors)
+  let resolvedMarketId = cart.marketId;
+  let resolvedMarket = cart.market;
+
+  if (!resolvedMarketId || !resolvedMarket) {
+    // Inférer le marché depuis les vendors du panier
+    const vendorIds = [...new Set(cart.items.map((item) => item.product.vendor.id))];
+
+    const marketVendors = await prisma.marketVendor.findMany({
+      where: { vendorId: { in: vendorIds } },
+      select: { marketId: true, vendorId: true },
+    });
+
+    const marketVendorSets = new Map<string, Set<string>>();
+    for (const mv of marketVendors) {
+      if (!marketVendorSets.has(mv.marketId)) {
+        marketVendorSets.set(mv.marketId, new Set());
+      }
+      marketVendorSets.get(mv.marketId)!.add(mv.vendorId);
+    }
+
+    // Marchés qui contiennent TOUS les vendors du panier
+    const eligible = [...marketVendorSets.entries()].filter(([, vendors]) =>
+      vendorIds.every((v) => vendors.has(v))
     );
+
+    if (eligible.length !== 1) {
+      return NextResponse.json(
+        { error: "Aucun marché associé au panier" },
+        { status: 400 }
+      );
+    }
+
+    resolvedMarketId = eligible[0][0];
+
+    const inferredMarket = await prisma.market.findUnique({
+      where: { id: resolvedMarketId },
+      include: { openings: true },
+    });
+
+    if (!inferredMarket) {
+      return NextResponse.json(
+        { error: "Aucun marché associé au panier" },
+        { status: 400 }
+      );
+    }
+
+    resolvedMarket = inferredMarket;
+
+    // Mettre à jour le panier silencieusement pour les prochains appels
+    prisma.cart.update({ where: { id: cart.id }, data: { marketId: resolvedMarketId } })
+      .catch((err) => console.error("Checkout: mise à jour cart.marketId échouée:", err));
   }
 
   // 2. Vérifier que tous les vendors sont onboardés sur Stripe
@@ -105,7 +144,7 @@ export async function POST() {
   }
 
   // 3. Déterminer le prochain jour de marché
-  const openings = cart.market.openings;
+  const openings = resolvedMarket.openings;
   if (openings.length === 0) {
     return NextResponse.json(
       { error: "Ce marché n'a pas d'horaires d'ouverture configurés" },
@@ -164,12 +203,12 @@ export async function POST() {
     const unitPrice = resolvePrice(
       product.basePrice,
       product.pricesByMarket,
-      cart.marketId!
+      resolvedMarketId
     );
 
     // Vérifier le stock
     const stock = product.stocksByMarket.find(
-      (s) => s.marketId === cart.marketId
+      (s) => s.marketId === resolvedMarketId
     );
     if (stock && !stock.isUnlimited && stock.quantity !== null) {
       if (item.quantity > stock.quantity) {
@@ -210,7 +249,7 @@ export async function POST() {
     // Récupérer la commission déjà collectée pour ce vendor/marché/date
     const existingOrders = await prisma.order.findMany({
       where: {
-        marketId: cart.marketId!,
+        marketId: resolvedMarketId,
         marketDate: nextDate,
         status: {
           in: [
@@ -257,13 +296,13 @@ export async function POST() {
 
   // 8. Créer la commande et le PaymentIntent dans une transaction
   const result = await prisma.$transaction(async (tx) => {
-    const orderNumber = await generateOrderNumber(nextDate);
+    const orderNumber = generateOrderNumber(nextDate!);
 
     const order = await tx.order.create({
       data: {
         orderNumber,
         userId: session.user.id,
-        marketId: cart.marketId!,
+        marketId: resolvedMarketId,
         marketDay: nextOpening.day,
         marketDate: nextDate,
         subtotalEuros,
@@ -295,7 +334,7 @@ export async function POST() {
         orderId: order.id,
         orderNumber: order.orderNumber,
         userId: session.user.id,
-        marketId: cart.marketId!,
+        marketId: resolvedMarketId,
         applicationFeeCents: applicationFeeCents.toString(),
       },
       automatic_payment_methods: {

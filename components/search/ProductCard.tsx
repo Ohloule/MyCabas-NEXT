@@ -34,6 +34,7 @@ interface ProductCardProps {
       icon: string | null;
     };
   };
+  marketId?: string;
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -71,7 +72,7 @@ function roundUpToStep(value: number, min: number, step: number): number {
   return parseFloat((min + stepsAboveMin * step).toFixed(d));
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, marketId }: ProductCardProps) {
   const { getQuantity, updateQuantity, isLoading: cartLoading } = useCart();
   const quantity = getQuantity(product.id);
   const min = product.minOrderQty || 1;
@@ -86,7 +87,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const handleUpdate = async (newQuantity: number) => {
     setLoading(true);
-    await updateQuantity(product.id, newQuantity);
+    await updateQuantity(product.id, newQuantity, marketId);
     setLoading(false);
   };
 
@@ -152,6 +153,13 @@ export default function ProductCard({ product }: ProductCardProps) {
           <span className="text-xs text-gray-500">/ {product.unit}</span>
         </div>
 
+        {/* Info min / step */}
+        <div className="mt-1.5 flex items-center gap-1.5 text-xs text-gray-400">
+          <span>Min&nbsp;: {min}&nbsp;{product.unit}</span>
+          <span>·</span>
+          <span>+{step}&nbsp;{product.unit}/clic</span>
+        </div>
+
         {/* Bouton Panier */}
         {quantity === 0 ? (
           <Button
@@ -163,83 +171,83 @@ export default function ProductCard({ product }: ProductCardProps) {
             {loading || cartLoading ? (
               <Loader taille={45} />
             ) : (
-              <>
-                <ShoppingCart className="w-3.5 h-3.5" />
-              </>
+              <ShoppingCart className="w-3.5 h-3.5" />
             )}
           </Button>
         ) : (
-          <div className="flex items-center self-end mt-3 rounded-full overflow-hidden  border border-gray-200">
-            {/* Bouton moins / supprimer */}
+          <div className="flex items-center self-end mt-3 gap-1.5">
+            {/* Bouton supprimer (poubelle séparée) */}
             <button
-              onClick={() => {
-                const next = quantity - step;
-                handleUpdate(next <= min ? 0 : snapToStep(next, min, step));
-              }}
+              onClick={() => handleUpdate(0)}
               disabled={loading}
-              className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-gray-900 text-white transition-colors disabled:opacity-50 cursor-pointer"
+              className="flex items-center justify-center w-8 h-8 rounded-full bg-red-50 hover:bg-red-100 text-red-400 hover:text-red-600 transition-colors disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
-                <Loader2
-                  className="animate-spin text-principale-100"
-                  size={20}
-                />
-              ) : quantity <= min ? (
-                <Trash2 className="w-4 h-4" />
+                <Loader2 className="animate-spin" size={14} />
               ) : (
+                <Trash2 className="w-3.5 h-3.5" />
+              )}
+            </button>
+
+            {/* Sélecteur quantité */}
+            <div className="flex items-center rounded-full overflow-hidden border border-gray-200">
+              {/* Bouton moins — désactivé au minimum */}
+              <button
+                onClick={() => {
+                  const next = snapToStep(quantity - step, min, step);
+                  handleUpdate(Math.max(next, min));
+                }}
+                disabled={loading || quantity <= min}
+                className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-gray-900 text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              >
                 <Minus className="w-4 h-4" />
-              )}
-            </button>
+              </button>
 
-            {/* Quantité */}
-            <input
-              type="text"
-              inputMode="decimal"
-              value={inputValue}
-              onChange={(e) => {
-                const raw = e.target.value
-                  .replaceAll(",", ".")
-                  .replace(/[^\d.]/g, "");
-                // Un seul point autorisé
-                const parts = raw.split(".");
-                const sanitized =
-                  parts.length > 2
-                    ? parts[0] + "." + parts.slice(1).join("")
-                    : raw;
-                // Max 2 décimales
-                if (parts.length === 2 && parts[1].length > 2) return;
-                if (sanitized === "" || sanitized === ".") {
+              {/* Quantité */}
+              <input
+                type="text"
+                inputMode="decimal"
+                value={inputValue}
+                onChange={(e) => {
+                  const raw = e.target.value
+                    .replaceAll(",", ".")
+                    .replace(/[^\d.]/g, "");
+                  const parts = raw.split(".");
+                  const sanitized =
+                    parts.length > 2
+                      ? parts[0] + "." + parts.slice(1).join("")
+                      : raw;
+                  if (parts.length === 2 && parts[1].length > 2) return;
+                  if (sanitized === "" || sanitized === ".") {
+                    setInputValue(sanitized);
+                    return;
+                  }
                   setInputValue(sanitized);
-                  return;
-                }
-                setInputValue(sanitized);
-              }}
-              onBlur={() => {
-                const num = parseFloat(inputValue);
-                if (isNaN(num) || num < min) {
-                  handleUpdate(min);
-                } else {
-                  handleUpdate(Math.min(roundUpToStep(num, min, step), 9999));
-                }
-              }}
-              className="w-18 h-9 bg-white text-sm font-bold text-gray-800 text-center outline-none border-x border-gray-200"
-            />
+                }}
+                onBlur={() => {
+                  const num = parseFloat(inputValue);
+                  if (isNaN(num) || num < min) {
+                    handleUpdate(min);
+                  } else {
+                    handleUpdate(Math.min(roundUpToStep(num, min, step), 9999));
+                  }
+                }}
+                className="w-18 h-9 bg-white text-sm font-bold text-gray-800 text-center outline-none border-x border-gray-200"
+              />
 
-            {/* Bouton plus */}
-            <button
-              onClick={() => handleUpdate(snapToStep(quantity + step, min, step))}
-              disabled={loading}
-              className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-principale-700 text-white transition-colors disabled:opacity-50 cursor-pointer"
-            >
-              {loading ? (
-                <Loader2
-                  className="animate-spin text-principale-100"
-                  size={20}
-                />
-              ) : (
-                <Plus className="w-4 h-4" />
-              )}
-            </button>
+              {/* Bouton plus */}
+              <button
+                onClick={() => handleUpdate(snapToStep(quantity + step, min, step))}
+                disabled={loading}
+                className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-principale-700 text-white transition-colors disabled:opacity-50 cursor-pointer"
+              >
+                {loading ? (
+                  <Loader2 className="animate-spin text-principale-100" size={20} />
+                ) : (
+                  <Plus className="w-4 h-4" />
+                )}
+              </button>
+            </div>
           </div>
         )}
       </CardContent>

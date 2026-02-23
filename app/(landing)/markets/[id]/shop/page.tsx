@@ -140,6 +140,13 @@ export default function ShopPage() {
         const data = await response.json();
         setMarket(data.market);
         setVendors(data.vendors);
+
+        // Associer le marché au panier dès que le marché est chargé
+        fetch("/api/cart", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ marketId }),
+        }).catch(() => {/* silencieux */});
       } catch (err) {
         setError(err instanceof Error ? err.message : "Erreur inconnue");
       } finally {
@@ -374,6 +381,7 @@ export default function ShopPage() {
                 vendor={vendor}
                 products={vendor.products}
                 collapsible
+                marketId={marketId}
               />
             ))}
           </Accordion>
@@ -384,6 +392,7 @@ export default function ShopPage() {
                 key={vendor.id}
                 vendor={vendor}
                 products={vendor.products}
+                marketId={marketId}
               />
             ))}
           </div>

@@ -100,6 +100,20 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Valider que le marketId existe en base (évite la violation FK)
+    let validatedMarketId: string | null = null;
+    if (marketId) {
+      const marketExists = await prisma.market.findUnique({
+        where: { id: marketId },
+        select: { id: true },
+      });
+      if (marketExists) {
+        validatedMarketId = marketId;
+      } else {
+        console.warn(`POST /api/cart: marketId "${marketId}" introuvable en base, ignoré`);
+      }
+    }
+
     // Upsert du panier
     let cart = await prisma.cart.findUnique({
       where: { userId: session.user.id },
@@ -109,15 +123,19 @@ export async function POST(request: NextRequest) {
       cart = await prisma.cart.create({
         data: {
           userId: session.user.id,
-          marketId: marketId || null,
+          marketId: validatedMarketId,
         },
       });
-    } else if (marketId && cart.marketId !== marketId) {
-      // Si le marché change, on met à jour
-      cart = await prisma.cart.update({
-        where: { id: cart.id },
-        data: { marketId },
-      });
+    } else if (validatedMarketId && cart.marketId !== validatedMarketId) {
+      // Si le marché change, on met à jour (non-fatal si ça échoue)
+      try {
+        cart = await prisma.cart.update({
+          where: { id: cart.id },
+          data: { marketId: validatedMarketId },
+        });
+      } catch (updateErr) {
+        console.error("POST /api/cart: impossible de mettre à jour marketId:", updateErr);
+      }
     }
 
     // Upsert de l'item
@@ -186,6 +204,60 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json(updated);
   } catch (err) {
     console.error("PUT /api/cart error:", err);
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
+  }
+}
+
+// PATCH - Mettre à jour uniquement le marché associé au panier
+export async function PATCH(request: NextRequest) {
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+  }
+
+  try {
+    const { marketId } = await request.json();
+
+    if (!marketId) {
+      return NextResponse.json({ error: "marketId requis" }, { status: 400 });
+    }
+
+    // Valider que le marché existe en base
+    const marketExists = await prisma.market.findUnique({
+      where: { id: marketId },
+      select: { id: true },
+    });
+
+    if (!marketExists) {
+      console.warn(`PATCH /api/cart: marketId "${marketId}" introuvable en base`);
+      return NextResponse.json({ error: "Marché introuvable" }, { status: 404 });
+    }
+
+    const cart = await prisma.cart.findUnique({
+      where: { userId: session.user.id },
+    });
+
+    if (!cart) {
+      // Créer le panier avec le marché
+      const newCart = await prisma.cart.create({
+        data: { userId: session.user.id, marketId },
+      });
+      return NextResponse.json(newCart);
+    }
+
+    if (cart.marketId === marketId) {
+      return NextResponse.json(cart);
+    }
+
+    const updated = await prisma.cart.update({
+      where: { id: cart.id },
+      data: { marketId },
+    });
+
+    return NextResponse.json(updated);
+  } catch (err) {
+    console.error("PATCH /api/cart error:", err);
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

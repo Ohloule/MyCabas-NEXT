@@ -4,17 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Check,
-  Copy,
   Infinity,
   Leaf,
   MapPin,
-  MoreHorizontal,
-  Pencil,
   Trash2,
   X,
 } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
 
 interface Category {
   id: string;
@@ -60,7 +56,6 @@ interface ProductsTableProps {
   products: Product[];
   onEdit: (product: Product) => void;
   onDelete: (productId: string) => void;
-  onDuplicate: (product: Product) => void;
 }
 
 // Couleurs par catégorie
@@ -79,9 +74,7 @@ export function ProductsTable({
   products,
   onEdit,
   onDelete,
-  onDuplicate,
 }: ProductsTableProps) {
-  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   // Calculer la fourchette de prix
   const getPriceRange = (product: Product) => {
@@ -154,7 +147,10 @@ export function ProductsTable({
 
   // Composant carte pour mobile
   const ProductCard = ({ product }: { product: Product }) => (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+    <div
+      className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 cursor-pointer"
+      onClick={() => onEdit(product)}
+    >
       <div className="flex items-start gap-3">
         {/* Image */}
         <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
@@ -236,26 +232,18 @@ export function ProductsTable({
       </div>
 
       {/* Actions */}
-      <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-end gap-1">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => onEdit(product)}
-          className="flex-1 sm:flex-none"
-        >
-          <Pencil className="w-4 h-4" />
-          <span className="sm:hidden">Modifier</span>
-        </Button>
-        <Button variant="ghost" size="sm" onClick={() => onDuplicate(product)}>
-          <Copy className="w-4 h-4" />
-        </Button>
+      <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-end">
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => onDelete(product.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(product.id);
+          }}
           className="text-red-600 hover:text-red-700 hover:bg-secondaire-50"
         >
           <Trash2 className="w-4 h-4" />
+          Supprimer
         </Button>
       </div>
     </div>
@@ -303,7 +291,8 @@ export function ProductsTable({
               {products.map((product) => (
                 <tr
                   key={product.id}
-                  className="hover:bg-gray-50 transition-colors"
+                  className="hover:bg-gray-50 transition-colors cursor-pointer"
+                  onClick={() => onEdit(product)}
                 >
                   {/* Produit (image + nom + badges) */}
                   <td className="px-4 py-4">
@@ -394,58 +383,19 @@ export function ProductsTable({
 
                   {/* Actions */}
                   <td className="px-4 py-4">
-                    <div className="flex items-center justify-end gap-1">
+                    <div className="flex items-center justify-end">
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => onEdit(product)}
-                        title="Modifier"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDelete(product.id);
+                        }}
+                        title="Supprimer"
+                        className="text-red-600 hover:text-red-700 hover:bg-secondaire-50"
                       >
-                        <Pencil className="w-4 h-4" />
+                        <Trash2 className="w-4 h-4" />
                       </Button>
-                      <div className="relative">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() =>
-                            setOpenMenuId(
-                              openMenuId === product.id ? null : product.id,
-                            )
-                          }
-                        >
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                        {openMenuId === product.id && (
-                          <>
-                            <div
-                              className="fixed inset-0 z-10"
-                              onClick={() => setOpenMenuId(null)}
-                            />
-                            <div className="absolute right-10 -top-8 z-20 bg-white rounded-lg shadow-lg border border-gray-100 py-1 min-w-35">
-                              <button
-                                onClick={() => {
-                                  onDuplicate(product);
-                                  setOpenMenuId(null);
-                                }}
-                                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                              >
-                                <Copy className="w-4 h-4" />
-                                Dupliquer
-                              </button>
-                              <button
-                                onClick={() => {
-                                  onDelete(product.id);
-                                  setOpenMenuId(null);
-                                }}
-                                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-secondaire-50"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                                Supprimer
-                              </button>
-                            </div>
-                          </>
-                        )}
-                      </div>
                     </div>
                   </td>
                 </tr>

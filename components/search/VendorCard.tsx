@@ -51,12 +51,14 @@ interface VendorCardProps {
     };
   }>;
   collapsible?: boolean;
+  marketId?: string;
 }
 
 export default function VendorCard({
   vendor,
   products,
   collapsible = false,
+  marketId,
 }: VendorCardProps) {
   const vendorHeader = (
     <div className="flex items-start gap-4 flex-1 min-w-0">
@@ -126,7 +128,7 @@ export default function VendorCard({
   const productGrid = (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} product={product} marketId={marketId} />
       ))}
     </div>
   );
