@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Infinity, Leaf, MapPin, Save, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import Loader from "../Loader";
 
 interface Category {
@@ -86,8 +87,6 @@ export function ProductsTableEditable({
     {},
   );
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // Initialiser les lignes éditables
   const initializeRows = useCallback(() => {
@@ -129,8 +128,6 @@ export function ProductsTableEditable({
         isDirty: true,
       },
     }));
-    setError(null);
-    setSuccessMessage(null);
   };
 
   const getDirtyRows = () => {
@@ -142,8 +139,6 @@ export function ProductsTableEditable({
     if (dirtyRows.length === 0) return;
 
     setSaving(true);
-    setError(null);
-    setSuccessMessage(null);
 
     try {
       const updates = dirtyRows.map((row) => ({
@@ -179,12 +174,10 @@ export function ProductsTableEditable({
         return updated;
       });
 
-      setSuccessMessage(`${dirtyRows.length} produit(s) mis à jour`);
+      toast.success(`${dirtyRows.length} produit(s) mis à jour`);
       onSaveSuccess();
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Erreur lors de la sauvegarde",
-      );
+      toast.error(err instanceof Error ? err.message : "Erreur lors de la sauvegarde");
     } finally {
       setSaving(false);
     }
@@ -192,8 +185,6 @@ export function ProductsTableEditable({
 
   const handleReset = () => {
     initializeRows();
-    setError(null);
-    setSuccessMessage(null);
   };
 
   const dirtyCount = getDirtyRows().length;
@@ -373,18 +364,6 @@ export function ProductsTableEditable({
           </Button>
         </div>
       </div>
-
-      {/* Messages */}
-      {error && (
-        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-          {error}
-        </div>
-      )}
-      {successMessage && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">
-          {successMessage}
-        </div>
-      )}
 
       {/* Vue mobile - Cartes */}
       <div className="lg:hidden space-y-3">

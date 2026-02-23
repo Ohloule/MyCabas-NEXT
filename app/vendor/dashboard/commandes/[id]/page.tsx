@@ -17,6 +17,7 @@ import {
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 interface OrderItem {
   id: string;
@@ -50,8 +51,6 @@ export default function OrderDetailPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
   // Quantités éditées
   const [editedQuantities, setEditedQuantities] = useState<
@@ -74,7 +73,7 @@ export default function OrderDetailPage() {
         setNote(data.vendorNote || "");
       }
     } catch {
-      setError("Erreur de chargement");
+      toast.error("Erreur de chargement");
     } finally {
       setLoading(false);
     }
@@ -87,7 +86,6 @@ export default function OrderDetailPage() {
   const handleAdjust = async () => {
     if (!order) return;
     setSaving(true);
-    setError(null);
 
     try {
       const items = order.items.map((item) => ({
@@ -106,10 +104,10 @@ export default function OrderDetailPage() {
         throw new Error(data.error || "Erreur");
       }
 
-      setSuccess("Quantités ajustées avec succès");
+      toast.success("Quantités ajustées avec succès");
       fetchOrder();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur");
+      toast.error(err instanceof Error ? err.message : "Erreur");
     } finally {
       setSaving(false);
     }
@@ -213,18 +211,6 @@ export default function OrderDetailPage() {
           </div>
         </div>
       </div>
-
-      {/* Messages */}
-      {error && (
-        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
-          {error}
-        </div>
-      )}
-      {success && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm">
-          {success}
-        </div>
-      )}
 
       {/* Items */}
       <Card className="mb-6">

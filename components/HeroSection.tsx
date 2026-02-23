@@ -1,8 +1,13 @@
+"use client";
+
 import { Search, Store } from "lucide-react"; // Pense à installer lucide-react si ce n'est pas fait
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 
 export default function HeroSection() {
+  const { data: session } = useSession();
+
   return (
     <section
       className="flex-1 relative  min-h-125 w-full overflow-visible bg-cover bg-bottom flex items-center"
@@ -33,12 +38,14 @@ export default function HeroSection() {
                 Rechercher un marché
               </Button>
             </Link>
-            <Link href="/register?role=vendor">
-              <Button variant="outline" className="w-full">
-                <Store className="h-5 w-5" />
-                Je suis commerçant
-              </Button>
-            </Link>
+            {!session && (
+              <Link href="/register?role=vendor">
+                <Button variant="outline" className="w-full">
+                  <Store className="h-5 w-5" />
+                  Je suis commerçant
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

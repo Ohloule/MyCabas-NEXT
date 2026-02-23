@@ -3,6 +3,7 @@
 import HeadingPage from "@/components/HeadingPage";
 import Loader from "@/components/Loader";
 import VendorCard from "@/components/search/VendorCard";
+import { Accordion } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/components/providers/cart-provider";
@@ -36,6 +37,7 @@ interface Product {
   imageUrl: string | null;
   unit: string;
   minOrderQty: number;
+  stepIncrement: number;
   basePrice: number;
   isOrganic: boolean;
   isLocal: boolean;
@@ -71,6 +73,7 @@ export default function ShopPage() {
 
   const marketId = params.id as string;
   const selectedDay = searchParams.get("day")?.toUpperCase() || null;
+  const vendorId = searchParams.get("vendorId") || null;
 
   const [market, setMarket] = useState<Market | null>(null);
   const [vendors, setVendors] = useState<Vendor[]>([]);
@@ -162,10 +165,11 @@ export default function ShopPage() {
     return cats.sort();
   }, [vendors]);
 
-  // Vendors + produits filtrés selon recherche et catégorie
+  // Vendors + produits filtrés selon vendorId, recherche et catégorie
   const filteredVendors = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     return vendors
+      .filter((vendor) => !vendorId || vendor.id === vendorId)
       .map((vendor) => {
         const products = vendor.products.filter((p) => {
           const matchCat =
@@ -179,7 +183,7 @@ export default function ShopPage() {
         return { ...vendor, products };
       })
       .filter((vendor) => vendor.products.length > 0);
-  }, [vendors, searchQuery, selectedCategory]);
+  }, [vendors, searchQuery, selectedCategory, vendorId]);
 
   if (status === "loading" || (status === "authenticated" && loading)) {
     return (
@@ -310,6 +314,24 @@ export default function ShopPage() {
           </div>
         )}
 
+        {/* Bandeau vendeur unique */}
+        {vendorId && vendors.find((v) => v.id === vendorId) && (
+          <div className="mb-4 flex items-center justify-between rounded-lg bg-principale-50 border border-principale-200 px-4 py-3">
+            <span className="text-sm font-medium text-principale-700">
+              Produits de{" "}
+              <span className="font-semibold">
+                {vendors.find((v) => v.id === vendorId)?.stallName}
+              </span>
+            </span>
+            <Link
+              href={`/markets/${marketId}/shop?day=${selectedDay?.toLowerCase()}`}
+              className="text-sm text-principale-600 hover:underline font-medium"
+            >
+              Voir tous les commerçants
+            </Link>
+          </div>
+        )}
+
         {vendors.length === 0 ? (
           <div className="rounded-lg border border-dashed p-16 text-center">
             <Store className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
@@ -339,6 +361,22 @@ export default function ShopPage() {
               Effacer les filtres
             </Button>
           </div>
+        ) : filteredVendors.length >= 2 ? (
+          <Accordion
+            type="single"
+            collapsible
+            defaultValue={filteredVendors[0]?.id}
+            className="space-y-4"
+          >
+            {filteredVendors.map((vendor) => (
+              <VendorCard
+                key={vendor.id}
+                vendor={vendor}
+                products={vendor.products}
+                collapsible
+              />
+            ))}
+          </Accordion>
         ) : (
           <div className="space-y-6">
             {filteredVendors.map((vendor) => (

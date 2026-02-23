@@ -19,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { useCallback, useState } from "react";
+import toast from "react-hot-toast";
 import Loader from "../Loader";
 
 interface ParsedRow {
@@ -54,14 +55,12 @@ export function ImportProductsDialog({
   const [preview, setPreview] = useState<PreviewResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [importing, setImporting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
 
   const reset = () => {
     setFile(null);
     setPreview(null);
-    setError(null);
     setSuccess(null);
   };
 
@@ -91,7 +90,6 @@ export function ImportProductsDialog({
   }, []);
 
   const handleFileSelect = async (selectedFile: File) => {
-    setError(null);
     setSuccess(null);
     setPreview(null);
 
@@ -100,7 +98,7 @@ export function ImportProductsDialog({
       !selectedFile.name.endsWith(".xlsx") &&
       !selectedFile.name.endsWith(".xls")
     ) {
-      setError("Le fichier doit être au format Excel (.xlsx ou .xls)");
+      toast.error("Le fichier doit être au format Excel (.xlsx ou .xls)");
       return;
     }
 
@@ -125,7 +123,7 @@ export function ImportProductsDialog({
 
       setPreview(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur lors de l'analyse");
+      toast.error(err instanceof Error ? err.message : "Erreur lors de l'analyse");
       setFile(null);
     } finally {
       setLoading(false);
@@ -136,7 +134,6 @@ export function ImportProductsDialog({
     if (!file || !preview || preview.validCount === 0) return;
 
     setImporting(true);
-    setError(null);
 
     try {
       const formData = new FormData();
@@ -155,6 +152,7 @@ export function ImportProductsDialog({
       }
 
       setSuccess(data.message);
+      toast.success(data.message);
       onImportSuccess();
 
       // Fermer après 2 secondes
@@ -162,7 +160,7 @@ export function ImportProductsDialog({
         handleClose();
       }, 2000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur lors de l'import");
+      toast.error(err instanceof Error ? err.message : "Erreur lors de l'import");
     } finally {
       setImporting(false);
     }
@@ -252,28 +250,6 @@ export function ImportProductsDialog({
             <div className="text-center py-8">
               <Loader taille={45} />
               <p className="text-gray-600">Analyse du fichier en cours...</p>
-            </div>
-          )}
-
-          {/* Erreur */}
-          {error && (
-            <div className="bg-secondaire-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-red-800 font-medium">Erreur</p>
-                <p className="text-sm text-red-700">{error}</p>
-              </div>
-            </div>
-          )}
-
-          {/* Succès */}
-          {success && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-green-800 font-medium">Import réussi !</p>
-                <p className="text-sm text-green-700">{success}</p>
-              </div>
             </div>
           )}
 

@@ -200,7 +200,7 @@ export default function Header() {
                     <Link
                       href="/vendor/dashboard"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-principale-100 transition-colors"
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-principale-100 transition-colors cursor-pointer"
                     >
                       <Store className="h-4 w-4" />
                       Mon commerce

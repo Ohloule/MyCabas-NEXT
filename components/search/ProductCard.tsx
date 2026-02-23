@@ -25,6 +25,7 @@ interface ProductCardProps {
     imageUrl: string | null;
     unit: string;
     minOrderQty: number;
+    stepIncrement: number;
     basePrice: number;
     isOrganic: boolean;
     isLocal: boolean;
@@ -46,19 +47,35 @@ const CATEGORY_COLORS: Record<string, string> = {
   "Bio & Nature": "bg-emerald-100 text-emerald-800 hover:bg-emerald-100",
 };
 
-// Arrondir au multiple de MOQ le plus proche
-function roundToMoq(value: number, moq: number): number {
-  if (moq <= 0) return value;
-  const rounded = Math.round(value / moq) * moq;
-  // Éviter les erreurs de virgule flottante
-  const decimals = (moq.toString().split(".")[1] || "").length;
-  return Math.max(moq, parseFloat(rounded.toFixed(decimals)));
+// Nombre de décimales significatives pour éviter les erreurs float
+function decimalsOf(a: number, b: number): number {
+  return Math.max(
+    (a.toString().split(".")[1] || "").length,
+    (b.toString().split(".")[1] || "").length,
+  );
+}
+
+// Arrondi standard au palier le plus proche au-dessus du min (pour boutons +/-)
+function snapToStep(value: number, min: number, step: number): number {
+  if (value <= min) return min;
+  const d = decimalsOf(min, step);
+  const stepsAboveMin = Math.round((value - min) / step);
+  return parseFloat((min + stepsAboveMin * step).toFixed(d));
+}
+
+// Arrondi au palier SUPÉRIEUR le plus proche (pour saisie manuelle)
+function roundUpToStep(value: number, min: number, step: number): number {
+  if (value <= min) return min;
+  const d = decimalsOf(min, step);
+  const stepsAboveMin = Math.ceil((value - min) / step);
+  return parseFloat((min + stepsAboveMin * step).toFixed(d));
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { getQuantity, updateQuantity, isLoading: cartLoading } = useCart();
   const quantity = getQuantity(product.id);
-  const moq = product.minOrderQty || 1;
+  const min = product.minOrderQty || 1;
+  const step = product.stepIncrement || min;
   const [inputValue, setInputValue] = useState(String(quantity));
   const [loading, setLoading] = useState(false);
 
@@ -138,7 +155,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Bouton Panier */}
         {quantity === 0 ? (
           <Button
-            onClick={() => handleUpdate(moq)}
+            onClick={() => handleUpdate(min)}
             disabled={loading || cartLoading}
             size="sm"
             className="w-16 self-end mt-3 gap-1.5 text-xs bg-principale-600 hover:bg-principale-500 transition-colors"
@@ -156,8 +173,8 @@ export default function ProductCard({ product }: ProductCardProps) {
             {/* Bouton moins / supprimer */}
             <button
               onClick={() => {
-                const next = quantity - moq;
-                handleUpdate(next < moq ? 0 : roundToMoq(next, moq));
+                const next = quantity - step;
+                handleUpdate(next <= min ? 0 : snapToStep(next, min, step));
               }}
               disabled={loading}
               className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-gray-900 text-white transition-colors disabled:opacity-50 cursor-pointer"
@@ -167,7 +184,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                   className="animate-spin text-principale-100"
                   size={20}
                 />
-              ) : quantity <= moq ? (
+              ) : quantity <= min ? (
                 <Trash2 className="w-4 h-4" />
               ) : (
                 <Minus className="w-4 h-4" />
@@ -199,10 +216,10 @@ export default function ProductCard({ product }: ProductCardProps) {
               }}
               onBlur={() => {
                 const num = parseFloat(inputValue);
-                if (isNaN(num) || num < moq) {
-                  handleUpdate(moq);
+                if (isNaN(num) || num < min) {
+                  handleUpdate(min);
                 } else {
-                  handleUpdate(Math.min(roundToMoq(num, moq), 99));
+                  handleUpdate(Math.min(roundUpToStep(num, min, step), 9999));
                 }
               }}
               className="w-18 h-9 bg-white text-sm font-bold text-gray-800 text-center outline-none border-x border-gray-200"
@@ -210,7 +227,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
             {/* Bouton plus */}
             <button
-              onClick={() => handleUpdate(roundToMoq(quantity + moq, moq))}
+              onClick={() => handleUpdate(snapToStep(quantity + step, min, step))}
               disabled={loading}
               className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-principale-700 text-white transition-colors disabled:opacity-50 cursor-pointer"
             >

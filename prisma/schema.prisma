@@ -75,6 +75,11 @@ enum MarketStatus {
   REJECTED // Rejeté par l'admin
 }
 
+enum ConversationStatus {
+  OPEN     // Conversation ouverte
+  CLOSED   // Clôturée par l'admin
+}
+
 // ============================================
 // USER & AUTH
 // ============================================
@@ -98,6 +103,7 @@ model User {
 
   cart            Cart?
   orders          Order[]
+  sentMessages    Message[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -204,11 +210,44 @@ model Vendor {
   marketVendors     MarketVendor[]
   orderItems        OrderItem[]
   submittedMarkets  Market[]       @relation("SubmittedMarkets")
+  settings          VendorSettings?
+  conversations     Conversation[]
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
   @@map("vendors")
+}
+
+model VendorSettings {
+  id                    String    @id @default(cuid())
+
+  // Notifications
+  notifPush             Boolean   @default(true)
+  notifEmail            Boolean   @default(true)
+  notifSms              Boolean   @default(false)
+
+  // Commandes
+  autoConfirm           Boolean   @default(false)
+  deadlineDaysBeforeDay Int       @default(1)   // 0 = jour même, 1 = veille, etc.
+  deadlineHour          Int       @default(19)  // 0–23
+  deadlineMinute        Int       @default(0)   // 0, 15, 30, 45
+
+  // Mode vacances
+  vacationMode          Boolean   @default(false)
+  vacationStart         DateTime?
+  vacationEnd           DateTime?
+
+  // Frais bancaires Stripe
+  stripeFeePaidBy       String    @default("VENDOR") // "VENDOR" | "CUSTOMER"
+
+  vendor                Vendor    @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId              String    @unique
+
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("vendor_settings")
 }
 
 // ============================================
@@ -227,6 +266,7 @@ model Market {
   // Statut de validation
   status              MarketStatus @default(ACTIVE)
   submittedByVendorId String?      // null = ajouté par admin
+  rejectionReason     String?      @db.Text // Raison du rejet par l'admin
 
   // Relations
   openings        MarketOpening[]
@@ -327,7 +367,8 @@ model Product {
   description     String?        @db.Text
   imageUrl        String?
   unit            String         @default("kg") // kg, pièce, botte, etc.
-  minOrderQty     Float          @default(1)    // Quantité minimum de commande (ex: 0.2 pour 200g min si vendu au kg)
+  minOrderQty     Float          @default(1)    // Seuil minimum de commande (ex: 450 pour 450g min)
+  stepIncrement   Float          @default(1)    // Tranche d'augmentation par clic (ex: 150 pour +150g par unité)
   basePrice       Float          // Prix de référence
   isOrganic       Boolean        @default(false) // Produit bio
   isLocal         Boolean        @default(false) // Produit local
@@ -542,4 +583,49 @@ model Payment {
 
   @@index([stripePaymentIntentId])
   @@map("payments")
+}
+
+// ============================================
+// MESSAGERIE INTERNE (Vendor <-> Admin)
+// ============================================
+
+model Conversation {
+  id        String             @id @default(cuid())
+  subject   String             // Objet de la conversation
+
+  status    ConversationStatus @default(OPEN)
+
+  // Vendor initiateur
+  vendorId  String
+  vendor    Vendor             @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+
+  messages  Message[]
+
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  @@index([vendorId])
+  @@index([status])
+  @@map("conversations")
+}
+
+model Message {
+  id              String       @id @default(cuid())
+  content         String       @db.Text
+
+  // Expéditeur
+  senderId        String
+  sender          User         @relation(fields: [senderId], references: [id])
+
+  // Conversation parente
+  conversationId  String
+  conversation    Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  // Lecture
+  readAt          DateTime?    // null = non lu
+
+  createdAt       DateTime     @default(now())
+
+  @@index([conversationId])
+  @@map("messages")
 }

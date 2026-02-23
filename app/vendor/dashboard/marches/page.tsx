@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 interface Suggestion {
   id: string;
@@ -88,7 +89,6 @@ export default function MarchesPage() {
   const [filteredMarkets, setFilteredMarkets] = useState<Market[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchLoading, setSearchLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
@@ -122,7 +122,7 @@ export default function MarchesPage() {
       const data = await response.json();
       setMyMarkets(data);
     } catch (err) {
-      setError("Impossible de charger vos marchés");
+      toast.error("Impossible de charger vos marchés");
       console.error(err);
     }
   }, []);
@@ -455,12 +455,6 @@ export default function MarchesPage() {
           <p className="text-gray-600">Gérez vos inscriptions aux marchés</p>
         </div>
       </div>
-
-      {error && (
-        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
-          {error}
-        </div>
-      )}
 
       {/* Mes marchés */}
       <div className="mb-8">

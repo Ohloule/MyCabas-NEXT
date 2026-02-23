@@ -12,6 +12,7 @@ interface Product {
   imageUrl: string | null;
   unit: string;
   minOrderQty: number;
+  stepIncrement: number;
   basePrice: number;
   isOrganic: boolean;
   isLocal: boolean;

@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 // ------- Types -------
 
@@ -84,7 +85,6 @@ export default function NouveauMarchePage() {
   // Soumission
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
 
   // ------- Autocomplétion adresse (API Adresse data.gouv.fr) -------
 
@@ -204,7 +204,6 @@ export default function NouveauMarchePage() {
   const handleSubmit = async () => {
     if (!canSubmit || !selectedAddress) return;
     setSubmitting(true);
-    setSubmitError(null);
 
     try {
       const res = await fetch("/api/vendor/markets/suggest", {
@@ -232,9 +231,7 @@ export default function NouveauMarchePage() {
 
       setSubmitted(true);
     } catch (err) {
-      setSubmitError(
-        err instanceof Error ? err.message : "Une erreur est survenue"
-      );
+      toast.error(err instanceof Error ? err.message : "Une erreur est survenue");
     } finally {
       setSubmitting(false);
     }
@@ -535,13 +532,6 @@ export default function NouveauMarchePage() {
               )}
             </CardContent>
           </Card>
-        )}
-
-        {/* Erreur soumission */}
-        {submitError && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-            {submitError}
-          </div>
         )}
 
         {/* Bouton soumettre */}

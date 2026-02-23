@@ -36,6 +36,7 @@ interface Product {
   imageUrl: string | null;
   unit: string;
   minOrderQty: number;
+  stepIncrement: number;
   basePrice: number;
   isOrganic: boolean;
   isLocal: boolean;
@@ -111,6 +112,7 @@ export default function EditProductPage({
         imageUrl: product.imageUrl,
         unit: product.unit,
         minOrderQty: product.minOrderQty,
+        stepIncrement: product.stepIncrement,
         basePrice: product.basePrice,
         categoryId: product.category.id,
         isOrganic: product.isOrganic,

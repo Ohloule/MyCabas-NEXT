@@ -12,6 +12,7 @@ import {
   Phone,
   Store,
 } from "lucide-react";
+import Link from "next/link";
 
 // Types
 interface SocialLinks {
@@ -86,9 +87,10 @@ function TikTokIcon({ className }: { className?: string }) {
 interface VendorCardProps {
   vendor: VendorCardData;
   isPreview?: boolean;
+  href?: string;
 }
 
-export function VendorCard({ vendor, isPreview = false }: VendorCardProps) {
+export function VendorCard({ vendor, isPreview = false, href }: VendorCardProps) {
   // Utiliser le logo de la boutique en priorité, sinon l'avatar
   const bannerImage = vendor.logoUrl || vendor.user?.avatarUrl;
   const hasProducts = vendor.products && vendor.products.length > 0;
@@ -109,8 +111,8 @@ export function VendorCard({ vendor, isPreview = false }: VendorCardProps) {
 
       console.log(vendor);
 
-  return (
-    <Card className="overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl">
+  const card = (
+    <Card className={`overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl${href && !isPreview ? " cursor-pointer" : ""}`}>
       {/* Bannière */}
       <div className="relative h-32 bg-linear-to-br from-principale-100 to-principale-200">
         {bannerImage ? (
@@ -310,4 +312,14 @@ export function VendorCard({ vendor, isPreview = false }: VendorCardProps) {
       </CardContent>
     </Card>
   );
+
+  if (href && !isPreview) {
+    return (
+      <Link href={href} className="block">
+        {card}
+      </Link>
+    );
+  }
+
+  return card;
 }

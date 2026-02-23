@@ -26,6 +26,7 @@ export async function GET() {
                 imageUrl: true,
                 unit: true,
                 minOrderQty: true,
+                stepIncrement: true,
                 basePrice: true,
                 vendor: {
                   select: { id: true, stallName: true },
@@ -66,21 +67,33 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Valider la quantité par rapport au MOQ du produit
+    // Valider la quantité par rapport au seuil minimum et à la tranche du produit
     if (quantity > 0) {
       const product = await prisma.product.findUnique({
         where: { id: productId },
-        select: { minOrderQty: true },
+        select: { minOrderQty: true, stepIncrement: true },
       });
 
       if (product && product.minOrderQty > 0) {
-        const moq = product.minOrderQty;
-        const rounded = Math.round(quantity / moq) * moq;
-        const decimals = (moq.toString().split(".")[1] || "").length;
-        const validQty = Math.max(moq, parseFloat(rounded.toFixed(decimals)));
+        const min = product.minOrderQty;
+        const step = product.stepIncrement || min;
+
+        if (quantity < min - 0.001) {
+          return NextResponse.json(
+            { error: `La quantité minimale est de ${min}`, validQuantity: min },
+            { status: 400 }
+          );
+        }
+
+        const decimals = Math.max(
+          (min.toString().split(".")[1] || "").length,
+          (step.toString().split(".")[1] || "").length,
+        );
+        const stepsAboveMin = Math.round((quantity - min) / step);
+        const validQty = parseFloat((min + stepsAboveMin * step).toFixed(decimals));
         if (Math.abs(quantity - validQty) > 0.001) {
           return NextResponse.json(
-            { error: `La quantité doit être un multiple de ${moq}`, validQuantity: validQty },
+            { error: `La quantité doit être un multiple de ${step} à partir de ${min}`, validQuantity: validQty },
             { status: 400 }
           );
         }

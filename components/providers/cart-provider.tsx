@@ -12,6 +12,7 @@ interface CartItemData {
     imageUrl: string | null;
     unit: string;
     minOrderQty: number;
+    stepIncrement: number;
     basePrice: number;
     vendor: {
       id: string;

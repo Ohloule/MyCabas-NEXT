@@ -42,11 +42,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null;
         }
 
+        // Les emails @mycabas.fr sont toujours ADMIN
+        const role = user.email.endsWith("@mycabas.fr") ? "ADMIN" : user.role;
+
         return {
           id: user.id,
           email: user.email,
           name: `${user.firstName} ${user.lastName}`,
-          role: user.role,
+          role,
           vendorId: user.vendor?.id || null,
         };
       },

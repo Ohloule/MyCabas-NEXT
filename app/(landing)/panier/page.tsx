@@ -41,23 +41,26 @@ export default function PanierPage() {
     item: {
       id: string;
       quantity: number;
-      product: { id: string; minOrderQty: number };
+      product: { id: string; minOrderQty: number; stepIncrement: number };
     },
     direction: "up" | "down",
   ) => {
-    const moq = item.product.minOrderQty || 1;
+    const min = item.product.minOrderQty || 1;
+    const step = item.product.stepIncrement || min;
     const newQuantity =
-      direction === "up" ? item.quantity + moq : item.quantity - moq;
+      direction === "up" ? item.quantity + step : item.quantity - step;
     setUpdatingItems((prev) => new Set(prev).add(item.id));
 
     try {
-      if (newQuantity < moq) {
+      if (newQuantity <= min) {
         await removeItem(item.id);
       } else {
-        // Arrondir au multiple de MOQ le plus proche
-        const rounded = Math.round(newQuantity / moq) * moq;
-        const decimals = (moq.toString().split(".")[1] || "").length;
-        const validQty = Math.max(moq, parseFloat(rounded.toFixed(decimals)));
+        const decimals = Math.max(
+          (min.toString().split(".")[1] || "").length,
+          (step.toString().split(".")[1] || "").length,
+        );
+        const stepsAboveMin = Math.round((newQuantity - min) / step);
+        const validQty = parseFloat((min + stepsAboveMin * step).toFixed(decimals));
         await updateQuantity(item.product.id, validQty);
       }
     } catch (err) {

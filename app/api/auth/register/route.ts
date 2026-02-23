@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
         firstName,
         lastName,
         phone,
-        role: role === "VENDOR" ? Role.VENDOR : Role.CLIENT,
+        role: email.endsWith("@mycabas.fr") ? Role.ADMIN : role === "VENDOR" ? Role.VENDOR : Role.CLIENT,
         // Créer l'adresse si fournie
         ...(street && zip && town
           ? {

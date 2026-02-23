@@ -197,10 +197,10 @@ function RegisterForm() {
           {/* Progress indicator */}
           <div className="mt-4 flex justify-center gap-2">
             <div
-              className={`h-2 w-16 rounded-full ${step >= 1 ? "bg-primary" : "bg-muted"}`}
+              className={`h-2 w-16 rounded-full ${step >= 1 ? "bg-principale-600" : "bg-muted"}`}
             />
             <div
-              className={`h-2 w-16 rounded-full ${step >= 2 ? "bg-primary" : "bg-muted"}`}
+              className={`h-2 w-16 rounded-full ${step >= 2 ? "bg-principale-600" : "bg-muted"}`}
             />
           </div>
         </CardHeader>
@@ -214,7 +214,7 @@ function RegisterForm() {
                 setRole("CLIENT");
                 setStep(2);
               }}
-              className="flex w-full items-center gap-4 rounded-lg border p-4 text-left transition-colors hover:border-primary hover:bg-primary/5"
+              className="flex w-full items-center gap-4 rounded-lg border p-4 text-left transition-colors hover:border-principale-700 hover:bg-principale-50 cursor-pointer"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <User className="h-6 w-6 text-primary" />
@@ -233,13 +233,13 @@ function RegisterForm() {
                 setRole("VENDOR");
                 setStep(2);
               }}
-              className="flex w-full items-center gap-4 rounded-lg border p-4 text-left transition-colors hover:border-primary hover:bg-primary/5"
+              className="flex w-full items-center gap-4 rounded-lg border p-4 text-left transition-colors hover:border-principale-700 hover:bg-principale-50 cursor-pointer"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <Store className="h-6 w-6 text-primary" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-principale-700/10">
+                <Store className="h-6 w-6 text-principale-700" />
               </div>
               <div>
-                <h3 className="font-semibold">Je suis un producteur</h3>
+                <h3 className="font-semibold">Je suis un commerçant</h3>
                 <p className="text-sm text-muted-foreground">
                   Je vends mes produits sur les marchés
                 </p>

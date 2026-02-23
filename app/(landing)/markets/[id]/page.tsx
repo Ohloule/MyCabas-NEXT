@@ -353,7 +353,7 @@ export default function MarketDetailPage() {
                 {/* Liste des commerçants floutée */}
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 blur-sm pointer-events-none select-none">
                   {vendors.slice(0, 6).map((vendor) => (
-                    <VendorCard key={vendor.id} vendor={vendor} />
+                    <VendorCard key={vendor.id} vendor={vendor} href={selectedDay ? `/markets/${marketId}/shop?day=${selectedDay.toLowerCase()}&vendorId=${vendor.id}` : undefined} />
                   ))}
                 </div>
 
@@ -391,7 +391,7 @@ export default function MarketDetailPage() {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {vendors.map((vendor) => (
-                  <VendorCard key={vendor.id} vendor={vendor} />
+                  <VendorCard key={vendor.id} vendor={vendor} href={selectedDay ? `/markets/${marketId}/shop?day=${selectedDay.toLowerCase()}&vendorId=${vendor.id}` : undefined} />
                 ))}
               </div>
             )}

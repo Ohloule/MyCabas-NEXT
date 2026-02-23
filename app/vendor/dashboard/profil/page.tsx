@@ -13,9 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import StripeConnectCard from "@/components/vendor/stripe-connect-card";
 import {
-  AlertCircle,
   Building2,
-  CheckCircle,
   CreditCard,
   Eye,
   EyeOff,
@@ -26,6 +24,7 @@ import {
   User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 interface VendorProfile {
   id: string;
@@ -51,8 +50,6 @@ export default function ProfilPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
   // États du formulaire RIB
   const [showBankForm, setShowBankForm] = useState(false);
@@ -92,7 +89,7 @@ export default function ProfilPage() {
           }
         }
       } catch (err) {
-        setError("Impossible de charger votre profil");
+        toast.error("Impossible de charger votre profil");
         console.error(err);
       } finally {
         setLoading(false);
@@ -112,8 +109,6 @@ export default function ProfilPage() {
   const handleSaveBankInfo = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-    setError(null);
-    setSuccess(null);
 
     try {
       const response = await fetch("/api/vendor/bank-info", {
@@ -142,11 +137,9 @@ export default function ProfilPage() {
 
       setShowBankForm(false);
       setBankFormData({ iban: "", bic: "", bankHolder: data.bankHolder });
-      setSuccess("Informations bancaires enregistrées avec succès");
+      toast.success("Informations bancaires enregistrées avec succès");
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Erreur lors de la sauvegarde",
-      );
+      toast.error(err instanceof Error ? err.message : "Erreur lors de la sauvegarde");
     } finally {
       setSaving(false);
     }
@@ -163,7 +156,6 @@ export default function ProfilPage() {
     }
 
     setDeleting(true);
-    setError(null);
 
     try {
       const response = await fetch("/api/vendor/bank-info", {
@@ -182,11 +174,9 @@ export default function ProfilPage() {
         updatedAt: null,
       });
       setBankFormData({ iban: "", bic: "", bankHolder: "" });
-      setSuccess("Informations bancaires supprimées");
+      toast.success("Informations bancaires supprimées");
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Erreur lors de la suppression",
-      );
+      toast.error(err instanceof Error ? err.message : "Erreur lors de la suppression");
     } finally {
       setDeleting(false);
     }
@@ -216,21 +206,6 @@ export default function ProfilPage() {
           </p>
         </div>
       </div>
-
-      {/* Messages */}
-      {error && (
-        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
-          <AlertCircle className="h-5 w-5 shrink-0" />
-          <span className="text-sm">{error}</span>
-        </div>
-      )}
-
-      {success && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
-          <CheckCircle className="h-5 w-5 shrink-0" />
-          <span className="text-sm">{success}</span>
-        </div>
-      )}
 
       <div className="space-y-6">
         {/* Informations légales (lecture seule) */}

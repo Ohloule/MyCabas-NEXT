@@ -16,6 +16,7 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import IngredientImagePicker from "../IngredientImagePicker";
 
 interface Category {
@@ -46,6 +47,7 @@ interface ProductFormProps {
     imageUrl: string | null;
     unit: string;
     minOrderQty: number;
+    stepIncrement: number;
     basePrice: number;
     categoryId: string;
     isOrganic: boolean;
@@ -83,7 +85,6 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
   const [markets, setMarkets] = useState<Market[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   // Formulaire - Infos générales
   const [name, setName] = useState(initialData?.name || "");
@@ -94,6 +95,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
   const [unit, setUnit] = useState(initialData?.unit || "kg");
   const [minOrderQty, setMinOrderQty] = useState(
     initialData?.minOrderQty?.toString() || "1",
+  );
+  const [stepIncrement, setStepIncrement] = useState(
+    initialData?.stepIncrement?.toString() || "1",
   );
   const [basePrice, setBasePrice] = useState(
     initialData?.basePrice?.toString() || "",
@@ -152,7 +156,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         setActiveMarketTab(marketsData[0].id);
       }
     } catch (err) {
-      setError("Impossible de charger les données");
+      toast.error("Impossible de charger les données");
       console.error(err);
     } finally {
       setLoading(false);
@@ -180,19 +184,18 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
   // Soumettre le formulaire
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
 
     // Validation
     if (!name.trim()) {
-      setError("Le nom du produit est requis");
+      toast.error("Le nom du produit est requis");
       return;
     }
     if (!basePrice || parseFloat(basePrice) <= 0) {
-      setError("Le prix de référence est requis");
+      toast.error("Le prix de référence est requis");
       return;
     }
     if (!categoryId) {
-      setError("La catégorie est requise");
+      toast.error("La catégorie est requise");
       return;
     }
 
@@ -205,6 +208,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         imageUrl: imageUrl.trim() || null,
         unit,
         minOrderQty: parseFloat(minOrderQty) || 1,
+        stepIncrement: parseFloat(stepIncrement) || 1,
         basePrice: parseFloat(basePrice),
         categoryId,
         isOrganic,
@@ -237,9 +241,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
       router.push("/vendor/dashboard/etal");
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Erreur lors de l'enregistrement",
-      );
+      toast.error(err instanceof Error ? err.message : "Erreur lors de l'enregistrement");
     } finally {
       setSaving(false);
     }
@@ -295,13 +297,6 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
           </Button>
         </div>
       </div>
-
-      {/* Erreur */}
-      {error && (
-        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
-          {error}
-        </div>
-      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Colonne principale */}
@@ -375,35 +370,20 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
-                {/* Quantité minimum de commande */}
-                <div className="">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Seuil minimum de vente */}
+                <div>
                   <div className="flex items-center gap-1.5">
-                    <Label htmlFor="minOrderQty">Quantité minimum *</Label>
+                    <Label htmlFor="minOrderQty">Seuil minimum de vente *</Label>
                     <div className="relative group">
                       <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" />
                       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 pointer-events-none">
-                        <p className="font-medium mb-1">
-                          Quantité minimum de commande
-                        </p>
+                        <p className="font-medium mb-1">Quantité minimale pour une commande</p>
                         <ul className="space-y-1 text-gray-300">
-                          <li>
-                            Vendu au kg, min 200g → mettre{" "}
-                            <strong className="text-white">0.2</strong>
-                          </li>
-                          <li>
-                            Vendu à la pièce entière → mettre{" "}
-                            <strong className="text-white">1</strong>
-                          </li>
-                          <li>
-                            Vendu par demi-pièce (pastèque) → mettre{" "}
-                            <strong className="text-white">0.5</strong>
-                          </li>
+                          <li>3 pommes à 150g pièce → mettre <strong className="text-white">450</strong> (g)</li>
+                          <li>Vendu au kg, min 200g → mettre <strong className="text-white">0.2</strong> (kg)</li>
+                          <li>Vendu à la pièce entière → mettre <strong className="text-white">1</strong></li>
                         </ul>
-                        <p className="mt-1 text-gray-300">
-                          Le client ne pourra commander que des multiples de
-                          cette valeur.
-                        </p>
                         <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
                       </div>
                     </div>
@@ -419,18 +399,82 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                       placeholder="1"
                       className="pr-16"
                     />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
                       {unit}
                     </span>
                   </div>
                   <p className="text-xs text-gray-500 mt-1">
-                    Le client ne pourra commander que des multiples de cette
-                    quantité
+                    Quantité minimale pour une commande
                   </p>
                 </div>
 
-                {/* Prix de référence */}
-                <div className="">
+                {/* Tranche d'augmentation */}
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="stepIncrement">Tranche d&apos;augmentation *</Label>
+                    <div className="relative group">
+                      <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" />
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 pointer-events-none">
+                        <p className="font-medium mb-1">Ajouter par tranche de...</p>
+                        <ul className="space-y-1 text-gray-300">
+                          <li>1 pomme = 150g → mettre <strong className="text-white">150</strong> (g)</li>
+                          <li>Vendu au kg par 100g → mettre <strong className="text-white">0.1</strong> (kg)</li>
+                          <li>Vendu à la pièce entière → mettre <strong className="text-white">1</strong></li>
+                        </ul>
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-1 relative">
+                    <Input
+                      id="stepIncrement"
+                      type="number"
+                      step="0.01"
+                      min="0.01"
+                      value={stepIncrement}
+                      onChange={(e) => setStepIncrement(e.target.value)}
+                      placeholder="1"
+                      className="pr-16"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+                      {unit}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Poids moyen d&apos;une unité (ex: 1 pomme)
+                  </p>
+                </div>
+              </div>
+
+              {/* Prévisualisation dynamique */}
+              {(() => {
+                const min = parseFloat(minOrderQty);
+                const step = parseFloat(stepIncrement);
+                if (!min || !step || min <= 0 || step <= 0) return null;
+                const decimals = Math.max(
+                  (minOrderQty.split(".")[1] || "").length,
+                  (stepIncrement.split(".")[1] || "").length,
+                );
+                const ex2 = parseFloat((min + step).toFixed(decimals));
+                const ex3 = parseFloat((min + step * 2).toFixed(decimals));
+                return (
+                  <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
+                    <p className="text-sm text-blue-700">
+                      <span className="font-medium">Aperçu client :</span>{" "}
+                      commande au moins{" "}
+                      <strong>{min} {unit}</strong>, puis par paliers de{" "}
+                      <strong>{step} {unit}</strong>
+                      <span className="text-blue-500 ml-1">
+                        (ex : {min}, {ex2}, {ex3} {unit}...)
+                      </span>
+                    </p>
+                  </div>
+                );
+              })()}
+
+              {/* Prix de référence */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
                   <div className="flex items-center gap-1.5">
                     <Label htmlFor="basePrice">Prix de référence *</Label>
                   </div>

@@ -18,6 +18,7 @@ import {
   Store,
   Menu,
   X,
+  MessageSquare,
 } from "lucide-react";
 
 interface VendorSidebarProps {
@@ -62,6 +63,11 @@ const menuItems = [
     label: "Facturations",
     href: "/vendor/dashboard/facturations",
     icon: Receipt,
+  },
+  {
+    label: "Messagerie",
+    href: "/vendor/dashboard/messagerie",
+    icon: MessageSquare,
   },
   {
     label: "Notifications",

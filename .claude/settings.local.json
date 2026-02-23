@@ -28,7 +28,10 @@
       "mcp__chrome-devtools__navigate_page",
       "mcp__chrome-devtools__take_screenshot",
       "mcp__chrome-devtools__take_snapshot",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(npm run db:migrate:*)",
+      "mcp__supabase__apply_migration",
+      "mcp__shadcn__search_items_in_registries"
     ]
   }
 }
