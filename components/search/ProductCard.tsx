@@ -93,6 +93,17 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
     product.canSellByPiece &&
     !!product.approxWeightPerPiece;
 
+  // Sous-unité : affichage en g/mL quand la quantité est < 1 pour les produits continus non-canToggle
+  const useSubUnit =
+    !canToggle &&
+    quantity > 0 &&
+    quantity < 1 &&
+    (product.unit === "kg" || product.unit === "litre");
+  const subMultiplier = useSubUnit ? 1000 : 1;
+  const smartUnit = useSubUnit
+    ? product.unit === "kg" ? "g" : "mL"
+    : product.unit;
+
   const [displayMode, setDisplayMode] = useState<"weight" | "piece">("piece");
   const [inputValue, setInputValue] = useState(String(quantity));
   const [loading, setLoading] = useState(false);
@@ -103,10 +114,12 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
       setInputValue(String(Math.round(quantity / product.approxWeightPerPiece)));
     } else if (canToggle && displayMode === "weight") {
       setInputValue(String(Math.round(quantity)));
+    } else if (useSubUnit) {
+      setInputValue(String(Math.round(quantity * subMultiplier)));
     } else {
       setInputValue(String(quantity));
     }
-  }, [quantity, displayMode, canToggle, product.approxWeightPerPiece]);
+  }, [quantity, displayMode, canToggle, product.approxWeightPerPiece, useSubUnit, subMultiplier]);
 
   const handleUpdate = async (newQuantityInUnit: number) => {
     setLoading(true);
@@ -114,15 +127,15 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
     setLoading(false);
   };
 
-  // Convertit la valeur affichée (pièces ou unité) → unité native
+  // Convertit la valeur affichée → unité native du produit
   function displayedToUnit(displayed: number): number {
     if (canToggle && displayMode === "piece" && product.approxWeightPerPiece) {
       return displayed * product.approxWeightPerPiece;
     }
-    return displayed;
+    return displayed / subMultiplier;
   }
 
-  // Convertit l'unité native → valeur affichée (toujours entier pour canToggle)
+  // Convertit l'unité native → valeur affichée (toujours entier pour canToggle et sub-unité)
   function unitToDisplayed(unitVal: number): number {
     if (canToggle && displayMode === "piece" && product.approxWeightPerPiece) {
       return Math.round(unitVal / product.approxWeightPerPiece);
@@ -130,12 +143,13 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
     if (canToggle && displayMode === "weight") {
       return Math.round(unitVal);
     }
-    return unitVal;
+    return unitVal * subMultiplier;
   }
 
   // Pour les produits canToggle : step et min toujours à 1 (entiers dans les deux modes)
-  const displayedMin = canToggle ? 1 : min;
-  const displayedStep = canToggle ? 1 : step;
+  // Pour les produits en sous-unité : step et min multipliés par subMultiplier
+  const displayedMin = canToggle ? 1 : min * subMultiplier;
+  const displayedStep = canToggle ? 1 : step * subMultiplier;
   const displayedQty = unitToDisplayed(quantity);
 
   // Changement de mode avec arrondi du panier
@@ -164,24 +178,32 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
   const displayedPriceUnit =
     canToggle && displayMode === "piece" ? "pièce" : product.unit;
 
+  // Formate une quantité en unité native avec conversion sous-unité si < 1
+  function formatQty(qty: number): string {
+    if ((product.unit === "kg" || product.unit === "litre") && qty > 0 && qty < 1) {
+      const sub = product.unit === "kg" ? "g" : "mL";
+      return `${Math.round(qty * 1000)} ${sub}`;
+    }
+    return `${qty} ${product.unit}`;
+  }
+
   // Label récapitulatif sous le sélecteur
   function getOrderLabel(): string {
     if (quantity === 0) return "";
     if (!canToggle) {
-      return `${quantity} ${product.unit}`;
+      return formatQty(quantity);
     }
-    const weightInUnit = quantity;
     const pieces = product.approxWeightPerPiece
       ? Math.round(quantity / product.approxWeightPerPiece)
       : null;
 
     if (displayMode === "piece" && pieces !== null) {
-      return `${pieces} pièce${pieces > 1 ? "s" : ""} ≈ ${weightInUnit.toFixed(2)} ${product.unit}`;
+      return `${pieces} pièce${pieces > 1 ? "s" : ""} ≈ ${formatQty(quantity)}`;
     }
     if (displayMode === "weight" && pieces !== null) {
-      return `${weightInUnit} ${product.unit} ≈ ${pieces} pièce${pieces > 1 ? "s" : ""}`;
+      return `${quantity} ${product.unit} ≈ ${pieces} pièce${pieces > 1 ? "s" : ""}`;
     }
-    return `${quantity} ${product.unit}`;
+    return formatQty(quantity);
   }
 
   return (
@@ -219,10 +241,40 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
       </div>
 
       <CardContent className="p-3 flex flex-col">
-        {/* Nom du produit */}
-        <h4 className="font-medium text-gray-900 truncate" title={product.name}>
-          {product.name}
-        </h4>
+        {/* Nom + toggle weight/piece sur la même ligne */}
+        <div className="flex items-center gap-1.5 min-w-0">
+          <h4 className="font-medium text-gray-900 truncate flex-1" title={product.name}>
+            {product.name}
+          </h4>
+          {canToggle && (
+            <div className="flex items-center gap-1 shrink-0">
+              <button
+                type="button"
+                onClick={() => handleModeChange("weight")}
+                title={`Commander en ${product.unit}`}
+                className={`flex items-center justify-center w-6 h-6 rounded-full border transition-colors cursor-pointer ${
+                  displayMode === "weight"
+                    ? "bg-principale-600 border-principale-600 text-white"
+                    : "bg-white border-gray-200 text-gray-400 hover:border-principale-300"
+                }`}
+              >
+                <Weight className="w-3 h-3" />
+              </button>
+              <button
+                type="button"
+                onClick={() => handleModeChange("piece")}
+                title="Commander à la pièce"
+                className={`flex items-center justify-center w-6 h-6 rounded-full border transition-colors cursor-pointer ${
+                  displayMode === "piece"
+                    ? "bg-principale-600 border-principale-600 text-white"
+                    : "bg-white border-gray-200 text-gray-400 hover:border-principale-300"
+                }`}
+              >
+                <Carrot className="w-3 h-3" />
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Catégorie */}
         <Badge
@@ -254,39 +306,6 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
           </span>
           <span className="text-xs text-gray-500">/ {displayedPriceUnit}</span>
         </div>
-
-        {/* Toggle weight/piece (uniquement pour continu + canSellByPiece) */}
-        {canToggle && (
-          <div className="mt-2 flex items-center gap-1">
-            <button
-              type="button"
-              onClick={() => handleModeChange("weight")}
-              title={`Commander en ${product.unit}`}
-              className={`flex items-center justify-center w-8 h-8 rounded-full border transition-colors cursor-pointer ${
-                displayMode === "weight"
-                  ? "bg-principale-600 border-principale-600 text-white"
-                  : "bg-white border-gray-200 text-gray-400 hover:border-principale-300"
-              }`}
-            >
-              <Weight className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => handleModeChange("piece")}
-              title="Commander à la pièce"
-              className={`flex items-center justify-center w-8 h-8 rounded-full border transition-colors cursor-pointer ${
-                displayMode === "piece"
-                  ? "bg-principale-600 border-principale-600 text-white"
-                  : "bg-white border-gray-200 text-gray-400 hover:border-principale-300"
-              }`}
-            >
-              <Carrot className="w-4 h-4" />
-            </button>
-            <span className="text-xs text-gray-400 ml-1">
-              {displayMode === "piece" ? "À la pièce" : `Au ${product.unit}`}
-            </span>
-          </div>
-        )}
 
         {/* Bouton Panier */}
         {quantity === 0 ? (
@@ -339,11 +358,11 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
                 {/* Input quantité */}
                 <input
                   type="text"
-                  inputMode={canToggle ? "numeric" : "decimal"}
+                  inputMode={canToggle || useSubUnit ? "numeric" : "decimal"}
                   value={inputValue}
                   onChange={(e) => {
-                    if (canToggle) {
-                      // Entiers uniquement pour les produits canToggle
+                    if (canToggle || useSubUnit) {
+                      // Entiers uniquement (canToggle et sous-unité)
                       const sanitized = e.target.value.replace(/[^\d]/g, "");
                       setInputValue(sanitized);
                     } else {
