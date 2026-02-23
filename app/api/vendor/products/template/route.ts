@@ -3,6 +3,8 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import ExcelJS from "exceljs";
 
+export const runtime = "nodejs";
+
 // Unités disponibles
 const UNITS = ["kg", "g", "pièce", "botte", "litre", "cl", "barquette", "pot", "sachet", "bouteille"];
 
@@ -281,7 +283,7 @@ export async function GET() {
     // Générer le buffer et retourner la réponse
     const buffer = await workbook.xlsx.writeBuffer();
 
-    return new NextResponse(buffer as ArrayBuffer, {
+    return new NextResponse(Buffer.from(buffer), {
       headers: {
         "Content-Type":        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         "Content-Disposition": "attachment; filename=template_produits_mycabas.xlsx",
