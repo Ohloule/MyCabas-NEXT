@@ -167,25 +167,32 @@ async function handleCaptured(paymentIntent: Stripe.PaymentIntent) {
     }
   }
 
-  // Créer les transfers vers chaque vendor
+  // Créer les transfers vers chaque vendor — best-effort, ne bloque pas le status update
   for (const [vendorId, { total, stripeAccountId }] of vendorTotals) {
     const commission = commissions[vendorId] || 0;
     const transferAmountEuros = total - commission;
     const transferAmountCents = eurosToCents(transferAmountEuros);
 
     if (transferAmountCents > 0 && stripeAccountId) {
-      await stripe.transfers.create({
-        amount: transferAmountCents,
-        currency: "eur",
-        destination: stripeAccountId,
-        transfer_group: order.id,
-        metadata: {
-          orderId: order.id,
-          orderNumber: order.orderNumber,
-          vendorId,
-          commissionEuros: commission.toString(),
-        },
-      });
+      try {
+        await stripe.transfers.create({
+          amount: transferAmountCents,
+          currency: "eur",
+          destination: stripeAccountId,
+          transfer_group: order.id,
+          metadata: {
+            orderId: order.id,
+            orderNumber: order.orderNumber,
+            vendorId,
+            commissionEuros: commission.toString(),
+          },
+        });
+      } catch (err) {
+        console.error(
+          `Transfer failed for vendor ${vendorId} on order ${order.orderNumber}:`,
+          err
+        );
+      }
     }
   }
 
