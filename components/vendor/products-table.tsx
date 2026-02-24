@@ -47,6 +47,8 @@ interface Product {
   isOrganic: boolean;
   isLocal: boolean;
   isActive: boolean;
+  canSellByPiece: boolean;
+  approxWeightPerPiece: number | null;
   category: Category;
   pricesByMarket: ProductPrice[];
   stocksByMarket: ProductStock[];
