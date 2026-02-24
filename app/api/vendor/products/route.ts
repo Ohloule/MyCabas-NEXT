@@ -76,6 +76,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const parsedBasePrice = parseFloat(basePrice);
+    const parsedPricePerPiece = pricePerPiece ? parseFloat(pricePerPiece) : null;
+
+    // Recalcul côté serveur : approxWeightPerPiece = pricePerPiece / basePrice
+    const computedApproxWeight =
+      canSellByPiece && parsedPricePerPiece && parsedBasePrice > 0
+        ? parseFloat((parsedPricePerPiece / parsedBasePrice).toFixed(4))
+        : approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null;
+
     // Créer le produit avec ses prix et stocks par marché
     const product = await prisma.product.create({
       data: {
@@ -85,14 +94,14 @@ export async function POST(request: NextRequest) {
         unit,
         minOrderQty: minOrderQty ? parseFloat(minOrderQty) : 1,
         stepIncrement: stepIncrement ? parseFloat(stepIncrement) : 1,
-        basePrice: parseFloat(basePrice),
+        basePrice: parsedBasePrice,
         categoryId,
         vendorId: session.user.vendorId,
         isOrganic: isOrganic || false,
         isLocal: isLocal || false,
         canSellByPiece: canSellByPiece || false,
-        approxWeightPerPiece: approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null,
-        pricePerPiece: pricePerPiece ? parseFloat(pricePerPiece) : null,
+        approxWeightPerPiece: computedApproxWeight,
+        pricePerPiece: parsedPricePerPiece,
         // Créer les prix par marché si fournis
         ...(marketPrices && marketPrices.length > 0 ? {
           pricesByMarket: {

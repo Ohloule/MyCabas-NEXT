@@ -218,7 +218,7 @@ export default function PanierPage() {
 
         <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Liste des produits */}
-          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6 ">
             {/* Header avec compteur et bouton vider */}
             <div className="flex items-center justify-between">
               <p className="text-gray-600">
@@ -230,7 +230,7 @@ export default function PanierPage() {
                 className="text-sm text-red-500 hover:text-red-700 flex items-center gap-1 cursor-pointer disabled:opacity-50"
               >
                 {clearing ? (
-                  <Loader taille={45} />
+                  <Loader2 className="animate-spin h-3 w-3" />
                 ) : (
                   <Trash2 className="h-3 w-3" />
                 )}
@@ -295,7 +295,7 @@ export default function PanierPage() {
                       </div>
 
                       {/* Ligne 2 mobile : quantité + prix + supprimer desktop */}
-                      <div className="flex items-center justify-between sm:justify-end sm:flex-1 gap-3 sm:gap-4 pl-17 sm:pl-0" >
+                      <div className="flex items-center justify-between sm:justify-end sm:flex-1 gap-3 sm:gap-4 sm:pl-0">
                         {/* Contrôles quantité */}
                         <div className="flex items-center gap-2">
                           <button
@@ -356,8 +356,8 @@ export default function PanierPage() {
             ))}
           </div>
 
-          {/* Récapitulatif */}
-          <div className="lg:col-span-1">
+          {/* Récapitulatif - masqué sur mobile (barre fixe en bas) */}
+          <div className="hidden lg:block lg:col-span-1">
             <Card className="sticky top-4">
               <CardContent className="p-4 sm:p-6 space-y-4">
                 <div className="flex items-center justify-between">
@@ -390,7 +390,7 @@ export default function PanierPage() {
                   </div>
                 </div>
 
-                <div className="space-y-3 text-sm hidden sm:block">
+                <div className="space-y-3 text-sm">
                   {recapView === "vendor"
                     ? Object.values(itemsByVendor).map(({ vendor, items }) => {
                         const subtotal = items.reduce(
@@ -489,7 +489,7 @@ export default function PanierPage() {
 
           {/* Barre fixe en bas sur mobile */}
           <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 lg:hidden z-50">
-            <div className="flex items-center justify-between gap-4 max-w-screen-sm mx-auto">
+            <div className="flex items-center justify-between gap-4 max-w-2xl mx-auto">
               <div>
                 <p className="text-xs text-gray-500">
                   {itemCount} {itemCount > 1 ? "produits" : "produit"}

@@ -540,9 +540,9 @@ model OrderItem {
   adjustedQuantity    Float?
   adjustedTotalEuros  Float?
 
-  // Référence produit (pour lien, pas pour le prix)
-  productId         String
-  product           Product   @relation(fields: [productId], references: [id])
+  // Référence produit (pour lien, pas pour le prix) — nullable : si le produit est supprimé, le snapshot reste intact
+  productId         String?
+  product           Product?  @relation(fields: [productId], references: [id], onDelete: SetNull)
 
   // Référence vendor (pour grouper et calculer les commissions/transfers)
   vendorId          String

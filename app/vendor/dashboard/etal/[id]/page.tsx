@@ -43,6 +43,7 @@ interface Product {
   isActive: boolean;
   canSellByPiece: boolean;
   approxWeightPerPiece: number | null;
+  pricePerPiece: number | null;
   category: Category;
   pricesByMarket: ProductPrice[];
   stocksByMarket: ProductStock[];
@@ -122,6 +123,7 @@ export default function EditProductPage({
         isActive: product.isActive,
         canSellByPiece: product.canSellByPiece,
         approxWeightPerPiece: product.approxWeightPerPiece,
+        pricePerPiece: product.pricePerPiece,
         pricesByMarket: product.pricesByMarket,
         stocksByMarket: product.stocksByMarket,
       }}

@@ -97,6 +97,24 @@ export async function PUT(
       marketPrices
     } = body;
 
+    const parsedBasePrice = basePrice ? parseFloat(basePrice) : undefined;
+    const parsedPricePerPiece = pricePerPiece !== undefined
+      ? (pricePerPiece ? parseFloat(pricePerPiece) : null)
+      : undefined;
+
+    // Recalcul côté serveur : approxWeightPerPiece = pricePerPiece / basePrice
+    const computedApproxWeight = (() => {
+      if (!canSellByPiece) return approxWeightPerPiece !== undefined
+        ? (approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null)
+        : undefined;
+      if (parsedPricePerPiece && parsedBasePrice && parsedBasePrice > 0) {
+        return parseFloat((parsedPricePerPiece / parsedBasePrice).toFixed(4));
+      }
+      return approxWeightPerPiece !== undefined
+        ? (approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null)
+        : undefined;
+    })();
+
     // Mettre à jour le produit dans une transaction
     const product = await prisma.$transaction(async (tx) => {
       // Mettre à jour le produit
@@ -109,18 +127,14 @@ export async function PUT(
           unit,
           minOrderQty: minOrderQty !== undefined ? parseFloat(minOrderQty) : undefined,
           stepIncrement: stepIncrement !== undefined ? parseFloat(stepIncrement) : undefined,
-          basePrice: basePrice ? parseFloat(basePrice) : undefined,
+          basePrice: parsedBasePrice,
           ...(categoryId ? { category: { connect: { id: categoryId } } } : {}),
           isOrganic,
           isLocal,
           isActive,
           canSellByPiece: canSellByPiece !== undefined ? canSellByPiece : undefined,
-          approxWeightPerPiece: approxWeightPerPiece !== undefined
-            ? (approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null)
-            : undefined,
-          pricePerPiece: pricePerPiece !== undefined
-            ? (pricePerPiece ? parseFloat(pricePerPiece) : null)
-            : undefined,
+          approxWeightPerPiece: computedApproxWeight,
+          pricePerPiece: parsedPricePerPiece,
         }
       });
 

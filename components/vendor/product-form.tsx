@@ -93,26 +93,34 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
   // Infos générales
   const [name, setName] = useState(initialData?.name || "");
-  const [description, setDescription] = useState(initialData?.description || "");
+  const [description, setDescription] = useState(
+    initialData?.description || "",
+  );
   const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || "");
   const [unit, setUnit] = useState(initialData?.unit || "kg");
-  const [basePrice, setBasePrice] = useState(initialData?.basePrice?.toString() || "");
+  const [basePrice, setBasePrice] = useState(
+    initialData?.basePrice?.toString() || "",
+  );
   const [categoryId, setCategoryId] = useState(initialData?.categoryId || "");
   const [isOrganic, setIsOrganic] = useState(initialData?.isOrganic || false);
   const [isLocal, setIsLocal] = useState(initialData?.isLocal || false);
   const [isActive, setIsActive] = useState(initialData?.isActive !== false);
 
   // Nouveaux champs simplifiés pour les quantités
-  const [canSellByPiece, setCanSellByPiece] = useState(initialData?.canSellByPiece || false);
+  const [canSellByPiece, setCanSellByPiece] = useState(
+    initialData?.canSellByPiece || false,
+  );
   const [approxWeightPerPiece, setApproxWeightPerPiece] = useState(
-    initialData?.approxWeightPerPiece?.toString() || ""
+    initialData?.approxWeightPerPiece?.toString() || "",
   );
   const [pricePerPiece, setPricePerPiece] = useState(
-    initialData?.pricePerPiece?.toString() || ""
+    initialData?.pricePerPiece?.toString() || "",
   );
 
   // Prix/Stock par marché
-  const [marketPrices, setMarketPrices] = useState<Record<string, MarketPriceData>>({});
+  const [marketPrices, setMarketPrices] = useState<
+    Record<string, MarketPriceData>
+  >({});
   const [activeMarketTab, setActiveMarketTab] = useState<string | null>(null);
 
   const isContinuousUnit = CONTINUOUS_UNITS.includes(unit);
@@ -176,7 +184,10 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
     fetchData();
   }, [fetchData]);
 
-  const updateMarketData = (marketId: string, data: Partial<MarketPriceData>) => {
+  const updateMarketData = (
+    marketId: string,
+    data: Partial<MarketPriceData>,
+  ) => {
     setMarketPrices((prev) => ({
       ...prev,
       [marketId]: { ...prev[marketId], ...data },
@@ -244,10 +255,13 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         isLocal,
         isActive,
         canSellByPiece: isContinuousUnit ? canSellByPiece : false,
-        approxWeightPerPiece: approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null,
-        pricePerPiece: isContinuousUnit && canSellByPiece && pricePerPiece
-          ? parseFloat(pricePerPiece)
+        approxWeightPerPiece: approxWeightPerPiece
+          ? parseFloat(approxWeightPerPiece)
           : null,
+        pricePerPiece:
+          isContinuousUnit && canSellByPiece && pricePerPiece
+            ? parseFloat(pricePerPiece)
+            : null,
         marketPrices: Object.values(marketPrices).map((mp) => ({
           marketId: mp.marketId,
           price: mp.price,
@@ -257,7 +271,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         })),
       };
 
-      const url = isEditing ? `/api/vendor/products/${productId}` : "/api/vendor/products";
+      const url = isEditing
+        ? `/api/vendor/products/${productId}`
+        : "/api/vendor/products";
       const method = isEditing ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -273,7 +289,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
       router.push("/vendor/dashboard/etal");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Erreur lors de l'enregistrement");
+      toast.error(
+        err instanceof Error ? err.message : "Erreur lors de l'enregistrement",
+      );
     } finally {
       setSaving(false);
     }
@@ -289,17 +307,26 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
   }
 
   const activeMarket = markets.find((m) => m.id === activeMarketTab);
-  const activeMarketData = activeMarketTab ? marketPrices[activeMarketTab] : null;
+  const activeMarketData = activeMarketTab
+    ? marketPrices[activeMarketTab]
+    : null;
 
   // Prévisualisation pour le client
-  const previewWeightStr = approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null;
+  const previewWeightStr = approxWeightPerPiece
+    ? parseFloat(approxWeightPerPiece)
+    : null;
 
   return (
     <form onSubmit={handleSubmit}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <Button type="button" variant="ghost" size="icon" onClick={() => router.back()}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => router.back()}
+          >
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <h1 className="text-2xl font-bold text-principale-800">
@@ -331,7 +358,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         <div className="lg:col-span-2 space-y-6">
           {/* Informations générales */}
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Informations générales</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Informations générales
+            </h2>
 
             <div className="space-y-4">
               {/* Nom */}
@@ -388,11 +417,13 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                     className="mt-1 w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500"
                   >
                     <optgroup label="Unités de poids / volume">
-                      {UNITS.filter((u) => u.group === "continuous").map((u) => (
-                        <option key={u.value} value={u.value}>
-                          {u.label}
-                        </option>
-                      ))}
+                      {UNITS.filter((u) => u.group === "continuous").map(
+                        (u) => (
+                          <option key={u.value} value={u.value}>
+                            {u.label}
+                          </option>
+                        ),
+                      )}
                     </optgroup>
                     <optgroup label="Unités discrètes">
                       {UNITS.filter((u) => u.group === "discrete").map((u) => (
@@ -404,10 +435,49 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                   </select>
                 </div>
               </div>
-
+              {/* Prix de référence */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="basePrice">Prix de référence *</Label>
+                  <div className="mt-1 relative">
+                    <Input
+                      id="basePrice"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={basePrice}
+                      onChange={(e) => {
+                        const b = e.target.value;
+                        setBasePrice(b);
+                        const bNum = parseFloat(b);
+                        const wNum = parseFloat(approxWeightPerPiece);
+                        if (
+                          canSellByPiece &&
+                          !isNaN(bNum) &&
+                          bNum > 0 &&
+                          !isNaN(wNum) &&
+                          wNum > 0
+                        ) {
+                          setPricePerPiece((wNum * bNum).toFixed(2));
+                        }
+                      }}
+                      placeholder="0.00"
+                      className="pr-16"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                      €/{unit}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Ce prix sera utilisé par défaut pour tous les marchés
+                  </p>
+                </div>
+              </div>
               {/* ── Bloc quantités simplifié ── */}
               <div className="border border-gray-100 rounded-lg p-4 bg-gray-50 space-y-4">
-                <p className="text-sm font-medium text-gray-700">Conditionnement</p>
+                <p className="text-sm font-medium text-gray-700">
+                  Conditionnement
+                </p>
 
                 {isContinuousUnit ? (
                   /* Unité continue (kg, g, L) */
@@ -426,9 +496,12 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                         className="mt-0.5 w-4 h-4 rounded border-gray-300 text-principale-600 focus:ring-principale-500"
                       />
                       <div>
-                        <span className="text-sm font-medium">Ce produit se vend à la pièce</span>
+                        <span className="text-sm font-medium">
+                          Ce produit se vend à la pièce
+                        </span>
                         <p className="text-xs text-gray-500">
-                          Ex : des pommes, des oranges… vendues au kg mais comptées à la pièce
+                          Ex : des pommes, des oranges… vendues au kg mais
+                          comptées à la pièce
                         </p>
                       </div>
                     </label>
@@ -446,7 +519,20 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                               step="0.001"
                               min="0.001"
                               value={approxWeightPerPiece}
-                              onChange={(e) => setApproxWeightPerPiece(e.target.value)}
+                              onChange={(e) => {
+                                const w = e.target.value;
+                                setApproxWeightPerPiece(w);
+                                const wNum = parseFloat(w);
+                                const bNum = parseFloat(basePrice);
+                                if (
+                                  !isNaN(wNum) &&
+                                  wNum > 0 &&
+                                  !isNaN(bNum) &&
+                                  bNum > 0
+                                ) {
+                                  setPricePerPiece((wNum * bNum).toFixed(2));
+                                }
+                              }}
                               placeholder="0.150"
                               className="pr-10"
                             />
@@ -470,7 +556,22 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                               step="0.01"
                               min="0.01"
                               value={pricePerPiece}
-                              onChange={(e) => setPricePerPiece(e.target.value)}
+                              onChange={(e) => {
+                                const p = e.target.value;
+                                setPricePerPiece(p);
+                                const pNum = parseFloat(p);
+                                const bNum = parseFloat(basePrice);
+                                if (
+                                  !isNaN(pNum) &&
+                                  pNum > 0 &&
+                                  !isNaN(bNum) &&
+                                  bNum > 0
+                                ) {
+                                  setApproxWeightPerPiece(
+                                    (pNum / bNum).toFixed(3),
+                                  );
+                                }
+                              }}
                               placeholder="0.30"
                               className="pr-6"
                             />
@@ -479,27 +580,33 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                             </span>
                           </div>
                           <p className="text-xs text-gray-500 mt-1">
-                            Prix affiché au client en mode &quot;à la pièce&quot;
+                            Renseigner l&apos;un calcule l&apos;autre
+                            automatiquement
                           </p>
                         </div>
                       </div>
                     )}
 
                     {/* Prévisualisation */}
-                    {canSellByPiece && previewWeightStr && previewWeightStr > 0 && (
-                      <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
-                        <p className="text-sm text-blue-700">
-                          <span className="font-medium">Aperçu client :</span> commande au{" "}
-                          <strong>{unit}</strong> ou à la <strong>pièce</strong>
-                          <span className="text-blue-500">
-                            {" "}(1 pièce ≈ {previewWeightStr} {unit}
-                            {pricePerPiece && parseFloat(pricePerPiece) > 0
-                              ? ` · ${parseFloat(pricePerPiece).toFixed(2)} €/pièce`
-                              : ""})
-                          </span>
-                        </p>
-                      </div>
-                    )}
+                    {canSellByPiece &&
+                      previewWeightStr &&
+                      previewWeightStr > 0 && (
+                        <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
+                          <p className="text-sm text-blue-700">
+                            <span className="font-medium">Aperçu client :</span>{" "}
+                            commande au <strong>{unit}</strong> ou à la{" "}
+                            <strong>pièce</strong>
+                            <span className="text-blue-500">
+                              {" "}
+                              (1 pièce ≈ {previewWeightStr} {unit}
+                              {pricePerPiece && parseFloat(pricePerPiece) > 0
+                                ? ` · ${parseFloat(pricePerPiece).toFixed(2)} €/pièce`
+                                : ""}
+                              )
+                            </span>
+                          </p>
+                        </div>
+                      )}
 
                     {!canSellByPiece && (
                       <div className="bg-gray-100 rounded-lg px-4 py-3">
@@ -514,7 +621,8 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                   /* Unité discontinue (pièce, botte, lot, barquette) */
                   <div className="space-y-3">
                     <p className="text-xs text-gray-500">
-                      Les clients commanderont par unité entière (1 {unit}, 2 {unit}s…).
+                      Les clients commanderont par unité entière (1 {unit}, 2{" "}
+                      {unit}s…).
                     </p>
                     <div>
                       <Label htmlFor="approxWeight">
@@ -528,7 +636,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                             step="0.001"
                             min="0.001"
                             value={approxWeightPerPiece}
-                            onChange={(e) => setApproxWeightPerPiece(e.target.value)}
+                            onChange={(e) =>
+                              setApproxWeightPerPiece(e.target.value)
+                            }
                             placeholder="500"
                             className="pr-6"
                           />
@@ -549,38 +659,13 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                     {previewWeightStr && previewWeightStr > 0 && (
                       <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
                         <p className="text-sm text-blue-700">
-                          <span className="font-medium">Aperçu client :</span> 1 {unit} ≈{" "}
-                          <strong>{previewWeightStr} g</strong>
+                          <span className="font-medium">Aperçu client :</span> 1{" "}
+                          {unit} ≈ <strong>{previewWeightStr} g</strong>
                         </p>
                       </div>
                     )}
                   </div>
                 )}
-              </div>
-
-              {/* Prix de référence */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="basePrice">Prix de référence *</Label>
-                  <div className="mt-1 relative">
-                    <Input
-                      id="basePrice"
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      value={basePrice}
-                      onChange={(e) => setBasePrice(e.target.value)}
-                      placeholder="0.00"
-                      className="pr-16"
-                    />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                      €/{unit}
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Ce prix sera utilisé par défaut pour tous les marchés
-                  </p>
-                </div>
               </div>
 
               {/* Options Bio / Local */}
@@ -664,11 +749,15 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                       type="checkbox"
                       checked={activeMarketData.isAvailable}
                       onChange={(e) =>
-                        updateMarketData(activeMarket.id, { isAvailable: e.target.checked })
+                        updateMarketData(activeMarket.id, {
+                          isAvailable: e.target.checked,
+                        })
                       }
                       className="w-5 h-5 rounded border-gray-300 text-principale-600 focus:ring-principale-500"
                     />
-                    <span className="text-sm font-medium">Disponible sur ce marché</span>
+                    <span className="text-sm font-medium">
+                      Disponible sur ce marché
+                    </span>
                   </label>
 
                   {activeMarketData.isAvailable && (
@@ -683,12 +772,15 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                               name={`price-type-${activeMarket.id}`}
                               checked={activeMarketData.price === null}
                               onChange={() =>
-                                updateMarketData(activeMarket.id, { price: null })
+                                updateMarketData(activeMarket.id, {
+                                  price: null,
+                                })
                               }
                               className="w-4 h-4 border-gray-300 text-principale-600 focus:ring-principale-500"
                             />
                             <span className="text-sm">
-                              Utiliser le prix de référence ({basePrice || "0"}€/{unit})
+                              Utiliser le prix de référence ({basePrice || "0"}
+                              €/{unit})
                             </span>
                           </label>
                           <label className="flex items-center gap-2 cursor-pointer">
@@ -795,8 +887,8 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
             <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg">
               <p className="font-medium">Aucun marché configuré</p>
               <p className="text-sm mt-1">
-                Vous devez d&apos;abord vous inscrire à des marchés pour configurer les prix et
-                stocks.
+                Vous devez d&apos;abord vous inscrire à des marchés pour
+                configurer les prix et stocks.
               </p>
             </div>
           )}
@@ -833,7 +925,10 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
             </div>
 
             <div>
-              <IngredientImagePicker onImageSelect={setImageUrl} defaultQuery={name} />
+              <IngredientImagePicker
+                onImageSelect={setImageUrl}
+                defaultQuery={name}
+              />
             </div>
           </div>
 

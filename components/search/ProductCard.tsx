@@ -46,10 +46,12 @@ const CATEGORY_COLORS: Record<string, string> = {
   "Fruits & Légumes": "bg-green-100 text-green-800 hover:bg-green-100",
   "Viandes & Charcuterie": "bg-red-100 text-red-800 hover:bg-red-100",
   "Poissons & Fruits de mer": "bg-blue-100 text-blue-800 hover:bg-blue-100",
-  "Fromages & Produits laitiers": "bg-amber-100 text-amber-800 hover:bg-amber-100",
-  "Boulangerie & Pâtisserie": "bg-orange-100 text-orange-800 hover:bg-orange-100",
+  "Fromages & Produits laitiers":
+    "bg-amber-100 text-amber-800 hover:bg-amber-100",
+  "Boulangerie & Pâtisserie":
+    "bg-orange-100 text-orange-800 hover:bg-orange-100",
   "Épicerie & Condiments": "bg-purple-100 text-purple-800 hover:bg-purple-100",
-  "Boissons": "bg-indigo-100 text-indigo-800 hover:bg-indigo-100",
+  Boissons: "bg-indigo-100 text-indigo-800 hover:bg-indigo-100",
   "Bio & Nature": "bg-emerald-100 text-emerald-800 hover:bg-emerald-100",
 };
 
@@ -101,7 +103,9 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
     (product.unit === "kg" || product.unit === "litre");
   const subMultiplier = useSubUnit ? 1000 : 1;
   const smartUnit = useSubUnit
-    ? product.unit === "kg" ? "g" : "mL"
+    ? product.unit === "kg"
+      ? "g"
+      : "mL"
     : product.unit;
 
   const [displayMode, setDisplayMode] = useState<"weight" | "piece">("piece");
@@ -111,7 +115,9 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
   // Synchroniser l'input quand le panier change
   useEffect(() => {
     if (canToggle && displayMode === "piece" && product.approxWeightPerPiece) {
-      setInputValue(String(Math.round(quantity / product.approxWeightPerPiece)));
+      setInputValue(
+        String(Math.round(quantity / product.approxWeightPerPiece)),
+      );
     } else if (canToggle && displayMode === "weight") {
       setInputValue(String(Math.round(quantity)));
     } else if (useSubUnit) {
@@ -119,7 +125,14 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
     } else {
       setInputValue(String(quantity));
     }
-  }, [quantity, displayMode, canToggle, product.approxWeightPerPiece, useSubUnit, subMultiplier]);
+  }, [
+    quantity,
+    displayMode,
+    canToggle,
+    product.approxWeightPerPiece,
+    useSubUnit,
+    subMultiplier,
+  ]);
 
   const handleUpdate = async (newQuantityInUnit: number) => {
     setLoading(true);
@@ -152,6 +165,10 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
   const displayedStep = canToggle ? 1 : step * subMultiplier;
   const displayedQty = unitToDisplayed(quantity);
 
+  // Unité affichée dans l'input
+  const inputUnit =
+    canToggle && displayMode === "piece" ? "pc" : smartUnit;
+
   // Changement de mode avec arrondi du panier
   function handleModeChange(mode: "weight" | "piece") {
     if (mode === displayMode) return;
@@ -159,7 +176,10 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
     if (quantity > 0 && canToggle && product.approxWeightPerPiece) {
       let roundedInUnit: number;
       if (mode === "piece") {
-        const pieces = Math.max(1, Math.round(quantity / product.approxWeightPerPiece));
+        const pieces = Math.max(
+          1,
+          Math.round(quantity / product.approxWeightPerPiece),
+        );
         roundedInUnit = pieces * product.approxWeightPerPiece;
       } else {
         roundedInUnit = Math.max(1, Math.round(quantity));
@@ -180,16 +200,26 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
 
   // Formate une quantité en unité native avec conversion sous-unité si < 1
   function formatQty(qty: number): string {
-    if ((product.unit === "kg" || product.unit === "litre") && qty > 0 && qty < 1) {
+    if (
+      (product.unit === "kg" || product.unit === "litre") &&
+      qty > 0 &&
+      qty < 1
+    ) {
       const sub = product.unit === "kg" ? "g" : "mL";
       return `${Math.round(qty * 1000)} ${sub}`;
     }
-    return `${qty} ${product.unit}`;
+    return `${parseFloat(qty.toFixed(2))} ${product.unit}`;
   }
 
   // Label récapitulatif sous le sélecteur
   function getOrderLabel(): string {
-    if (quantity === 0) return "";
+    if (quantity === 0) {
+      if (!product.approxWeightPerPiece) return "";
+      if (CONTINUOUS_UNITS.includes(product.unit)) {
+        return `1 pièce ≈ ${parseFloat(product.approxWeightPerPiece.toFixed(2))} ${product.unit}`;
+      }
+      return `1 ${product.unit} ≈ ${parseFloat(product.approxWeightPerPiece.toFixed(2))} g`;
+    }
     if (!canToggle) {
       return formatQty(quantity);
     }
@@ -201,13 +231,13 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
       return `${pieces} pièce${pieces > 1 ? "s" : ""} ≈ ${formatQty(quantity)}`;
     }
     if (displayMode === "weight" && pieces !== null) {
-      return `${quantity} ${product.unit} ≈ ${pieces} pièce${pieces > 1 ? "s" : ""}`;
+      return `${parseFloat(quantity.toFixed(2))} ${product.unit} ≈ ${pieces} pièce${pieces > 1 ? "s" : ""}`;
     }
     return formatQty(quantity);
   }
 
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow">
+    <Card className="overflow-hidden hover:shadow-md transition-shadow flex flex-col">
       {/* Image du produit */}
       <div className="relative h-32 bg-gray-100">
         {product.imageUrl ? (
@@ -240,10 +270,13 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
         </div>
       </div>
 
-      <CardContent className="p-3 flex flex-col">
+      <CardContent className="p-3 flex flex-col  flex-1">
         {/* Nom + toggle weight/piece sur la même ligne */}
         <div className="flex items-center gap-1.5 min-w-0">
-          <h4 className="font-medium text-gray-900 truncate flex-1" title={product.name}>
+          <h4
+            className="font-medium text-gray-900 truncate flex-1"
+            title={product.name}
+          >
             {product.name}
           </h4>
           {canToggle && (
@@ -289,23 +322,29 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
             {product.description}
           </p>
         )}
-
-        {/* Poids/conditionnement */}
-        {product.approxWeightPerPiece && (
-          <p className="text-xs text-gray-400 mt-1">
-            {CONTINUOUS_UNITS.includes(product.unit)
-              ? `1 pièce ≈ ${product.approxWeightPerPiece} ${product.unit}`
-              : `1 ${product.unit} ≈ ${product.approxWeightPerPiece} g`}
-          </p>
-        )}
-
         {/* Prix */}
-        <div className="mt-2 flex items-baseline gap-1">
-          <span className="text-lg font-bold text-principale-600">
-            {displayedPrice.toFixed(2)} €
-          </span>
-          <span className="text-xs text-gray-500">/ {displayedPriceUnit}</span>
+        <div className="mt-auto pt-2 flex justify-between gap-1 flex-1 items-start">
+          <div className="flex items-baseline gap-1">
+            <span className="text-lg font-bold text-principale-600">
+              {displayedPrice.toFixed(2)} €
+            </span>
+            <span className="text-xs text-gray-500">
+              / {displayedPriceUnit}
+            </span>
+          </div>
+          {quantity > 0 && (
+            <Badge className="text-sm font-bold bg-principale-300 text-principale-900 px-2.5 py-1">
+              {(canToggle && displayMode === "piece" && product.pricePerPiece && product.approxWeightPerPiece
+                ? Math.round(quantity / product.approxWeightPerPiece) * product.pricePerPiece
+                : quantity * product.basePrice
+              ).toFixed(2)} €
+            </Badge>
+          )}
         </div>
+        {/* Poids/conditionnement + récapitulatif commande */}
+        {getOrderLabel() && (
+          <p className="text-xs text-gray-400 mt-1">{getOrderLabel()}</p>
+        )}
 
         {/* Bouton Panier */}
         {quantity === 0 ? (
@@ -313,56 +352,57 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
             onClick={() => handleUpdate(displayedToUnit(displayedMin))}
             disabled={loading || cartLoading}
             size="sm"
-            className="w-16 self-end mt-3 gap-1.5 text-xs bg-principale-600 hover:bg-principale-500 transition-colors"
+            className="w-16 h-9 self-end mt-3 gap-1.5 text-xs bg-principale-600 hover:bg-principale-500 transition-colors"
           >
             {loading || cartLoading ? (
-              <Loader taille={45} />
+              <Loader2 className="animate-spin" size={14} />
             ) : (
               <ShoppingCart className="w-3.5 h-3.5" />
             )}
           </Button>
         ) : (
-          <div className="flex flex-col items-end mt-3 gap-1">
-            <div className="flex items-center gap-1.5">
-              {/* Bouton supprimer */}
+          <div className="flex items-center justify-end mt-3 gap-1.5">
+            {/* Bouton supprimer */}
+            <button
+              onClick={() => handleUpdate(0)}
+              disabled={loading}
+              className="flex items-center justify-center w-8 h-8 rounded-full bg-red-50 hover:bg-red-100 text-red-400 hover:text-red-600 transition-colors disabled:opacity-50 cursor-pointer"
+            >
+              {loading ? (
+                <Loader2 className="animate-spin" size={14} />
+              ) : (
+                <Trash2 className="w-3.5 h-3.5" />
+              )}
+            </button>
+
+            {/* Sélecteur quantité */}
+            <div className="flex items-center rounded-full overflow-hidden border border-gray-200">
+              {/* Bouton moins */}
               <button
-                onClick={() => handleUpdate(0)}
-                disabled={loading}
-                className="flex items-center justify-center w-8 h-8 rounded-full bg-red-50 hover:bg-red-100 text-red-400 hover:text-red-600 transition-colors disabled:opacity-50 cursor-pointer"
+                onClick={() => {
+                  const nextDisplayed = snapToStep(
+                    displayedQty - displayedStep,
+                    displayedMin,
+                    displayedStep,
+                  );
+                  handleUpdate(
+                    displayedToUnit(Math.max(nextDisplayed, displayedMin)),
+                  );
+                }}
+                disabled={loading || displayedQty <= displayedMin}
+                className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-gray-900 text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
-                {loading ? (
-                  <Loader2 className="animate-spin" size={14} />
-                ) : (
-                  <Trash2 className="w-3.5 h-3.5" />
-                )}
+                <Minus className="w-4 h-4" />
               </button>
 
-              {/* Sélecteur quantité */}
-              <div className="flex items-center rounded-full overflow-hidden border border-gray-200">
-                {/* Bouton moins */}
-                <button
-                  onClick={() => {
-                    const nextDisplayed = snapToStep(
-                      displayedQty - displayedStep,
-                      displayedMin,
-                      displayedStep,
-                    );
-                    handleUpdate(displayedToUnit(Math.max(nextDisplayed, displayedMin)));
-                  }}
-                  disabled={loading || displayedQty <= displayedMin}
-                  className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-gray-900 text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                >
-                  <Minus className="w-4 h-4" />
-                </button>
-
-                {/* Input quantité */}
+              {/* Input quantité + unité */}
+              <div className="flex items-center justify-center h-9 bg-white border-x border-gray-200 px-2 gap-1 min-w-0">
                 <input
                   type="text"
                   inputMode={canToggle || useSubUnit ? "numeric" : "decimal"}
                   value={inputValue}
                   onChange={(e) => {
                     if (canToggle || useSubUnit) {
-                      // Entiers uniquement (canToggle et sous-unité)
                       const sanitized = e.target.value.replace(/[^\d]/g, "");
                       setInputValue(sanitized);
                     } else {
@@ -385,37 +425,47 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
                     } else {
                       handleUpdate(
                         displayedToUnit(
-                          Math.min(roundUpToStep(num, displayedMin, displayedStep), 9999),
+                          Math.min(
+                            roundUpToStep(num, displayedMin, displayedStep),
+                            9999,
+                          ),
                         ),
                       );
                     }
                   }}
-                  className="w-14 h-9 bg-white text-sm font-bold text-gray-800 text-center outline-none border-x border-gray-200"
+                  className="w-10 bg-transparent text-sm font-bold text-gray-800 text-center outline-none"
                 />
-
-                {/* Bouton plus */}
-                <button
-                  onClick={() =>
-                    handleUpdate(
-                      displayedToUnit(
-                        snapToStep(displayedQty + displayedStep, displayedMin, displayedStep),
-                      ),
-                    )
-                  }
-                  disabled={loading}
-                  className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-principale-700 text-white transition-colors disabled:opacity-50 cursor-pointer"
-                >
-                  {loading ? (
-                    <Loader2 className="animate-spin text-principale-100" size={20} />
-                  ) : (
-                    <Plus className="w-4 h-4" />
-                  )}
-                </button>
+                <span className="text-xs text-gray-400 shrink-0 font-normal">
+                  {inputUnit}
+                </span>
               </div>
-            </div>
 
-            {/* Label récapitulatif */}
-            <span className="text-xs text-gray-500 pr-1">{getOrderLabel()}</span>
+              {/* Bouton plus */}
+              <button
+                onClick={() =>
+                  handleUpdate(
+                    displayedToUnit(
+                      snapToStep(
+                        displayedQty + displayedStep,
+                        displayedMin,
+                        displayedStep,
+                      ),
+                    ),
+                  )
+                }
+                disabled={loading}
+                className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-principale-700 text-white transition-colors disabled:opacity-50 cursor-pointer"
+              >
+                {loading ? (
+                  <Loader2
+                    className="animate-spin text-principale-100"
+                    size={20}
+                  />
+                ) : (
+                  <Plus className="w-4 h-4" />
+                )}
+              </button>
+            </div>
           </div>
         )}
       </CardContent>

@@ -42,7 +42,7 @@ export default function QualiteProductSection() {
           <Image
             src="/images/market1.png"
             alt="Produits frais"
-            className="max-h-[400px] object-contain rounded-2xl"
+            className="max-h-100 object-contain rounded-2xl"
             width={500}
             height={400}
           />

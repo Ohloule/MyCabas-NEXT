@@ -114,7 +114,6 @@ export default function ShopPage() {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [isSticky, setIsSticky] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   const { cart } = useCart();
@@ -130,18 +129,6 @@ export default function ShopPage() {
           currency: "EUR",
         })
       : null;
-
-  // Détecter quand la barre de filtres devient sticky
-  useEffect(() => {
-    const sentinel = sentinelRef.current;
-    if (!sentinel) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsSticky(!entry.isIntersecting),
-      { threshold: 0 },
-    );
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, [vendors.length]);
 
   // Rediriger si non connecté
   useEffect(() => {
@@ -315,15 +302,8 @@ export default function ShopPage() {
                 )}
               </div>
 
-              {/* Bouton panier - visible uniquement en mode sticky */}
-              <Link
-                href="/panier"
-                className={`transition-all duration-300 overflow-hidden ${
-                  isSticky
-                    ? "w-auto opacity-100"
-                    : "w-0 opacity-0 pointer-events-none"
-                }`}
-              >
+              {/* Bouton panier */}
+              <Link href="/panier">
                 <Button className="bg-secondaire-500 hover:bg-secondaire-600 gap-2 whitespace-nowrap">
                   <ShoppingCart className="h-4 w-4" />
                   {cartTotalLabel ? cartTotalLabel : "Panier"}
