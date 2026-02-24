@@ -120,6 +120,7 @@ body {
     animation-range: cover 0% contain 50%;
   }
 
+
   @keyframes reveal {
     from {
       transform: scale(0);

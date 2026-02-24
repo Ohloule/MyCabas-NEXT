@@ -35,7 +35,8 @@ export default function Page() {
               <span className="font-mycabas text-xl">MyCabas</span> est
               gratuite. Les commerçants ne paient que lorsqu’ils reçoivent des
               commandes via l’application. À chaque marché, une commission de{" "}
-              <strong>10 % du chiffre d’affaires généré via</strong> <span className="font-mycabas text-xl">MyCabas</span> est
+              <strong>10 % du chiffre d’affaires généré via</strong>{" "}
+              <span className="font-mycabas text-xl">MyCabas</span> est
               appliquée, mais elle est <strong>plafonnée à 5 € maximum</strong>{" "}
               quel que soit le nombre de commandes.
             </p>
@@ -103,8 +104,8 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="bg-secondaire-100 py-12 px-0 md:px-16">
-        <div className="align-center text-center">
+      <section className="bg-secondaire-100 py-12 px-0 md:px-16 ">
+        <div className="align-center text-center selection:bg-secondaire-300">
           <h2 className="text-2xl font-semibold mb-4">
             🔐 Une tarification pensée pour vous, pas contre vous
           </h2>
@@ -120,17 +121,17 @@ export default function Page() {
 
       <section className="py-12 px-0 md:px-16 bg-CardSection">
         <div className="align-center grid md:grid-cols-3 gap-4">
-          <Card className="bg-principale-50 animate-scroll-reveal-up">
+          <Card className="bg-principale-50">
             <CardHeader>
               <CardTitle className="text-xl">Sans engagement</CardTitle>
             </CardHeader>
             <CardContent className="text-gray-700">
-              Arrêtez quand vous voulez. Vous n’avez rien à perdre : pas de
+              Arrêtez quand vous voulez. Vous n'avez rien à perdre : pas de
               ventes = pas de frais.
             </CardContent>
           </Card>
 
-          <Card className="bg-principale-50 animate-scroll-reveal-up">
+          <Card className="bg-principale-50">
             <CardHeader>
               <CardTitle className="text-xl">Tarif plafonné</CardTitle>
             </CardHeader>
@@ -141,7 +142,7 @@ export default function Page() {
             </CardContent>
           </Card>
 
-          <Card className="bg-principale-50 animate-scroll-reveal-up">
+          <Card className="bg-principale-50">
             <CardHeader>
               <CardTitle className="text-xl">Zéro frais cachés</CardTitle>
             </CardHeader>
@@ -215,8 +216,8 @@ export default function Page() {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div className="bg-principale-100 p-4 rounded-lg">
-                <strong>
+              <div className="bg-principale-100 p-4 rounded-lg ">
+                <strong className="block h-8">
                   Partage des frais avec{" "}
                   <span className="font-mycabas text-xl">MyCabas</span> :
                 </strong>
@@ -254,7 +255,7 @@ export default function Page() {
               </div>
 
               <div className="bg-white border p-4 rounded-lg text-principale-800/50">
-                <strong>Sans partage des frais :</strong>
+                <strong className="block h-8">Sans partage des frais :</strong>
                 <ul className="list-disc list-inside mt-2">
                   <li className="flex flex-row justify-between">
                     <span>Boucher</span> <span>1,00 €</span>

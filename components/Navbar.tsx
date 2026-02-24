@@ -4,6 +4,7 @@ import {
   Apple,
   Beef,
   BookOpen,
+  ChevronDown,
   ChevronRight,
   CreditCard,
   Croissant,
@@ -13,7 +14,9 @@ import {
   MapPin,
   Menu,
   Milk,
+  Plus,
   Receipt,
+  ShieldCheck,
   ShoppingCart,
   Store,
   UserPlus,
@@ -23,10 +26,9 @@ import {
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CategoriesMenu from "./CategoriesMenu";
 import { useCart } from "./providers/cart-provider";
-import SearchBar from "./SearchBar";
 import { Button } from "./ui/button";
 
 // Icônes des catégories pour le menu mobile
@@ -50,12 +52,31 @@ interface Category {
   description: string;
 }
 
+interface FavoriteEntry {
+  id: string;
+  day: string;
+  market: { id: string; name: string; town: string; zip: string };
+}
+
+const DAY_LABELS: Record<string, string> = {
+  LUNDI: "Lundi",
+  MARDI: "Mardi",
+  MERCREDI: "Mercredi",
+  JEUDI: "Jeudi",
+  VENDREDI: "Vendredi",
+  SAMEDI: "Samedi",
+  DIMANCHE: "Dimanche",
+};
+
 export default function Navbar() {
   const { data: session } = useSession();
   const { cart } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [showCategories, setShowCategories] = useState(false);
+  const [mobileFavMarkets, setMobileFavMarkets] = useState<FavoriteEntry[]>([]);
+  const [showMobileFavMenu, setShowMobileFavMenu] = useState(false);
+  const mobileFavRef = useRef<HTMLDivElement>(null);
 
   const cartTotal =
     cart?.items.reduce(
@@ -84,6 +105,32 @@ export default function Navbar() {
       }
     }
     fetchCategories();
+  }, []);
+
+  // Charger les marchés favoris pour le CLIENT
+  useEffect(() => {
+    if (session?.user?.role === "CLIENT") {
+      fetch("/api/favorites/markets")
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.favorites) setMobileFavMarkets(data.favorites);
+        })
+        .catch(() => {});
+    }
+  }, [session]);
+
+  // Fermer le menu marchés favoris mobile au clic extérieur
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        mobileFavRef.current &&
+        !mobileFavRef.current.contains(event.target as Node)
+      ) {
+        setShowMobileFavMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Bloquer le scroll quand le menu mobile est ouvert
@@ -164,25 +211,93 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Navigation */}
-          <div className="flex lg:hidden items-center justify-between">
+          <div className="flex lg:hidden items-center gap-3 justify-between">
             {/* Bouton Menu Hamburger */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="flex items-center gap-2 text-blanc p-2 -ml-2 cursor-pointer"
+              className="flex items-center text-blanc p-2 -ml-2 cursor-pointer shrink-0"
               aria-label="Ouvrir le menu"
             >
               <Menu className="h-6 w-6" />
-              <span className="font-medium">Menu</span>
             </button>
 
-            {/* Lien rapide Marchés */}
-            <Link
-              href="/markets"
-              className="flex items-center gap-1.5 text-blanc text-sm"
-            >
-              <MapPin className="h-4 w-4" />
-              <span>Marchés</span>
-            </Link>
+            {/* Lien rapide contextuel selon le rôle */}
+            {!session ? (
+              <Link
+                href="/markets"
+                className="flex items-center gap-1.5 text-blanc text-sm"
+              >
+                <MapPin className="h-4 w-4" />
+                <span>Marchés</span>
+              </Link>
+            ) : session.user?.role === "CLIENT" ? (
+              <div className="relative" ref={mobileFavRef}>
+                <button
+                  onClick={() => setShowMobileFavMenu(!showMobileFavMenu)}
+                  className="flex items-center gap-1.5 text-blanc text-sm cursor-pointer"
+                >
+                  <MapPin className="h-4 w-4" />
+                  <span>Mes marchés</span>
+                  <ChevronDown
+                    className={`h-3 w-3 transition-transform duration-200 ${showMobileFavMenu ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {showMobileFavMenu && (
+                  <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50 border border-gray-100">
+                    {mobileFavMarkets.length === 0 ? (
+                      <Link
+                        href="/markets"
+                        onClick={() => setShowMobileFavMenu(false)}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      >
+                        <Plus className="h-4 w-4 text-principale-600" />
+                        Ajouter un marché
+                      </Link>
+                    ) : (
+                      mobileFavMarkets.map((f) => (
+                        <Link
+                          key={f.id}
+                          href={`/markets/${f.market.id}/shop?day=${f.day.toLowerCase()}`}
+                          onClick={() => setShowMobileFavMenu(false)}
+                          className="flex flex-col px-4 py-2 hover:bg-gray-50"
+                        >
+                          <span className="text-sm font-medium text-gray-800">
+                            {f.market.name}
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            {f.market.town} · {DAY_LABELS[f.day] ?? f.day}
+                          </span>
+                        </Link>
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
+            ) : session.user?.role === "VENDOR" ? (
+              <Link
+                href="/vendor/dashboard/"
+                className="flex items-center gap-1.5 text-blanc text-sm"
+              >
+                <Store className="h-4 w-4" />
+                <span>Mon commerce</span>
+              </Link>
+            ) : session.user?.role === "ADMIN" ? (
+              <Link
+                href="/admin"
+                className="flex items-center gap-1.5 text-blanc text-sm"
+              >
+                <ShieldCheck className="h-4 w-4" />
+                <span>Admin</span>
+              </Link>
+            ) : (
+              <Link
+                href="/markets"
+                className="flex items-center gap-1.5 text-blanc text-sm"
+              >
+                <MapPin className="h-4 w-4" />
+                <span>Marchés</span>
+              </Link>
+            )}
           </div>
         </div>
       </nav>
@@ -215,11 +330,6 @@ export default function Navbar() {
 
         {/* Contenu du drawer */}
         <div className="overflow-y-auto h-[calc(100%-64px)]">
-          {/* Barre de recherche mobile */}
-          <div className="p-4 bg-gray-50 border-b">
-            <SearchBar className="w-full" />
-          </div>
-
           {/* Navigation principale */}
           <div className="py-2">
             {/* Bouton Vos commerçants avec sous-menu */}

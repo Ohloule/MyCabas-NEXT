@@ -237,7 +237,7 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
   }
 
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow flex flex-col">
+    <Card className="overflow-hidden hover:shadow-md transition-shadow flex flex-col min-h-82.5 min-w-50 ">
       {/* Image du produit */}
       <div className="relative h-32 bg-gray-100">
         {product.imageUrl ? (

@@ -1,5 +1,5 @@
 "use client";
-import { ChevronDown, LogIn, LogOut, Store, User, UserPen } from "lucide-react";
+import { ChevronDown, LogIn, LogOut, Search, Store, User, UserPen, X } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,8 +14,29 @@ export default function Header() {
   const isLoading = status === "loading";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const searchModalRef = useRef<HTMLDivElement>(null);
+
+  // Auto-focus sur l'input quand la modal de recherche s'ouvre
+  useEffect(() => {
+    if (showMobileSearch && searchModalRef.current) {
+      const input = searchModalRef.current.querySelector("input");
+      if (input) input.focus();
+    }
+  }, [showMobileSearch]);
+
+  // Fermer la modal de recherche avec Escape
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setShowMobileSearch(false);
+    }
+    if (showMobileSearch) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [showMobileSearch]);
 
   // Fermer le menu quand on clique en dehors
   useEffect(() => {
@@ -41,6 +62,7 @@ export default function Header() {
   };
 
   return (
+    <>
     <header className="w-full food-motif bg-principale-700 py-5 sm:py-2">
       <div className="align-center h-full flex flex-row justify-between items-center gap-4">
         {/* Logo */}
@@ -153,7 +175,16 @@ export default function Header() {
         </div>
 
         {/* Version mobile */}
-        <div className="flex lg:hidden items-center">
+        <div className="flex lg:hidden items-center gap-3">
+          {/* Bouton loupe */}
+          <button
+            onClick={() => setShowMobileSearch(true)}
+            className="flex items-center justify-center text-blanc p-1.5 cursor-pointer"
+            aria-label="Rechercher"
+          >
+            <Search className="h-5 w-5" />
+          </button>
+
           {isLoading ? (
             <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
           ) : session?.user ? (
@@ -230,5 +261,30 @@ export default function Header() {
         </div>
       </div>
     </header>
+
+      {/* Modal de recherche mobile */}
+      {showMobileSearch && (
+        <div className="fixed inset-0 z-60 lg:hidden flex flex-col">
+          <div className=" bg-black/60" onClick={() => setShowMobileSearch(false)} />
+          <div
+            ref={searchModalRef}
+            className="bg-principale-700 px-4 pt-7 pb-5 text-xs flex items-center gap-2"
+          >
+            <SearchBar className="flex-1" />
+            <button
+              onClick={() => setShowMobileSearch(false)}
+              className="text-blanc shrink-0 p-1 cursor-pointer"
+              aria-label="Fermer la recherche"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+          <div
+            className="flex-1 bg-black/60"
+            onClick={() => setShowMobileSearch(false)}
+          />
+        </div>
+      )}
+    </>
   );
 }

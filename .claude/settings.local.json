@@ -34,7 +34,9 @@
       "mcp__shadcn__search_items_in_registries",
       "mcp__supabase__get_advisors",
       "Bash(npm audit:*)",
-      "Bash(1:*)"
+      "Bash(1:*)",
+      "Bash(cat:*)",
+      "Bash(python3:*)"
     ]
   }
 }
