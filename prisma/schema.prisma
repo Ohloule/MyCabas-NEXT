@@ -364,6 +364,7 @@ model Category {
 model Product {
   id              String         @id @default(cuid())
   name            String
+  genericName     String?                             // Auto-généré par IA — recherche uniquement, invisible vendeur
   description     String?        @db.Text
   imageUrl        String?
   unit            String         @default("kg") // kg, pièce, botte, etc.
@@ -442,9 +443,10 @@ model Cart {
   userId    String     @unique
   user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // Marché associé au panier (un panier = un marché)
+  // Marché associé au panier (un panier = un marché + un jour)
   marketId  String?
   market    Market?    @relation(fields: [marketId], references: [id], onDelete: SetNull)
+  marketDay Day?       // Jour du marché sélectionné
 
   items     CartItem[]
 

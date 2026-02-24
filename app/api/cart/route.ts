@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { Day } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Récupérer le panier de l'utilisateur
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { productId, quantity = 1, marketId } = await request.json();
+    const { productId, quantity = 1, marketId, day } = await request.json();
 
     if (!productId) {
       return NextResponse.json(
@@ -119,22 +120,32 @@ export async function POST(request: NextRequest) {
       where: { userId: session.user.id },
     });
 
+    // Valider le jour (doit être un enum Day valide)
+    const VALID_DAYS = ["LUNDI","MARDI","MERCREDI","JEUDI","VENDREDI","SAMEDI","DIMANCHE"];
+    const validatedDay: string | null = day && VALID_DAYS.includes(String(day).toUpperCase())
+      ? String(day).toUpperCase()
+      : null;
+
     if (!cart) {
       cart = await prisma.cart.create({
         data: {
           userId: session.user.id,
           marketId: validatedMarketId,
+          ...(validatedMarketId && validatedDay ? { marketDay: validatedDay as Day } : {}),
         },
       });
-    } else if (validatedMarketId && cart.marketId !== validatedMarketId) {
-      // Si le marché change, on met à jour (non-fatal si ça échoue)
+    } else if (validatedMarketId && (cart.marketId !== validatedMarketId || validatedDay !== cart.marketDay)) {
+      // Si le marché ou le jour change, on met à jour
       try {
         cart = await prisma.cart.update({
           where: { id: cart.id },
-          data: { marketId: validatedMarketId },
+          data: {
+            marketId: validatedMarketId,
+            ...(validatedDay ? { marketDay: validatedDay as Day } : {}),
+          },
         });
       } catch (updateErr) {
-        console.error("POST /api/cart: impossible de mettre à jour marketId:", updateErr);
+        console.error("POST /api/cart: impossible de mettre à jour marketId/marketDay:", updateErr);
       }
     }
 
@@ -217,7 +228,7 @@ export async function PATCH(request: NextRequest) {
   }
 
   try {
-    const { marketId } = await request.json();
+    const { marketId, day } = await request.json();
 
     if (!marketId) {
       return NextResponse.json({ error: "marketId requis" }, { status: 400 });
@@ -234,25 +245,36 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: "Marché introuvable" }, { status: 404 });
     }
 
+    const VALID_DAYS = ["LUNDI","MARDI","MERCREDI","JEUDI","VENDREDI","SAMEDI","DIMANCHE"];
+    const validatedDay: string | null = day && VALID_DAYS.includes(String(day).toUpperCase())
+      ? String(day).toUpperCase()
+      : null;
+
     const cart = await prisma.cart.findUnique({
       where: { userId: session.user.id },
     });
 
     if (!cart) {
-      // Créer le panier avec le marché
       const newCart = await prisma.cart.create({
-        data: { userId: session.user.id, marketId },
+        data: {
+          userId: session.user.id,
+          marketId,
+          ...(validatedDay ? { marketDay: validatedDay as Day } : {}),
+        },
       });
       return NextResponse.json(newCart);
     }
 
-    if (cart.marketId === marketId) {
+    if (cart.marketId === marketId && (!validatedDay || cart.marketDay === validatedDay)) {
       return NextResponse.json(cart);
     }
 
     const updated = await prisma.cart.update({
       where: { id: cart.id },
-      data: { marketId },
+      data: {
+        marketId,
+        ...(validatedDay ? { marketDay: validatedDay as Day } : {}),
+      },
     });
 
     return NextResponse.json(updated);
@@ -294,8 +316,8 @@ export async function DELETE(request: NextRequest) {
 
       await prisma.cartItem.delete({ where: { id: itemId } });
     } else {
-      // Vider tout le panier
-      await prisma.cartItem.deleteMany({ where: { cartId: cart.id } });
+      // Supprimer le panier entier (les CartItem sont supprimés en cascade)
+      await prisma.cart.delete({ where: { id: cart.id } });
     }
 
     return NextResponse.json({ success: true });

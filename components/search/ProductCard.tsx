@@ -5,6 +5,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Carrot,
   Leaf,
   Loader2,
@@ -40,6 +48,7 @@ interface ProductCardProps {
     };
   };
   marketId?: string;
+  day?: string;
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -79,14 +88,14 @@ function roundUpToStep(value: number, min: number, step: number): number {
   return parseFloat((min + stepsAboveMin * step).toFixed(d));
 }
 
-export default function ProductCard({ product, marketId }: ProductCardProps) {
-  const { getQuantity, updateQuantity, isLoading: cartLoading } = useCart();
+export default function ProductCard({ product, marketId, day }: ProductCardProps) {
+  const { getQuantity, updateQuantity, clearCart, cart, isLoading: cartLoading } = useCart();
 
   // Le panier stocke toujours la quantité dans l'unité native du produit (kg, pièce…)
   const quantity = getQuantity(product.id);
 
-  const min = product.minOrderQty || 1;
-  const step = product.stepIncrement || min;
+  const min = 1;
+  const step = 1;
 
   // Mode d'affichage : "weight" (unité native) ou "piece" (pièces)
   // Disponible uniquement pour les produits continus + canSellByPiece
@@ -111,6 +120,8 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
   const [displayMode, setDisplayMode] = useState<"weight" | "piece">("piece");
   const [inputValue, setInputValue] = useState(String(quantity));
   const [loading, setLoading] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [pendingQuantity, setPendingQuantity] = useState<number | null>(null);
 
   // Synchroniser l'input quand le panier change
   useEffect(() => {
@@ -135,8 +146,31 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
   ]);
 
   const handleUpdate = async (newQuantityInUnit: number) => {
+    // Détection de conflit de marché/jour : ouvrir la dialog de confirmation
+    if (
+      newQuantityInUnit > 0 &&
+      marketId &&
+      cart?.market?.id &&
+      cart.items.length > 0 &&
+      (marketId !== cart.market.id ||
+        (day && cart.marketDay && day !== cart.marketDay))
+    ) {
+      setPendingQuantity(newQuantityInUnit);
+      setConfirmOpen(true);
+      return;
+    }
     setLoading(true);
-    await updateQuantity(product.id, newQuantityInUnit, marketId);
+    await updateQuantity(product.id, newQuantityInUnit, marketId, day);
+    setLoading(false);
+  };
+
+  const handleConfirmSwitch = async () => {
+    if (pendingQuantity === null) return;
+    setConfirmOpen(false);
+    setLoading(true);
+    await clearCart();
+    await updateQuantity(product.id, pendingQuantity, marketId, day);
+    setPendingQuantity(null);
     setLoading(false);
   };
 
@@ -237,6 +271,39 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
   }
 
   return (
+    <>
+    <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+      <DialogContent showCloseButton={false} className="max-w-sm">
+        <DialogHeader>
+          <DialogTitle>Changer de marché ?</DialogTitle>
+          <DialogDescription>
+            {cart?.market?.id === marketId ? (
+              <>
+                Votre panier contient des produits pour le marché{" "}
+                <span className="font-medium text-gray-800">{cart?.market?.name}</span>{" "}
+                un autre jour. Changer de jour supprimera tous les articles déjà
+                dans votre panier.
+              </>
+            ) : (
+              <>
+                Votre panier contient des produits du marché{" "}
+                <span className="font-medium text-gray-800">{cart?.market?.name}</span>.
+                Ajouter ce produit d&apos;un autre marché supprimera tous les articles
+                déjà dans votre panier.
+              </>
+            )}
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="gap-2 sm:gap-0">
+          <Button variant="outline" onClick={() => setConfirmOpen(false)}>
+            Annuler
+          </Button>
+          <Button variant="secondary" className="ml-3" onClick={handleConfirmSwitch}>
+            Vider et continuer
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
     <Card className="overflow-hidden hover:shadow-md transition-shadow flex flex-col min-h-82.5 min-w-50 ">
       {/* Image du produit */}
       <div className="relative h-32 bg-gray-100">
@@ -470,5 +537,6 @@ export default function ProductCard({ product, marketId }: ProductCardProps) {
         )}
       </CardContent>
     </Card>
+    </>
   );
 }

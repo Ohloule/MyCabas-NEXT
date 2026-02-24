@@ -100,7 +100,7 @@ export default function MarketDetailPage() {
   const searchParams = useSearchParams();
   const { status } = useSession();
   const isAuthenticated = status === "authenticated";
-  const marketId = params.id as string;
+  const marketId = decodeURIComponent(params.id as string);
   const selectedDay = searchParams.get("day")?.toUpperCase() || null;
 
   const [market, setMarket] = useState<Market | null>(null);

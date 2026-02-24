@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { suggestGenericName } from "@/lib/ai/suggest-generic-name";
 
 // GET - Récupérer un produit par ID
 export async function GET(
@@ -102,6 +103,14 @@ export async function PUT(
       ? (pricePerPiece ? parseFloat(pricePerPiece) : null)
       : undefined;
 
+    // Regénérer le nom générique si le nom du produit a changé
+    let genericName: string | null | undefined = undefined;
+    if (name && name !== existingProduct.name) {
+      const resolvedCategoryId = categoryId || existingProduct.categoryId;
+      const category = await prisma.category.findUnique({ where: { id: resolvedCategoryId } });
+      genericName = await suggestGenericName(name, category?.name ?? "");
+    }
+
     // Recalcul côté serveur : approxWeightPerPiece = pricePerPiece / basePrice
     const computedApproxWeight = (() => {
       if (!canSellByPiece) return approxWeightPerPiece !== undefined
@@ -122,6 +131,7 @@ export async function PUT(
         where: { id },
         data: {
           name,
+          ...(genericName !== undefined && { genericName }),
           description,
           imageUrl,
           unit,

@@ -194,20 +194,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
     }));
   };
 
-  // Calcule minOrderQty et stepIncrement à partir des nouveaux champs
+  // minOrderQty et stepIncrement toujours à 1
   function deriveQtyFields(): { minOrderQty: number; stepIncrement: number } {
-    if (!isContinuousUnit) {
-      // Unité discontinue : toujours 1 par 1
-      return { minOrderQty: 1, stepIncrement: 1 };
-    }
-    if (canSellByPiece && approxWeightPerPiece) {
-      const w = parseFloat(approxWeightPerPiece);
-      if (w > 0) return { minOrderQty: w, stepIncrement: w };
-    }
-    // Unité continue sans vente à la pièce : palier par défaut selon l'unité
-    const defaults: Record<string, number> = { kg: 0.1, g: 50, litre: 0.25 };
-    const d = defaults[unit] ?? 0.1;
-    return { minOrderQty: d, stepIncrement: d };
+    return { minOrderQty: 1, stepIncrement: 1 };
   }
 
   const handleSubmit = async (e: React.FormEvent) => {

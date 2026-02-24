@@ -13,6 +13,7 @@ import {
   Store,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // Types
 interface SocialLinks {
@@ -95,6 +96,7 @@ export function VendorCard({
   isPreview = false,
   href,
 }: VendorCardProps) {
+  const router = useRouter();
   // Utiliser le logo de la boutique en priorité, sinon l'avatar
   const bannerImage = vendor.logoUrl || vendor.user?.avatarUrl;
   const hasProducts = vendor.products && vendor.products.length > 0;
@@ -172,6 +174,7 @@ export function VendorCard({
                   rel="noopener noreferrer"
                   className="p-1.5 rounded-full bg-linear-to-br from-purple-500 via-pink-500 to-orange-400 text-white hover:opacity-80 transition-opacity"
                   title="Instagram"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <Instagram className="h-4 w-4" />
                 </Link>
@@ -187,6 +190,7 @@ export function VendorCard({
                   rel="noopener noreferrer"
                   className="p-1.5 rounded-full bg-[#1877F2] text-white hover:opacity-80 transition-opacity"
                   title="Facebook"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <Facebook className="h-4 w-4" />
                 </Link>
@@ -202,6 +206,7 @@ export function VendorCard({
                   rel="noopener noreferrer"
                   className="p-1.5 rounded-full bg-black text-white hover:opacity-80 transition-opacity"
                   title="TikTok"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <TikTokIcon className="h-4 w-4" />
                 </Link>
@@ -226,7 +231,7 @@ export function VendorCard({
               <Link
                 href={isPreview ? "#" : `tel:${vendor.phone}`}
                 className="flex items-center gap-2 text-sm text-principale-600 hover:underline"
-                onClick={isPreview ? (e) => e.preventDefault() : undefined}
+                onClick={isPreview ? (e) => e.preventDefault() : (e) => e.stopPropagation()}
               >
                 <Phone className="h-4 w-4" />
                 {vendor.phone}
@@ -236,7 +241,7 @@ export function VendorCard({
               <Link
                 href={isPreview ? "#" : `mailto:${vendor.email}`}
                 className="flex items-center gap-2 text-sm text-principale-600 hover:underline"
-                onClick={isPreview ? (e) => e.preventDefault() : undefined}
+                onClick={isPreview ? (e) => e.preventDefault() : (e) => e.stopPropagation()}
               >
                 <Mail className="h-4 w-4" />
                 {vendor.email}
@@ -248,7 +253,7 @@ export function VendorCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm text-principale-600 hover:underline"
-                onClick={isPreview ? (e) => e.preventDefault() : undefined}
+                onClick={isPreview ? (e) => e.preventDefault() : (e) => e.stopPropagation()}
               >
                 <Globe className="h-4 w-4" />
                 {vendor.website.length > 30
@@ -321,9 +326,9 @@ export function VendorCard({
 
   if (href && !isPreview) {
     return (
-      <Link href={href} className="block">
+      <div className="block cursor-pointer" onClick={() => router.push(href)}>
         {card}
-      </Link>
+      </div>
     );
   }
 

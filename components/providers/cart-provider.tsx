@@ -33,6 +33,7 @@ interface CartData {
     address: string;
     town: string;
   } | null;
+  marketDay: string | null;
   items: CartItemData[];
 }
 
@@ -40,7 +41,7 @@ interface CartContextType {
   /** Quantité d'un produit dans le panier (0 si absent) */
   getQuantity: (productId: string) => number;
   /** Mettre à jour la quantité d'un produit (0 = supprimer) */
-  updateQuantity: (productId: string, quantity: number, marketId?: string) => Promise<boolean>;
+  updateQuantity: (productId: string, quantity: number, marketId?: string, day?: string) => Promise<boolean>;
   /** Supprimer un item par son ID de CartItem */
   removeItem: (itemId: string) => Promise<boolean>;
   /** Vider tout le panier */
@@ -110,7 +111,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 
   const updateQuantity = useCallback(
-    async (productId: string, quantity: number, marketId?: string): Promise<boolean> => {
+    async (productId: string, quantity: number, marketId?: string, day?: string): Promise<boolean> => {
       try {
         if (quantity <= 0) {
           const res = await fetch("/api/cart", {
@@ -135,7 +136,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         const res = await fetch("/api/cart", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ productId, quantity, marketId }),
+          body: JSON.stringify({ productId, quantity, marketId, day }),
         });
 
         if (res.ok) {
@@ -180,7 +181,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         const res = await fetch("/api/cart", { method: "DELETE" });
         if (res.ok) {
           setItems(new Map());
-          setCart((prev) => prev ? { ...prev, items: [] } : null);
+          setCart(null);
           return true;
         }
         return false;

@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { resolveSearchQuery } from "@/lib/ai/resolve-search-query";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -22,13 +23,22 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Récupérer les marchés favoris de l'utilisateur
+    // Récupérer les marchés favoris de l'utilisateur (avec le jour)
     const favoriteMarkets = await prisma.favoriteMarket.findMany({
       where: { userId: session.user.id },
-      select: { marketId: true },
+      select: { marketId: true, day: true },
     });
 
-    const favoriteMarketIds = favoriteMarkets.map((f) => f.marketId);
+    const favoriteMarketIds = [...new Set(favoriteMarkets.map((f) => f.marketId))];
+
+    // Map marketId -> Set<day> pour les favoris
+    const favDaysByMarket = new Map<string, Set<string>>();
+    for (const fav of favoriteMarkets) {
+      if (!favDaysByMarket.has(fav.marketId)) {
+        favDaysByMarket.set(fav.marketId, new Set());
+      }
+      favDaysByMarket.get(fav.marketId)!.add(fav.day);
+    }
 
     // Si pas de marchés favoris, retourner vide
     if (favoriteMarketIds.length === 0) {
@@ -47,6 +57,12 @@ export async function GET(request: NextRequest) {
 
     const vendorIds = [...new Set(marketVendors.map((mv) => mv.vendorId))];
 
+    // Résoudre la requête via Haiku (ex: "pink lady" → "POMME")
+    let resolvedQuery: string | null = null;
+    if (query) {
+      resolvedQuery = await resolveSearchQuery(query);
+    }
+
     // Construire les conditions de recherche
     const whereConditions: Record<string, unknown> = {
       isActive: true,
@@ -62,7 +78,11 @@ export async function GET(request: NextRequest) {
 
     // Filtre par recherche textuelle
     if (query) {
+      const genericSearchTerm = resolvedQuery ?? query;
       whereConditions.OR = [
+        // Priorité : recherche par nom générique (terme résolu par l'IA)
+        { genericName: { contains: genericSearchTerm, mode: "insensitive" } },
+        // Fallback : recherche textuelle classique sur le nom, description, commerçant
         { name: { contains: query, mode: "insensitive" } },
         { description: { contains: query, mode: "insensitive" } },
         { vendor: { stallName: { contains: query, mode: "insensitive" } } },
@@ -110,12 +130,52 @@ export async function GET(request: NextRequest) {
       vendorsMap.get(vendorId)!.products.push(product);
     }
 
-    const results = Array.from(vendorsMap.values());
+    // Récupérer les marchés favoris de chaque vendor (avec les jours de présence)
+    const vendorMarketsList = await prisma.marketVendor.findMany({
+      where: {
+        vendorId: { in: Array.from(vendorsMap.keys()) },
+        marketId: { in: favoriteMarketIds },
+      },
+      select: {
+        vendorId: true,
+        days: true,
+        market: {
+          select: { id: true, name: true, town: true },
+        },
+      },
+    });
+
+    // Construire les paires (marché, jour) : intersection entre les jours du vendor
+    // et les jours que l'utilisateur a mis en favori pour ce marché
+    const vendorMarketsMap = new Map<
+      string,
+      Array<{ id: string; name: string; town: string; day: string }>
+    >();
+    for (const vm of vendorMarketsList) {
+      if (!vendorMarketsMap.has(vm.vendorId)) {
+        vendorMarketsMap.set(vm.vendorId, []);
+      }
+      const favDays = favDaysByMarket.get(vm.market.id) ?? new Set();
+      for (const day of vm.days) {
+        if (favDays.has(day)) {
+          vendorMarketsMap.get(vm.vendorId)!.push({ ...vm.market, day });
+        }
+      }
+    }
+
+    const results = Array.from(vendorsMap.values()).map(
+      ({ vendor, products: vendorProducts }) => ({
+        vendor,
+        products: vendorProducts,
+        vendorMarkets: vendorMarketsMap.get(vendor.id) ?? [],
+      })
+    );
 
     return NextResponse.json({
       results,
       total: products.length,
       vendorCount: results.length,
+      resolvedQuery,
     });
   } catch (error) {
     console.error("Erreur recherche:", error);

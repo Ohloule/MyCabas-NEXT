@@ -20,11 +20,18 @@ export default function SearchBar({ className }: SearchBarProps) {
     const trimmedQuery = query.trim();
     if (!trimmedQuery) return;
 
+    const isPostalCode = /^\d{5}$/.test(trimmedQuery);
+
+    if (!isPostalCode) {
+      router.push(`/search?q=${encodeURIComponent(trimmedQuery)}`);
+      return;
+    }
+
     setIsLoading(true);
     let redirectUrl = `/search?q=${encodeURIComponent(trimmedQuery)}`;
 
     try {
-      // Tenter de géocoder comme une commune (code postal ou nom de ville)
+      // Géocoder le code postal via l'API adresse française
       const response = await fetch(
         `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(trimmedQuery)}&type=municipality&limit=1`,
       );
@@ -32,12 +39,9 @@ export default function SearchBar({ className }: SearchBarProps) {
 
       if (data.features?.length > 0) {
         const feature = data.features[0];
-        // Score > 0.6 = correspondance fiable avec une commune française
-        if (feature.properties.score > 0.6) {
-          const [lng, lat] = feature.geometry.coordinates;
-          const cityName = feature.properties.city || feature.properties.name;
-          redirectUrl = `/markets?lat=${lat}&lng=${lng}&radius=5&address=${encodeURIComponent(cityName)}`;
-        }
+        const [lng, lat] = feature.geometry.coordinates;
+        const cityName = feature.properties.city || feature.properties.name;
+        redirectUrl = `/markets?lat=${lat}&lng=${lng}&radius=5&address=${encodeURIComponent(cityName)}`;
       }
     } catch {
       // Erreur réseau : continuer avec la recherche produit par défaut
@@ -57,7 +61,7 @@ export default function SearchBar({ className }: SearchBarProps) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Rechercher un produit, un commerçant..."
+            placeholder="Code postal ou produit, commerçant..."
             className="w-full h-10 pl-10 pr-4 rounded-l-full border-0 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-principale-500"
           />
         </div>

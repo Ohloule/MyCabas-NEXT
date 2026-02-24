@@ -104,7 +104,7 @@ export default function ShopPage() {
   const router = useRouter();
   const { status } = useSession();
 
-  const marketId = params.id as string;
+  const marketId = decodeURIComponent(params.id as string);
   const selectedDay = searchParams.get("day")?.toUpperCase() || null;
   const vendorId = searchParams.get("vendorId") || null;
 
@@ -161,11 +161,11 @@ export default function ShopPage() {
         setMarket(data.market);
         setVendors(data.vendors);
 
-        // Associer le marché au panier dès que le marché est chargé
+        // Associer le marché + jour au panier dès que le marché est chargé
         fetch("/api/cart", {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ marketId }),
+          body: JSON.stringify({ marketId, day: selectedDay }),
         }).catch(() => {/* silencieux */});
       } catch (err) {
         setError(err instanceof Error ? err.message : "Erreur inconnue");
@@ -405,6 +405,7 @@ export default function ShopPage() {
                 products={vendor.products}
                 collapsible
                 marketId={marketId}
+                day={selectedDay ?? undefined}
               />
             ))}
           </Accordion>
@@ -416,6 +417,7 @@ export default function ShopPage() {
                 vendor={vendor}
                 products={vendor.products}
                 marketId={marketId}
+                day={selectedDay ?? undefined}
               />
             ))}
           </div>

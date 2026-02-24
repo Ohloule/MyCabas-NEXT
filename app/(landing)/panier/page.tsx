@@ -4,8 +4,11 @@ import HeadingPage from "@/components/HeadingPage";
 import Loader from "@/components/Loader";
 import { useCart } from "@/components/providers/cart-provider";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import {
+  Calendar,
   Layers,
   Loader2,
   MapPin,
@@ -207,13 +210,32 @@ export default function PanierPage() {
       <div className="align-center py-8 pb-28 lg:pb-8">
         {/* Infos marché */}
         {cart.market && (
-          <div className="flex items-center gap-2 text-sm text-gray-600 mb-6 bg-principale-50 rounded-lg px-4 py-3">
-            <MapPin className="h-4 w-4 text-principale-600 shrink-0" />
-            <span>
-              Marché de <strong>{cart.market.name}</strong> -{" "}
-              {cart.market.address}, {cart.market.town}
-            </span>
-          </div>
+          <Card className="mb-6 border-principale-200 bg-principale-50 shadow-none">
+            <CardContent className="flex items-center gap-4 px-4 py-3">
+              <div className="flex items-center justify-center bg-principale-100 rounded-full p-2 shrink-0">
+                <MapPin className="h-4 w-4 text-principale-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-gray-900 leading-tight">
+                  {cart.market.name}
+                </p>
+                <p className="text-xs text-gray-500 truncate">
+                  {cart.market.address}, {cart.market.town}
+                </p>
+              </div>
+              {cart.marketDay && (
+                <>
+                  <Separator orientation="vertical" className="h-9 shrink-0" />
+                  <div className="flex flex-col items-center gap-1 shrink-0">
+                    <Calendar className="h-4 w-4 text-principale-500" />
+                    <Badge className="bg-principale-100 text-principale-800 border-principale-300 border text-xs font-semibold shadow-none">
+                      {cart.marketDay.charAt(0) + cart.marketDay.slice(1).toLowerCase()}
+                    </Badge>
+                  </div>
+                </>
+              )}
+            </CardContent>
+          </Card>
         )}
 
         <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
@@ -479,7 +501,7 @@ export default function PanierPage() {
 
                 <Button
                   onClick={() => router.push("/checkout")}
-                  className="w-full bg-secondaire-500 hover:bg-secondaire-600 mt-4"
+                  className="w-full bg-secondaire-500 hover:bg-secondaire-600 mt-4 hover:text-white"
                 >
                   Passer la commande
                 </Button>

@@ -37,9 +37,17 @@ interface Vendor {
   };
 }
 
+interface VendorMarket {
+  id: string;
+  name: string;
+  town: string;
+  day: string;
+}
+
 interface SearchResult {
   vendor: Vendor;
   products: Product[];
+  vendorMarkets: VendorMarket[];
 }
 
 interface SearchResultsProps {
@@ -55,6 +63,7 @@ export default function SearchResults({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [totalProducts, setTotalProducts] = useState(0);
+  const [resolvedQuery, setResolvedQuery] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -81,6 +90,7 @@ export default function SearchResults({
         const data = await response.json();
         setResults(data.results);
         setTotalProducts(data.total);
+        setResolvedQuery(data.resolvedQuery ?? null);
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Une erreur est survenue",
@@ -155,12 +165,23 @@ export default function SearchResults({
         {totalProducts > 1 ? "s" : ""} trouvé{totalProducts > 1 ? "s" : ""} chez{" "}
         <span className="font-medium">{results.length}</span> commerçant
         {results.length > 1 ? "s" : ""}
+        {resolvedQuery && resolvedQuery !== query.toUpperCase() && (
+          <span className="block mt-1 text-xs text-gray-400">
+            Recherche interprétée comme :{" "}
+            <span className="font-medium text-gray-500">{resolvedQuery}</span>
+          </span>
+        )}
       </div>
 
       {/* Liste des vendors avec leurs produits */}
       <div className="space-y-6">
-        {results.map(({ vendor, products }) => (
-          <VendorCard key={vendor.id} vendor={vendor} products={products} />
+        {results.map(({ vendor, products, vendorMarkets }) => (
+          <VendorCard
+            key={vendor.id}
+            vendor={vendor}
+            products={products}
+            vendorMarkets={vendorMarkets}
+          />
         ))}
       </div>
     </div>
