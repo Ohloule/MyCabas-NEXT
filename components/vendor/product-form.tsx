@@ -222,7 +222,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
       toast.error("Le prix à la pièce est requis");
       return;
     }
-    if (!isContinuousUnit && !approxWeightPerPiece) {
+    if (!isContinuousUnit && ["barquette", "lot"].includes(unit) && !approxWeightPerPiece) {
       toast.error("Le poids approximatif de l'unité est requis");
       return;
     }
@@ -615,7 +615,8 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                     </p>
                     <div>
                       <Label htmlFor="approxWeight">
-                        Poids / contenu approximatif par {unit} *
+                        Poids / contenu approximatif par {unit}{" "}
+                        {["barquette", "lot"].includes(unit) ? "*" : "(optionnel)"}
                       </Label>
                       <div className="mt-1 flex items-center gap-2">
                         <div className="relative w-32">

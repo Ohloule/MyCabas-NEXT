@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { ProductsTable } from "@/components/vendor/products-table";
 import { ProductsTableEditable } from "@/components/vendor/products-table-editable";
+import { ImportProductsDialog } from "@/components/vendor/import-products-dialog";
 import {
   Carrot,
   FileSpreadsheet,
@@ -205,12 +206,12 @@ export default function EtalPage() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <a href="/filesDownload/myCabas_model_import.xlsx" download>
+          <ImportProductsDialog onImportSuccess={fetchProducts}>
             <Button variant="outline">
               <FileSpreadsheet className="w-4 h-4" />
-              <span className="hidden md:inline">Template</span>
+              <span className="hidden md:inline">Importer</span>
             </Button>
-          </a>
+          </ImportProductsDialog>
           <Button onClick={() => router.push("/vendor/dashboard/etal/nouveau")}>
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">Ajouter un produit</span>

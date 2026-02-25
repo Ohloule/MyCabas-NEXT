@@ -127,12 +127,12 @@ export default function CommandesPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 bg-gray-100 rounded-lg p-1 w-fit">
+      <div className="flex gap-1 mb-6 bg-gray-100 rounded-lg p-1 w-full sm:w-fit overflow-x-auto">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+            className={`flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer whitespace-nowrap ${
               activeTab === tab.key
                 ? "bg-principale-700 text-white shadow-sm"
                 : "text-gray-600 hover:text-gray-900"
@@ -156,7 +156,7 @@ export default function CommandesPage() {
       ) : (
         <div className="space-y-4">
           {orders.map((order) => (
-            <Card key={order.id}>
+            <Card key={order.id} className="w-full sm:w-fit sm:max-w-2xl">
               <CardContent className="p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                   <div>
@@ -188,7 +188,7 @@ export default function CommandesPage() {
                       </span>
                     </div>
                   </div>
-                  <div className="text-right">
+                  <div className="text-left sm:text-right">
                     <p className="font-bold text-lg text-principale-600">
                       {getVendorSubtotal(order).toFixed(2)} €
                     </p>
@@ -204,16 +204,16 @@ export default function CommandesPage() {
                   {order.items.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between text-sm"
+                      className="flex items-baseline justify-between gap-2 text-sm"
                     >
-                      <span className="text-gray-700">
+                      <span className="text-gray-700 min-w-0">
                         {item.productName} —{" "}
                         <span className="text-gray-500">
                           {item.adjustedQuantity ?? item.quantity}{" "}
                           {item.productUnit}
                         </span>
                       </span>
-                      <span className="font-medium">
+                      <span className="font-medium shrink-0">
                         {(item.adjustedTotalEuros ?? item.totalEuros).toFixed(
                           2,
                         )}{" "}
@@ -230,7 +230,7 @@ export default function CommandesPage() {
                     <Button
                       onClick={() => handleConfirm(order.id)}
                       disabled={actionLoading === order.id}
-                      className="bg-green-600 hover:bg-green-700 gap-2 flex-1"
+                      className="bg-principale-500 hover:bg-principale-700 hover:text-white gap-2 "
                     >
                       {actionLoading === order.id ? (
                         <Loader taille={45} />
@@ -241,7 +241,6 @@ export default function CommandesPage() {
                     </Button>
                     <Link
                       href={`/vendor/dashboard/commandes/${order.id}`}
-                      className="flex-1"
                     >
                       <Button variant="outline" className="w-full gap-2">
                         Ajuster les quantités

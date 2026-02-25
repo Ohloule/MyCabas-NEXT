@@ -17,6 +17,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Check,
+  Loader2,
   Store,
   User,
 } from "lucide-react";
@@ -279,7 +280,11 @@ function RegisterForm() {
                         onClick={searchSiret}
                         disabled={siretLoading || loading}
                       >
-                        {siretLoading ? <Loader taille={45} /> : "Vérifier"}
+                        {siretLoading ? (
+                          <Loader2 className="animate-spin h-3 w-3" />
+                        ) : (
+                          "Vérifier"
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -439,7 +444,7 @@ function RegisterForm() {
                 <Button type="submit" className="flex-1" disabled={loading}>
                   {loading ? (
                     <>
-                      <Loader taille={45} />
+                      <Loader2 className="animate-spin h-3 w-3" />
                       Inscription...
                     </>
                   ) : (

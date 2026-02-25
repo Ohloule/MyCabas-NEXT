@@ -1,6 +1,5 @@
 "use client";
 
-import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -62,7 +61,9 @@ export default function LoginPage() {
               MyCabas
             </span>
           </Link>
-          <CardTitle className="text-4xl font-special mt-1 mb-8">Connexion</CardTitle>
+          <CardTitle className="text-4xl font-special mt-1 mb-8">
+            Connexion
+          </CardTitle>
           <CardDescription>
             Connectez-vous à votre compte{" "}
             <span className="font-mycabas">MyCabas</span>
@@ -109,7 +110,7 @@ export default function LoginPage() {
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? (
                 <>
-                  <Loader taille={45} />
+                  <Loader2 className="animate-spin h-3 w-3" />
                   Connexion...
                 </>
               ) : (

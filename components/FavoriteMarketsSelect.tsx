@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 type FavoriteEntry = {
   id: string;
   day: string;
-  market: { id: string; name: string; town: string; zip: string };
+  market: { id: string; name: string; address: string; town: string; zip: string; lat: number; lng: number };
 };
 
 const DAY_LABELS: Record<string, string> = {
@@ -39,17 +39,20 @@ export default function FavoriteMarketsSelect() {
               const nameDiff = a.market.name.localeCompare(b.market.name, "fr");
               if (nameDiff !== 0) return nameDiff;
               return a.day.localeCompare(b.day);
-            })
+            }),
           );
         setLoaded(true);
       })
-      .catch(() => { setLoaded(true); });
+      .catch(() => {
+        setLoaded(true);
+      });
   };
 
   useEffect(() => {
     fetchFavorites();
     window.addEventListener("favoritemarkets:changed", fetchFavorites);
-    return () => window.removeEventListener("favoritemarkets:changed", fetchFavorites);
+    return () =>
+      window.removeEventListener("favoritemarkets:changed", fetchFavorites);
   }, []);
 
   useEffect(() => {
@@ -63,7 +66,7 @@ export default function FavoriteMarketsSelect() {
   }, []);
 
   if (!loaded) return null;
-
+  
   if (favorites.length === 0)
     return (
       <Link
@@ -89,23 +92,38 @@ export default function FavoriteMarketsSelect() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-principale-50 rounded-lg shadow-lg py-2 z-50 border border-gray-100">
+        <div className="absolute right-0 mt-4 w-56 lg:w-max bg-principale-50 rounded-lg shadow-lg py-2 z-50 border border-gray-100">
           {favorites.map((f) => (
-            <button
-              key={f.id}
-              onClick={() => {
-                setIsOpen(false);
-                router.push(`/markets/${f.market.id}/shop?day=${f.day.toLowerCase()}`);
-              }}
-              className="flex flex-col w-full text-left px-4 py-2 hover:bg-principale-100 transition-colors"
-            >
-              <span className="text-sm font-medium text-gray-800">
-                {f.market.name}
-              </span>
-              <span className="text-xs text-gray-500">
-                {f.market.town} · {DAY_LABELS[f.day] ?? f.day}
-              </span>
-            </button>
+            <div key={f.id} className="flex items-center gap-2 px-4 py-2 hover:bg-principale-100 transition-colors">
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                  `${f.market.name}, ${f.market.address}, ${f.market.zip} ${f.market.town}`,
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="shrink-0 text-principale-500 hover:text-principale-700 transition-colors"
+                title="Voir sur Google Maps"
+              >
+                <MapPin className="h-4 w-4" />
+              </a>
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  router.push(
+                    `/markets/${f.market.id}/shop?day=${f.day.toLowerCase()}`,
+                  );
+                }}
+                className="flex flex-col flex-1 text-left cursor-pointer"
+              >
+                <span className="text-sm font-medium text-gray-800">
+                  {f.market.name}
+                </span>
+                <span className="text-xs text-gray-500">
+                  {f.market.town} · {DAY_LABELS[f.day] ?? f.day}
+                </span>
+              </button>
+            </div>
           ))}
         </div>
       )}

@@ -17,6 +17,7 @@ import {
   Calendar,
   Clock,
   Heart,
+  Loader2,
   MapPin,
   Navigation,
   Search,
@@ -202,7 +203,9 @@ export default function MarketsPage() {
         searchParamsApi.set("search", params.search);
       }
 
-      const response = await fetch(`/api/markets?${searchParamsApi.toString()}`);
+      const response = await fetch(
+        `/api/markets?${searchParamsApi.toString()}`,
+      );
       const data = await response.json();
       setAllMarkets(data.markets || []);
     } catch (error) {
@@ -580,7 +583,7 @@ export default function MarketsPage() {
                   />
                   {suggestionsLoading && (
                     <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                      <Loader taille={45} />
+                      <Loader2 className="animate-spin h-3 w-3" />
                     </div>
                   )}
 
