@@ -490,11 +490,11 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                       />
                       <div>
                         <span className="text-sm font-medium">
-                          Ce produit se vend à la pièce
+                          Ce produit peut aussi se commander à la pièce
                         </span>
                         <p className="text-xs text-neu-500">
-                          Ex : des pommes, des oranges… vendues au kg mais
-                          comptées à la pièce
+                          Le client peut commander par quantité (ex : 4 oranges,
+                          2 entrecôtes) au lieu de saisir un poids en kg
                         </p>
                       </div>
                     </label>
