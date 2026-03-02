@@ -5,11 +5,11 @@ export default function LivreDeCuisinePage() {
     <>
       <HeadingPage title="Mes idées recettes" />
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-        <p className="text-neutre-600 max-w-md">
+        <p className="text-n-600 max-w-md">
           Trouvez des recettes adaptées aux produits disponibles sur vos marchés
           préférés.
         </p>
-        <p className="text-sm text-neutre-400 mt-2">Fonctionnalité à venir.</p>
+        <p className="text-sm text-n-400 mt-2">Fonctionnalité à venir.</p>
       </div>
     </>
   );

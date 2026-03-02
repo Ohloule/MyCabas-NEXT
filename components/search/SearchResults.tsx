@@ -108,7 +108,7 @@ export default function SearchResults({
     return (
       <div className="flex flex-col items-center justify-center py-16">
         <Loader taille={45} />
-        <p className="mt-4 text-neutre-600">Recherche en cours...</p>
+        <p className="mt-4 text-n-600">Recherche en cours...</p>
       </div>
     );
   }
@@ -117,9 +117,9 @@ export default function SearchResults({
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
-        <div className="text-secondaire-500 text-center">
+        <div className="text-s-500 text-center">
           <p className="text-lg font-medium">Oups !</p>
-          <p className="text-neutre-600 mt-2">{error}</p>
+          <p className="text-n-600 mt-2">{error}</p>
         </div>
       </div>
     );
@@ -129,8 +129,8 @@ export default function SearchResults({
   if (!query && !categorySlug) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
-        <SearchX className="w-16 h-16 text-neutre-300" />
-        <p className="mt-4 text-neutre-600 text-center">
+        <SearchX className="w-16 h-16 text-n-300" />
+        <p className="mt-4 text-n-600 text-center">
           Utilisez la barre de recherche ou sélectionnez une catégorie
           <br />
           pour trouver des produits.
@@ -143,11 +143,11 @@ export default function SearchResults({
   if (results.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
-        <SearchX className="w-16 h-16 text-neutre-300" />
-        <p className="mt-4 text-lg font-medium text-neutre-700">
+        <SearchX className="w-16 h-16 text-n-300" />
+        <p className="mt-4 text-lg font-medium text-n-700">
           Aucun résultat trouvé
         </p>
-        <p className="text-neutre-500 text-center mt-2">
+        <p className="text-n-500 text-center mt-2">
           Essayez avec d&apos;autres termes de recherche
           <br />
           ou explorez nos catégories.
@@ -160,15 +160,15 @@ export default function SearchResults({
   return (
     <div>
       {/* Compteur de résultats */}
-      <div className="mb-6 text-sm text-neutre-600">
+      <div className="mb-6 text-sm text-n-600">
         <span className="font-medium">{totalProducts}</span> produit
         {totalProducts > 1 ? "s" : ""} trouvé{totalProducts > 1 ? "s" : ""} chez{" "}
         <span className="font-medium">{results.length}</span> commerçant
         {results.length > 1 ? "s" : ""}
         {resolvedQuery && resolvedQuery !== query.toUpperCase() && (
-          <span className="block mt-1 text-xs text-neutre-400">
+          <span className="block mt-1 text-xs text-n-400">
             Recherche interprétée comme :{" "}
-            <span className="font-medium text-neutre-500">{resolvedQuery}</span>
+            <span className="font-medium text-n-500">{resolvedQuery}</span>
           </span>
         )}
       </div>

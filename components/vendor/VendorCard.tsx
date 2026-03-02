@@ -122,7 +122,7 @@ export function VendorCard({
       className={`overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl${href && !isPreview ? " cursor-pointer" : ""}`}
     >
       {/* Bannière */}
-      <div className="relative h-32 bg-linear-to-br from-principale-100 to-principale-200">
+      <div className="relative h-32 bg-linear-to-br from-p-100 to-p-200">
         {bannerImage ? (
           <img
             src={bannerImage}
@@ -131,7 +131,7 @@ export function VendorCard({
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <Store className="h-16 w-16 text-principale-300" />
+            <Store className="h-16 w-16 text-p-300" />
           </div>
         )}
 
@@ -144,7 +144,7 @@ export function VendorCard({
               return (
                 <Badge
                   key={label}
-                  className="text-xs bg-white/90 text-principale-700 border-0 shadow-sm backdrop-blur-sm"
+                  className="text-xs bg-white/90 text-p-700 border-0 shadow-sm backdrop-blur-sm"
                 >
                   {labelInfo.icon} {labelInfo.label}
                 </Badge>
@@ -172,7 +172,7 @@ export function VendorCard({
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-1.5 rounded-full bg-linear-to-br from-tertiaire-500 via-tertiaire-500 to-secondaire-400 text-white hover:opacity-80 transition-opacity"
+                  className="p-1.5 rounded-full bg-linear-to-br from-t-500 via-t-500 to-s-400 text-white hover:opacity-80 transition-opacity"
                   title="Instagram"
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -230,7 +230,7 @@ export function VendorCard({
             {vendor.phone && (
               <Link
                 href={isPreview ? "#" : `tel:${vendor.phone}`}
-                className="flex items-center gap-2 text-sm text-principale-600 hover:underline"
+                className="flex items-center gap-2 text-sm text-p-600 hover:underline"
                 onClick={
                   isPreview
                     ? (e) => e.preventDefault()
@@ -244,7 +244,7 @@ export function VendorCard({
             {vendor.email && (
               <Link
                 href={isPreview ? "#" : `mailto:${vendor.email}`}
-                className="flex items-center gap-2 text-sm text-principale-600 hover:underline"
+                className="flex items-center gap-2 text-sm text-p-600 hover:underline"
                 onClick={
                   isPreview
                     ? (e) => e.preventDefault()
@@ -260,7 +260,7 @@ export function VendorCard({
                 href={isPreview ? "#" : vendor.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-principale-600 hover:underline"
+                className="flex items-center gap-2 text-sm text-p-600 hover:underline"
                 onClick={
                   isPreview
                     ? (e) => e.preventDefault()
@@ -279,7 +279,7 @@ export function VendorCard({
         {/* Modes de paiement */}
         {vendor.paymentMethods && vendor.paymentMethods.length > 0 && (
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm font-medium text-neutre-700">
+            <div className="flex items-center gap-2 text-sm font-medium text-n-700">
               <CreditCard className="h-4 w-4" />
               Modes de paiement acceptés
             </div>

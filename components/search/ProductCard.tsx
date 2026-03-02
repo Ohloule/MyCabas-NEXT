@@ -51,21 +51,14 @@ interface ProductCardProps {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  "Fruits & Légumes":
-    "bg-principale-100 text-principale-800 hover:bg-principale-100",
-  "Viandes & Charcuterie":
-    "bg-secondaire-100 text-secondaire-800 hover:bg-secondaire-100",
-  "Poissons & Fruits de mer":
-    "bg-tertiaire-100 text-tertiaire-800 hover:bg-tertiaire-100",
-  "Fromages & Produits laitiers":
-    "bg-secondaire-100 text-secondaire-800 hover:bg-secondaire-100",
-  "Boulangerie & Pâtisserie":
-    "bg-secondaire-100 text-secondaire-800 hover:bg-secondaire-100",
-  "Épicerie & Condiments":
-    "bg-tertiaire-100 text-tertiaire-800 hover:bg-tertiaire-100",
-  Boissons: "bg-tertiaire-100 text-tertiaire-800 hover:bg-tertiaire-100",
-  "Bio & Nature":
-    "bg-principale-100 text-principale-800 hover:bg-principale-100",
+  "Fruits & Légumes": "bg-p-100 text-p-800 hover:bg-p-100",
+  "Viandes & Charcuterie": "bg-s-100 text-s-800 hover:bg-s-100",
+  "Poissons & Fruits de mer": "bg-t-100 text-t-800 hover:bg-t-100",
+  "Fromages & Produits laitiers": "bg-s-100 text-s-800 hover:bg-s-100",
+  "Boulangerie & Pâtisserie": "bg-s-100 text-s-800 hover:bg-s-100",
+  "Épicerie & Condiments": "bg-t-100 text-t-800 hover:bg-t-100",
+  Boissons: "bg-t-100 text-t-800 hover:bg-t-100",
+  "Bio & Nature": "bg-p-100 text-p-800 hover:bg-p-100",
 };
 
 const CONTINUOUS_UNITS = ["kg", "g", "litre"];
@@ -293,7 +286,7 @@ export default function ProductCard({
               {cart?.market?.id === marketId ? (
                 <>
                   Votre panier contient des produits pour le marché{" "}
-                  <span className="font-medium text-neutre-800">
+                  <span className="font-medium text-n-800">
                     {cart?.market?.name}
                   </span>{" "}
                   un autre jour. Changer de jour supprimera tous les articles
@@ -302,7 +295,7 @@ export default function ProductCard({
               ) : (
                 <>
                   Votre panier contient des produits du marché{" "}
-                  <span className="font-medium text-neutre-800">
+                  <span className="font-medium text-n-800">
                     {cart?.market?.name}
                   </span>
                   . Ajouter ce produit d&apos;un autre marché supprimera tous
@@ -327,7 +320,7 @@ export default function ProductCard({
       </Dialog>
       <Card className="overflow-hidden hover:shadow-md transition-shadow flex flex-col min-h-82.5 min-w-50 ">
         {/* Image du produit */}
-        <div className="relative h-32 bg-neutre-100">
+        <div className="relative h-32 bg-n-100">
           {product.imageUrl ? (
             <Image
               src={product.imageUrl}
@@ -336,7 +329,7 @@ export default function ProductCard({
               className="object-cover"
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-4xl text-neutre-300">
+            <div className="flex items-center justify-center h-full text-4xl text-n-300">
               {product.category.icon || "🛒"}
             </div>
           )}
@@ -344,13 +337,13 @@ export default function ProductCard({
           {/* Badges Bio / Local */}
           <div className="absolute top-2 left-2 flex gap-1">
             {product.isOrganic && (
-              <Badge className="bg-principale-500 hover:bg-principale-600 text-white text-xs">
+              <Badge className="bg-p-500 hover:bg-p-600 text-white text-xs">
                 <Leaf className="w-3 h-3 mr-1" />
                 Bio
               </Badge>
             )}
             {product.isLocal && (
-              <Badge className="bg-secondaire-500 hover:bg-secondaire-600 text-white text-xs">
+              <Badge className="bg-s-500 hover:bg-s-600 text-white text-xs">
                 <MapPin className="w-3 h-3 mr-1" />
                 Local
               </Badge>
@@ -362,7 +355,7 @@ export default function ProductCard({
           {/* Nom + toggle weight/piece sur la même ligne */}
           <div className="flex items-center gap-1.5 min-w-0">
             <h4
-              className="font-medium text-neutre-900 truncate flex-1"
+              className="font-medium text-n-900 truncate flex-1"
               title={product.name}
             >
               {product.name}
@@ -375,8 +368,8 @@ export default function ProductCard({
                   title={`Commander en ${product.unit}`}
                   className={`flex items-center justify-center w-6 h-6 rounded-full border transition-colors cursor-pointer ${
                     displayMode === "weight"
-                      ? "bg-principale-600 border-principale-600 text-white"
-                      : "bg-white border-neutre-200 text-neutre-400 hover:border-principale-300"
+                      ? "bg-p-600 border-p-600 text-white"
+                      : "bg-white border-n-200 text-n-400 hover:border-p-300"
                   }`}
                 >
                   <Weight className="w-3 h-3" />
@@ -387,8 +380,8 @@ export default function ProductCard({
                   title="Commander à la pièce"
                   className={`flex items-center justify-center w-6 h-6 rounded-full border transition-colors cursor-pointer ${
                     displayMode === "piece"
-                      ? "bg-principale-600 border-principale-600 text-white"
-                      : "bg-white border-neutre-200 text-neutre-400 hover:border-principale-300"
+                      ? "bg-p-600 border-p-600 text-white"
+                      : "bg-white border-n-200 text-n-400 hover:border-p-300"
                   }`}
                 >
                   <Carrot className="w-3 h-3" />
@@ -399,29 +392,27 @@ export default function ProductCard({
 
           {/* Catégorie */}
           <Badge
-            className={`mt-1 w-fit text-xs font-normal ${CATEGORY_COLORS[product.category.name] ?? "bg-neutre-100 text-neutre-700 hover:bg-neutre-100"}`}
+            className={`mt-1 w-fit text-xs font-normal ${CATEGORY_COLORS[product.category.name] ?? "bg-n-100 text-n-700 hover:bg-n-100"}`}
           >
             {product.category.name}
           </Badge>
 
           {/* Description */}
           {product.description && (
-            <p className="text-xs text-neutre-500 mt-1.5 line-clamp-2">
+            <p className="text-xs text-n-500 mt-1.5 line-clamp-2">
               {product.description}
             </p>
           )}
           {/* Prix */}
           <div className="mt-auto pt-2 flex justify-between gap-1 flex-1 items-start">
             <div className="flex items-baseline gap-1">
-              <span className="text-lg font-bold text-principale-600">
+              <span className="text-lg font-bold text-p-600">
                 {displayedPrice.toFixed(2)} €
               </span>
-              <span className="text-xs text-neutre-500">
-                / {displayedPriceUnit}
-              </span>
+              <span className="text-xs text-n-500">/ {displayedPriceUnit}</span>
             </div>
             {quantity > 0 && (
-              <Badge className="text-sm font-bold bg-principale-300 text-principale-900 px-2.5 py-1">
+              <Badge className="text-sm font-bold bg-p-300 text-p-900 px-2.5 py-1">
                 {(canToggle &&
                 displayMode === "piece" &&
                 product.pricePerPiece &&
@@ -436,7 +427,7 @@ export default function ProductCard({
           </div>
           {/* Poids/conditionnement + récapitulatif commande */}
           {getOrderLabel() && (
-            <p className="text-xs text-neutre-400 mt-1">{getOrderLabel()}</p>
+            <p className="text-xs text-n-400 mt-1">{getOrderLabel()}</p>
           )}
 
           {/* Bouton Panier */}
@@ -445,7 +436,7 @@ export default function ProductCard({
               onClick={() => handleUpdate(displayedToUnit(displayedMin))}
               disabled={loading || cartLoading}
               size="sm"
-              className="w-16 h-9 self-end mt-3 gap-1.5 text-xs bg-principale-600 hover:bg-principale-500 transition-colors"
+              className="w-16 h-9 self-end mt-3 gap-1.5 text-xs bg-p-600 hover:bg-p-500 transition-colors"
             >
               {loading || cartLoading ? (
                 <Loader2 className="animate-spin" size={14} />
@@ -459,7 +450,7 @@ export default function ProductCard({
               <button
                 onClick={() => handleUpdate(0)}
                 disabled={loading}
-                className="flex items-center justify-center w-8 h-8 rounded-full bg-secondaire-50 hover:bg-secondaire-100 text-secondaire-400 hover:text-secondaire-600 transition-colors disabled:opacity-50 cursor-pointer"
+                className="flex items-center justify-center w-8 h-8 rounded-full bg-s-50 hover:bg-s-100 text-s-400 hover:text-s-600 transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {loading ? (
                   <Loader2 className="animate-spin" size={14} />
@@ -469,7 +460,7 @@ export default function ProductCard({
               </button>
 
               {/* Sélecteur quantité */}
-              <div className="flex items-center rounded-full overflow-hidden border border-neutre-200">
+              <div className="flex items-center rounded-full overflow-hidden border border-n-200">
                 {/* Bouton moins */}
                 <button
                   onClick={() => {
@@ -483,13 +474,13 @@ export default function ProductCard({
                     );
                   }}
                   disabled={loading || displayedQty <= displayedMin}
-                  className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-neutre-900 text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  className="flex items-center justify-center w-9 h-9 bg-p-600 hover:bg-p-500 active:bg-n-900 text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
 
                 {/* Input quantité + unité */}
-                <div className="flex items-center justify-center h-9 bg-white border-x border-neutre-200 px-2 gap-1 min-w-0">
+                <div className="flex items-center justify-center h-9 bg-white border-x border-n-200 px-2 gap-1 min-w-0">
                   <input
                     type="text"
                     inputMode={canToggle || useSubUnit ? "numeric" : "decimal"}
@@ -526,9 +517,9 @@ export default function ProductCard({
                         );
                       }
                     }}
-                    className="w-10 bg-transparent text-sm font-bold text-neutre-800 text-center outline-none"
+                    className="w-10 bg-transparent text-sm font-bold text-n-800 text-center outline-none"
                   />
-                  <span className="text-xs text-neutre-400 shrink-0 font-normal">
+                  <span className="text-xs text-n-400 shrink-0 font-normal">
                     {inputUnit}
                   </span>
                 </div>
@@ -547,13 +538,10 @@ export default function ProductCard({
                     )
                   }
                   disabled={loading}
-                  className="flex items-center justify-center w-9 h-9 bg-principale-600 hover:bg-principale-500 active:bg-principale-700 text-white transition-colors disabled:opacity-50 cursor-pointer"
+                  className="flex items-center justify-center w-9 h-9 bg-p-600 hover:bg-p-500 active:bg-p-700 text-white transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   {loading ? (
-                    <Loader2
-                      className="animate-spin text-principale-100"
-                      size={20}
-                    />
+                    <Loader2 className="animate-spin text-p-100" size={20} />
                   ) : (
                     <Plus className="w-4 h-4" />
                   )}

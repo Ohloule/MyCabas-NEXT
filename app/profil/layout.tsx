@@ -21,18 +21,18 @@ export default async function ProfilLayout({
     <>
       <Header />
       <Navbar />
-      <main className="min-h-screen bg-neutre-50">
+      <main className="min-h-screen bg-n-50">
         <div className="max-w-7xl mx-auto px-8 py-8">
           {/* Header */}
           <div className="flex items-center gap-3 mb-8">
-            <div className="p-3 bg-principale-100 rounded-lg">
-              <User className="w-6 h-6 text-principale-600" />
+            <div className="p-3 bg-p-100 rounded-lg">
+              <User className="w-6 h-6 text-p-600" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-special text-principale-800">
+              <h1 className="text-2xl sm:text-3xl font-special text-p-800">
                 Mon profil
               </h1>
-              <p className="text-neutre-600">
+              <p className="text-n-600">
                 Gérez vos informations personnelles et vos préférences
               </p>
             </div>

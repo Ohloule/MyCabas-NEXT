@@ -19,13 +19,13 @@ export function VendorToaster() {
         },
         success: {
           style: {
-            background: "var(--principale-50)",
-            color: "var(--principale-900)",
-            border: "1px solid var(--principale-200)",
+            background: "var(--p-50)",
+            color: "var(--p-900)",
+            border: "1px solid var(--p-200)",
           },
           iconTheme: {
-            primary: "var(--principale-600)",
-            secondary: "var(--principale-50)",
+            primary: "var(--p-600)",
+            secondary: "var(--p-50)",
           },
         },
         error: {

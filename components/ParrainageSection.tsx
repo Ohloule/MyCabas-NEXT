@@ -4,8 +4,8 @@ export default function ParrainageSection() {
   return (
     <section className="py-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch md:px-6  align-center">
       {/* Bloc Illustration + titres */}
-      <div className="bg-secondaire-100 rounded-4xl py-4 px-6 shadow-2xl flex flex-col justify-between">
-        <h1 className="font-special text-center text-4xl lg:text-6xl text-secondaire-700 py-6">
+      <div className="bg-s-100 rounded-4xl py-4 px-6 shadow-2xl flex flex-col justify-between">
+        <h1 className="font-special text-center text-4xl lg:text-6xl text-s-700 py-6">
           Parrainage
         </h1>
 
@@ -17,15 +17,15 @@ export default function ParrainageSection() {
           className="rounded-4xl max-h-100 w-full object-contain object-center"
         />
 
-        <h1 className="font-special text-center text-4xl lg:text-6xl text-secondaire-700 py-6">
+        <h1 className="font-special text-center text-4xl lg:text-6xl text-s-700 py-6">
           Pour tous
         </h1>
       </div>
 
       {/* Bloc Parrainages détaillés */}
-      <div className="bg-secondaire-100 py-6 px-2 md:px-6 rounded-4xl shadow-2xl flex flex-col md:flex-row lg:flex-col justify-center selection:bg-secondaire-300">
+      <div className="bg-s-100 py-6 px-2 md:px-6 rounded-4xl shadow-2xl flex flex-col md:flex-row lg:flex-col justify-center selection:bg-s-300">
         <div className="mb-6 mx-2 md:mx-6">
-          <h1 className="font-special text-center text-4xl lg:text-6xl text-secondaire-700 py-6">
+          <h1 className="font-special text-center text-4xl lg:text-6xl text-s-700 py-6">
             Parrainer un commerçant
           </h1>
           <p className="text-justify">
@@ -42,7 +42,7 @@ export default function ParrainageSection() {
         </div>
 
         <div className="mx-2 md:mx-6">
-          <h1 className="font-special text-center text-4xl lg:text-6xl text-secondaire-700 py-6">
+          <h1 className="font-special text-center text-4xl lg:text-6xl text-s-700 py-6">
             Parrainer un ami
           </h1>
           <p className="text-justify">

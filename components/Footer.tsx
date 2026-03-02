@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="food-motif bg-principale-700 text-blanc px-6 py-12">
+    <footer className="food-motif bg-p-700 text-blanc px-6 py-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Bloc logo + pitch */}
         <div className="col-span-1">
@@ -106,13 +106,13 @@ export default function Footer() {
       </div>
 
       {/* Bas de page */}
-      <div className="mt-10 border-t border-principale-300 pt-6 text-center text-sm">
+      <div className="mt-10 border-t border-p-300 pt-6 text-center text-sm">
         © {new Date().getFullYear()}{" "}
         <span className="font-mycabas  text-xl">MyCabas</span> – Tous droits
         réservés •
         <Link
           href="/confidentialite"
-          className="ml-1 underline hover:text-principale-100"
+          className="ml-1 underline hover:text-p-100"
         >
           Données personnelles & RGPD
         </Link>

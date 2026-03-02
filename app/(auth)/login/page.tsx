@@ -57,9 +57,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link href="/" className="mx-auto mb-4 flex items-center gap-2">
-            <span className="text-7xl font-mycabas text-principale-700 ">
-              MyCabas
-            </span>
+            <span className="text-7xl font-mycabas text-p-700 ">MyCabas</span>
           </Link>
           <CardTitle className="text-4xl font-special mt-1 mb-8">
             Connexion

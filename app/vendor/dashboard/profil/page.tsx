@@ -198,14 +198,14 @@ export default function ProfilPage() {
     <div className="max-w-3xl">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-principale-100 rounded-lg">
-          <User className="w-6 h-6 text-principale-600" />
+        <div className="p-3 bg-p-100 rounded-lg">
+          <User className="w-6 h-6 text-p-600" />
         </div>
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-principale-800">
+          <h1 className="text-2xl sm:text-3xl font-bold text-p-800">
             Mon profil
           </h1>
-          <p className="text-neutre-600">
+          <p className="text-n-600">
             Informations légales et coordonnées bancaires
           </p>
         </div>
@@ -213,7 +213,7 @@ export default function ProfilPage() {
 
       <div className="space-y-6">
         {/* Informations légales (lecture seule) */}
-        <Card className="bg-neutre-50">
+        <Card className="bg-n-50">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">
               <Building2 className="h-5 w-5" />
@@ -227,19 +227,15 @@ export default function ProfilPage() {
           <CardContent>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <Label className="text-neutre-500 text-sm">
-                  Raison sociale
-                </Label>
+                <Label className="text-n-500 text-sm">Raison sociale</Label>
                 <p className="font-medium">{profile?.companyName}</p>
               </div>
               <div>
-                <Label className="text-neutre-500 text-sm">SIRET</Label>
+                <Label className="text-n-500 text-sm">SIRET</Label>
                 <p className="font-medium font-mono">{profile?.siret}</p>
               </div>
               <div className="sm:col-span-2">
-                <Label className="text-neutre-500 text-sm">
-                  Adresse du siège
-                </Label>
+                <Label className="text-n-500 text-sm">Adresse du siège</Label>
                 <p className="font-medium">
                   {(() => {
                     const street = profile?.street || "";
@@ -281,7 +277,7 @@ export default function ProfilPage() {
               Coordonnées bancaires (RIB)
             </CardTitle>
             <CardDescription className="flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-principale-600" />
+              <ShieldCheck className="h-4 w-4 text-p-600" />
               <span>Vos données sont chiffrées et sécurisées</span>
             </CardDescription>
           </CardHeader>
@@ -291,15 +287,13 @@ export default function ProfilPage() {
                 {bankInfo?.hasInfo ? (
                   <div className="space-y-4">
                     {/* Affichage des infos masquées */}
-                    <div className="bg-neutre-50 rounded-lg p-4 space-y-3">
+                    <div className="bg-n-50 rounded-lg p-4 space-y-3">
                       <div className="flex items-center justify-between">
                         <div>
-                          <Label className="text-neutre-500 text-sm">
-                            IBAN
-                          </Label>
+                          <Label className="text-n-500 text-sm">IBAN</Label>
                           <p className="font-mono font-medium flex items-center gap-2">
                             {showIban ? (
-                              <span className="text-neutre-400">
+                              <span className="text-n-400">
                                 Données chiffrées
                               </span>
                             ) : (
@@ -308,7 +302,7 @@ export default function ProfilPage() {
                             <button
                               type="button"
                               onClick={() => setShowIban(!showIban)}
-                              className="text-neutre-400 hover:text-neutre-600"
+                              className="text-n-400 hover:text-n-600"
                             >
                               {showIban ? (
                                 <EyeOff className="h-4 w-4" />
@@ -318,10 +312,10 @@ export default function ProfilPage() {
                             </button>
                           </p>
                         </div>
-                        <Lock className="h-5 w-5 text-principale-600" />
+                        <Lock className="h-5 w-5 text-p-600" />
                       </div>
                       <div>
-                        <Label className="text-neutre-500 text-sm">
+                        <Label className="text-n-500 text-sm">
                           BIC / SWIFT
                         </Label>
                         <p className="font-mono font-medium">
@@ -329,13 +323,13 @@ export default function ProfilPage() {
                         </p>
                       </div>
                       <div>
-                        <Label className="text-neutre-500 text-sm">
+                        <Label className="text-n-500 text-sm">
                           Titulaire du compte
                         </Label>
                         <p className="font-medium">{bankInfo.bankHolder}</p>
                       </div>
                       {bankInfo.updatedAt && (
-                        <p className="text-xs text-neutre-500">
+                        <p className="text-xs text-n-500">
                           Dernière mise à jour :{" "}
                           {new Date(bankInfo.updatedAt).toLocaleDateString(
                             "fr-FR",
@@ -362,7 +356,7 @@ export default function ProfilPage() {
                         variant="ghost"
                         onClick={handleDeleteBankInfo}
                         disabled={deleting}
-                        className="text-secondaire-600 hover:text-secondaire-700 hover:bg-secondaire-50"
+                        className="text-s-600 hover:text-s-700 hover:bg-s-50"
                       >
                         {deleting ? (
                           <Loader taille={45} />
@@ -375,10 +369,10 @@ export default function ProfilPage() {
                   </div>
                 ) : (
                   <div className="text-center py-6">
-                    <div className="w-12 h-12 bg-neutre-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <CreditCard className="h-6 w-6 text-neutre-400" />
+                    <div className="w-12 h-12 bg-n-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <CreditCard className="h-6 w-6 text-n-400" />
                     </div>
-                    <p className="text-neutre-600 mb-4">
+                    <p className="text-n-600 mb-4">
                       Aucune coordonnée bancaire enregistrée
                     </p>
                     <Button onClick={() => setShowBankForm(true)}>
@@ -389,9 +383,9 @@ export default function ProfilPage() {
               </>
             ) : (
               <form onSubmit={handleSaveBankInfo} className="space-y-4">
-                <div className="bg-secondaire-50 border border-secondaire-200 rounded-lg p-3 flex items-start gap-2">
-                  <ShieldCheck className="h-5 w-5 text-secondaire-600 shrink-0 mt-0.5" />
-                  <p className="text-sm text-secondaire-800">
+                <div className="bg-s-50 border border-s-200 rounded-lg p-3 flex items-start gap-2">
+                  <ShieldCheck className="h-5 w-5 text-s-600 shrink-0 mt-0.5" />
+                  <p className="text-sm text-s-800">
                     Ce RIB ne sert qu&apos;à vous envoyer de l&apos;argent, ce
                     n&apos;est en aucun cas une autorisation de prélèvement.{" "}
                     <span className="font-mycabas">MyCabas</span> ne vous
@@ -401,8 +395,7 @@ export default function ProfilPage() {
                 {/* Titulaire */}
                 <div className="space-y-2">
                   <Label htmlFor="bankHolder">
-                    Titulaire du compte{" "}
-                    <span className="text-secondaire-500">*</span>
+                    Titulaire du compte <span className="text-s-500">*</span>
                   </Label>
                   <Input
                     id="bankHolder"
@@ -422,7 +415,7 @@ export default function ProfilPage() {
                 {/* IBAN */}
                 <div className="space-y-2">
                   <Label htmlFor="iban">
-                    IBAN <span className="text-secondaire-500">*</span>
+                    IBAN <span className="text-s-500">*</span>
                   </Label>
                   <Input
                     id="iban"
@@ -437,7 +430,7 @@ export default function ProfilPage() {
                     maxLength={42}
                     required
                   />
-                  <p className="text-xs text-neutre-500">
+                  <p className="text-xs text-n-500">
                     27 caractères pour un IBAN français (sans espaces)
                   </p>
                 </div>
@@ -445,7 +438,7 @@ export default function ProfilPage() {
                 {/* BIC */}
                 <div className="space-y-2">
                   <Label htmlFor="bic">
-                    BIC / SWIFT <span className="text-secondaire-500">*</span>
+                    BIC / SWIFT <span className="text-s-500">*</span>
                   </Label>
                   <Input
                     id="bic"
@@ -462,13 +455,13 @@ export default function ProfilPage() {
                     maxLength={11}
                     required
                   />
-                  <p className="text-xs text-neutre-500">8 ou 11 caractères</p>
+                  <p className="text-xs text-n-500">8 ou 11 caractères</p>
                 </div>
 
                 {/* Info sécurité */}
-                <div className="bg-tertiaire-50 border border-tertiaire-200 rounded-lg p-3 flex items-start gap-2">
-                  <ShieldCheck className="h-5 w-5 text-tertiaire-600 shrink-0 mt-0.5" />
-                  <p className="text-sm text-tertiaire-800">
+                <div className="bg-t-50 border border-t-200 rounded-lg p-3 flex items-start gap-2">
+                  <ShieldCheck className="h-5 w-5 text-t-600 shrink-0 mt-0.5" />
+                  <p className="text-sm text-t-800">
                     Vos informations bancaires sont chiffrées avec
                     l&apos;algorithme AES-256-GCM avant d&apos;être stockées.
                     Elles ne sont jamais transmises en clair.

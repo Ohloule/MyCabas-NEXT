@@ -4,58 +4,58 @@
 
 :root {
   /* Vert Émeraude - Teinte (h) autour de 175 */
-  --principale-50: oklch(98.5% 0.015 175);
-  --principale-100: oklch(95% 0.035 175);
-  --principale-200: oklch(89% 0.065 175);
-  --principale-300: oklch(80% 0.095 175);
-  --principale-400: oklch(70% 0.12 175);
-  --principale-500: oklch(59% 0.11 175); /* Vert Signature - Très frais */
-  --principale-600: oklch(48% 0.125 175);
-  --principale-650: oklch(43% 0.115 175);
-  --principale-700: oklch(38% 0.105 175);
-  --principale-800: oklch(28% 0.085 175);
-  --principale-900: oklch(18% 0.065 175);
+  --p-50: oklch(98.5% 0.015 175);
+  --p-100: oklch(95% 0.035 175);
+  --p-200: oklch(89% 0.065 175);
+  --p-300: oklch(80% 0.095 175);
+  --p-400: oklch(70% 0.12 175);
+  --p-500: oklch(59% 0.11 175); /* Vert Signature - Très frais */
+  --p-600: oklch(48% 0.125 175);
+  --p-650: oklch(43% 0.115 175);
+  --p-700: oklch(38% 0.105 175);
+  --p-800: oklch(28% 0.085 175);
+  --p-900: oklch(18% 0.065 175);
 
   /* Sable Cuivré - Teinte (h) autour de 60 */
-  --secondaire-25: oklch(97.512% 0.00674 67.377);
-  --secondaire-50: oklch(98.8% 0.012 60);
-  --secondaire-100: oklch(96% 0.03 60);
-  --secondaire-200: oklch(92% 0.055 60);
-  --secondaire-300: oklch(86% 0.085 60);
-  --secondaire-400: oklch(78% 0.115 60);
-  --secondaire-500: oklch(70.044% 0.13526 59.801); 
-  --secondaire-550: oklch(68.354% 0.1898 44.924); 
-  --secondaire-600: oklch(60% 0.115 60);
-  --secondaire-700: oklch(50% 0.095 60);
-  --secondaire-800: oklch(38% 0.075 60);
-  --secondaire-900: oklch(25% 0.055 60);
+  --s-25: oklch(97.512% 0.00674 67.377);
+  --s-50: oklch(98.8% 0.012 60);
+  --s-100: oklch(96% 0.03 60);
+  --s-200: oklch(92% 0.055 60);
+  --s-300: oklch(86% 0.085 60);
+  --s-400: oklch(78% 0.115 60);
+  --s-500: oklch(70.044% 0.13526 59.801);
+  --s-550: oklch(68.354% 0.1898 44.924);
+  --s-600: oklch(60% 0.115 60);
+  --s-700: oklch(50% 0.095 60);
+  --s-800: oklch(38% 0.075 60);
+  --s-900: oklch(25% 0.055 60);
 
   /*Bleu Tertiaire*/
   /* Bleu Tertiaire - Teinte (h) autour de 298 */
-  --tertiaire-50: oklch(98.5% 0.02 298);
-  --tertiaire-100: oklch(95% 0.05 298);
-  --tertiaire-200: oklch(89% 0.10 298);
-  --tertiaire-300: oklch(80% 0.15 298);
-  --tertiaire-400: oklch(70% 0.19 298);
-  --tertiaire-500: oklch(57% 0.21 298); /* Ton original - Bleu Électrique */
-  --tertiaire-600: oklch(48% 0.21 298);
-  --tertiaire-650: oklch(43% 0.19 298);
-  --tertiaire-700: oklch(38% 0.17 298);
-  --tertiaire-800: oklch(28% 0.13 298);
-  --tertiaire-900: oklch(18% 0.09 298);
+  --t-50: oklch(98.5% 0.02 298);
+  --t-100: oklch(95% 0.05 298);
+  --t-200: oklch(89% 0.1 298);
+  --t-300: oklch(80% 0.15 298);
+  --t-400: oklch(70% 0.19 298);
+  --t-500: oklch(57% 0.21 298); /* Ton original - Bleu Électrique */
+  --t-600: oklch(48% 0.21 298);
+  --t-650: oklch(43% 0.19 298);
+  --t-700: oklch(38% 0.17 298);
+  --t-800: oklch(28% 0.13 298);
+  --t-900: oklch(18% 0.09 298);
 
-/* Gris Saturés - Teinte (h) 175 - Plus de caractère */
-  --neutre-50:  oklch(99% 0.015 175);  /* Blanc cassé émeraude */
-  --neutre-100: oklch(96.981% 0.01272 172.86);  /* Fond très doux */
-  --neutre-200: oklch(91% 0.035 175);  /* Séparateurs visibles */
-  --neutre-300: oklch(83% 0.045 175);  /* Gris clair "Teal" */
-  --neutre-400: oklch(72% 0.05 175);   /* Gris moyen-clair */
-  --neutre-500: oklch(60% 0.05 175);   /* Gris moyen (équilibre parfait) */
-  --neutre-600: oklch(48% 0.045 175);  /* Gris sombre texturé */
-  --neutre-700: oklch(35% 0.04 175);   /* Ardoise profonde */
-  --neutre-800: oklch(24% 0.035 175);  /* Anthracite émeraude */
-  --neutre-900: oklch(14% 0.03 175);   /* Presque noir coloré */
-  --neutre-950: oklch(08% 0.025 175);  /* Noir profond organique */
+  /* Gris Saturés - Teinte (h) 175 - Plus de caractère */
+  --n-50: oklch(99% 0.015 175); /* Blanc cassé émeraude */
+  --n-100: oklch(96.981% 0.01272 172.86); /* Fond très doux */
+  --n-200: oklch(91% 0.035 175); /* Séparateurs visibles */
+  --n-300: oklch(83% 0.045 175); /* Gris clair "Teal" */
+  --n-400: oklch(72% 0.05 175); /* Gris moyen-clair */
+  --n-500: oklch(60% 0.05 175); /* Gris moyen (équilibre parfait) */
+  --n-600: oklch(48% 0.045 175); /* Gris sombre texturé */
+  --n-700: oklch(35% 0.04 175); /* Ardoise profonde */
+  --n-800: oklch(24% 0.035 175); /* Anthracite émeraude */
+  --n-900: oklch(14% 0.03 175); /* Presque noir coloré */
+  --n-950: oklch(08% 0.025 175); /* Noir profond organique */
 
   --blanc: oklch(100% 0.00011 271.152);
   --noir: oklch(0% 0 0);
@@ -95,59 +95,59 @@
 }
 
 @theme {
-  --color-principale-50: var(--principale-50);
-  --color-principale-100: var(--principale-100);
-  --color-principale-200: var(--principale-200);
-  --color-principale-300: var(--principale-300);
-  --color-principale-400: var(--principale-400);
-  --color-principale-500: var(--principale-500);
-  --color-principale-600: var(--principale-600);
-  --color-principale-650: var(--principale-650);
-  --color-principale-700: var(--principale-700);
-  --color-principale-800: var(--principale-800);
-  --color-principale-900: var(--principale-900);
+  --color-p-50: var(--p-50);
+  --color-p-100: var(--p-100);
+  --color-p-200: var(--p-200);
+  --color-p-300: var(--p-300);
+  --color-p-400: var(--p-400);
+  --color-p-500: var(--p-500);
+  --color-p-600: var(--p-600);
+  --color-p-650: var(--p-650);
+  --color-p-700: var(--p-700);
+  --color-p-800: var(--p-800);
+  --color-p-900: var(--p-900);
 
   --color-blanc: var(--blanc);
   --color-noir: var(--noir);
 
-  --color-secondaire-25: var(--secondaire-25);
-  --color-secondaire-50: var(--secondaire-50);
-  --color-secondaire-100: var(--secondaire-100);
-  --color-secondaire-200: var(--secondaire-200);
-  --color-secondaire-300: var(--secondaire-300);
-  --color-secondaire-400: var(--secondaire-400);
-  --color-secondaire-500: var(--secondaire-500);
-  --color-secondaire-550: var(--secondaire-550);
-  --color-secondaire-600: var(--secondaire-600);
-  --color-secondaire-700: var(--secondaire-700);
-  --color-secondaire-800: var(--secondaire-800);
-  --color-secondaire-900: var(--secondaire-900);
+  --color-s-25: var(--s-25);
+  --color-s-50: var(--s-50);
+  --color-s-100: var(--s-100);
+  --color-s-200: var(--s-200);
+  --color-s-300: var(--s-300);
+  --color-s-400: var(--s-400);
+  --color-s-500: var(--s-500);
+  --color-s-550: var(--s-550);
+  --color-s-600: var(--s-600);
+  --color-s-700: var(--s-700);
+  --color-s-800: var(--s-800);
+  --color-s-900: var(--s-900);
 
-    --color-tertiaire-25: var(--tertiaire-25);
-  --color-tertiaire-50: var(--tertiaire-50);
-  --color-tertiaire-100: var(--tertiaire-100);
-  --color-tertiaire-200: var(--tertiaire-200);
-  --color-tertiaire-300: var(--tertiaire-300);
-  --color-tertiaire-400: var(--tertiaire-400);
-  --color-tertiaire-500: var(--tertiaire-500);
-  --color-tertiaire-550: var(--tertiaire-550);
-  --color-tertiaire-600: var(--tertiaire-600);
-  --color-tertiaire-700: var(--tertiaire-700);
-  --color-tertiaire-800: var(--tertiaire-800);
-  --color-tertiaire-900: var(--tertiaire-900);    
-  
-  --color-neutre-25: var(--neutre-25);
-  --color-neutre-50: var(--neutre-50);
-  --color-neutre-100: var(--neutre-100);
-  --color-neutre-200: var(--neutre-200);
-  --color-neutre-300: var(--neutre-300);
-  --color-neutre-400: var(--neutre-400);
-  --color-neutre-500: var(--neutre-500);
-  --color-neutre-550: var(--neutre-550);
-  --color-neutre-600: var(--neutre-600);
-  --color-neutre-700: var(--neutre-700);
-  --color-neutre-800: var(--neutre-800);
-  --color-neutre-900: var(--neutre-900);
+  --color-t-25: var(--t-25);
+  --color-t-50: var(--t-50);
+  --color-t-100: var(--t-100);
+  --color-t-200: var(--t-200);
+  --color-t-300: var(--t-300);
+  --color-t-400: var(--t-400);
+  --color-t-500: var(--t-500);
+  --color-t-550: var(--t-550);
+  --color-t-600: var(--t-600);
+  --color-t-700: var(--t-700);
+  --color-t-800: var(--t-800);
+  --color-t-900: var(--t-900);
+
+  --color-n-25: var(--n-25);
+  --color-n-50: var(--n-50);
+  --color-n-100: var(--n-100);
+  --color-n-200: var(--n-200);
+  --color-n-300: var(--n-300);
+  --color-n-400: var(--n-400);
+  --color-n-500: var(--n-500);
+  --color-n-550: var(--n-550);
+  --color-n-600: var(--n-600);
+  --color-n-700: var(--n-700);
+  --color-n-800: var(--n-800);
+  --color-n-900: var(--n-900);
 }
 
 body {
@@ -324,9 +324,9 @@ body {
 @layer base {
   ::selection {
     background-color: var(
-      --color-principale-300
+      --color-p-300
     ); /* Utilise une variable de couleur Tailwind */
-    color: var(--color-principale-900);
+    color: var(--color-p-900);
   }
   * {
     @apply border-border outline-ring/50;

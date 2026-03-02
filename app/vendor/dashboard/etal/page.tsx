@@ -235,7 +235,7 @@ export default function EtalPage() {
             <DialogTitle>Supprimer ce produit ?</DialogTitle>
             <DialogDescription>
               Le produit{" "}
-              <span className="font-medium text-neutre-800">
+              <span className="font-medium text-n-800">
                 {deletingProduct?.name}
               </span>{" "}
               sera définitivement supprimé. Cette action est irréversible.
@@ -265,14 +265,12 @@ export default function EtalPage() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-principale-100 rounded-lg">
-              <Carrot className="w-6 h-6 text-principale-600" />
+            <div className="p-3 bg-p-100 rounded-lg">
+              <Carrot className="w-6 h-6 text-p-600" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-principale-800">
-                Mon étal
-              </h1>
-              <p className="text-neutre-600">
+              <h1 className="text-3xl font-bold text-p-800">Mon étal</h1>
+              <p className="text-n-600">
                 {products.length} produit{products.length > 1 ? "s" : ""}
               </p>
             </div>
@@ -296,11 +294,11 @@ export default function EtalPage() {
         </div>
 
         {/* Sélecteur de marché */}
-        <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border border-neutre-100 mb-4">
+        <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border border-n-100 mb-4">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
             <div className="flex items-center gap-2">
-              <Store className="w-5 h-5 text-principale-600 shrink-0" />
-              <span className="text-sm font-medium text-neutre-700 hidden sm:inline">
+              <Store className="w-5 h-5 text-p-600 shrink-0" />
+              <span className="text-sm font-medium text-n-700 hidden sm:inline">
                 Vue par marché :
               </span>
             </div>
@@ -321,7 +319,7 @@ export default function EtalPage() {
                 </SelectContent>
               </Select>
               {selectedMarket !== "all" && (
-                <span className="text-xs text-secondaire-600 bg-secondaire-50 px-2 py-1 rounded whitespace-nowrap">
+                <span className="text-xs text-s-600 bg-s-50 px-2 py-1 rounded whitespace-nowrap">
                   Mode édition
                 </span>
               )}
@@ -330,11 +328,11 @@ export default function EtalPage() {
         </div>
 
         {/* Barre de recherche et filtres */}
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-neutre-100 mb-6">
+        <div className="bg-white rounded-xl p-4 shadow-sm border border-n-100 mb-6">
           <div className="flex flex-col sm:flex-row gap-3">
             {/* Recherche */}
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutre-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-n-400" />
               <Input
                 type="text"
                 placeholder="Rechercher un produit..."
@@ -348,25 +346,25 @@ export default function EtalPage() {
             <Button
               variant="outline"
               onClick={() => setShowFilters(!showFilters)}
-              className={showFilters ? "bg-neutre-100" : ""}
+              className={showFilters ? "bg-n-100" : ""}
             >
               <Filter className="w-4 h-4" />
               Filtres
               {hasActiveFilters && (
-                <span className="ml-1 w-2 h-2 bg-principale-600 rounded-full" />
+                <span className="ml-1 w-2 h-2 bg-p-600 rounded-full" />
               )}
             </Button>
           </div>
 
           {/* Filtres déroulants */}
           {showFilters && (
-            <div className="mt-4 pt-4 border-t border-neutre-100">
+            <div className="mt-4 pt-4 border-t border-n-100">
               <div className="flex flex-wrap gap-3">
                 {/* Filtre par catégorie */}
                 <select
                   value={selectedCategory || ""}
                   onChange={(e) => setSelectedCategory(e.target.value || null)}
-                  className="px-3 py-2 border border-neutre-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500"
+                  className="px-3 py-2 border border-n-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-p-500"
                 >
                   <option value="">Toutes les catégories</option>
                   {categories.map((cat) => (
@@ -380,7 +378,7 @@ export default function EtalPage() {
                 <select
                   value={selectedStatus || ""}
                   onChange={(e) => setSelectedStatus(e.target.value || null)}
-                  className="px-3 py-2 border border-neutre-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500"
+                  className="px-3 py-2 border border-n-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-p-500"
                 >
                   <option value="">Tous les statuts</option>
                   <option value="active">Actif</option>
@@ -401,14 +399,14 @@ export default function EtalPage() {
 
         {/* Contenu */}
         {loading ? (
-          <div className="bg-white rounded-xl p-12 shadow-sm border border-neutre-100 text-center">
-            {/* <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-principale-600 mx-auto"></div> */}
+          <div className="bg-white rounded-xl p-12 shadow-sm border border-n-100 text-center">
+            {/* <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-p-600 mx-auto"></div> */}
             <Loader taille={30} />
-            <p className="mt-4 text-neutre-500">Chargement des produits...</p>
+            <p className="mt-4 text-n-500">Chargement des produits...</p>
           </div>
         ) : error ? (
-          <div className="bg-white rounded-xl p-12 shadow-sm border border-neutre-100 text-center">
-            <p className="text-secondaire-600">{error}</p>
+          <div className="bg-white rounded-xl p-12 shadow-sm border border-n-100 text-center">
+            <p className="text-s-600">{error}</p>
             <Button variant="outline" className="mt-4" onClick={fetchProducts}>
               Réessayer
             </Button>

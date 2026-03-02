@@ -14,11 +14,11 @@ export default function CarouselIndicator({
           className={`h-2 w-2 rounded-full transition-all duration-300 ${
             current === index+1
               ? index % 2 === 0
-                ? "bg-principale-700 scale-125"
-                : "bg-secondaire-700 scale-125"
+                ? "bg-p-700 scale-125"
+                : "bg-s-700 scale-125"
               : index % 2 === 0
-              ? "bg-principale-300"
-              : "bg-secondaire-300"
+              ? "bg-p-300"
+              : "bg-s-300"
           }`}
         />
       ))}
@@ -27,5 +27,5 @@ export default function CarouselIndicator({
 }
 
 /* current === index+1
-              ? "bg-principale-700 scale-125"
-              : "bg-principale-300" */
+              ? "bg-p-700 scale-125"
+              : "bg-p-300" */

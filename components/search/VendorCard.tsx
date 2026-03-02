@@ -21,13 +21,13 @@ import ProductCard from "./ProductCard";
 
 // Labels avec leurs couleurs
 const labelConfig: Record<string, { label: string; color: string }> = {
-  BIO: { label: "Bio", color: "bg-principale-500" },
-  LOCAL: { label: "Local", color: "bg-secondaire-500" },
-  ARTISAN: { label: "Artisan", color: "bg-tertiaire-500" },
-  FERMIER: { label: "Fermier", color: "bg-secondaire-500" },
-  AOC_AOP: { label: "AOC/AOP", color: "bg-secondaire-500" },
-  LABEL_ROUGE: { label: "Label Rouge", color: "bg-secondaire-600" },
-  FAIR_TRADE: { label: "Commerce équitable", color: "bg-principale-500" },
+  BIO: { label: "Bio", color: "bg-p-500" },
+  LOCAL: { label: "Local", color: "bg-s-500" },
+  ARTISAN: { label: "Artisan", color: "bg-t-500" },
+  FERMIER: { label: "Fermier", color: "bg-s-500" },
+  AOC_AOP: { label: "AOC/AOP", color: "bg-s-500" },
+  LABEL_ROUGE: { label: "Label Rouge", color: "bg-s-600" },
+  FAIR_TRADE: { label: "Commerce équitable", color: "bg-p-500" },
 };
 
 const DAY_LABELS: Record<string, string> = {
@@ -119,14 +119,12 @@ export default function VendorCard({
   // Sélecteur de marché+jour (shadcn Select)
   const marketSelector = showMarketSelector ? (
     <div className="flex items-center gap-1.5 shrink-0">
-      <MapPin className="w-3.5 h-3.5 text-neutre-400 shrink-0" />
+      <MapPin className="w-3.5 h-3.5 text-n-400 shrink-0" />
       {vendorMarkets!.length === 1 ? (
-        <span className="text-sm text-neutre-600">
+        <span className="text-sm text-n-600">
           {vendorMarkets![0].name}
-          <span className="text-neutre-400 ml-1">
-            ({vendorMarkets![0].town})
-          </span>
-          <span className="text-neutre-400 ml-1">
+          <span className="text-n-400 ml-1">({vendorMarkets![0].town})</span>
+          <span className="text-n-400 ml-1">
             · {DAY_LABELS[vendorMarkets![0].day] ?? vendorMarkets![0].day}
           </span>
         </span>
@@ -166,18 +164,18 @@ export default function VendorCard({
             className="object-cover"
           />
         ) : (
-          <div className="flex items-center justify-center h-full bg-principale-100">
-            <Store className="w-8 h-8 text-principale-500" />
+          <div className="flex items-center justify-center h-full bg-p-100">
+            <Store className="w-8 h-8 text-p-500" />
           </div>
         )}
       </div>
 
       {/* Infos vendor */}
       <div className="flex-1 min-w-0">
-        <h3 className="text-xl font-bold text-neutre-900 truncate">
+        <h3 className="text-xl font-bold text-n-900 truncate">
           {vendor.stallName}
         </h3>
-        <p className="text-sm text-neutre-600">
+        <p className="text-sm text-n-600">
           {vendor.user.firstName} {vendor.user.lastName}
         </p>
 
@@ -201,7 +199,7 @@ export default function VendorCard({
 
         {/* Description (dans le header accordéon) */}
         {collapsible && vendor.description && (
-          <p className="text-sm text-neutre-600 mt-2 line-clamp-2">
+          <p className="text-sm text-n-600 mt-2 line-clamp-2">
             {vendor.description}
           </p>
         )}
@@ -213,10 +211,10 @@ export default function VendorCard({
 
         {/* Nombre de produits */}
         <div className="text-right">
-          <span className="text-2xl font-bold text-principale-600">
+          <span className="text-2xl font-bold text-p-600">
             {products.length}
           </span>
-          <p className="text-xs text-neutre-500">
+          <p className="text-xs text-n-500">
             produit{products.length > 1 ? "s" : ""}
           </p>
         </div>
@@ -240,8 +238,8 @@ export default function VendorCard({
   if (collapsible) {
     return (
       <AccordionItem value={vendor.id} className="border-0">
-        <Card className="overflow-hidden border-2 border-neutre-100">
-          <AccordionTrigger className="px-6 py-4 bg-linear-to-r from-principale-50 to-white hover:no-underline hover:from-principale-100 [&>svg]:shrink-0 [&>svg]:mt-1 [&>svg]:ml-3">
+        <Card className="overflow-hidden border-2 border-n-100">
+          <AccordionTrigger className="px-6 py-4 bg-linear-to-r from-p-50 to-white hover:no-underline hover:from-p-100 [&>svg]:shrink-0 [&>svg]:mt-1 [&>svg]:ml-3">
             {vendorHeader}
           </AccordionTrigger>
           <AccordionContent className="pb-0">
@@ -253,13 +251,13 @@ export default function VendorCard({
   }
 
   return (
-    <Card className="overflow-hidden border-2 border-neutre-100">
-      <CardHeader className="bg-linear-to-r from-principale-50 to-white pb-4">
+    <Card className="overflow-hidden border-2 border-n-100">
+      <CardHeader className="bg-linear-to-r from-p-50 to-white pb-4">
         {vendorHeader}
 
         {/* Description */}
         {vendor.description && (
-          <p className="text-sm text-neutre-600 mt-3 line-clamp-2">
+          <p className="text-sm text-n-600 mt-3 line-clamp-2">
             {vendor.description}
           </p>
         )}

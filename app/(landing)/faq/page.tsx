@@ -59,12 +59,12 @@ export default function Page() {
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="border border-border rounded-xl bg-principale-50 w-[85vw] md:max-w-6xl shadow text-justify"
+              className="border border-border rounded-xl bg-p-50 w-[85vw] md:max-w-6xl shadow text-justify"
             >
-              <AccordionTrigger className="px-4 py-3 text-left text-base md:text-lg font-medium text-principale-900 hover:underline hover:text-accent-foreground transition-all cursor-pointer">
+              <AccordionTrigger className="px-4 py-3 text-left text-base md:text-lg font-medium text-p-900 hover:underline hover:text-accent-foreground transition-all cursor-pointer">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="px-4 pb-4   text-sm text-principale-900 -foreground">
+              <AccordionContent className="px-4 pb-4   text-sm text-p-900 -foreground">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

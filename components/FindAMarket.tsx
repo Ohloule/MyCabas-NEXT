@@ -105,7 +105,7 @@ export default function FindMarket() {
         );
 
   return (
-    <section className="bg-secondaire-50">
+    <section className="bg-s-50">
       <div className="align-center p-6 space-y-6 min-h-[50vh] ">
         <h2 className="font-special text-4xl">
           Rechercher les marchés proches de vous
@@ -167,7 +167,7 @@ export default function FindMarket() {
             )}
           </div>
         </form>
-        {error && <p className="text-secondaire-500 text-sm">{error}</p>}
+        {error && <p className="text-s-500 text-sm">{error}</p>}
 
         {filteredMarkets.length === 0 && (
           <Image
@@ -190,7 +190,7 @@ export default function FindMarket() {
                   key={market._id}
                   className="w-xs p-0 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-start"
                 >
-                  <CardTitle className="bg-principale-600 food-motif py-6">
+                  <CardTitle className="bg-p-600 food-motif py-6">
                     <h4 className="px-2 font-semibold text-2xl font-special text-white text-center uppercase truncate whitespace-nowrap leading-none">
                       {market.name}
                     </h4>

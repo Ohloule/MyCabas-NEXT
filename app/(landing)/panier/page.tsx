@@ -118,17 +118,15 @@ export default function PanierPage() {
       <>
         <HeadingPage title="Mon Panier" />
         <div className="align-center py-16 text-center">
-          <ShoppingCart className="h-16 w-16 text-neutre-300 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-neutre-700 mb-2">
+          <ShoppingCart className="h-16 w-16 text-n-300 mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-n-700 mb-2">
             Connectez-vous pour voir votre panier
           </h2>
-          <p className="text-neutre-500 mb-6">
+          <p className="text-n-500 mb-6">
             Votre panier est synchronisé sur tous vos appareils.
           </p>
           <Link href="/login">
-            <Button className="bg-principale-500 hover:bg-principale-600">
-              Se connecter
-            </Button>
+            <Button className="bg-p-500 hover:bg-p-600">Se connecter</Button>
           </Link>
         </div>
       </>
@@ -153,15 +151,15 @@ export default function PanierPage() {
       <>
         <HeadingPage title="Mon Panier" />
         <div className="align-center py-16 text-center">
-          <ShoppingCart className="h-16 w-16 text-neutre-300 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-neutre-700 mb-2">
+          <ShoppingCart className="h-16 w-16 text-n-300 mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-n-700 mb-2">
             Votre panier est vide
           </h2>
-          <p className="text-neutre-500 mb-6">
+          <p className="text-n-500 mb-6">
             Parcourez les produits de vos commerçants pour remplir votre cabas !
           </p>
           <Link href="/markets">
-            <Button className="bg-principale-500 hover:bg-principale-600 gap-2">
+            <Button className="bg-p-500 hover:bg-p-600 gap-2">
               <MapPin className="h-4 w-4" />
               Trouver un marché
             </Button>
@@ -211,16 +209,16 @@ export default function PanierPage() {
       <div className="align-center py-8 pb-28 lg:pb-8">
         {/* Infos marché */}
         {cart.market && (
-          <Card className="mb-6 border-principale-200 bg-principale-50 shadow-none">
+          <Card className="mb-6 border-p-200 bg-p-50 shadow-none">
             <CardContent className="flex items-center gap-4 px-4 py-3">
-              <div className="flex items-center justify-center bg-principale-100 rounded-full p-2 shrink-0">
-                <MapPin className="h-4 w-4 text-principale-600" />
+              <div className="flex items-center justify-center bg-p-100 rounded-full p-2 shrink-0">
+                <MapPin className="h-4 w-4 text-p-600" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-neutre-900 leading-tight">
+                <p className="font-semibold text-n-900 leading-tight">
                   {cart.market.name}
                 </p>
-                <p className="text-xs text-neutre-500 truncate">
+                <p className="text-xs text-n-500 truncate">
                   {cart.market.address}, {cart.market.town}
                 </p>
               </div>
@@ -228,8 +226,8 @@ export default function PanierPage() {
                 <>
                   <Separator orientation="vertical" className="h-9 shrink-0" />
                   <div className="flex flex-col items-center gap-1 shrink-0">
-                    <Calendar className="h-4 w-4 text-principale-500" />
-                    <Badge className="bg-principale-100 text-principale-800 border-principale-300 border text-xs font-semibold shadow-none">
+                    <Calendar className="h-4 w-4 text-p-500" />
+                    <Badge className="bg-p-100 text-p-800 border-p-300 border text-xs font-semibold shadow-none">
                       {cart.marketDay.charAt(0) +
                         cart.marketDay.slice(1).toLowerCase()}
                     </Badge>
@@ -245,13 +243,13 @@ export default function PanierPage() {
           <div className="lg:col-span-2 space-y-4 sm:space-y-6 ">
             {/* Header avec compteur et bouton vider */}
             <div className="flex items-center justify-between">
-              <p className="text-neutre-600">
+              <p className="text-n-600">
                 {itemCount} {itemCount > 1 ? "produits" : "produit"}
               </p>
               <button
                 onClick={handleClearCart}
                 disabled={clearing}
-                className="text-sm text-secondaire-500 hover:text-secondaire-700 flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                className="text-sm text-s-500 hover:text-s-700 flex items-center gap-1 cursor-pointer disabled:opacity-50"
               >
                 {clearing ? (
                   <Loader2 className="animate-spin h-3 w-3" />
@@ -265,9 +263,9 @@ export default function PanierPage() {
             {/* Items groupés par vendeur */}
             {Object.values(itemsByVendor).map(({ vendor, items }) => (
               <Card key={vendor.id}>
-                <div className="px-4 py-3 bg-neutre-50 border-b rounded-t-lg flex items-center gap-2">
-                  <Store className="h-4 w-4 text-principale-600" />
-                  <span className="font-medium text-sm text-neutre-700">
+                <div className="px-4 py-3 bg-n-50 border-b rounded-t-lg flex items-center gap-2">
+                  <Store className="h-4 w-4 text-p-600" />
+                  <span className="font-medium text-sm text-n-700">
                     {vendor.stallName}
                   </span>
                 </div>
@@ -280,7 +278,7 @@ export default function PanierPage() {
                       {/* Ligne 1 mobile : image + infos + supprimer */}
                       <div className="flex items-center gap-3 sm:gap-4   min-w-0 ">
                         {/* Image produit */}
-                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg bg-neutre-100 overflow-hidden shrink-0">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg bg-n-100 overflow-hidden shrink-0">
                           {item.product.imageUrl ? (
                             <Image
                               src={item.product.imageUrl}
@@ -291,17 +289,17 @@ export default function PanierPage() {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
-                              <ShoppingCart className="h-6 w-6 text-neutre-300" />
+                              <ShoppingCart className="h-6 w-6 text-n-300" />
                             </div>
                           )}
                         </div>
 
                         {/* Infos produit */}
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-medium text-neutre-900 truncate text-sm sm:text-base">
+                          <h3 className="font-medium text-n-900 truncate text-sm sm:text-base">
                             {item.product.name}
                           </h3>
-                          <p className="text-xs sm:text-sm text-neutre-500">
+                          <p className="text-xs sm:text-sm text-n-500">
                             {item.product.basePrice.toFixed(2)} € /{" "}
                             {item.product.unit}
                           </p>
@@ -311,7 +309,7 @@ export default function PanierPage() {
                         <button
                           onClick={() => handleRemoveItem(item.id)}
                           disabled={updatingItems.has(item.id)}
-                          className="sm:hidden p-1 text-neutre-400 hover:text-secondaire-500 cursor-pointer disabled:opacity-50"
+                          className="sm:hidden p-1 text-n-400 hover:text-s-500 cursor-pointer disabled:opacity-50"
                           title="Supprimer"
                         >
                           <X className="h-4 w-4" />
@@ -325,7 +323,7 @@ export default function PanierPage() {
                           <button
                             onClick={() => handleUpdateQuantity(item, "down")}
                             disabled={updatingItems.has(item.id)}
-                            className="w-8 h-8 rounded-full border border-neutre-300 flex items-center justify-center hover:bg-neutre-100 cursor-pointer disabled:opacity-50"
+                            className="w-8 h-8 rounded-full border border-n-300 flex items-center justify-center hover:bg-n-100 cursor-pointer disabled:opacity-50"
                           >
                             {item.quantity <=
                             (item.product.minOrderQty || 1) ? (
@@ -337,7 +335,7 @@ export default function PanierPage() {
                           <span className="w-12 text-center font-medium">
                             {updatingItems.has(item.id) ? (
                               <Loader2
-                                className="animate-spin text-principale-800"
+                                className="animate-spin text-p-800"
                                 size={20}
                               />
                             ) : (
@@ -347,7 +345,7 @@ export default function PanierPage() {
                           <button
                             onClick={() => handleUpdateQuantity(item, "up")}
                             disabled={updatingItems.has(item.id)}
-                            className="w-8 h-8 rounded-full border border-neutre-300 flex items-center justify-center hover:bg-neutre-100 cursor-pointer disabled:opacity-50"
+                            className="w-8 h-8 rounded-full border border-n-300 flex items-center justify-center hover:bg-n-100 cursor-pointer disabled:opacity-50"
                           >
                             <Plus className="h-3 w-3" />
                           </button>
@@ -355,7 +353,7 @@ export default function PanierPage() {
 
                         {/* Prix total item */}
                         <div className="text-right shrink-0 min-w-24 ">
-                          <p className="font-semibold text-neutre-900">
+                          <p className="font-semibold text-n-900">
                             {(item.product.basePrice * item.quantity).toFixed(
                               2,
                             )}{" "}
@@ -367,7 +365,7 @@ export default function PanierPage() {
                         <button
                           onClick={() => handleRemoveItem(item.id)}
                           disabled={updatingItems.has(item.id)}
-                          className="hidden sm:block p-1 text-neutre-400 hover:text-secondaire-500 cursor-pointer disabled:opacity-50"
+                          className="hidden sm:block p-1 text-n-400 hover:text-s-500 cursor-pointer disabled:opacity-50"
                           title="Supprimer"
                         >
                           <X className="h-4 w-4" />
@@ -386,13 +384,13 @@ export default function PanierPage() {
               <CardContent className="p-4 sm:p-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <h2 className="font-semibold text-lg">Récapitulatif</h2>
-                  <div className="flex items-center gap-1 bg-neutre-100 rounded-lg p-1">
+                  <div className="flex items-center gap-1 bg-n-100 rounded-lg p-1">
                     <button
                       onClick={() => setRecapView("vendor")}
                       className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
                         recapView === "vendor"
-                          ? "bg-white text-principale-700 shadow-sm"
-                          : "text-neutre-500 hover:text-neutre-700"
+                          ? "bg-white text-p-700 shadow-sm"
+                          : "text-n-500 hover:text-n-700"
                       }`}
                       title="Par commerçant"
                     >
@@ -403,8 +401,8 @@ export default function PanierPage() {
                       onClick={() => setRecapView("category")}
                       className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
                         recapView === "category"
-                          ? "bg-white text-principale-700 shadow-sm"
-                          : "text-neutre-500 hover:text-neutre-700"
+                          ? "bg-white text-p-700 shadow-sm"
+                          : "text-n-500 hover:text-n-700"
                       }`}
                       title="Par catégorie"
                     >
@@ -423,19 +421,19 @@ export default function PanierPage() {
                         );
                         return (
                           <div key={vendor.id}>
-                            <div className="flex items-center justify-between font-medium text-neutre-700 mb-1">
+                            <div className="flex items-center justify-between font-medium text-n-700 mb-1">
                               <span className="flex items-center gap-1">
-                                <Store className="h-3 w-3 text-principale-500 shrink-0" />
+                                <Store className="h-3 w-3 text-p-500 shrink-0" />
                                 {vendor.stallName}
                               </span>
-                              <span className="shrink-0 text-principale-600">
+                              <span className="shrink-0 text-p-600">
                                 {subtotal.toFixed(2)} €
                               </span>
                             </div>
                             {items.map((item) => (
                               <div
                                 key={item.id}
-                                className="flex justify-between text-neutre-500 pl-4"
+                                className="flex justify-between text-n-500 pl-4"
                               >
                                 <span className="truncate mr-2">
                                   {item.product.name} x{item.quantity}
@@ -458,19 +456,19 @@ export default function PanierPage() {
                         );
                         return (
                           <div key={name}>
-                            <div className="flex items-center justify-between font-medium text-neutre-700 mb-1">
+                            <div className="flex items-center justify-between font-medium text-n-700 mb-1">
                               <span className="flex items-center gap-1">
-                                <Tag className="h-3 w-3 text-principale-500 shrink-0" />
+                                <Tag className="h-3 w-3 text-p-500 shrink-0" />
                                 {name}
                               </span>
-                              <span className="shrink-0 text-principale-600">
+                              <span className="shrink-0 text-p-600">
                                 {subtotal.toFixed(2)} €
                               </span>
                             </div>
                             {items.map((item) => (
                               <div
                                 key={item.id}
-                                className="flex justify-between text-neutre-500 pl-4"
+                                className="flex justify-between text-n-500 pl-4"
                               >
                                 <span className="truncate mr-2">
                                   {item.product.name} x{item.quantity}
@@ -491,11 +489,9 @@ export default function PanierPage() {
                 <div className="border-t pt-4">
                   <div className="flex justify-between font-semibold text-lg">
                     <span>Total estimé</span>
-                    <span className="text-principale-600">
-                      {total.toFixed(2)} €
-                    </span>
+                    <span className="text-p-600">{total.toFixed(2)} €</span>
                   </div>
-                  <p className="text-xs text-neutre-500 mt-1">
+                  <p className="text-xs text-n-500 mt-1">
                     Montant pré-autorisé. Le commerçant pourra ajuster les
                     quantités avant le marché.
                   </p>
@@ -503,7 +499,7 @@ export default function PanierPage() {
 
                 <Button
                   onClick={() => router.push("/checkout")}
-                  className="w-full bg-secondaire-500 hover:bg-secondaire-600 mt-4 hover:text-white"
+                  className="w-full bg-s-500 hover:bg-s-600 mt-4 hover:text-white"
                 >
                   Passer la commande
                 </Button>
@@ -515,14 +511,14 @@ export default function PanierPage() {
           <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 lg:hidden z-50">
             <div className="flex items-center justify-between gap-4 max-w-2xl mx-auto">
               <div>
-                <p className="text-xs text-neutre-500">
+                <p className="text-xs text-n-500">
                   {itemCount} {itemCount > 1 ? "produits" : "produit"}
                 </p>
-                <p className="font-semibold text-lg text-principale-600">
+                <p className="font-semibold text-lg text-p-600">
                   {total.toFixed(2)} €
                 </p>
               </div>
-              <Button className="bg-secondaire-500 hover:bg-secondaire-600 flex-1 max-w-50">
+              <Button className="bg-s-500 hover:bg-s-600 flex-1 max-w-50">
                 Passer la commande
               </Button>
             </div>

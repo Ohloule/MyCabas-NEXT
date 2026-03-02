@@ -180,9 +180,7 @@ function RegisterForm() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link href="/" className="mx-auto mb-4 flex items-center gap-2">
-            <span className="text-7xl font-mycabas text-principale-700 ">
-              MyCabas
-            </span>
+            <span className="text-7xl font-mycabas text-p-700 ">MyCabas</span>
           </Link>
           <CardTitle className="text-4xl font-special mt-1 mb-8">
             Créer un compte
@@ -198,10 +196,10 @@ function RegisterForm() {
           {/* Progress indicator */}
           <div className="mt-4 flex justify-center gap-2">
             <div
-              className={`h-2 w-16 rounded-full ${step >= 1 ? "bg-principale-600" : "bg-muted"}`}
+              className={`h-2 w-16 rounded-full ${step >= 1 ? "bg-p-600" : "bg-muted"}`}
             />
             <div
-              className={`h-2 w-16 rounded-full ${step >= 2 ? "bg-principale-600" : "bg-muted"}`}
+              className={`h-2 w-16 rounded-full ${step >= 2 ? "bg-p-600" : "bg-muted"}`}
             />
           </div>
         </CardHeader>
@@ -215,7 +213,7 @@ function RegisterForm() {
                 setRole("CLIENT");
                 setStep(2);
               }}
-              className="flex w-full items-center gap-4 rounded-lg border p-4 text-left transition-colors hover:border-principale-700 hover:bg-principale-50 cursor-pointer"
+              className="flex w-full items-center gap-4 rounded-lg border p-4 text-left transition-colors hover:border-p-700 hover:bg-p-50 cursor-pointer"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <User className="h-6 w-6 text-primary" />
@@ -234,10 +232,10 @@ function RegisterForm() {
                 setRole("VENDOR");
                 setStep(2);
               }}
-              className="flex w-full items-center gap-4 rounded-lg border p-4 text-left transition-colors hover:border-principale-700 hover:bg-principale-50 cursor-pointer"
+              className="flex w-full items-center gap-4 rounded-lg border p-4 text-left transition-colors hover:border-p-700 hover:bg-p-50 cursor-pointer"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-principale-700/10">
-                <Store className="h-6 w-6 text-principale-700" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-p-700/10">
+                <Store className="h-6 w-6 text-p-700" />
               </div>
               <div>
                 <h3 className="font-semibold">Je suis un commerçant</h3>

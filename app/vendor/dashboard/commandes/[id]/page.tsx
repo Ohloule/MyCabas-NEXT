@@ -164,7 +164,7 @@ export default function OrderDetailPage() {
   if (!order) {
     return (
       <div className="text-center py-16">
-        <p className="text-neutre-500">Commande non trouvée</p>
+        <p className="text-n-500">Commande non trouvée</p>
       </div>
     );
   }
@@ -176,7 +176,7 @@ export default function OrderDetailPage() {
       {/* Header */}
       <Link
         href="/vendor/dashboard/commandes"
-        className="inline-flex items-center gap-1 text-sm text-neutre-600 hover:text-neutre-900 mb-4"
+        className="inline-flex items-center gap-1 text-sm text-n-600 hover:text-n-900 mb-4"
       >
         <ArrowLeft className="h-4 w-4" />
         Retour aux commandes
@@ -185,12 +185,12 @@ export default function OrderDetailPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <h1 className="text-2xl font-bold text-principale-800">
+            <h1 className="text-2xl font-bold text-p-800">
               {order.orderNumber}
             </h1>
             <OrderStatusBadge status={order.status} />
           </div>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-neutre-500">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-n-500">
             <span className="flex items-center gap-1">
               <User className="h-3.5 w-3.5" />
               {order.user.firstName} {order.user.lastName}
@@ -222,10 +222,8 @@ export default function OrderDetailPage() {
             {order.items.map((item) => (
               <div key={item.id} className="flex items-center gap-4 px-6 py-4">
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-neutre-900">
-                    {item.productName}
-                  </p>
-                  <p className="text-sm text-neutre-500">
+                  <p className="font-medium text-n-900">{item.productName}</p>
+                  <p className="text-sm text-n-500">
                     {item.unitPriceEuros.toFixed(2)} € / {item.productUnit}
                   </p>
                 </div>
@@ -245,12 +243,12 @@ export default function OrderDetailPage() {
                       }
                       className="w-24 text-center"
                     />
-                    <span className="text-sm text-neutre-500 w-12">
+                    <span className="text-sm text-n-500 w-12">
                       {item.productUnit}
                     </span>
                   </div>
                 ) : (
-                  <span className="text-sm text-neutre-700">
+                  <span className="text-sm text-n-700">
                     {item.adjustedQuantity ?? item.quantity} {item.productUnit}
                   </span>
                 )}
@@ -269,9 +267,9 @@ export default function OrderDetailPage() {
           </div>
 
           {/* Total */}
-          <div className="border-t px-6 py-4 flex justify-between items-center bg-neutre-50">
+          <div className="border-t px-6 py-4 flex justify-between items-center bg-n-50">
             <span className="font-semibold">Total</span>
-            <span className="font-bold text-lg text-principale-600">
+            <span className="font-bold text-lg text-p-600">
               {(newTotal ?? 0).toFixed(2)} €
             </span>
           </div>
@@ -282,14 +280,14 @@ export default function OrderDetailPage() {
       {canEdit && (
         <Card className="mb-6">
           <CardContent className="p-6">
-            <label className="block text-sm font-medium text-neutre-700 mb-2">
+            <label className="block text-sm font-medium text-n-700 mb-2">
               Note pour le client (optionnel)
             </label>
             <textarea
               value={note}
               onChange={(e) => setNote(e.target.value)}
               placeholder="Ex: Les tomates étaient un peu plus lourdes que prévu..."
-              className="w-full rounded-md border border-neutre-300 px-3 py-2 text-sm resize-none"
+              className="w-full rounded-md border border-n-300 px-3 py-2 text-sm resize-none"
               rows={2}
             />
           </CardContent>
@@ -303,7 +301,7 @@ export default function OrderDetailPage() {
             <Button
               onClick={handleAdjust}
               disabled={saving}
-              className="bg-tertiaire-600 hover:bg-tertiaire-700 gap-2 flex-1"
+              className="bg-t-600 hover:bg-t-700 gap-2 flex-1"
             >
               {saving ? <Loader taille={45} /> : <Save className="h-4 w-4" />}
               Enregistrer les ajustements
@@ -312,7 +310,7 @@ export default function OrderDetailPage() {
           <Button
             onClick={handleConfirm}
             disabled={actionLoading}
-            className="bg-principale-600 hover:bg-principale-700 gap-2 flex-1"
+            className="bg-p-600 hover:bg-p-700 gap-2 flex-1"
           >
             {actionLoading ? (
               <Loader taille={45} />
@@ -325,7 +323,7 @@ export default function OrderDetailPage() {
             variant="ghost"
             onClick={handleCancel}
             disabled={actionLoading}
-            className="text-secondaire-600 hover:text-secondaire-700 hover:bg-secondaire-50 gap-2"
+            className="text-s-600 hover:text-s-700 hover:bg-s-50 gap-2"
           >
             <XCircle className="h-4 w-4" />
             Annuler

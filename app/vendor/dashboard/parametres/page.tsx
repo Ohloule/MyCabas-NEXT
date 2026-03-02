@@ -157,14 +157,14 @@ export default function ParametresPage() {
     <div className="max-w-3xl">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-principale-100 rounded-lg">
-          <Settings className="w-6 h-6 text-principale-600" />
+        <div className="p-3 bg-p-100 rounded-lg">
+          <Settings className="w-6 h-6 text-p-600" />
         </div>
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-principale-800">
+          <h1 className="text-2xl sm:text-3xl font-bold text-p-800">
             Paramètres boutique
           </h1>
-          <p className="text-neutre-600">
+          <p className="text-n-600">
             Gérez les préférences de votre espace vendeur
           </p>
         </div>
@@ -191,7 +191,7 @@ export default function ParametresPage() {
                 >
                   Notifications push
                 </Label>
-                <p className="text-sm text-neutre-500">
+                <p className="text-sm text-n-500">
                   Alertes en temps réel sur votre appareil
                 </p>
               </div>
@@ -212,7 +212,7 @@ export default function ParametresPage() {
                 >
                   Notifications par e-mail
                 </Label>
-                <p className="text-sm text-neutre-500">
+                <p className="text-sm text-n-500">
                   Résumés et alertes envoyés par e-mail
                 </p>
               </div>
@@ -233,7 +233,7 @@ export default function ParametresPage() {
                 >
                   Notifications par SMS
                 </Label>
-                <p className="text-sm text-neutre-500">
+                <p className="text-sm text-n-500">
                   Messages courts pour les alertes urgentes
                 </p>
               </div>
@@ -262,7 +262,7 @@ export default function ParametresPage() {
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label className="font-medium">Confirmation automatique</Label>
-                <p className="text-sm text-neutre-500">
+                <p className="text-sm text-n-500">
                   Accepter les nouvelles commandes sans validation manuelle
                 </p>
               </div>
@@ -275,7 +275,7 @@ export default function ParametresPage() {
             <div className="space-y-3">
               <div>
                 <Label className="font-medium">Date limite de commande</Label>
-                <p className="text-sm text-neutre-500 mt-0.5">
+                <p className="text-sm text-n-500 mt-0.5">
                   Jusqu'à quand les clients peuvent-ils commander avant le jour
                   du marché ?
                 </p>
@@ -284,7 +284,7 @@ export default function ParametresPage() {
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-[1fr_auto_auto] sm:items-end">
                 {/* Nombre de jours avant */}
                 <div className="space-y-1.5">
-                  <Label className="text-sm text-neutre-600">
+                  <Label className="text-sm text-n-600">
                     Jours avant le marché
                   </Label>
                   <Select value={deadlineDays} onValueChange={setDeadlineDays}>
@@ -305,7 +305,7 @@ export default function ParametresPage() {
 
                 {/* Heure */}
                 <div className="space-y-1.5">
-                  <Label className="text-sm text-neutre-600">Heure</Label>
+                  <Label className="text-sm text-n-600">Heure</Label>
                   <Select value={deadlineHour} onValueChange={setDeadlineHour}>
                     <SelectTrigger className="w-24">
                       <SelectValue />
@@ -322,7 +322,7 @@ export default function ParametresPage() {
 
                 {/* Minutes */}
                 <div className="space-y-1.5">
-                  <Label className="text-sm text-neutre-600">Minutes</Label>
+                  <Label className="text-sm text-n-600">Minutes</Label>
                   <Select
                     value={deadlineMinute}
                     onValueChange={setDeadlineMinute}
@@ -341,7 +341,7 @@ export default function ParametresPage() {
               </div>
 
               {/* Résumé lisible */}
-              <div className="bg-principale-50 border border-principale-100 rounded-lg px-4 py-2.5 text-sm text-principale-700 flex items-center gap-2">
+              <div className="bg-p-50 border border-p-100 rounded-lg px-4 py-2.5 text-sm text-p-700 flex items-center gap-2">
                 <CalendarDays className="h-4 w-4 shrink-0" />
                 <span>
                   Les commandes ferment{" "}
@@ -371,20 +371,18 @@ export default function ParametresPage() {
             </CardTitle>
             <CardDescription>
               Chaque paiement en ligne coûte{" "}
-              <strong className="text-neutre-700">0,25€ + 1,5%</strong> du
-              montant de la commande
+              <strong className="text-n-700">0,25€ + 1,5%</strong> du montant de
+              la commande
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
             {/* Explication contextuelle des frais */}
-            <div className="bg-neutre-50 border border-neutre-200 rounded-lg px-4 py-3 text-sm text-neutre-600 space-y-1">
-              <p className="font-medium text-neutre-700">Exemple concret</p>
+            <div className="bg-n-50 border border-n-200 rounded-lg px-4 py-3 text-sm text-n-600 space-y-1">
+              <p className="font-medium text-n-700">Exemple concret</p>
               <p>
                 Pour une commande de <strong>30€</strong> :{" "}
-                <span className="text-neutre-500">0,25€ + 0,45€</span> ={" "}
-                <strong className="text-neutre-800">
-                  0,70€ de frais Stripe
-                </strong>
+                <span className="text-n-500">0,25€ + 0,45€</span> ={" "}
+                <strong className="text-n-800">0,70€ de frais Stripe</strong>
               </p>
             </div>
 
@@ -397,12 +395,12 @@ export default function ParametresPage() {
                 className={cn(
                   "relative text-left rounded-xl border-2 p-4 transition-all focus:outline-none",
                   stripeFeePaidBy === "VENDOR"
-                    ? "border-principale-500 bg-principale-50"
-                    : "border-neutre-200 bg-white hover:border-neutre-300",
+                    ? "border-p-500 bg-p-50"
+                    : "border-n-200 bg-white hover:border-n-300",
                 )}
               >
                 {/* Badge recommandé */}
-                <span className="absolute top-3 right-3 inline-flex items-center gap-1 text-xs font-semibold text-principale-700 bg-principale-100 px-2 py-0.5 rounded-full">
+                <span className="absolute top-3 right-3 inline-flex items-center gap-1 text-xs font-semibold text-p-700 bg-p-100 px-2 py-0.5 rounded-full">
                   <Sparkles className="h-3 w-3" />
                   Recommandé
                 </span>
@@ -412,8 +410,8 @@ export default function ParametresPage() {
                     className={cn(
                       "mt-0.5 h-4 w-4 shrink-0 rounded-full border-2 flex items-center justify-center",
                       stripeFeePaidBy === "VENDOR"
-                        ? "border-principale-500 bg-principale-500"
-                        : "border-neutre-300",
+                        ? "border-p-500 bg-p-500"
+                        : "border-n-300",
                     )}
                   >
                     {stripeFeePaidBy === "VENDOR" && (
@@ -421,10 +419,10 @@ export default function ParametresPage() {
                     )}
                   </div>
                   <div className="space-y-1">
-                    <p className="font-semibold text-neutre-800 text-sm">
+                    <p className="font-semibold text-n-800 text-sm">
                       Je les inclus dans mes prix
                     </p>
-                    <p className="text-xs text-neutre-500 leading-relaxed">
+                    <p className="text-xs text-n-500 leading-relaxed">
                       Aucune surprise pour le client. Intégrez simplement les
                       frais dans vos tarifs — c'est la méthode la plus fluide et
                       la plus transparente.
@@ -440,8 +438,8 @@ export default function ParametresPage() {
                 className={cn(
                   "relative text-left rounded-xl border-2 p-4 transition-all focus:outline-none",
                   stripeFeePaidBy === "CUSTOMER"
-                    ? "border-principale-500 bg-principale-50"
-                    : "border-neutre-200 bg-white hover:border-neutre-300",
+                    ? "border-p-500 bg-p-50"
+                    : "border-n-200 bg-white hover:border-n-300",
                 )}
               >
                 <div className="flex items-start gap-3">
@@ -449,8 +447,8 @@ export default function ParametresPage() {
                     className={cn(
                       "mt-0.5 h-4 w-4 shrink-0 rounded-full border-2 flex items-center justify-center",
                       stripeFeePaidBy === "CUSTOMER"
-                        ? "border-principale-500 bg-principale-500"
-                        : "border-neutre-300",
+                        ? "border-p-500 bg-p-500"
+                        : "border-n-300",
                     )}
                   >
                     {stripeFeePaidBy === "CUSTOMER" && (
@@ -459,12 +457,12 @@ export default function ParametresPage() {
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <p className="font-semibold text-neutre-800 text-sm">
+                      <p className="font-semibold text-n-800 text-sm">
                         Le client les paie
                       </p>
-                      <Users className="h-3.5 w-3.5 text-neutre-400" />
+                      <Users className="h-3.5 w-3.5 text-n-400" />
                     </div>
-                    <p className="text-xs text-neutre-500 leading-relaxed">
+                    <p className="text-xs text-n-500 leading-relaxed">
                       Les frais sont calculés et ajoutés automatiquement au
                       total lors du paiement.
                     </p>
@@ -475,8 +473,8 @@ export default function ParametresPage() {
 
             {/* Message contextuel selon le choix */}
             {stripeFeePaidBy === "VENDOR" ? (
-              <div className="flex items-start gap-2.5 bg-principale-50 border border-principale-200 rounded-lg px-4 py-3 text-sm text-principale-800">
-                <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5 text-principale-600" />
+              <div className="flex items-start gap-2.5 bg-p-50 border border-p-200 rounded-lg px-4 py-3 text-sm text-p-800">
+                <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5 text-p-600" />
                 <span>
                   <strong>Astuce :</strong> Ajoutez environ{" "}
                   <strong>2 à 3 %</strong> à vos prix pour couvrir les frais
@@ -485,8 +483,8 @@ export default function ParametresPage() {
                 </span>
               </div>
             ) : (
-              <div className="flex items-start gap-2.5 bg-secondaire-50 border border-secondaire-200 rounded-lg px-4 py-3 text-sm text-secondaire-800">
-                <CreditCard className="h-4 w-4 shrink-0 mt-0.5 text-secondaire-600" />
+              <div className="flex items-start gap-2.5 bg-s-50 border border-s-200 rounded-lg px-4 py-3 text-sm text-s-800">
+                <CreditCard className="h-4 w-4 shrink-0 mt-0.5 text-s-600" />
                 <span>
                   Les frais Stripe seront affichés séparément et ajoutés au
                   total de la commande lors du paiement. Certains clients
@@ -512,7 +510,7 @@ export default function ParametresPage() {
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label className="font-medium">Activer le mode vacances</Label>
-                <p className="text-sm text-neutre-500">
+                <p className="text-sm text-n-500">
                   Votre boutique sera suspendue pendant la période définie
                 </p>
               </div>
@@ -526,7 +524,7 @@ export default function ParametresPage() {
               <>
                 <Separator />
                 <div className="space-y-3">
-                  <p className="text-sm text-secondaire-700 bg-secondaire-50 border border-secondaire-200 rounded-lg px-4 py-2.5">
+                  <p className="text-sm text-s-700 bg-s-50 border border-s-200 rounded-lg px-4 py-2.5">
                     Pendant le mode vacances, votre boutique ne sera plus
                     visible et aucune commande ne pourra être passée.
                   </p>
@@ -534,7 +532,7 @@ export default function ParametresPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Date de début */}
                     <div className="space-y-1.5">
-                      <Label className="text-sm text-neutre-600 font-medium">
+                      <Label className="text-sm text-n-600 font-medium">
                         Début des vacances
                       </Label>
                       <Popover>
@@ -568,7 +566,7 @@ export default function ParametresPage() {
 
                     {/* Date de fin */}
                     <div className="space-y-1.5">
-                      <Label className="text-sm text-neutre-600 font-medium">
+                      <Label className="text-sm text-n-600 font-medium">
                         Fin des vacances
                       </Label>
                       <Popover>
@@ -605,7 +603,7 @@ export default function ParametresPage() {
 
                   {/* Résumé vacances */}
                   {vacationStart && vacationEnd && (
-                    <div className="bg-principale-50 border border-principale-100 rounded-lg px-4 py-2.5 text-sm text-principale-700 flex items-center gap-2">
+                    <div className="bg-p-50 border border-p-100 rounded-lg px-4 py-2.5 text-sm text-p-700 flex items-center gap-2">
                       <Plane className="h-4 w-4 shrink-0" />
                       <span>
                         Boutique suspendue du{" "}

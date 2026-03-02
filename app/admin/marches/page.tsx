@@ -40,9 +40,9 @@ const STATUS_LABELS: Record<MarketStatus, string> = {
 };
 
 const STATUS_COLORS: Record<MarketStatus, string> = {
-  ACTIVE: "bg-principale-100 text-principale-800 border-principale-200",
-  PENDING: "bg-secondaire-100 text-secondaire-800 border-secondaire-200",
-  REJECTED: "bg-secondaire-100 text-secondaire-800 border-secondaire-200",
+  ACTIVE: "bg-p-100 text-p-800 border-p-200",
+  PENDING: "bg-s-100 text-s-800 border-s-200",
+  REJECTED: "bg-s-100 text-s-800 border-s-200",
 };
 
 const DAYS_FR: Record<string, string> = {
@@ -176,12 +176,12 @@ export default function AdminMarchesPage() {
     <div>
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-tertiaire-100 rounded-lg">
-          <MapPin className="w-6 h-6 text-tertiaire-600" />
+        <div className="p-3 bg-t-100 rounded-lg">
+          <MapPin className="w-6 h-6 text-t-600" />
         </div>
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Marchés</h1>
-          <p className="text-sm text-neutre-500">
+          <p className="text-sm text-n-500">
             {total} marché{total !== 1 ? "s" : ""}
             {filter !== "ALL"
               ? ` ${STATUS_LABELS[filter].toLowerCase()}${total !== 1 ? "s" : ""}`
@@ -189,7 +189,7 @@ export default function AdminMarchesPage() {
           </p>
         </div>
         {filter === "PENDING" && total > 0 && (
-          <span className="ml-auto px-3 py-1 rounded-full bg-secondaire-100 text-secondaire-800 text-sm font-semibold border border-secondaire-200">
+          <span className="ml-auto px-3 py-1 rounded-full bg-s-100 text-s-800 text-sm font-semibold border border-s-200">
             {total} en attente
           </span>
         )}
@@ -204,7 +204,7 @@ export default function AdminMarchesPage() {
             className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
               filter === s
                 ? "bg-slate-800 text-white border-slate-800"
-                : "bg-white text-neutre-600 border-neutre-200 hover:border-slate-400"
+                : "bg-white text-n-600 border-n-200 hover:border-slate-400"
             }`}
           >
             {s === "ALL" ? "Tous" : STATUS_LABELS[s]}
@@ -214,7 +214,7 @@ export default function AdminMarchesPage() {
 
       {/* Recherche */}
       <div className="relative mb-6">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutre-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-n-400" />
         <Input
           placeholder="Rechercher par nom, ville ou code postal…"
           value={search}
@@ -225,23 +225,21 @@ export default function AdminMarchesPage() {
 
       {/* Liste */}
       {loading ? (
-        <div className="text-center py-12 text-neutre-400">Chargement…</div>
+        <div className="text-center py-12 text-n-400">Chargement…</div>
       ) : markets.length === 0 ? (
-        <div className="text-center py-12 text-neutre-400">
-          Aucun marché trouvé
-        </div>
+        <div className="text-center py-12 text-n-400">Aucun marché trouvé</div>
       ) : (
         <>
           <div className="space-y-3">
             {markets.map((market) => (
               <div
                 key={market.id}
-                className="bg-white rounded-xl border border-neutre-200 p-4 md:p-5"
+                className="bg-white rounded-xl border border-n-200 p-4 md:p-5"
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <h3 className="font-semibold text-neutre-800">
+                      <h3 className="font-semibold text-n-800">
                         {market.name}
                       </h3>
                       <span
@@ -250,7 +248,7 @@ export default function AdminMarchesPage() {
                         {STATUS_LABELS[market.status]}
                       </span>
                     </div>
-                    <p className="text-sm text-neutre-500 flex items-center gap-1">
+                    <p className="text-sm text-n-500 flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5 shrink-0" />
                       {market.address}, {market.zip} {market.town}
                     </p>
@@ -260,7 +258,7 @@ export default function AdminMarchesPage() {
                       {market.openings.map((o, i) => (
                         <span
                           key={i}
-                          className="text-xs bg-neutre-100 text-neutre-600 px-2 py-0.5 rounded"
+                          className="text-xs bg-n-100 text-n-600 px-2 py-0.5 rounded"
                         >
                           {DAYS_FR[o.day] || o.day} {o.start}–{o.end}
                         </span>
@@ -269,28 +267,28 @@ export default function AdminMarchesPage() {
 
                     {/* Soumis par */}
                     {market.submittedBy ? (
-                      <p className="text-xs text-neutre-400 mt-1">
+                      <p className="text-xs text-n-400 mt-1">
                         Proposé par{" "}
-                        <span className="font-medium text-neutre-600">
+                        <span className="font-medium text-n-600">
                           {market.submittedBy.stallName}
                         </span>{" "}
                         · {market.submittedBy.user.firstName}{" "}
                         {market.submittedBy.user.lastName}
                       </p>
                     ) : (
-                      <p className="text-xs text-neutre-400 mt-1">
+                      <p className="text-xs text-n-400 mt-1">
                         Ajouté par un admin
                       </p>
                     )}
 
                     {/* Raison du rejet */}
                     {market.status === "REJECTED" && market.rejectionReason && (
-                      <p className="text-xs text-secondaire-600 mt-1 bg-secondaire-50 px-2 py-1 rounded">
+                      <p className="text-xs text-s-600 mt-1 bg-s-50 px-2 py-1 rounded">
                         Raison : {market.rejectionReason}
                       </p>
                     )}
 
-                    <p className="text-xs text-neutre-400 mt-1">
+                    <p className="text-xs text-n-400 mt-1">
                       {market._count.marketVendors} commerçant
                       {market._count.marketVendors !== 1 ? "s" : ""} inscrit
                       {market._count.marketVendors !== 1 ? "s" : ""}
@@ -302,7 +300,7 @@ export default function AdminMarchesPage() {
                     <div className="flex gap-2 shrink-0">
                       <Button
                         size="sm"
-                        className="bg-principale-600 hover:bg-principale-700 text-white"
+                        className="bg-p-600 hover:bg-p-700 text-white"
                         onClick={() => handleApprove(market.id)}
                         disabled={actionLoading}
                       >
@@ -312,7 +310,7 @@ export default function AdminMarchesPage() {
                       <Button
                         size="sm"
                         variant="outline"
-                        className="border-secondaire-300 text-secondaire-600 hover:bg-secondaire-50"
+                        className="border-s-300 text-s-600 hover:bg-s-50"
                         onClick={() => {
                           setRejectTarget(market.id);
                           setRejectReason("");
@@ -329,7 +327,7 @@ export default function AdminMarchesPage() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-secondaire-300 text-secondaire-600 hover:bg-secondaire-50 shrink-0"
+                      className="border-s-300 text-s-600 hover:bg-s-50 shrink-0"
                       onClick={() => {
                         setRejectTarget(market.id);
                         setRejectReason("");
@@ -344,7 +342,7 @@ export default function AdminMarchesPage() {
                   {market.status === "REJECTED" && (
                     <Button
                       size="sm"
-                      className="bg-principale-600 hover:bg-principale-700 text-white shrink-0"
+                      className="bg-p-600 hover:bg-p-700 text-white shrink-0"
                       onClick={() => handleApprove(market.id)}
                       disabled={actionLoading}
                     >
@@ -375,7 +373,7 @@ export default function AdminMarchesPage() {
           )}
 
           {/* Compteur */}
-          <p className="text-center text-xs text-neutre-400 mt-4">
+          <p className="text-center text-xs text-n-400 mt-4">
             {markets.length} / {total} marché{total !== 1 ? "s" : ""} affiché
             {markets.length !== 1 ? "s" : ""}
           </p>
@@ -386,13 +384,13 @@ export default function AdminMarchesPage() {
       {rejectTarget && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md">
-            <h3 className="text-lg font-semibold text-neutre-800 mb-1 flex items-center gap-2">
-              <XCircle className="w-5 h-5 text-secondaire-500" />
+            <h3 className="text-lg font-semibold text-n-800 mb-1 flex items-center gap-2">
+              <XCircle className="w-5 h-5 text-s-500" />
               {markets.find((m) => m.id === rejectTarget)?.status === "ACTIVE"
                 ? "Désactiver le marché"
                 : "Rejeter le marché"}
             </h3>
-            <p className="text-sm text-neutre-500 mb-4">
+            <p className="text-sm text-n-500 mb-4">
               Vous pouvez indiquer une raison qui sera visible par le
               commerçant.
             </p>
@@ -401,7 +399,7 @@ export default function AdminMarchesPage() {
               onChange={(e) => setRejectReason(e.target.value)}
               placeholder="Raison du rejet (optionnel)…"
               rows={3}
-              className="w-full rounded-lg border border-neutre-200 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-secondaire-300 mb-4"
+              className="w-full rounded-lg border border-n-200 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-s-300 mb-4"
             />
             <div className="flex gap-3 justify-end">
               <Button
@@ -412,7 +410,7 @@ export default function AdminMarchesPage() {
                 Annuler
               </Button>
               <Button
-                className="bg-secondaire-600 hover:bg-secondaire-700 text-white"
+                className="bg-s-600 hover:bg-s-700 text-white"
                 onClick={handleReject}
                 disabled={actionLoading}
               >

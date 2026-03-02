@@ -11,7 +11,7 @@ import TransparenceSection from "@/components/TransparenceSection";
 export default function HomePage() {
   return (
     <>
-      <div className="flex flex-col min-h-screen bg-principale-500">
+      <div className="flex flex-col min-h-screen bg-p-500">
         <Header />
         <Navbar />
         <HeroSection />
@@ -33,7 +33,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 text-center">
           <h1 className="mb-6 text-4xl font-special font-bold tracking-tight sm:text-5xl md:text-6xl">
             Trouvez les marchés
-            <span className="text-principale-600"> près de chez vous</span>
+            <span className="text-p-600"> près de chez vous</span>
           </h1>
           <p className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground">
             Découvrez les producteurs locaux, leurs produits frais et les

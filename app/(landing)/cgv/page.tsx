@@ -11,39 +11,43 @@ export default function Page() {
         <section className="align-center text-sm leading-relaxed space-y-10 text-justify">
           {/* Article 1 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-principale-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
               Article 1 – Objet
             </h2>
             <p>
               Les présentes Conditions Générales de Vente (ci-après les « CGV »)
               régissent les relations contractuelles entre, d’une part,
               l&apos;utilisateur (ci-après « le Client ») et, d’autre part, la
-              plateforme <span className="font-mycabas">myCabas</span> (ci-après « la Plateforme »), exploitée par
-              <span className="font-mycabas">MyCabas</span> SAS, dans le cadre des commandes effectuées auprès de
-              commerçants référencés sur les marchés partenaires.
+              plateforme <span className="font-mycabas">myCabas</span> (ci-après
+              « la Plateforme »), exploitée par
+              <span className="font-mycabas">MyCabas</span> SAS, dans le cadre
+              des commandes effectuées auprès de commerçants référencés sur les
+              marchés partenaires.
             </p>
           </div>
 
           {/* Article 2 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-principale-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
               Article 2 – Fonctionnement du service
             </h2>
             <p>
-              <span className="font-mycabas">MyCabas</span> permet aux utilisateurs de passer commande en ligne auprès
-              de commerçants locaux présents sur des marchés traditionnels. Le
-              Client sélectionne ses produits, paie via la plateforme, et retire
-              son panier le jour du marché.
+              <span className="font-mycabas">MyCabas</span> permet aux
+              utilisateurs de passer commande en ligne auprès de commerçants
+              locaux présents sur des marchés traditionnels. Le Client
+              sélectionne ses produits, paie via la plateforme, et retire son
+              panier le jour du marché.
             </p>
             <p className="mt-2">
-              <span className="font-mycabas">MyCabas</span> agit en tant qu'intermédiaire technique. Le contrat de
-              vente est conclu directement entre le Client et le Commerçant.
+              <span className="font-mycabas">MyCabas</span> agit en tant
+              qu'intermédiaire technique. Le contrat de vente est conclu
+              directement entre le Client et le Commerçant.
             </p>
           </div>
 
           {/* Article 3 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-principale-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
               Article 3 – Commande
             </h2>
             <p>
@@ -56,7 +60,7 @@ export default function Page() {
 
           {/* Article 4 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-principale-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
               Article 4 – Prix et paiement
             </h2>
             <p>
@@ -69,20 +73,20 @@ export default function Page() {
 
           {/* Article 5 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-principale-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
               Article 5 – Retrait des commandes
             </h2>
             <p>
               Le Client s’engage à venir retirer sa commande directement sur le
               stand du commerçant, durant les horaires indiqués. Passé ce délai,
-              ni le commerçant ni <span className="font-mycabas">myCabas</span> ne garantissent la disponibilité ou la
-              fraîcheur des produits.
+              ni le commerçant ni <span className="font-mycabas">myCabas</span>{" "}
+              ne garantissent la disponibilité ou la fraîcheur des produits.
             </p>
           </div>
 
           {/* Article 6 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-principale-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
               Article 6 – Annulation / Rétractation
             </h2>
             <p>
@@ -95,7 +99,7 @@ export default function Page() {
 
           {/* Article 7 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-principale-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
               Article 7 – Litiges / Médiation
             </h2>
             <p>
@@ -108,20 +112,20 @@ export default function Page() {
 
           {/* Article 8 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-principale-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
               Article 8 – Responsabilité
             </h2>
             <p>
-              <span className="font-mycabas">MyCabas</span> ne saurait être tenue responsable des produits vendus par
-              les commerçants, ni des retards ou défauts de retrait. La
-              responsabilité incombe au commerçant à partir du moment où le
-              paiement est validé.
+              <span className="font-mycabas">MyCabas</span> ne saurait être
+              tenue responsable des produits vendus par les commerçants, ni des
+              retards ou défauts de retrait. La responsabilité incombe au
+              commerçant à partir du moment où le paiement est validé.
             </p>
           </div>
 
           {/* Article 9 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-principale-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
               Article 9 – Données personnelles
             </h2>
             <p>
@@ -134,13 +138,13 @@ export default function Page() {
 
           {/* Article 10 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-principale-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
               Article 10 – Modification des CGV
             </h2>
             <p>
-              <span className="font-mycabas">MyCabas</span> se réserve le droit de modifier à tout moment les
-              présentes CGV. Les conditions applicables sont celles en vigueur à
-              la date de la commande.
+              <span className="font-mycabas">MyCabas</span> se réserve le droit
+              de modifier à tout moment les présentes CGV. Les conditions
+              applicables sont celles en vigueur à la date de la commande.
             </p>
           </div>
 

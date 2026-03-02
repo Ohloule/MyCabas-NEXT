@@ -71,7 +71,7 @@ export default function CheckoutForm({
       />
 
       {error && (
-        <div className="bg-secondaire-50 border border-secondaire-200 text-secondaire-700 px-4 py-3 rounded-lg text-sm">
+        <div className="bg-s-50 border border-s-200 text-s-700 px-4 py-3 rounded-lg text-sm">
           {error}
         </div>
       )}
@@ -79,7 +79,7 @@ export default function CheckoutForm({
       <Button
         type="submit"
         disabled={isProcessing || !stripe || !elements}
-        className="w-full bg-secondaire-500 hover:bg-secondaire-600 h-12 text-base gap-2"
+        className="w-full bg-s-500 hover:bg-s-600 h-12 text-base gap-2"
       >
         {isProcessing ? <Loader taille={45} /> : <Lock className="h-4 w-4" />}
         {isProcessing
@@ -87,7 +87,7 @@ export default function CheckoutForm({
           : `Autoriser ${totalEuros.toFixed(2)} €`}
       </Button>
 
-      <p className="text-xs text-neutre-500 text-center">
+      <p className="text-xs text-n-500 text-center">
         Le montant sera pré-autorisé sur votre carte. Vous ne serez débité
         qu&apos;après confirmation du commerçant.
       </p>

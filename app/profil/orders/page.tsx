@@ -54,20 +54,20 @@ export default function OrdersPage() {
       <Card>
         <CardContent className="pt-6">
           <div className="text-center py-12">
-            <div className="w-16 h-16 bg-neutre-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ShoppingBag className="h-8 w-8 text-neutre-300" />
+            <div className="w-16 h-16 bg-n-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <ShoppingBag className="h-8 w-8 text-n-300" />
             </div>
-            <h3 className="font-semibold text-neutre-700 mb-2">
+            <h3 className="font-semibold text-n-700 mb-2">
               Aucune commande en cours
             </h3>
-            <p className="text-sm text-neutre-500 mb-4">
+            <p className="text-sm text-n-500 mb-4">
               Quand vous passerez une commande, elle apparaîtra ici jusqu&apos;à
               ce que vous la récupériez au marché.
             </p>
             <Link href="/search">
               <Button
                 variant="outline"
-                className="border-principale-300 text-principale-600 hover:bg-principale-50"
+                className="border-p-300 text-p-600 hover:bg-p-50"
               >
                 <ClipboardList className="h-4 w-4" />
                 Passer une commande
@@ -100,7 +100,7 @@ export default function OrdersPage() {
                       </span>
                       <OrderStatusBadge status={order.status} />
                     </div>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-neutre-500">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-n-500">
                       <span className="flex items-center gap-1">
                         <MapPin className="h-3.5 w-3.5" />
                         {order.market.name}
@@ -118,13 +118,13 @@ export default function OrdersPage() {
                       </span>
                     </div>
                   </div>
-                  <p className="font-bold text-lg text-principale-600">
+                  <p className="font-bold text-lg text-p-600">
                     {total.toFixed(2)} €
                   </p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2 text-sm text-neutre-600">
-                  <Store className="h-3.5 w-3.5 text-neutre-400" />
+                <div className="flex flex-wrap items-center gap-2 text-sm text-n-600">
+                  <Store className="h-3.5 w-3.5 text-n-400" />
                   {vendorNames.join(", ")} — {order.items.length} article
                   {order.items.length > 1 ? "s" : ""}
                 </div>

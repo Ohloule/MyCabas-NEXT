@@ -16,15 +16,15 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  PENDING_PAYMENT: "bg-neutre-100 text-neutre-600",
-  AUTHORIZED: "bg-tertiaire-100 text-tertiaire-700",
-  CONFIRMED: "bg-principale-100 text-principale-700",
-  ADJUSTED: "bg-tertiaire-100 text-tertiaire-700",
-  CAPTURED: "bg-principale-200 text-principale-800",
-  PICKED_UP: "bg-principale-100 text-principale-700",
-  CANCELLED: "bg-secondaire-100 text-secondaire-700",
-  EXPIRED: "bg-secondaire-100 text-secondaire-700",
-  REFUNDED: "bg-secondaire-100 text-secondaire-700",
+  PENDING_PAYMENT: "bg-n-100 text-n-600",
+  AUTHORIZED: "bg-t-100 text-t-700",
+  CONFIRMED: "bg-p-100 text-p-700",
+  ADJUSTED: "bg-t-100 text-t-700",
+  CAPTURED: "bg-p-200 text-p-800",
+  PICKED_UP: "bg-p-100 text-p-700",
+  CANCELLED: "bg-s-100 text-s-700",
+  EXPIRED: "bg-s-100 text-s-700",
+  REFUNDED: "bg-s-100 text-s-700",
 };
 
 export default async function AdminCommandesPage() {
@@ -58,10 +58,10 @@ export default async function AdminCommandesPage() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Commandes</h1>
-          <p className="text-sm text-neutre-500">
+          <p className="text-sm text-n-500">
             {orders.length} commande{orders.length !== 1 ? "s" : ""} · CA
             capturé :{" "}
-            <span className="font-semibold text-principale-600">
+            <span className="font-semibold text-p-600">
               {totalRevenue.toFixed(2)} €
             </span>
           </p>
@@ -69,27 +69,27 @@ export default async function AdminCommandesPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-neutre-200 overflow-hidden">
+      <div className="bg-white rounded-xl border border-n-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-neutre-100 bg-neutre-50">
-                <th className="text-left px-4 py-3 font-medium text-neutre-600">
+              <tr className="border-b border-n-100 bg-n-50">
+                <th className="text-left px-4 py-3 font-medium text-n-600">
                   Commande
                 </th>
-                <th className="text-left px-4 py-3 font-medium text-neutre-600">
+                <th className="text-left px-4 py-3 font-medium text-n-600">
                   Client
                 </th>
-                <th className="text-left px-4 py-3 font-medium text-neutre-600">
+                <th className="text-left px-4 py-3 font-medium text-n-600">
                   Marché
                 </th>
-                <th className="text-left px-4 py-3 font-medium text-neutre-600">
+                <th className="text-left px-4 py-3 font-medium text-n-600">
                   Statut
                 </th>
-                <th className="text-right px-4 py-3 font-medium text-neutre-600">
+                <th className="text-right px-4 py-3 font-medium text-n-600">
                   Total
                 </th>
-                <th className="text-right px-4 py-3 font-medium text-neutre-600">
+                <th className="text-right px-4 py-3 font-medium text-n-600">
                   Date
                 </th>
               </tr>
@@ -98,40 +98,37 @@ export default async function AdminCommandesPage() {
               {orders.map((order) => (
                 <tr
                   key={order.id}
-                  className="border-b border-neutre-50 hover:bg-neutre-50 transition-colors"
+                  className="border-b border-n-50 hover:bg-n-50 transition-colors"
                 >
-                  <td className="px-4 py-3 font-mono text-xs text-neutre-700">
+                  <td className="px-4 py-3 font-mono text-xs text-n-700">
                     {order.orderNumber}
                   </td>
                   <td className="px-4 py-3">
-                    <p className="font-medium text-neutre-800">
+                    <p className="font-medium text-n-800">
                       {order.user.firstName} {order.user.lastName}
                     </p>
-                    <p className="text-xs text-neutre-400">
-                      {order.user.email}
-                    </p>
+                    <p className="text-xs text-n-400">{order.user.email}</p>
                   </td>
-                  <td className="px-4 py-3 text-neutre-600">
+                  <td className="px-4 py-3 text-n-600">
                     {order.market.name}
-                    <span className="text-xs text-neutre-400 ml-1">
+                    <span className="text-xs text-n-400 ml-1">
                       ({order.market.town})
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <span
                       className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                        STATUS_COLORS[order.status] ||
-                        "bg-neutre-100 text-neutre-600"
+                        STATUS_COLORS[order.status] || "bg-n-100 text-n-600"
                       }`}
                     >
                       {STATUS_LABELS[order.status] || order.status}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-right font-medium text-neutre-800">
+                  <td className="px-4 py-3 text-right font-medium text-n-800">
                     {(order.adjustedTotalEuros ?? order.totalEuros).toFixed(2)}{" "}
                     €
                   </td>
-                  <td className="px-4 py-3 text-right text-xs text-neutre-400">
+                  <td className="px-4 py-3 text-right text-xs text-n-400">
                     {new Date(order.createdAt).toLocaleDateString("fr-FR")}
                   </td>
                 </tr>
@@ -139,7 +136,7 @@ export default async function AdminCommandesPage() {
             </tbody>
           </table>
           {orders.length === 0 && (
-            <p className="text-center py-12 text-neutre-400">Aucune commande</p>
+            <p className="text-center py-12 text-n-400">Aucune commande</p>
           )}
         </div>
       </div>

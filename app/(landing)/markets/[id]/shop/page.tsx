@@ -216,7 +216,7 @@ export default function ShopPage() {
 
   if (status === "loading" || (status === "authenticated" && loading)) {
     return (
-      <div className="min-h-screen bg-secondaire-50/50 flex items-center justify-center">
+      <div className="min-h-screen bg-s-50/50 flex items-center justify-center">
         <Loader taille={45} />
       </div>
     );
@@ -224,9 +224,9 @@ export default function ShopPage() {
 
   if (error || !market) {
     return (
-      <div className="min-h-screen bg-secondaire-50/50 flex items-center justify-center">
+      <div className="min-h-screen bg-s-50/50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-lg font-medium text-neutre-700">
+          <p className="text-lg font-medium text-n-700">
             {error || "Marché introuvable"}
           </p>
           <Link href="/markets" className="mt-4 inline-block">
@@ -244,9 +244,9 @@ export default function ShopPage() {
   const nextMarketDate = selectedDay ? getNextMarketDate(selectedDay) : "";
 
   return (
-    <div className="min-h-screen bg-secondaire-25">
+    <div className="min-h-screen bg-s-25">
       <HeadingPage title={market.name}>
-        <div className="flex items-center justify-center gap-2 mt-2 text-principale-100">
+        <div className="flex items-center justify-center gap-2 mt-2 text-p-100">
           <ShoppingBasket className="h-5 w-5" />
           <span className="text-base font-medium">
             Faire son marché · {dayLabel}
@@ -263,7 +263,7 @@ export default function ShopPage() {
             </Button>
           </Link>
           {nextMarketDate && (
-            <div className="flex items-center gap-2 rounded-lg border border-principale-200 bg-principale-50 px-3 py-1.5 text-sm text-principale-700">
+            <div className="flex items-center gap-2 rounded-lg border border-p-200 bg-p-50 px-3 py-1.5 text-sm text-p-700">
               <CalendarDays className="h-4 w-4 shrink-0" />
               <span>
                 Prochain marché :{" "}
@@ -271,7 +271,7 @@ export default function ShopPage() {
               </span>
             </div>
           )}
-          <span className="text-sm text-neutre-500">
+          <span className="text-sm text-n-500">
             {vendors.length} commerçant{vendors.length > 1 ? "s" : ""} présent
             {vendors.length > 1 ? "s" : ""} le {dayLabel}
           </span>
@@ -282,11 +282,11 @@ export default function ShopPage() {
 
         {/* Filtres sticky */}
         {vendors.length > 0 && (
-          <div className="sticky top-0 z-20 -mx-4 px-4 py-3 mb-6 bg-secondaire-25/95 backdrop-blur-sm border-b border-neutre-100 space-y-3">
+          <div className="sticky top-0 z-20 -mx-4 px-4 py-3 mb-6 bg-s-25/95 backdrop-blur-sm border-b border-n-100 space-y-3">
             {/* Barre de recherche + bouton panier */}
             <div className="flex items-center gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutre-400 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-n-400 pointer-events-none" />
                 <Input
                   type="text"
                   placeholder="Rechercher un produit ou un commerçant…"
@@ -297,7 +297,7 @@ export default function ShopPage() {
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutre-400 hover:text-neutre-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-n-400 hover:text-n-600"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -306,7 +306,7 @@ export default function ShopPage() {
 
               {/* Bouton panier */}
               <Link href="/panier">
-                <Button className="bg-secondaire-500 hover:bg-secondaire-600 gap-2 whitespace-nowrap">
+                <Button className="bg-s-500 hover:bg-s-600 gap-2 whitespace-nowrap">
                   <ShoppingCart className="h-4 w-4" />
                   {cartTotalLabel ? cartTotalLabel : "Panier"}
                 </Button>
@@ -320,8 +320,8 @@ export default function ShopPage() {
                   onClick={() => setSelectedCategory(null)}
                   className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                     selectedCategory === null
-                      ? "bg-principale-600 text-white"
-                      : "bg-white border border-neutre-200 text-neutre-600 hover:border-principale-300"
+                      ? "bg-p-600 text-white"
+                      : "bg-white border border-n-200 text-n-600 hover:border-p-300"
                   }`}
                 >
                   Tout
@@ -334,8 +334,8 @@ export default function ShopPage() {
                     }
                     className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                       selectedCategory === cat
-                        ? "bg-principale-600 text-white"
-                        : "bg-white border border-neutre-200 text-neutre-600 hover:border-principale-300"
+                        ? "bg-p-600 text-white"
+                        : "bg-white border border-n-200 text-n-600 hover:border-p-300"
                     }`}
                   >
                     {cat}
@@ -348,8 +348,8 @@ export default function ShopPage() {
 
         {/* Bandeau vendeur unique */}
         {vendorId && vendors.find((v) => v.id === vendorId) && (
-          <div className="mb-4 flex items-center justify-between rounded-lg bg-principale-50 border border-principale-200 px-4 py-3">
-            <span className="text-sm font-medium text-principale-700">
+          <div className="mb-4 flex items-center justify-between rounded-lg bg-p-50 border border-p-200 px-4 py-3">
+            <span className="text-sm font-medium text-p-700">
               Produits de{" "}
               <span className="font-semibold">
                 {vendors.find((v) => v.id === vendorId)?.stallName}
@@ -357,7 +357,7 @@ export default function ShopPage() {
             </span>
             <Link
               href={`/markets/${marketId}/shop?day=${selectedDay?.toLowerCase()}`}
-              className="text-sm text-principale-600 hover:underline font-medium"
+              className="text-sm text-p-600 hover:underline font-medium"
             >
               Voir tous les commerçants
             </Link>

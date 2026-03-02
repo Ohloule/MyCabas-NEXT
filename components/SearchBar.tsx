@@ -56,19 +56,19 @@ export default function SearchBar({ className }: SearchBarProps) {
     <div className={`relative ${className}`}>
       <form onSubmit={handleSearch} className="flex items-center">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutre-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-n-400" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Code postal ou produit, commerçant..."
-            className="w-full h-10 pl-10 pr-4 rounded-l-full border-0 bg-white text-neutre-900 placeholder:text-neutre-400 focus:outline-none focus:ring-2 focus:ring-principale-500"
+            className="w-full h-10 pl-10 pr-4 rounded-l-full border-0 bg-white text-n-900 placeholder:text-n-400 focus:outline-none focus:ring-2 focus:ring-p-500"
           />
         </div>
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-10 px-6 rounded-r-full bg-principale-400 hover:bg-principale-500 text-white"
+          className="h-10 px-6 rounded-r-full bg-p-400 hover:bg-p-500 text-white"
         >
           {isLoading ? (
             <Loader2 className="h-4 w-4 animate-spin" />

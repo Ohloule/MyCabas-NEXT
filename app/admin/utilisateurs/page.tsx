@@ -18,9 +18,9 @@ interface User {
 }
 
 const ROLE_COLORS: Record<Role, string> = {
-  CLIENT: "bg-tertiaire-100 text-tertiaire-700 border-tertiaire-200",
-  VENDOR: "bg-principale-100 text-principale-700 border-principale-200",
-  ADMIN: "bg-secondaire-100 text-secondaire-700 border-secondaire-200",
+  CLIENT: "bg-t-100 text-t-700 border-t-200",
+  VENDOR: "bg-p-100 text-p-700 border-p-200",
+  ADMIN: "bg-s-100 text-s-700 border-s-200",
 };
 
 export default function AdminUtilisateursPage() {
@@ -52,12 +52,12 @@ export default function AdminUtilisateursPage() {
     <div>
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-tertiaire-100 rounded-lg">
-          <Users className="w-6 h-6 text-tertiaire-600" />
+        <div className="p-3 bg-t-100 rounded-lg">
+          <Users className="w-6 h-6 text-t-600" />
         </div>
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Utilisateurs</h1>
-          <p className="text-sm text-neutre-500">
+          <p className="text-sm text-n-500">
             {users.length} utilisateur{users.length !== 1 ? "s" : ""}
           </p>
         </div>
@@ -72,7 +72,7 @@ export default function AdminUtilisateursPage() {
             className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
               filter === r
                 ? "bg-slate-800 text-white border-slate-800"
-                : "bg-white text-neutre-600 border-neutre-200 hover:border-slate-400"
+                : "bg-white text-n-600 border-n-200 hover:border-slate-400"
             }`}
           >
             {r === "ALL" ? "Tous" : r}
@@ -82,7 +82,7 @@ export default function AdminUtilisateursPage() {
 
       {/* Recherche */}
       <div className="relative mb-6">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutre-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-n-400" />
         <Input
           placeholder="Rechercher par nom ou email…"
           value={search}
@@ -93,9 +93,9 @@ export default function AdminUtilisateursPage() {
 
       {/* Liste */}
       {loading ? (
-        <div className="text-center py-12 text-neutre-400">Chargement…</div>
+        <div className="text-center py-12 text-n-400">Chargement…</div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-12 text-neutre-400">
+        <div className="text-center py-12 text-n-400">
           Aucun utilisateur trouvé
         </div>
       ) : (
@@ -103,11 +103,11 @@ export default function AdminUtilisateursPage() {
           {filtered.map((user) => (
             <div
               key={user.id}
-              className="bg-white rounded-xl border border-neutre-200 p-4 flex flex-wrap items-center justify-between gap-3"
+              className="bg-white rounded-xl border border-n-200 p-4 flex flex-wrap items-center justify-between gap-3"
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="font-medium text-neutre-800">
+                  <span className="font-medium text-n-800">
                     {user.firstName} {user.lastName}
                   </span>
                   <span
@@ -116,20 +116,20 @@ export default function AdminUtilisateursPage() {
                     {user.role}
                   </span>
                 </div>
-                <p className="text-sm text-neutre-500">{user.email}</p>
+                <p className="text-sm text-n-500">{user.email}</p>
                 {user.vendor && (
-                  <p className="text-xs text-neutre-400 mt-0.5">
+                  <p className="text-xs text-n-400 mt-0.5">
                     Commerce : {user.vendor.stallName}
                   </p>
                 )}
               </div>
               <div className="text-right shrink-0">
-                <div className="flex items-center gap-1 text-xs text-neutre-500 justify-end">
+                <div className="flex items-center gap-1 text-xs text-n-500 justify-end">
                   <ShoppingBag className="w-3.5 h-3.5" />
                   {user._count.orders} commande
                   {user._count.orders !== 1 ? "s" : ""}
                 </div>
-                <p className="text-xs text-neutre-400 mt-1">
+                <p className="text-xs text-n-400 mt-1">
                   {new Date(user.createdAt).toLocaleDateString("fr-FR")}
                 </p>
               </div>

@@ -79,7 +79,7 @@ export default function FavoriteMarketsSelect() {
     return (
       <Link
         href="/markets"
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-principale-400/60 text-principale-200 hover:bg-principale-600/50 hover:text-blanc transition-all text-xs font-medium"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-p-400/60 text-p-200 hover:bg-p-600/50 hover:text-blanc transition-all text-xs font-medium"
       >
         <Plus className="h-3 w-3" />
         Mes marchés
@@ -90,7 +90,7 @@ export default function FavoriteMarketsSelect() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity text-principale-100"
+        className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity text-p-100"
       >
         <MapPin className="h-4 w-4" />
         <span className="text-sm font-medium">Mes marchés</span>
@@ -100,11 +100,11 @@ export default function FavoriteMarketsSelect() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-4 w-56 lg:w-max bg-principale-50 rounded-lg shadow-lg py-2 z-50 border border-neutre-100">
+        <div className="absolute right-0 mt-4 w-56 lg:w-max bg-p-50 rounded-lg shadow-lg py-2 z-50 border border-n-100">
           {favorites.map((f) => (
             <div
               key={f.id}
-              className="flex items-center gap-2 px-4 py-2 hover:bg-principale-100 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 hover:bg-p-100 transition-colors"
             >
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -113,7 +113,7 @@ export default function FavoriteMarketsSelect() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="shrink-0 text-principale-500 hover:text-principale-700 transition-colors"
+                className="shrink-0 text-p-500 hover:text-p-700 transition-colors"
                 title="Voir sur Google Maps"
               >
                 <MapPin className="h-4 w-4" />
@@ -127,10 +127,10 @@ export default function FavoriteMarketsSelect() {
                 }}
                 className="flex flex-col flex-1 text-left cursor-pointer"
               >
-                <span className="text-sm font-medium text-neutre-800">
+                <span className="text-sm font-medium text-n-800">
                   {f.market.name}
                 </span>
-                <span className="text-xs text-neutre-500">
+                <span className="text-xs text-n-500">
                   {f.market.town} · {DAY_LABELS[f.day] ?? f.day}
                 </span>
               </button>

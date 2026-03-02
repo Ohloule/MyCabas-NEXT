@@ -196,7 +196,7 @@ export default function MarketDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-secondaire-50/50">
+      <div className="min-h-screen bg-s-50/50">
         <div className="flex items-center justify-center py-24">
           <Loader taille={45} />
         </div>
@@ -206,7 +206,7 @@ export default function MarketDetailPage() {
 
   if (error || !market) {
     return (
-      <div className="min-h-screen bg-secondaire-50/50">
+      <div className="min-h-screen bg-s-50/50">
         <div className="container mx-auto px-4 py-12">
           <div className="rounded-lg border border-dashed p-12 text-center">
             <MapPin className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
@@ -229,7 +229,7 @@ export default function MarketDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-secondaire-50/50">
+    <div className="min-h-screen bg-s-50/50">
       <HeadingPage title={market.name}>
         {/* Bouton favori - visible uniquement si un jour est sélectionné */}
         {isAuthenticated && selectedDay && (
@@ -239,8 +239,8 @@ export default function MarketDetailPage() {
               disabled={favoriteLoading}
               className={`flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full transition-all ${
                 isFavorite
-                  ? "bg-secondaire-500 text-white hover:bg-principale-800"
-                  : "bg-principale-50 text-black hover:bg-secondaire-200"
+                  ? "bg-s-500 text-white hover:bg-p-800"
+                  : "bg-p-50 text-black hover:bg-s-200"
               } ${favoriteLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
             >
               <Heart
@@ -254,14 +254,14 @@ export default function MarketDetailPage() {
             </button>
             <Link
               href={`/markets/${marketId}/shop?day=${selectedDay.toLowerCase()}`}
-              className="flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full bg-principale-600 text-white hover:bg-principale-500 transition-colors cursor-pointer"
+              className="flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full bg-p-600 text-white hover:bg-p-500 transition-colors cursor-pointer"
             >
               <ShoppingBasket className="h-5 w-5" />
               <span className="text-sm font-medium">Faire son marché</span>
             </Link>
           </div>
         )}
-        <div className="flex items-center gap-2 text-sm sm:text-base bg-principale-50/10 text-principale-50 py-2 px-6 backdrop-blur-sm w-fit mx-auto">
+        <div className="flex items-center gap-2 text-sm sm:text-base bg-p-50/10 text-p-50 py-2 px-6 backdrop-blur-sm w-fit mx-auto">
           <MapPin className="h-5 w-5" />
           <Link
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -306,7 +306,7 @@ export default function MarketDetailPage() {
                     variant={
                       selectedDay === opening.day ? "default" : "outline"
                     }
-                    className="cursor-pointer py-2 px-4 text-sm hover:bg-principale-100"
+                    className="cursor-pointer py-2 px-4 text-sm hover:bg-p-100"
                   >
                     <Clock className="mr-1 h-3 w-3" />
                     {DAYS_FR[opening.day]} {opening.start}-{opening.end}
@@ -318,8 +318,8 @@ export default function MarketDetailPage() {
             {selectedOpening ? (
               <span></span>
             ) : (
-              <div className="mt-4 p-3 bg-secondaire-50 border border-secondaire-200 rounded-lg">
-                <p className="text-sm text-secondaire-700">
+              <div className="mt-4 p-3 bg-s-50 border border-s-200 rounded-lg">
+                <p className="text-sm text-s-700">
                   Sélectionnez un jour pour voir la liste des commerçants
                   présents.
                 </p>
@@ -370,7 +370,7 @@ export default function MarketDetailPage() {
                 {/* Overlay avec bouton de connexion */}
                 <div className="absolute -top-3 -bottom-2 -right-4 -left-4 flex items-center justify-center rounded-4xl bg-white/60 backdrop-blur-[2px]">
                   <div className="text-center p-8 bg-white rounded-xl shadow-lg border max-w-md mx-4">
-                    <Store className="mx-auto mb-4 h-12 w-12 text-principale-600" />
+                    <Store className="mx-auto mb-4 h-12 w-12 text-p-600" />
                     <h3 className="text-xl font-semibold mb-2">
                       Connectez-vous pour voir les commerçants
                     </h3>
@@ -390,7 +390,7 @@ export default function MarketDetailPage() {
                       Pas encore de compte ?{" "}
                       <Link
                         href="/register"
-                        className="text-principale-600 hover:underline font-medium"
+                        className="text-p-600 hover:underline font-medium"
                       >
                         Créer un compte
                       </Link>

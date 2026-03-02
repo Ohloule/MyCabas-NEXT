@@ -2,11 +2,11 @@ import Image from "next/image";
 
 export default function QualiteProductSection() {
   return (
-    <section className="py-16 md:px-6 bg-secondaire-200 selection:bg-secondaire-300">
+    <section className="py-16 md:px-6 bg-s-200 selection:bg-s-300">
       <div className="align-center grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Texte qualitatif */}
         <div>
-          <h2 className="text-4xl lg:text-5xl font-special text-principale-700 mb-6">
+          <h2 className="text-4xl lg:text-5xl font-special text-p-700 mb-6">
             Des produits que vous pouvez regarder dans les yeux
           </h2>
 
@@ -32,7 +32,7 @@ export default function QualiteProductSection() {
             à vos achats.
           </p>
 
-          <p className="text-lg font-medium text-principale-700 mt-6">
+          <p className="text-lg font-medium text-p-700 mt-6">
             🌱 Frais. Local. Engagé. Et ça se sent dans l’assiette.
           </p>
         </div>
