@@ -85,7 +85,7 @@ export default function CheckoutPage() {
         <HeadingPage title="Paiement" />
         <div className="align-center py-24 flex flex-col items-center gap-4">
           <Loader taille={45} />
-          <p className="text-n-600">Préparation de votre commande...</p>
+          <p className="text-neu-600">Préparation de votre commande...</p>
         </div>
       </>
     );
@@ -96,11 +96,11 @@ export default function CheckoutPage() {
       <>
         <HeadingPage title="Paiement" />
         <div className="align-center py-16 text-center">
-          <AlertCircle className="h-16 w-16 text-s-300 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-n-700 mb-2">
+          <AlertCircle className="h-16 w-16 text-sec300 mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-neu-700 mb-2">
             Impossible de créer la commande
           </h2>
-          <p className="text-n-500 mb-6 max-w-md mx-auto">{error}</p>
+          <p className="text-neu-500 mb-6 max-w-md mx-auto">{error}</p>
           <Link href="/panier">
             <Button variant="outline" className="gap-2">
               <ArrowLeft className="h-4 w-4" />
@@ -141,7 +141,7 @@ export default function CheckoutPage() {
         {/* Retour panier */}
         <Link
           href="/panier"
-          className="inline-flex items-center gap-1 text-sm text-n-600 hover:text-n-900 mb-6"
+          className="inline-flex items-center gap-1 text-sm text-neu-600 hover:text-neu-900 mb-6"
         >
           <ArrowLeft className="h-4 w-4" />
           Retour au panier
@@ -149,8 +149,8 @@ export default function CheckoutPage() {
 
         {/* Infos marché */}
         {cart?.market && (
-          <div className="flex items-center gap-2 text-sm text-n-600 mb-6 bg-p-50 rounded-lg px-4 py-3">
-            <MapPin className="h-4 w-4 text-p-600 shrink-0" />
+          <div className="flex items-center gap-2 text-sm text-neu-600 mb-6 bg-prin-50 rounded-lg px-4 py-3">
+            <MapPin className="h-4 w-4 text-prin-600 shrink-0" />
             <span>
               Marché de <strong>{cart.market.name}</strong> —{" "}
               {cart.market.address}, {cart.market.town}
@@ -165,9 +165,9 @@ export default function CheckoutPage() {
 
             {Object.values(itemsByVendor).map(({ vendor, items }) => (
               <Card key={vendor.id}>
-                <div className="px-4 py-3 bg-n-50 border-b rounded-t-lg flex items-center gap-2">
-                  <Store className="h-4 w-4 text-p-600" />
-                  <span className="font-medium text-sm text-n-700">
+                <div className="px-4 py-3 bg-neu-50 border-b rounded-ter-lg flex items-center gap-2">
+                  <Store className="h-4 w-4 text-prin-600" />
+                  <span className="font-medium text-sm text-neu-700">
                     {vendor.stallName}
                   </span>
                 </div>
@@ -178,15 +178,15 @@ export default function CheckoutPage() {
                       className="flex items-center justify-between px-4 py-3"
                     >
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-n-900 truncate">
+                        <p className="font-medium text-neu-900 truncate">
                           {item.product.name}
                         </p>
-                        <p className="text-sm text-n-500">
+                        <p className="text-sm text-neu-500">
                           {item.quantity} {item.product.unit} x{" "}
                           {item.product.basePrice.toFixed(2)} €
                         </p>
                       </div>
-                      <p className="font-semibold text-n-900 shrink-0 ml-4">
+                      <p className="font-semibold text-neu-900 shrink-0 ml-4">
                         {(item.product.basePrice * item.quantity).toFixed(2)} €
                       </p>
                     </div>
@@ -196,9 +196,9 @@ export default function CheckoutPage() {
             ))}
 
             {/* Total */}
-            <div className="flex justify-between items-center px-4 py-4 bg-n-50 rounded-lg">
+            <div className="flex justify-between items-center px-4 py-4 bg-neu-50 rounded-lg">
               <span className="font-semibold text-lg">Total</span>
-              <span className="font-bold text-xl text-p-600">
+              <span className="font-bold text-xl text-prin-600">
                 {checkoutData.totalEuros.toFixed(2)} €
               </span>
             </div>
@@ -211,7 +211,7 @@ export default function CheckoutPage() {
                 <h2 className="font-semibold text-lg mb-1">
                   Paiement sécurisé
                 </h2>
-                <p className="text-sm text-n-500 mb-6">
+                <p className="text-sm text-neu-500 mb-6">
                   Commande n° {checkoutData.orderNumber}
                 </p>
 

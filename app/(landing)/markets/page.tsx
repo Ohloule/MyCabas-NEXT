@@ -520,7 +520,7 @@ export default function MarketsPage() {
   const isLocationSearch = userLocation || selectedLocation;
 
   return (
-    <div className="min-h-screen bg-s-50/50">
+    <div className="min-h-screen bg-sec50/50">
       <HeadingPage title="Trouver un marché près de chez vous !">
         {" "}
         <p className="text-lg ">
@@ -532,21 +532,21 @@ export default function MarketsPage() {
         {/* Alerte si l'utilisateur doit choisir un marché favori */}
         {showFavoriteAlert && (
           <div className="mb-6 relative">
-            <div className="flex items-start gap-3 p-4 rounded-lg bg-s-50 border border-s-200">
-              <AlertCircle className="h-5 w-5 text-s-600 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3 p-4 rounded-lg bg-sec50 border border-sec200">
+              <AlertCircle className="h-5 w-5 text-sec600 shrink-0 mt-0.5" />
               <div className="flex-1">
-                <h3 className="font-semibold text-s-800">
+                <h3 className="font-semibold text-sec800">
                   Choisissez votre marché favori
                 </h3>
-                <p className="text-sm text-s-700 mt-1">
+                <p className="text-sm text-sec700 mt-1">
                   Pour accéder à la recherche de produits, vous devez
                   d&apos;abord ajouter au moins un marché à vos favoris. Trouvez
                   un marché près de chez vous et cliquez sur le bouton{" "}
-                  <Heart className="inline h-4 w-4 text-s-500" /> pour
+                  <Heart className="inline h-4 w-4 text-sec500" /> pour
                   l&apos;ajouter.
                 </p>
                 {(pendingQuery || pendingCategory) && (
-                  <p className="text-xs text-s-600 mt-2">
+                  <p className="text-xs text-sec600 mt-2">
                     Votre recherche{" "}
                     {pendingQuery && <>&quot;{pendingQuery}&quot;</>}{" "}
                     {pendingCategory && `(catégorie: ${pendingCategory})`} sera
@@ -556,7 +556,7 @@ export default function MarketsPage() {
               </div>
               <button
                 onClick={() => setShowFavoriteAlert(false)}
-                className="text-s-600 hover:text-s-800 p-1"
+                className="text-sec600 hover:text-sec800 p-1"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -589,7 +589,7 @@ export default function MarketsPage() {
 
                   {/* Liste des suggestions */}
                   {showSuggestions && (
-                    <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-auto rounded-lg border bg-n-50 shadow-lg">
+                    <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-auto rounded-lg border bg-neu-50 shadow-lg">
                       {suggestionsLoading ? (
                         <div className="flex items-center justify-center py-4">
                           <Loader taille={45} />
@@ -600,21 +600,21 @@ export default function MarketsPage() {
                             key={index}
                             type="button"
                             onClick={() => handleSelectSuggestion(suggestion)}
-                            className="flex w-full items-start gap-2 px-4 py-3 text-left hover:bg-n-50 transition-colors"
+                            className="flex w-full items-start gap-2 px-4 py-3 text-left hover:bg-neu-50 transition-colors"
                           >
-                            <MapPin className="h-4 w-4 mt-0.5 text-p-600 shrink-0" />
+                            <MapPin className="h-4 w-4 mt-0.5 text-prin-600 shrink-0" />
                             <div>
                               <div className="font-medium">
                                 {suggestion.city || suggestion.label}
                               </div>
-                              <div className="text-sm text-n-500">
+                              <div className="text-sm text-neu-500">
                                 {suggestion.postcode} - {suggestion.context}
                               </div>
                             </div>
                           </button>
                         ))
                       ) : (
-                        <div className="px-4 py-3 text-sm text-n-500">
+                        <div className="px-4 py-3 text-sm text-neu-500">
                           Aucun résultat
                         </div>
                       )}
@@ -698,7 +698,7 @@ export default function MarketsPage() {
                     onClick={() => toggleDay(day)}
                     className={
                       !hasMarkets
-                        ? "opacity-50 bg-p-400 hover:bg-p-400 cursor-not-allowed"
+                        ? "opacity-50 bg-prin-400 hover:bg-prin-400 cursor-not-allowed"
                         : ""
                     }
                   >
@@ -713,13 +713,13 @@ export default function MarketsPage() {
 
           {/* Indication de la recherche active */}
           {selectedLocation && (
-            <div className="mt-4 flex items-center gap-2 text-sm text-p-700">
+            <div className="mt-4 flex items-center gap-2 text-sm text-prin-700">
               <MapPin className="h-4 w-4" />
               Recherche autour de : <strong>{selectedLocation.label}</strong>
             </div>
           )}
           {userLocation && (
-            <div className="mt-4 flex items-center gap-2 text-sm text-p-700">
+            <div className="mt-4 flex items-center gap-2 text-sm text-prin-700">
               <Navigation className="h-4 w-4" />
               Recherche autour de votre position
             </div>
@@ -813,7 +813,7 @@ export default function MarketsPage() {
                           >
                             <Badge
                               variant="outline"
-                              className="justify-center py-1 w-full cursor-pointer hover:bg-p-50 hover:border-p-300 transition-colors"
+                              className="justify-center py-1 w-full cursor-pointer hover:bg-prin-50 hover:border-prin-300 transition-colors"
                             >
                               {DAYS_FR[opening.day]}
                               <br /> {opening.start}-{opening.end}

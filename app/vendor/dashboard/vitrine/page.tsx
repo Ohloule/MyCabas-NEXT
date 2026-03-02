@@ -321,14 +321,14 @@ export default function ParametresPage() {
     <div className="">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-p-100 rounded-lg">
-          <Settings className="w-6 h-6 text-p-600" />
+        <div className="p-3 bg-prin-100 rounded-lg">
+          <Settings className="w-6 h-6 text-prin-600" />
         </div>
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-p-800">
+          <h1 className="text-2xl sm:text-3xl font-bold text-prin-800">
             Vitrine de la boutique
           </h1>
-          <p className="text-n-600">
+          <p className="text-neu-600">
             Personnalisez votre vitrine et vos informations visible par le
             public
           </p>
@@ -337,14 +337,14 @@ export default function ParametresPage() {
 
       {/* Messages */}
       {error && (
-        <div className="bg-s-50 border border-s-200 text-s-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+        <div className="bg-sec50 border border-sec200 text-sec700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
           <AlertCircle className="h-5 w-5 shrink-0" />
           <span className="text-sm">{error}</span>
         </div>
       )}
 
       {success && (
-        <div className="bg-p-50 border border-p-200 text-p-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+        <div className="bg-prin-50 border border-prin-200 text-prin-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
           <CheckCircle className="h-5 w-5 shrink-0" />
           <span className="text-sm">{success}</span>
         </div>
@@ -370,7 +370,7 @@ export default function ParametresPage() {
               <div className="flex flex-col sm:flex-row items-start gap-6">
                 {/* Aperçu actuel */}
                 <div className="shrink-0">
-                  <div className="w-40 h-28 rounded-lg overflow-hidden border-2 border-n-200 bg-n-50">
+                  <div className="w-40 h-28 rounded-lg overflow-hidden border-2 border-neu-200 bg-neu-50">
                     {logoPreview || settings?.logoUrl ? (
                       <Image
                         src={logoPreview || settings!.logoUrl!}
@@ -381,7 +381,7 @@ export default function ParametresPage() {
                         unoptimized
                       />
                     ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center text-n-400">
+                      <div className="w-full h-full flex flex-col items-center justify-center text-neu-400">
                         <ImageIcon className="h-8 w-8 mb-1" />
                         <span className="text-xs">Aucune photo</span>
                       </div>
@@ -401,8 +401,8 @@ export default function ParametresPage() {
                     onClick={() => fileInputRef.current?.click()}
                     className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
                       dragOver
-                        ? "border-p-500 bg-p-50"
-                        : "border-n-300 hover:border-p-400 hover:bg-n-50"
+                        ? "border-prin-500 bg-prin-50"
+                        : "border-neu-300 hover:border-prin-400 hover:bg-neu-50"
                     }`}
                   >
                     <input
@@ -415,23 +415,23 @@ export default function ParametresPage() {
                     {uploading ? (
                       <div className="flex flex-col items-center gap-2">
                         <Loader taille={45} />
-                        <span className="text-sm text-n-600">
+                        <span className="text-sm text-neu-600">
                           Upload en cours...
                         </span>
                       </div>
                     ) : (
                       <div className="flex flex-col items-center gap-2">
-                        <Upload className="h-8 w-8 text-n-400" />
+                        <Upload className="h-8 w-8 text-neu-400" />
                         <div>
-                          <span className="text-sm font-medium text-p-600">
+                          <span className="text-sm font-medium text-prin-600">
                             Cliquez ou glissez
                           </span>
-                          <span className="text-sm text-n-500">
+                          <span className="text-sm text-neu-500">
                             {" "}
                             une image ici
                           </span>
                         </div>
-                        <span className="text-xs text-n-400">
+                        <span className="text-xs text-neu-400">
                           JPG, PNG ou WebP - 5 Mo max
                         </span>
                       </div>
@@ -444,7 +444,7 @@ export default function ParametresPage() {
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="mt-2 text-s-600 hover:text-s-700 hover:bg-s-50"
+                      className="mt-2 text-sec600 hover:text-sec700 hover:bg-sec50"
                       onClick={handleDeleteLogo}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -475,7 +475,7 @@ export default function ParametresPage() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="stallName">
-                    Nom de la boutique <span className="text-s-500">*</span>
+                    Nom de la boutique <span className="text-sec500">*</span>
                   </Label>
                   <Input
                     id="stallName"
@@ -497,7 +497,7 @@ export default function ParametresPage() {
                     placeholder="Présentez votre activité, vos produits, votre histoire..."
                     rows={4}
                   />
-                  <p className="text-xs text-n-500">
+                  <p className="text-xs text-neu-500">
                     {formData.description.length}/500 caractères
                   </p>
                 </div>
@@ -520,7 +520,7 @@ export default function ParametresPage() {
                   <div className="space-y-2">
                     <Label htmlFor="phone">Téléphone</Label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-n-400" />
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neu-400" />
                       <Input
                         id="phone"
                         name="phone"
@@ -536,7 +536,7 @@ export default function ParametresPage() {
                   <div className="space-y-2">
                     <Label htmlFor="email">Email de contact</Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-n-400" />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neu-400" />
                       <Input
                         id="email"
                         name="email"
@@ -552,7 +552,7 @@ export default function ParametresPage() {
                   <div className="space-y-2 sm:col-span-2">
                     <Label htmlFor="website">Site web</Label>
                     <div className="relative">
-                      <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-n-400" />
+                      <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neu-400" />
                       <Input
                         id="website"
                         name="website"
@@ -584,7 +584,7 @@ export default function ParametresPage() {
                   <div className="space-y-2">
                     <Label htmlFor="instagram">Instagram</Label>
                     <div className="relative">
-                      <Instagram className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-n-400" />
+                      <Instagram className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neu-400" />
                       <Input
                         id="instagram"
                         name="instagram"
@@ -600,7 +600,7 @@ export default function ParametresPage() {
                     <Label htmlFor="facebook">Facebook</Label>
                     <div className="relative">
                       <svg
-                        className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-n-400"
+                        className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neu-400"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -621,7 +621,7 @@ export default function ParametresPage() {
                     <Label htmlFor="tiktok">TikTok</Label>
                     <div className="relative">
                       <svg
-                        className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-n-400"
+                        className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neu-400"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -659,8 +659,8 @@ export default function ParametresPage() {
                       key={method.id}
                       className={`flex items-center gap-3 p-3 rounded-lg border-2 cursor-pointer transition-colors ${
                         formData.paymentMethods.includes(method.id)
-                          ? "border-p-500 bg-p-50"
-                          : "border-n-200 hover:border-n-300"
+                          ? "border-prin-500 bg-prin-50"
+                          : "border-neu-200 hover:border-neu-300"
                       }`}
                     >
                       <Checkbox
@@ -714,8 +714,8 @@ export default function ParametresPage() {
                       key={label.id}
                       className={`flex items-center gap-3 p-3 rounded-lg border-2 cursor-pointer transition-colors ${
                         formData.labels.includes(label.id)
-                          ? "border-p-500 bg-p-50"
-                          : "border-n-200 hover:border-n-300"
+                          ? "border-prin-500 bg-prin-50"
+                          : "border-neu-200 hover:border-neu-300"
                       }`}
                     >
                       <Checkbox
@@ -759,7 +759,7 @@ export default function ParametresPage() {
         {/* Colonne droite : aperçu sticky (desktop uniquement) */}
         <div className="hidden lg:block lg:w-95 shrink-0">
           <div className="sticky top-6">
-            <Card className="bg-n-50">
+            <Card className="bg-neu-50">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <Eye className="h-5 w-5" />

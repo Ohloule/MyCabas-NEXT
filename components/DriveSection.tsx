@@ -4,8 +4,8 @@ export default function DriveSection() {
   return (
     <section>
       <div className="align-center  flex flex-col md:flex-row justify-between items-center gap-8">
-        <div className="md:w-[50%] lg:h-100 bg-p-50 p-6 rounded-4xl shadow-2xl ">
-          <h1 className="font-special text-center text-4xl lg:text-6xl text-p-700 py-6">
+        <div className="md:w-[50%] lg:h-100 bg-prin-50 p-6 rounded-4xl shadow-2xl ">
+          <h1 className="font-special text-center text-4xl lg:text-6xl text-prin-700 py-6">
             Préparez le marché. Gagnez du temps.
           </h1>
           <p className="text-center mb-4">
@@ -20,7 +20,7 @@ export default function DriveSection() {
           </h2>
           <p className="text-center">Les bons produits sont à côté de vous</p>
         </div>
-        <div className="bg-p-50 rounded-4xl ">
+        <div className="bg-prin-50 rounded-4xl ">
           <Image
             src="/images/market3.png"
             alt="illustration d'un marché"

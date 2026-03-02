@@ -33,7 +33,7 @@ export default function ConfirmationPage() {
         <HeadingPage title="Confirmation" />
         <div className="align-center py-24 flex flex-col items-center gap-4">
           <Loader taille={45} />
-          <p className="text-n-600">Finalisation de votre commande...</p>
+          <p className="text-neu-600">Finalisation de votre commande...</p>
         </div>
       </>
     );
@@ -51,25 +51,25 @@ export default function ConfirmationPage() {
           <CardContent className="p-8 text-center space-y-6">
             {isSuccess ? (
               <>
-                <CheckCircle className="h-16 w-16 text-p-500 mx-auto" />
+                <CheckCircle className="h-16 w-16 text-prin-500 mx-auto" />
                 <div>
-                  <h2 className="text-2xl font-bold text-n-900 mb-2">
+                  <h2 className="text-2xl font-bold text-neu-900 mb-2">
                     Commande confirmée !
                   </h2>
                   {orderNumber && (
-                    <p className="text-p-600 font-mono font-semibold text-lg">
+                    <p className="text-prin-600 font-mono font-semibold text-lg">
                       {orderNumber}
                     </p>
                   )}
                 </div>
-                <p className="text-n-600">
+                <p className="text-neu-600">
                   Votre paiement a été pré-autorisé. Le commerçant va confirmer
                   votre commande avant le jour du marché. Vous ne serez débité
                   qu&apos;après sa confirmation.
                 </p>
-                <div className="bg-s-50 border border-s-200 rounded-lg p-4 flex items-start gap-3 text-left">
-                  <Clock className="h-5 w-5 text-s-600 shrink-0 mt-0.5" />
-                  <div className="text-sm text-s-800">
+                <div className="bg-sec50 border border-sec200 rounded-lg p-4 flex items-start gap-3 text-left">
+                  <Clock className="h-5 w-5 text-sec600 shrink-0 mt-0.5" />
+                  <div className="text-sm text-sec800">
                     <p className="font-medium">En attente de confirmation</p>
                     <p>
                       Le commerçant peut ajuster les quantités (ex: poids exact
@@ -80,7 +80,7 @@ export default function ConfirmationPage() {
                 </div>
                 <div className="flex flex-col gap-3 pt-2">
                   <Link href="/profil/orders">
-                    <Button className="w-full bg-p-500 hover:bg-p-600 gap-2">
+                    <Button className="w-full bg-prin-500 hover:bg-prin-600 gap-2">
                       <ShoppingBag className="h-4 w-4" />
                       Voir mes commandes
                     </Button>
@@ -94,19 +94,19 @@ export default function ConfirmationPage() {
               </>
             ) : isFailed ? (
               <>
-                <XCircle className="h-16 w-16 text-s-500 mx-auto" />
+                <XCircle className="h-16 w-16 text-sec500 mx-auto" />
                 <div>
-                  <h2 className="text-2xl font-bold text-n-900 mb-2">
+                  <h2 className="text-2xl font-bold text-neu-900 mb-2">
                     Paiement échoué
                   </h2>
-                  <p className="text-n-600">
+                  <p className="text-neu-600">
                     Le paiement n&apos;a pas pu être autorisé. Aucun montant
                     n&apos;a été prélevé. Vérifiez vos informations de carte et
                     réessayez.
                   </p>
                 </div>
                 <Link href="/panier">
-                  <Button className="bg-p-500 hover:bg-p-600">
+                  <Button className="bg-prin-500 hover:bg-prin-600">
                     Retour au panier
                   </Button>
                 </Link>
@@ -114,7 +114,7 @@ export default function ConfirmationPage() {
             ) : (
               <>
                 <Loader taille={45} />
-                <p className="text-n-600">
+                <p className="text-neu-600">
                   Vérification du paiement en cours...
                 </p>
               </>

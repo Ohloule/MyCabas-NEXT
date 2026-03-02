@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-n-50/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-neu-50/80 backdrop-blur-sm">
       <div className="animate-spin-slow">
         <Image
           src="/logos/loader.svg"

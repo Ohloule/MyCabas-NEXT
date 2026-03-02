@@ -474,7 +474,7 @@ export default function MarchesPage() {
             <DialogTitle>Se désinscrire du marché ?</DialogTitle>
             <DialogDescription>
               Vous êtes sur le point de vous désinscrire du marché{" "}
-              <span className="font-medium text-n-800">
+              <span className="font-medium text-neu-800">
                 {unregisterMarket?.name}
               </span>
               . Cette action supprimera votre inscription et vos jours de
@@ -501,12 +501,12 @@ export default function MarchesPage() {
       <div>
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 bg-p-100 rounded-lg">
-            <MapPin className="w-6 h-6 text-p-600" />
+          <div className="p-3 bg-prin-100 rounded-lg">
+            <MapPin className="w-6 h-6 text-prin-600" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-p-800">Mes marchés</h1>
-            <p className="text-n-600">Gérez vos inscriptions aux marchés</p>
+            <h1 className="text-3xl font-bold text-prin-800">Mes marchés</h1>
+            <p className="text-neu-600">Gérez vos inscriptions aux marchés</p>
           </div>
         </div>
 
@@ -523,11 +523,11 @@ export default function MarchesPage() {
           {myMarkets.length === 0 ? (
             <Card>
               <CardContent className="py-12 text-center">
-                <MapPin className="h-12 w-12 text-n-300 mx-auto mb-4" />
-                <p className="text-n-500">
+                <MapPin className="h-12 w-12 text-neu-300 mx-auto mb-4" />
+                <p className="text-neu-500">
                   Vous n'êtes inscrit à aucun marché pour le moment.
                 </p>
-                <p className="text-sm text-n-400 mt-1">
+                <p className="text-sm text-neu-400 mt-1">
                   Recherchez un marché ci-dessous pour vous inscrire.
                 </p>
               </CardContent>
@@ -552,7 +552,7 @@ export default function MarchesPage() {
                         </div>
                         <Badge
                           variant="default"
-                          className="bg-p-100 text-p-700 hover:bg-p-100"
+                          className="bg-prin-100 text-prin-700 hover:bg-prin-100"
                         >
                           <Check className="h-3 w-3 mr-1" />
                           Inscrit
@@ -561,7 +561,7 @@ export default function MarchesPage() {
                     </CardHeader>
                     <CardContent>
                       <div className="mb-3">
-                        <div className="flex items-center gap-2 text-sm text-n-600 mb-2">
+                        <div className="flex items-center gap-2 text-sm text-neu-600 mb-2">
                           <Calendar className="h-4 w-4" />
                           <span className="font-medium">
                             Jours de présence :
@@ -569,7 +569,7 @@ export default function MarchesPage() {
                           {!isEditing && (
                             <button
                               onClick={() => startEditDays(market)}
-                              className="ml-auto text-p-600 hover:text-p-700"
+                              className="ml-auto text-prin-600 hover:text-prin-700"
                             >
                               <Edit2 className="h-4 w-4" />
                             </button>
@@ -593,10 +593,10 @@ export default function MarchesPage() {
                                 ${isEditing ? "cursor-pointer" : "cursor-default"}
                                 ${
                                   isSelected
-                                    ? "bg-p-600 text-n-50 shadow-sm"
+                                    ? "bg-prin-600 text-neu-50 shadow-sm"
                                     : isEditing
-                                      ? "bg-n-100 text-n-600 hover:bg-n-200"
-                                      : "bg-n-100 text-n-400"
+                                      ? "bg-neu-100 text-neu-600 hover:bg-neu-200"
+                                      : "bg-neu-100 text-neu-400"
                                 }
                               `}
                               >
@@ -644,7 +644,7 @@ export default function MarchesPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="w-full text-s-600 hover:text-s-700 hover:bg-s-50"
+                          className="w-full text-sec600 hover:text-sec700 hover:bg-sec50"
                           onClick={() => handleUnregister(market.id)}
                           disabled={actionLoading === market.id}
                         >
@@ -675,15 +675,15 @@ export default function MarchesPage() {
 
           {/* Message d'info sur la localisation */}
           {locationError && !searchQuery && (
-            <div className="bg-s-50 border border-s-200 text-s-700 px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
+            <div className="bg-sec50 border border-sec200 text-sec700 px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
               <MapPin className="h-5 w-5 shrink-0" />
               <span>{locationError}</span>
             </div>
           )}
 
-          <div className="bg-n-50 rounded-xl p-4 shadow-sm border border-n-100 mb-4">
+          <div className="bg-neu-50 rounded-xl p-4 shadow-sm border border-neu-100 mb-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-n-400 z-10" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neu-400 z-10" />
               <Input
                 ref={searchInputRef}
                 type="text"
@@ -706,22 +706,22 @@ export default function MarchesPage() {
               {showSuggestions && suggestions.length > 0 && (
                 <div
                   ref={suggestionsRef}
-                  className="absolute top-full left-0 right-0 mt-1 bg-n-50 border border-n-200 rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto"
+                  className="absolute top-full left-0 right-0 mt-1 bg-neu-50 border border-neu-200 rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto"
                 >
                   {suggestions.map((suggestion, index) => (
                     <button
                       key={suggestion.id}
                       onClick={() => handleSelectSuggestion(suggestion)}
-                      className={`w-full px-4 py-3 text-left hover:bg-n-50 flex items-center gap-3 transition-colors ${
-                        index === selectedSuggestionIndex ? "bg-p-50" : ""
-                      } ${index !== suggestions.length - 1 ? "border-b border-n-100" : ""}`}
+                      className={`w-full px-4 py-3 text-left hover:bg-neu-50 flex items-center gap-3 transition-colors ${
+                        index === selectedSuggestionIndex ? "bg-prin-50" : ""
+                      } ${index !== suggestions.length - 1 ? "border-b border-neu-100" : ""}`}
                     >
-                      <MapPin className="w-4 h-4 text-p-500 shrink-0" />
+                      <MapPin className="w-4 h-4 text-prin-500 shrink-0" />
                       <div className="min-w-0">
-                        <div className="font-medium text-n-900 truncate">
+                        <div className="font-medium text-neu-900 truncate">
                           {suggestion.name}
                         </div>
-                        <div className="text-sm text-n-500">
+                        <div className="text-sm text-neu-500">
                           {suggestion.town} ({suggestion.zip})
                         </div>
                       </div>
@@ -739,8 +739,8 @@ export default function MarchesPage() {
           ) : filteredMarkets.length === 0 ? (
             <Card>
               <CardContent className="py-12 text-center">
-                <MapPin className="h-12 w-12 text-n-300 mx-auto mb-4" />
-                <p className="text-n-500">
+                <MapPin className="h-12 w-12 text-neu-300 mx-auto mb-4" />
+                <p className="text-neu-500">
                   {searchQuery
                     ? "Aucun marché trouvé pour cette recherche."
                     : "Tous les marchés sont déjà dans votre liste."}
@@ -766,7 +766,7 @@ export default function MarchesPage() {
                     </CardHeader>
                     <CardContent>
                       <div className="mb-3">
-                        <div className="flex items-center gap-2 text-sm text-n-600 mb-2">
+                        <div className="flex items-center gap-2 text-sm text-neu-600 mb-2">
                           <Clock className="h-4 w-4" />
                           <span className="font-medium">
                             Sélectionnez vos jours :
@@ -788,8 +788,8 @@ export default function MarchesPage() {
                                 px-3 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer
                                 ${
                                   isSelected
-                                    ? "bg-p-600 text-n-50 shadow-sm"
-                                    : "bg-n-100 text-n-600 hover:bg-n-200"
+                                    ? "bg-prin-600 text-neu-50 shadow-sm"
+                                    : "bg-neu-100 text-neu-600 hover:bg-neu-200"
                                 }
                               `}
                               >
@@ -836,7 +836,7 @@ export default function MarchesPage() {
           )}
 
           {filteredMarkets.length > 9 && (
-            <p className="text-center text-sm text-n-500 mt-4">
+            <p className="text-center text-sm text-neu-500 mt-4">
               {filteredMarkets.length - 9} autres marchés disponibles. Affinez
               votre recherche.
             </p>
@@ -847,7 +847,7 @@ export default function MarchesPage() {
             <Link href="/vendor/dashboard/marches/nouveau">
               <Button
                 variant="outline"
-                className="gap-2 text-p-700 border-p-300 hover:bg-p-50"
+                className="gap-2 text-prin-700 border-prin-300 hover:bg-prin-50"
               >
                 <HelpCircle className="h-4 w-4" />
                 Vous ne trouvez pas votre marché ? Proposez-le !

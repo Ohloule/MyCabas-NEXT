@@ -64,7 +64,7 @@ export default function Page() {
         </p>
       </HeadingPage>
 
-      <section className="bg-p-50/10 text-n-800 py-16 px-0 md:px-20">
+      <section className="bg-prin-50/10 text-neu-800 py-16 px-0 md:px-20">
         <div className="align-center">
           <div className="grid md:grid-cols-2 gap-10 items-center mb-16">
             <div className="space-y-6 text-lg text-justify">
@@ -101,9 +101,9 @@ export default function Page() {
           >
             <CarouselContent className="flex gap-6 items-end">
               <CarouselItem className="min-w-70 sm:min-w-87.5">
-                <Card className="bg-p-100 rounded-2xl border-0 shadow-md">
+                <Card className="bg-prin-100 rounded-2xl border-0 shadow-md">
                   <CardContent className="p-6">
-                    <h3 className="font-special text-3xl font-semibold mb-2 text-p-800">
+                    <h3 className="font-special text-3xl font-semibold mb-2 text-prin-800">
                       Une commande simple
                     </h3>
                     <p>
@@ -114,9 +114,9 @@ export default function Page() {
                 </Card>
               </CarouselItem>
               <CarouselItem className="min-w-70 sm:min-w-87.5">
-                <Card className="bg-s-100 border-0 rounded-2xl shadow-md">
+                <Card className="bg-sec100 border-0 rounded-2xl shadow-md">
                   <CardContent className="p-6">
-                    <h3 className="font-special text-3xl font-semibold mb-2 text-s-800">
+                    <h3 className="font-special text-3xl font-semibold mb-2 text-sec800">
                       Qualité locale garantie
                     </h3>
                     <p>
@@ -127,9 +127,9 @@ export default function Page() {
                 </Card>
               </CarouselItem>
               <CarouselItem className="min-w-70 sm:min-w-87.5">
-                <Card className="bg-p-100 border-0 rounded-2xl shadow-md">
+                <Card className="bg-prin-100 border-0 rounded-2xl shadow-md">
                   <CardContent className="p-6">
-                    <h3 className="font-special text-3xl font-semibold mb-2 text-p-800">
+                    <h3 className="font-special text-3xl font-semibold mb-2 text-prin-800">
                       Un outil fait pour les commerçants
                     </h3>
                     <p>
@@ -140,9 +140,9 @@ export default function Page() {
                 </Card>
               </CarouselItem>
               <CarouselItem className="min-w-70  sm:min-w-87.5">
-                <Card className="bg-s-100 border-0 rounded-2xl shadow-md ">
+                <Card className="bg-sec100 border-0 rounded-2xl shadow-md ">
                   <CardContent className="p-6">
-                    <h3 className="font-special text-3xl font-semibold mb-2 text-s-800">
+                    <h3 className="font-special text-3xl font-semibold mb-2 text-sec800">
                       Qualité locale garantie
                     </h3>
                     <p>
@@ -185,7 +185,7 @@ export default function Page() {
 
           <div
             ref={resumeRef}
-            className={`text-n-50 food-motif bg-p-700 rounded-2xl shadow-xl p-8 space-y-4 text-lg max-w-175 mx-auto transition-all duration-700 ${
+            className={`text-neu-50 food-motif bg-prin-700 rounded-2xl shadow-xl p-8 space-y-4 text-lg max-w-175 mx-auto transition-all duration-700 ${
               isResumeRevealed ? "opacity-100 scale-100" : "opacity-0 scale-0"
             }`}
           >
@@ -215,7 +215,7 @@ export default function Page() {
           </div>
 
           <div className="text-center mt-12">
-            <p className="text-xl text-p-800">
+            <p className="text-xl text-prin-800">
               <Link href={`/register`} className="underline">
                 Rejoignez le mouvement.
               </Link>{" "}

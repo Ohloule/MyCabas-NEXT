@@ -12,13 +12,13 @@ export default function CarouselIndicator({
         <div
           key={index}
           className={`h-2 w-2 rounded-full transition-all duration-300 ${
-            current === index+1
+            current === index + 1
               ? index % 2 === 0
-                ? "bg-p-700 scale-125"
-                : "bg-s-700 scale-125"
+                ? "bg-prin-700 scale-125"
+                : "bg-sec700 scale-125"
               : index % 2 === 0
-              ? "bg-p-300"
-              : "bg-s-300"
+                ? "bg-prin-300"
+                : "bg-sec300"
           }`}
         />
       ))}
@@ -27,5 +27,5 @@ export default function CarouselIndicator({
 }
 
 /* current === index+1
-              ? "bg-p-700 scale-125"
-              : "bg-p-300" */
+              ? "bg-prin-700 scale-125"
+              : "bg-prin-300" */

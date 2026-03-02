@@ -182,7 +182,7 @@ export default function IngredientImagePicker({
       {/* Input de recherche + bouton importer */}
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-n-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neu-400" />
           <Input
             placeholder="Rechercher une image..."
             value={query}
@@ -215,9 +215,9 @@ export default function IngredientImagePicker({
       </div>
 
       {/* Grille d'images */}
-      <div className="relative min-h-75 border rounded-xl p-2 bg-n-50">
+      <div className="relative min-h-75 border rounded-xl p-2 bg-neu-50">
         {loading && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center bg-n-50/60 backdrop-blur-[1px]">
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-neu-50/60 backdrop-blur-[1px]">
             <Loader taille={45} />
           </div>
         )}
@@ -243,7 +243,7 @@ export default function IngredientImagePicker({
                   }
                   className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all hover:opacity-80 ${
                     selectedUrl === img.urls.regular
-                      ? "border-t-500 ring-2 ring-t-200"
+                      ? "border-ter-500 ring-2 ring-ter-200"
                       : "border-transparent"
                   }`}
                 >
@@ -253,8 +253,8 @@ export default function IngredientImagePicker({
                     className="w-full h-full object-cover"
                   />
                   {selectedUrl === img.urls.regular && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-t-500/20">
-                      <Check className="text-n-50 bg-t-500 rounded-full p-1" />
+                    <div className="absolute inset-0 flex items-center justify-center bg-ter-500/20">
+                      <Check className="text-neu-50 bg-ter-500 rounded-full p-1" />
                     </div>
                   )}
                 </button>
@@ -272,7 +272,7 @@ export default function IngredientImagePicker({
               >
                 <ChevronLeft className="h-4 w-4 mr-1" /> Précédent
               </Button>
-              <span className="text-xs text-n-500">Page {page}</span>
+              <span className="text-xs text-neu-500">Page {page}</span>
               <Button
                 type="button"
                 variant="outline"
@@ -288,7 +288,7 @@ export default function IngredientImagePicker({
             <p className="text-sm text-center px-4">{error}</p>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center h-75 text-n-400">
+          <div className="flex flex-col items-center justify-center h-75 text-neu-400">
             <p className="text-sm text-center px-4">
               Tapez le nom d'un ingrédient pour voir les images
             </p>
@@ -299,7 +299,7 @@ export default function IngredientImagePicker({
       {/* Aperçu agrandi au survol */}
       {!disableHoverPreview && hoveredImg && (
         <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-          <div className="rounded-xl overflow-hidden shadow-2xl border border-n-200 bg-n-50">
+          <div className="rounded-xl overflow-hidden shadow-2xl border border-neu-200 bg-neu-50">
             <img
               src={hoveredImg}
               alt="Aperçu"
@@ -311,7 +311,7 @@ export default function IngredientImagePicker({
 
       {/* Crédit Unsplash */}
       {selectedUrl && (
-        <p className="text-[10px] text-n-400 italic text-center">
+        <p className="text-[10px] text-neu-400 italic text-center">
           Crédit photo : Unsplash
         </p>
       )}

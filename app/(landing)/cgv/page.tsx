@@ -7,11 +7,11 @@ export default function Page() {
         {" "}
         <p className="text-lg">Dernière mise à jour : 31 juillet 2025</p>
       </HeadingPage>
-      <div className="w-full py-16 bg-n-50 text-noir">
+      <div className="w-full py-16 bg-neu-50 text-noir">
         <section className="align-center text-sm leading-relaxed space-y-10 text-justify">
           {/* Article 1 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 1 – Objet
             </h2>
             <p>
@@ -28,7 +28,7 @@ export default function Page() {
 
           {/* Article 2 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 2 – Fonctionnement du service
             </h2>
             <p>
@@ -47,7 +47,7 @@ export default function Page() {
 
           {/* Article 3 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 3 – Commande
             </h2>
             <p>
@@ -60,7 +60,7 @@ export default function Page() {
 
           {/* Article 4 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 4 – Prix et paiement
             </h2>
             <p>
@@ -73,7 +73,7 @@ export default function Page() {
 
           {/* Article 5 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 5 – Retrait des commandes
             </h2>
             <p>
@@ -86,7 +86,7 @@ export default function Page() {
 
           {/* Article 6 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 6 – Annulation / Rétractation
             </h2>
             <p>
@@ -99,7 +99,7 @@ export default function Page() {
 
           {/* Article 7 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 7 – Litiges / Médiation
             </h2>
             <p>
@@ -112,7 +112,7 @@ export default function Page() {
 
           {/* Article 8 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 8 – Responsabilité
             </h2>
             <p>
@@ -125,7 +125,7 @@ export default function Page() {
 
           {/* Article 9 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 9 – Données personnelles
             </h2>
             <p>
@@ -138,7 +138,7 @@ export default function Page() {
 
           {/* Article 10 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 10 – Modification des CGV
             </h2>
             <p>

@@ -14,15 +14,15 @@ export default function HeroSection() {
       style={{ backgroundImage: "url('/images/bg-HeroSection.jpg')" }}
     >
       {/* Overlay pour améliorer la lisibilité si l'image est trop claire */}
-      <div className="absolute inset-0 bg-n-900/10" />
+      <div className="absolute inset-0 bg-neu-900/10" />
 
       <div className="relative mx-auto md:mr-[10%] lg:mr-[15%] bg-s-50/75 backdrop-blur-sm max-w-xl w-[92%] p-8 md:p-12 rounded-3xl z-10 shadow-2xl border border-s">
         <div className="max-w-md">
-          <h1 className="text-3xl lg:text-5xl text-p-800 font-special leading-tight">
+          <h1 className="text-3xl lg:text-5xl text-prin-800 font-special leading-tight">
             Faites vos courses avec <br />
             des produits de qualité
           </h1>
-          <p className="text-lg text-p-900 mt-4 mb-8">
+          <p className="text-lg text-prin-900 mt-4 mb-8">
             Découvrez les producteurs locaux et les marchés de votre région en
             quelques clics.
           </p>

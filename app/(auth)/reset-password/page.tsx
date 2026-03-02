@@ -33,7 +33,9 @@ function ResetPasswordForm() {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <Link href="/" className="mx-auto mb-4 flex items-center gap-2">
-              <span className="text-7xl font-mycabas text-p-700">MyCabas</span>
+              <span className="text-7xl font-mycabas text-prin-700">
+                MyCabas
+              </span>
             </Link>
             <CardTitle className="text-4xl font-special mt-1 mb-8">
               Lien invalide
@@ -105,7 +107,9 @@ function ResetPasswordForm() {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <Link href="/" className="mx-auto mb-4 flex items-center gap-2">
-              <span className="text-7xl font-mycabas text-p-700">MyCabas</span>
+              <span className="text-7xl font-mycabas text-prin-700">
+                MyCabas
+              </span>
             </Link>
             <CardTitle className="text-4xl font-special mt-1 mb-8">
               Mot de passe modifié
@@ -117,8 +121,8 @@ function ResetPasswordForm() {
                 <CheckCircle2 className="h-8 w-8 text-primary" />
               </div>
               <p className="text-center text-sm text-muted-foreground">
-                Votre mot de passe a été réinitialisé avec succès.
-                Vous allez être redirigé vers la page de connexion...
+                Votre mot de passe a été réinitialisé avec succès. Vous allez
+                être redirigé vers la page de connexion...
               </p>
             </div>
           </CardContent>
@@ -137,7 +141,7 @@ function ResetPasswordForm() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link href="/" className="mx-auto mb-4 flex items-center gap-2">
-            <span className="text-7xl font-mycabas text-p-700">MyCabas</span>
+            <span className="text-7xl font-mycabas text-prin-700">MyCabas</span>
           </Link>
           <CardTitle className="text-4xl font-special mt-1 mb-8">
             Nouveau mot de passe

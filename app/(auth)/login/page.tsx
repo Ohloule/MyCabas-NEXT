@@ -57,7 +57,9 @@ export default function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link href="/" className="mx-auto mb-4 flex items-center gap-2">
-            <span className="text-7xl font-mycabas text-p-700 ">MyCabas</span>
+            <span className="text-7xl font-mycabas text-prin-700 ">
+              MyCabas
+            </span>
           </Link>
           <CardTitle className="text-4xl font-special mt-1 mb-8">
             Connexion
@@ -71,7 +73,7 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             {error && (
-              <div className="flex items-center gap-2 rounded-md bg-s-500/10 p-3 text-sm text-s-900">
+              <div className="flex items-center gap-2 rounded-md bg-sec500/10 p-3 text-sm text-sec900">
                 <AlertCircle className="h-4 w-4" />
                 {error}
               </div>

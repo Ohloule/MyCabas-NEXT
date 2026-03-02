@@ -37,14 +37,14 @@ const iconMap: Record<string, React.ReactNode> = {
 
 // Couleurs par catégorie
 const colorMap: Record<string, string> = {
-  "fruits-legumes": "text-p-600 bg-p-50",
+  "fruits-legumes": "text-prin-600 bg-prin-50",
   "viandes-charcuterie": "text-s-600 bg-s-50",
-  "poissons-fruits-de-mer": "text-t-600 bg-t-50",
+  "poissons-fruits-de-mer": "text-ter-600 bg-ter-50",
   "fromages-produits-laitiers": "text-s-600 bg-s-50",
   "boulangerie-patisserie": "text-s-600 bg-s-50",
   "epicerie-condiments": "text-s-600 bg-s-50",
-  boissons: "text-t-600 bg-t-50",
-  "bio-nature": "text-p-600 bg-p-50",
+  boissons: "text-ter-600 bg-ter-50",
+  "bio-nature": "text-prin-600 bg-prin-50",
 };
 
 export default function CategoriesMenu() {
@@ -83,7 +83,7 @@ export default function CategoriesMenu() {
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 text-blanc hover:bg-p-700 rounded-lg transition-colors cursor-pointer"
+        className="flex items-center gap-2 px-4 py-2 text-blanc hover:bg-prin-700 rounded-lg transition-colors cursor-pointer"
       >
         <Store className="h-5 w-5" />
         <span className="font-medium">Vos commerçants</span>
@@ -96,8 +96,8 @@ export default function CategoriesMenu() {
 
       {/* Mega menu */}
       {isOpen && (
-        <div className="absolute left-0 top-full mt-2 w-80 md:w-125 bg-n-50 rounded-xl shadow-xl border border-n-100 z-50 p-4">
-          <h3 className="text-sm font-semibold text-n-500 uppercase tracking-wide mb-3 px-2">
+        <div className="absolute left-0 top-full mt-2 w-80 md:w-125 bg-neu-50 rounded-xl shadow-xl border border-neu-100 z-50 p-4">
+          <h3 className="text-sm font-semibold text-neu-500 uppercase tracking-wide mb-3 px-2">
             Parcourir par catégorie
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -106,20 +106,20 @@ export default function CategoriesMenu() {
                 key={category.id}
                 href={`/search?category=${category.slug}`}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-n-50 transition-colors group"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-neu-50 transition-colors group"
               >
                 <div
                   className={`p-2 rounded-lg ${
-                    colorMap[category.slug] || "text-n-600 bg-n-100"
+                    colorMap[category.slug] || "text-neu-600 bg-neu-100"
                   }`}
                 >
                   {iconMap[category.slug] || <Store className="h-5 w-5" />}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-n-900 group-hover:text-p-600 transition-colors">
+                  <p className="font-medium text-neu-900 group-hover:text-prin-600 transition-colors">
                     {category.name}
                   </p>
-                  <p className="text-xs text-n-500 truncate">
+                  <p className="text-xs text-neu-500 truncate">
                     {category.description}
                   </p>
                 </div>
@@ -128,11 +128,11 @@ export default function CategoriesMenu() {
           </div>
 
           {/* Lien voir tous les commerçants */}
-          <div className="mt-4 pt-4 border-t border-n-100">
+          <div className="mt-4 pt-4 border-t border-neu-100">
             <Link
               href="/vendors"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-2 text-p-600 hover:text-p-700 font-medium transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-2 text-prin-600 hover:text-prin-700 font-medium transition-colors"
             >
               <Store className="h-4 w-4" />
               Voir tous les commerçants

@@ -52,7 +52,7 @@ export default function ForgotPasswordPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link href="/" className="mx-auto mb-4 flex items-center gap-2">
-            <span className="text-7xl font-mycabas text-p-700">MyCabas</span>
+            <span className="text-7xl font-mycabas text-prin-700">MyCabas</span>
           </Link>
           <CardTitle className="text-4xl font-special mt-1 mb-8">
             Mot de passe oublié
@@ -69,12 +69,12 @@ export default function ForgotPasswordPage() {
             <CardContent>
               <div className="flex flex-col items-center gap-4 py-4">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                  <CheckCircle2 className="h-8 w-8 text-p-500" />
+                  <CheckCircle2 className="h-8 w-8 text-prin-500" />
                 </div>
                 <p className="text-center text-sm text-muted-foreground">
-                  Si un compte existe avec l&apos;adresse <strong>{email}</strong>,
-                  vous recevrez un email avec un lien pour réinitialiser votre
-                  mot de passe.
+                  Si un compte existe avec l&apos;adresse{" "}
+                  <strong>{email}</strong>, vous recevrez un email avec un lien
+                  pour réinitialiser votre mot de passe.
                 </p>
               </div>
             </CardContent>

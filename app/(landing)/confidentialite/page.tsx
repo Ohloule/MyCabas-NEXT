@@ -6,11 +6,11 @@ export default function Page() {
       <HeadingPage title="Politique de confidentialité">
         <p className="text-lg">Dernière mise à jour : 31 juillet 2025</p>
       </HeadingPage>
-      <div className="w-full py-16 bg-n-50 text-noir">
+      <div className="w-full py-16 bg-neu-50 text-noir">
         <section className="align-center text-sm leading-relaxed space-y-10 text-justify">
           {/* Préambule */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Préambule
             </h2>
             <p>
@@ -23,7 +23,7 @@ export default function Page() {
 
           {/* Article 1 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 1 – Données collectées
             </h2>
             <p>
@@ -40,7 +40,7 @@ export default function Page() {
 
           {/* Article 2 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 2 – Utilisation des données
             </h2>
             <p>
@@ -58,7 +58,7 @@ export default function Page() {
 
           {/* Article 3 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 3 – Partage des données
             </h2>
             <p>
@@ -70,7 +70,7 @@ export default function Page() {
 
           {/* Article 4 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 4 – Paiement et sécurité
             </h2>
             <p>
@@ -83,7 +83,7 @@ export default function Page() {
 
           {/* Article 5 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 5 – Durée de conservation
             </h2>
             <p>
@@ -96,7 +96,7 @@ export default function Page() {
 
           {/* Article 6 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 6 – Droits des utilisateurs
             </h2>
             <p>
@@ -109,7 +109,7 @@ export default function Page() {
 
           {/* Article 7 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 7 – Cookies
             </h2>
             <p>
@@ -122,7 +122,7 @@ export default function Page() {
 
           {/* Article 8 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 8 – Hébergement des données
             </h2>
             <p>
@@ -136,7 +136,7 @@ export default function Page() {
 
           {/* Article 9 */}
           <div>
-            <h2 className="text-xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-xl font-bold font-special text-prin-700 mb-2">
               Article 9 – Modification de la politique
             </h2>
             <p>

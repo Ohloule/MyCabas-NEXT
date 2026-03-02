@@ -49,7 +49,7 @@ export default async function AdminDashboardPage() {
         <h1 className="text-2xl md:text-3xl font-bold text-slate-800 mb-1">
           Bonjour, {session?.user?.name?.split(" ")[0]} !
         </h1>
-        <p className="text-n-500">Voici l'état de la plateforme MyCabas</p>
+        <p className="text-neu-500">Voici l'état de la plateforme MyCabas</p>
       </div>
 
       {/* Stats */}
@@ -58,7 +58,7 @@ export default async function AdminDashboardPage() {
           title="Marchés en attente"
           value={pendingMarkets}
           icon={Clock}
-          color="bg-s-500"
+          color="bg-sec500"
           href="/admin/marches?status=PENDING"
           urgent={pendingMarkets > 0}
         />
@@ -66,28 +66,28 @@ export default async function AdminDashboardPage() {
           title="Marchés au total"
           value={totalMarkets}
           icon={MapPin}
-          color="bg-t-500"
+          color="bg-ter-500"
           href="/admin/marches"
         />
         <StatCard
           title="Commerçants"
           value={totalVendors}
           icon={Store}
-          color="bg-p-600"
+          color="bg-prin-600"
           href="/admin/commercants"
         />
         <StatCard
           title="Utilisateurs"
           value={totalUsers}
           icon={Users}
-          color="bg-t-500"
+          color="bg-ter-500"
           href="/admin/utilisateurs"
         />
         <StatCard
           title="Messages ouverts"
           value={openConversations}
           icon={MessageSquare}
-          color="bg-p-500"
+          color="bg-prin-500"
           href="/admin/messagerie"
           urgent={openConversations > 0}
         />
@@ -101,22 +101,22 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Marchés en attente */}
-      <div className="bg-n-50 rounded-xl shadow-sm border border-n-200 p-6">
+      <div className="bg-neu-50 rounded-xl shadow-sm border border-neu-200 p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-n-800 flex items-center gap-2">
-            <Clock className="w-5 h-5 text-s-500" />
+          <h2 className="text-lg font-semibold text-neu-800 flex items-center gap-2">
+            <Clock className="w-5 h-5 text-sec500" />
             Marchés en attente de validation
           </h2>
           <Link
             href="/admin/marches?status=PENDING"
-            className="text-sm text-p-600 hover:underline font-medium"
+            className="text-sm text-prin-600 hover:underline font-medium"
           >
             Voir tous →
           </Link>
         </div>
 
         {recentPendingMarkets.length === 0 ? (
-          <p className="text-n-400 text-sm text-center py-6">
+          <p className="text-neu-400 text-sm text-center py-6">
             Aucun marché en attente
           </p>
         ) : (
@@ -125,15 +125,15 @@ export default async function AdminDashboardPage() {
               <Link
                 key={market.id}
                 href="/admin/marches?status=PENDING"
-                className="flex items-center justify-between p-3 rounded-lg border border-s-100 bg-s-50 hover:bg-s-100 transition-colors group"
+                className="flex items-center justify-between p-3 rounded-lg border border-sec100 bg-sec50 hover:bg-sec100 transition-colors group"
               >
                 <div>
-                  <p className="font-medium text-n-800">{market.name}</p>
-                  <p className="text-sm text-n-500">
+                  <p className="font-medium text-neu-800">{market.name}</p>
+                  <p className="text-sm text-neu-500">
                     {market.address}, {market.zip} {market.town}
                   </p>
                   {market.submittedBy && (
-                    <p className="text-xs text-n-400 mt-0.5">
+                    <p className="text-xs text-neu-400 mt-0.5">
                       Proposé par{" "}
                       <span className="font-medium">
                         {market.submittedBy.stallName}
@@ -143,7 +143,7 @@ export default async function AdminDashboardPage() {
                     </p>
                   )}
                 </div>
-                <span className="text-xs font-semibold px-2 py-1 rounded-full bg-s-200 text-s-800">
+                <span className="text-xs font-semibold px-2 py-1 rounded-full bg-sec200 text-sec800">
                   PENDING
                 </span>
               </Link>
@@ -173,23 +173,23 @@ function StatCard({
   return (
     <Link href={href}>
       <div
-        className={`bg-n-50 rounded-xl p-4 md:p-5 shadow-sm border transition-shadow hover:shadow-md cursor-pointer ${
-          urgent ? "border-s-300" : "border-n-200"
+        className={`bg-neu-50 rounded-xl p-4 md:p-5 shadow-sm border transition-shadow hover:shadow-md cursor-pointer ${
+          urgent ? "border-sec300" : "border-neu-200"
         }`}
       >
         <div className="flex items-center justify-between gap-2">
           <div className="min-w-0">
-            <p className="text-xs md:text-sm text-n-500 truncate">{title}</p>
-            <p className="text-2xl md:text-3xl font-bold text-n-800 mt-1">
+            <p className="text-xs md:text-sm text-neu-500 truncate">{title}</p>
+            <p className="text-2xl md:text-3xl font-bold text-neu-800 mt-1">
               {value}
             </p>
           </div>
           <div className={`${color} p-2 md:p-3 rounded-lg shrink-0`}>
-            <Icon className="w-5 h-5 md:w-6 md:h-6 text-n-50" />
+            <Icon className="w-5 h-5 md:w-6 md:h-6 text-neu-50" />
           </div>
         </div>
         {urgent && value > 0 && (
-          <p className="text-xs text-s-600 font-medium mt-2">Action requise</p>
+          <p className="text-xs text-sec600 font-medium mt-2">Action requise</p>
         )}
       </div>
     </Link>

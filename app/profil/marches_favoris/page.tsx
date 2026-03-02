@@ -150,13 +150,13 @@ export default function MarchesFavorisPage() {
         <Card>
           <CardContent className="pt-6">
             <div className="text-center py-8">
-              <div className="w-16 h-16 bg-n-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="h-8 w-8 text-n-300" />
+              <div className="w-16 h-16 bg-neu-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Heart className="h-8 w-8 text-neu-300" />
               </div>
-              <h3 className="font-semibold text-n-700 mb-2">
+              <h3 className="font-semibold text-neu-700 mb-2">
                 Aucun marché favori
               </h3>
-              <p className="text-sm text-n-500 mb-4">
+              <p className="text-sm text-neu-500 mb-4">
                 Explorez les marchés et ajoutez vos préférés pour les retrouver
                 facilement.
               </p>
@@ -167,7 +167,7 @@ export default function MarchesFavorisPage() {
           <Link href="/markets">
             <Button
               variant="outline"
-              className="border-p-300 text-p-600 hover:bg-p-50"
+              className="border-prin-300 text-prin-600 hover:bg-prin-50"
             >
               <MapPin className="h-4 w-4" />
               Découvrir les marchés
@@ -190,8 +190,8 @@ export default function MarchesFavorisPage() {
           <Card key={group.market.id}>
             <CardContent className="pt-6">
               <div className="flex items-start gap-4">
-                <div className="p-2 bg-p-100 rounded-lg shrink-0">
-                  <MapPin className="h-5 w-5 text-p-600" />
+                <div className="p-2 bg-prin-100 rounded-lg shrink-0">
+                  <MapPin className="h-5 w-5 text-prin-600" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-start justify-between gap-2">
@@ -199,14 +199,14 @@ export default function MarchesFavorisPage() {
                       <h3 className="font-semibold text-lg">
                         {group.market.name}
                       </h3>
-                      <p className="text-sm text-n-500">
+                      <p className="text-sm text-neu-500">
                         {group.market.address}, {group.market.town}
                       </p>
                     </div>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-s-400 hover:text-s-600 hover:bg-s-50 shrink-0"
+                      className="text-sec400 hover:text-sec600 hover:bg-sec50 shrink-0"
                       disabled={isDeletingThis}
                       onClick={() => deleteMarket(group.market.id, group.days)}
                       aria-label="Retirer ce marché des favoris"
@@ -238,10 +238,10 @@ export default function MarchesFavorisPage() {
                               toggleDay(group.market.id, opening.day)
                             }
                           />
-                          <span className="text-sm font-medium text-n-700 group-hover:text-n-900">
+                          <span className="text-sm font-medium text-neu-700 group-hover:text-neu-900">
                             {DAY_LABELS[opening.day] || opening.day}
                           </span>
-                          <span className="text-xs text-n-400">
+                          <span className="text-xs text-neu-400">
                             {opening.start}–{opening.end}
                           </span>
                           {isToggling && (
@@ -262,7 +262,7 @@ export default function MarchesFavorisPage() {
         <Link href="/markets">
           <Button
             variant="outline"
-            className="border-p-300 text-p-600 hover:bg-p-50"
+            className="border-prin-300 text-prin-600 hover:bg-prin-50"
           >
             <MapPin className="h-4 w-4" />
             Voir tous les marchés

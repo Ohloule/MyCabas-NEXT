@@ -2,7 +2,7 @@ import HeadingPage from "@/components/HeadingPage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export default function Page() {
   return (
-    <main className="bg-n-50 text-n-900">
+    <main className="bg-neu-50 text-neu-900">
       <HeadingPage title="Tarifs & Fonctionnement">
         {" "}
         <p className="text-lg">
@@ -41,7 +41,7 @@ export default function Page() {
               quel que soit le nombre de commandes.
             </p>
 
-            <p className="mt-8 text-center text-xl bg-p-100 py-4 rounded-2xl shadow-lg">
+            <p className="mt-8 text-center text-xl bg-prin-100 py-4 rounded-2xl shadow-lg">
               <strong>Pas de vente = 0 € à payer.</strong> <br /> Vous ne prenez
               aucun risque.
             </p>
@@ -65,7 +65,7 @@ export default function Page() {
                 50 commandes pour 2000€ = <strong>5€ forfaitaire</strong>
               </li>
             </ul>
-            <p className="mt-8 text-center text-xl bg-p-100 py-4 rounded-2xl shadow-lg">
+            <p className="mt-8 text-center text-xl bg-prin-100 py-4 rounded-2xl shadow-lg">
               Quel que soit le volume de commandes, vous ne paierez jamais plus
               de <strong>5€ par marché</strong>.
             </p>
@@ -104,8 +104,8 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="bg-s-100 py-12 px-0 md:px-16 ">
-        <div className="align-center text-center selection:bg-s-300">
+      <section className="bg-sec100 py-12 px-0 md:px-16 ">
+        <div className="align-center text-center selection:bg-sec300">
           <h2 className="text-2xl font-semibold mb-4">
             🔐 Une tarification pensée pour vous, pas contre vous
           </h2>
@@ -121,39 +121,39 @@ export default function Page() {
 
       <section className="py-12 px-0 md:px-16 bg-CardSection">
         <div className="align-center grid md:grid-cols-3 gap-4">
-          <Card className="bg-p-50">
+          <Card className="bg-prin-50">
             <CardHeader>
               <CardTitle className="text-xl">Sans engagement</CardTitle>
             </CardHeader>
-            <CardContent className="text-n-700">
+            <CardContent className="text-neu-700">
               Arrêtez quand vous voulez. Vous n'avez rien à perdre : pas de
               ventes = pas de frais.
             </CardContent>
           </Card>
 
-          <Card className="bg-p-50">
+          <Card className="bg-prin-50">
             <CardHeader>
               <CardTitle className="text-xl">Tarif plafonné</CardTitle>
             </CardHeader>
-            <CardContent className="text-n-700">
+            <CardContent className="text-neu-700">
               Même si vous faites 500€ ou 5000€ de vente, vous ne paierez jamais
               plus de 5€ à <span className="font-mycabas text-xl">MyCabas</span>{" "}
               pour ce marché.
             </CardContent>
           </Card>
 
-          <Card className="bg-p-50">
+          <Card className="bg-prin-50">
             <CardHeader>
               <CardTitle className="text-xl">Zéro frais cachés</CardTitle>
             </CardHeader>
-            <CardContent className="text-n-700">
+            <CardContent className="text-neu-700">
               Pas de commission supplémentaire, pas de frais Stripe pour vous :
               tout est inclus dans les 10% ou les 5€ max.
             </CardContent>
           </Card>
         </div>
       </section>
-      <section className="py-12 px-0 md:px-16 bg-p-50 ">
+      <section className="py-12 px-0 md:px-16 bg-prin-50 ">
         <div className="align-center space-y-6 rounded-2xl text-justify">
           <h2 className="text-5xl py-8 font-special font-semibold">
             À propos des frais bancaires Stripe
@@ -166,7 +166,7 @@ export default function Page() {
             frais bancaires sur chaque transaction :
           </p>
 
-          <ul className="list-none list-inside text-n-800">
+          <ul className="list-none list-inside text-neu-800">
             <li className="">
               💳 <strong>1,5 % + 0,25 €</strong> pour les cartes bancaires
               européennes (carte française, etc.)
@@ -186,7 +186,7 @@ export default function Page() {
             un encaissement individuel.
           </p>
 
-          <div className="bg-n-50 shadow rounded-xl p-6 space-y-4 border">
+          <div className="bg-neu-50 shadow rounded-xl p-6 space-y-4 border">
             <h3 className="text-3xl font-special font-bold">
               {" "}
               Exemple concret :
@@ -216,7 +216,7 @@ export default function Page() {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div className="bg-p-100 p-4 rounded-lg ">
+              <div className="bg-prin-100 p-4 rounded-lg ">
                 <strong className="block h-8">
                   Partage des frais avec{" "}
                   <span className="font-mycabas text-xl">MyCabas</span> :
@@ -248,13 +248,13 @@ export default function Page() {
                   <li className="flex flex-row justify-between">
                     <span>Fleuriste (7,5 %)</span> <span>0,24 €</span>
                   </li>
-                  <li className="flex flex-row justify-between font-bold border-t-2 border-p-800 mt-1">
+                  <li className="flex flex-row justify-between font-bold border-ter-2 border-prin-800 mt-1">
                     <span>Total</span> <span>3,25 €</span>
                   </li>
                 </ul>
               </div>
 
-              <div className="bg-n-50 border p-4 rounded-lg text-p-800/50">
+              <div className="bg-neu-50 border p-4 rounded-lg text-prin-800/50">
                 <strong className="block h-8">Sans partage des frais :</strong>
                 <ul className="list-disc list-inside mt-2">
                   <li className="flex flex-row justify-between">
@@ -281,14 +281,14 @@ export default function Page() {
                   <li className="flex flex-row justify-between">
                     <span>Fleuriste</span> <span>0,48 €</span>
                   </li>
-                  <li className="flex flex-row justify-between font-bold border-t-2 border-p-800 mt-1">
+                  <li className="flex flex-row justify-between font-bold border-ter-2 border-prin-800 mt-1">
                     <span>Total</span> <span>5,00 €</span>
                   </li>
                 </ul>
               </div>
             </div>
 
-            <p className="mt-4 text-p-700 font-semibold">
+            <p className="mt-4 text-prin-700 font-semibold">
               ✅ Résultat : grâce à{" "}
               <span className="font-mycabas text-xl">MyCabas</span>, les
               commerçants paient ensemble
@@ -304,7 +304,7 @@ export default function Page() {
             </p>
           </div>
 
-          <p className="text-sm text-n-600 mt-4">
+          <p className="text-sm text-neu-600 mt-4">
             💡 Ces frais sont automatiquement déduits lors du reversement de vos
             gains. Vous recevez un récapitulatif clair après chaque marché.
           </p>

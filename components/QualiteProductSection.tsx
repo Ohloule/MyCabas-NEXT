@@ -6,14 +6,18 @@ export default function QualiteProductSection() {
       <div className="align-center grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Texte qualitatif */}
         <div>
-          <h2 className="text-4xl lg:text-5xl font-special text-p-700 mb-6">
+          <h2 className="text-4xl lg:text-5xl font-special text-prin-700 mb-6">
             Des produits que vous pouvez regarder dans les yeux
           </h2>
 
           <p className="text-lg mb-4 text-justify">
-            Chez <strong><span className="font-mycabas text-xl">MyCabas</span></strong>, vous commandez directement auprès de
-            commerçants passionnés, sur les marchés près de chez vous. Pas
-            d’intermédiaire, pas de plateforme opaque : ici,{" "}
+            Chez{" "}
+            <strong>
+              <span className="font-mycabas text-xl">MyCabas</span>
+            </strong>
+            , vous commandez directement auprès de commerçants passionnés, sur
+            les marchés près de chez vous. Pas d’intermédiaire, pas de
+            plateforme opaque : ici,{" "}
             <strong>vous savez d’où viennent vos produits</strong>, et surtout,
             de qui.
           </p>
@@ -32,7 +36,7 @@ export default function QualiteProductSection() {
             à vos achats.
           </p>
 
-          <p className="text-lg font-medium text-p-700 mt-6">
+          <p className="text-lg font-medium text-prin-700 mt-6">
             🌱 Frais. Local. Engagé. Et ça se sent dans l’assiette.
           </p>
         </div>

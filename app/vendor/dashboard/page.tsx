@@ -6,10 +6,10 @@ export default async function VendorDashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl md:text-3xl font-bold text-p-800 mb-2">
+      <h1 className="text-2xl md:text-3xl font-bold text-prin-800 mb-2">
         Bonjour, {session?.user?.name?.split(" ")[0]} !
       </h1>
-      <p className="text-n-600 mb-6 md:mb-8">
+      <p className="text-neu-600 mb-6 md:mb-8">
         Voici un résumé de votre activité
       </p>
 
@@ -19,42 +19,46 @@ export default async function VendorDashboardPage() {
           title="Commandes à préparer"
           value="0"
           icon={Package}
-          color="bg-t-500"
+          color="bg-ter-500"
         />
         <DashboardCard
           title="CA du mois"
           value="0 €"
           icon={TrendingUp}
-          color="bg-p-500"
+          color="bg-prin-500"
         />
         <DashboardCard
           title="Marchés actifs"
           value="0"
           icon={MapPin}
-          color="bg-t-500"
+          color="bg-ter-500"
         />
         <DashboardCard
           title="Stocks bas"
           value="0"
           icon={AlertTriangle}
-          color="bg-s-500"
+          color="bg-sec500"
         />
       </div>
 
       {/* Sections à venir */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-          <h2 className="text-xl font-semibold text-n-800 mb-4">
+        <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+          <h2 className="text-xl font-semibold text-neu-800 mb-4">
             Prochaines commandes
           </h2>
-          <p className="text-n-500 text-center py-8">Aucune commande à venir</p>
+          <p className="text-neu-500 text-center py-8">
+            Aucune commande à venir
+          </p>
         </div>
 
-        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-          <h2 className="text-xl font-semibold text-n-800 mb-4">
+        <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+          <h2 className="text-xl font-semibold text-neu-800 mb-4">
             Prochains marchés
           </h2>
-          <p className="text-n-500 text-center py-8">Aucun marché programmé</p>
+          <p className="text-neu-500 text-center py-8">
+            Aucun marché programmé
+          </p>
         </div>
       </div>
     </div>
@@ -73,16 +77,16 @@ function DashboardCard({
   color: string;
 }) {
   return (
-    <div className="bg-n-50 rounded-xl p-4 md:p-6 shadow-sm border border-n-100">
+    <div className="bg-neu-50 rounded-xl p-4 md:p-6 shadow-sm border border-neu-100">
       <div className="flex items-center justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-xs md:text-sm text-n-500 truncate">{title}</p>
-          <p className="text-xl md:text-2xl font-bold text-n-800 mt-1">
+          <p className="text-xs md:text-sm text-neu-500 truncate">{title}</p>
+          <p className="text-xl md:text-2xl font-bold text-neu-800 mt-1">
             {value}
           </p>
         </div>
         <div className={`${color} p-2 md:p-3 rounded-lg shrink-0`}>
-          <Icon className="w-5 h-5 md:w-6 md:h-6 text-n-50" />
+          <Icon className="w-5 h-5 md:w-6 md:h-6 text-neu-50" />
         </div>
       </div>
     </div>

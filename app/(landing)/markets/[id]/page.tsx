@@ -196,7 +196,7 @@ export default function MarketDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-s-50/50">
+      <div className="min-h-screen bg-sec50/50">
         <div className="flex items-center justify-center py-24">
           <Loader taille={45} />
         </div>
@@ -206,7 +206,7 @@ export default function MarketDetailPage() {
 
   if (error || !market) {
     return (
-      <div className="min-h-screen bg-s-50/50">
+      <div className="min-h-screen bg-sec50/50">
         <div className="container mx-auto px-4 py-12">
           <div className="rounded-lg border border-dashed p-12 text-center">
             <MapPin className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
@@ -229,7 +229,7 @@ export default function MarketDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-s-50/50">
+    <div className="min-h-screen bg-sec50/50">
       <HeadingPage title={market.name}>
         {/* Bouton favori - visible uniquement si un jour est sélectionné */}
         {isAuthenticated && selectedDay && (
@@ -239,8 +239,8 @@ export default function MarketDetailPage() {
               disabled={favoriteLoading}
               className={`flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full transition-all ${
                 isFavorite
-                  ? "bg-s-500 text-n-50 hover:bg-p-800"
-                  : "bg-p-50 text-n-900 hover:bg-s-200"
+                  ? "bg-sec500 text-neu-50 hover:bg-prin-800"
+                  : "bg-prin-50 text-neu-900 hover:bg-sec200"
               } ${favoriteLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
             >
               <Heart
@@ -254,14 +254,14 @@ export default function MarketDetailPage() {
             </button>
             <Link
               href={`/markets/${marketId}/shop?day=${selectedDay.toLowerCase()}`}
-              className="flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full bg-p-600 text-n-50 hover:bg-p-500 transition-colors cursor-pointer"
+              className="flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full bg-prin-600 text-neu-50 hover:bg-prin-500 transition-colors cursor-pointer"
             >
               <ShoppingBasket className="h-5 w-5" />
               <span className="text-sm font-medium">Faire son marché</span>
             </Link>
           </div>
         )}
-        <div className="flex items-center gap-2 text-sm sm:text-base bg-p-50/10 text-p-50 py-2 px-6 backdrop-blur-sm w-fit mx-auto">
+        <div className="flex items-center gap-2 text-sm sm:text-base bg-prin-50/10 text-prin-50 py-2 px-6 backdrop-blur-sm w-fit mx-auto">
           <MapPin className="h-5 w-5" />
           <Link
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -306,7 +306,7 @@ export default function MarketDetailPage() {
                     variant={
                       selectedDay === opening.day ? "default" : "outline"
                     }
-                    className="cursor-pointer py-2 px-4 text-sm hover:bg-p-100"
+                    className="cursor-pointer py-2 px-4 text-sm hover:bg-prin-100"
                   >
                     <Clock className="mr-1 h-3 w-3" />
                     {DAYS_FR[opening.day]} {opening.start}-{opening.end}
@@ -318,8 +318,8 @@ export default function MarketDetailPage() {
             {selectedOpening ? (
               <span></span>
             ) : (
-              <div className="mt-4 p-3 bg-s-50 border border-s-200 rounded-lg">
-                <p className="text-sm text-s-700">
+              <div className="mt-4 p-3 bg-sec50 border border-sec200 rounded-lg">
+                <p className="text-sm text-sec700">
                   Sélectionnez un jour pour voir la liste des commerçants
                   présents.
                 </p>
@@ -368,9 +368,9 @@ export default function MarketDetailPage() {
                 </div>
 
                 {/* Overlay avec bouton de connexion */}
-                <div className="absolute -top-3 -bottom-2 -right-4 -left-4 flex items-center justify-center rounded-4xl bg-n-50/60 backdrop-blur-[2px]">
-                  <div className="text-center p-8 bg-n-50 rounded-xl shadow-lg border max-w-md mx-4">
-                    <Store className="mx-auto mb-4 h-12 w-12 text-p-600" />
+                <div className="absolute -top-3 -bottom-2 -right-4 -left-4 flex items-center justify-center rounded-4xl bg-neu-50/60 backdrop-blur-[2px]">
+                  <div className="text-center p-8 bg-neu-50 rounded-xl shadow-lg border max-w-md mx-4">
+                    <Store className="mx-auto mb-4 h-12 w-12 text-prin-600" />
                     <h3 className="text-xl font-semibold mb-2">
                       Connectez-vous pour voir les commerçants
                     </h3>
@@ -390,7 +390,7 @@ export default function MarketDetailPage() {
                       Pas encore de compte ?{" "}
                       <Link
                         href="/register"
-                        className="text-p-600 hover:underline font-medium"
+                        className="text-prin-600 hover:underline font-medium"
                       >
                         Créer un compte
                       </Link>

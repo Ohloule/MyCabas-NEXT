@@ -2,11 +2,11 @@ import Image from "next/image";
 
 export default function TransparenceSection() {
   return (
-    <section className="py-16 md:px-6 bg-p-50">
+    <section className="py-16 md:px-6 bg-prin-50">
       <div className="align-center grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Texte explicatif */}
         <div>
-          <h2 className="text-4xl lg:text-6xl font-special text-p-700-700 mb-6">
+          <h2 className="text-4xl lg:text-6xl font-special text-prin-700-700 mb-6">
             Le même prix qu&apos;au marché !
           </h2>
           <p className="text-lg mb-4 text-justify">
@@ -24,7 +24,7 @@ export default function TransparenceSection() {
             <strong>5 € par marché actif</strong>, sans engagement, sans
             abonnement mensuel.
           </p>
-          <p className="text-sm md:text-lg  mb-8 text-center bg-p-50  p-3 rounded-2xl shadow-2xl">
+          <p className="text-sm md:text-lg  mb-8 text-center bg-prin-50  p-3 rounded-2xl shadow-2xl">
             Un marché sans commande{" "}
             <span className="font-mycabas text-xl">MyCabas</span> = 0€ <br />
             Un marché avec 100€ de commande = 5€
@@ -42,7 +42,7 @@ export default function TransparenceSection() {
             Notre modèle est simple : nous ne gagnons de l’argent que si la
             commande est réussie et que tout le monde est satisfait.
           </p>
-          <p className="text-lg font-medium text-p-900 mt-6">
+          <p className="text-lg font-medium text-prin-900 mt-6">
             🍅 Acheter local, sans surprise, c’est aussi ça l’esprit{" "}
             <span className="font-mycabas text-xl">MyCabas</span>.
           </p>

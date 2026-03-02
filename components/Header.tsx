@@ -72,7 +72,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="w-full food-motif bg-p-700 py-5 sm:py-2">
+      <header className="w-full food-motif bg-prin-700 py-5 sm:py-2">
         <div className="align-center h-full flex flex-row justify-between items-center gap-4">
           {/* Logo */}
           <div className="h-full place-content-center shrink-0">
@@ -109,7 +109,7 @@ export default function Header() {
               <>
                 {session.user.role === "VENDOR" && (
                   <Link href="/vendor/dashboard">
-                    <Button className="bg-p-600 hover:bg-p-500">
+                    <Button className="bg-prin-600 hover:bg-prin-500">
                       <Store className="h-4 w-4" />
                       Mon commerce
                     </Button>
@@ -125,7 +125,7 @@ export default function Header() {
                     className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
                   >
                     {/* Avatar */}
-                    <div className="h-10 w-10 rounded-full overflow-hidden bg-p-500 flex items-center justify-center border-2 border-p-100">
+                    <div className="h-10 w-10 rounded-full overflow-hidden bg-prin-500 flex items-center justify-center border-2 border-prin-100">
                       {session.user.image ? (
                         <Image
                           src={session.user.image}
@@ -135,14 +135,14 @@ export default function Header() {
                           className="h-full w-full object-cover"
                         />
                       ) : (
-                        <span className="text-p-100 font-semibold text-lg">
+                        <span className="text-prin-100 font-semibold text-lg">
                           {getInitial(session.user.name)}
                         </span>
                       )}
                     </div>
                     {/* Chevron */}
                     <ChevronDown
-                      className={`h-5 w-5 text-p-100 transition-transform duration-200 ${
+                      className={`h-5 w-5 text-prin-100 transition-transform duration-200 ${
                         isMenuOpen ? "rotate-180" : ""
                       }`}
                     />
@@ -150,11 +150,11 @@ export default function Header() {
 
                   {/* Menu déroulant */}
                   {isMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-p-50 rounded-lg shadow-lg py-2 z-50 border border-n-100">
+                    <div className="absolute right-0 mt-2 w-48 bg-prin-50 rounded-lg shadow-lg py-2 z-50 border border-neu-100">
                       <Link
                         href="/profil"
                         onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-n-700 hover:bg-p-100 transition-colors"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-neu-700 hover:bg-prin-100 transition-colors"
                       >
                         <UserPen className="h-4 w-4" />
                         Mon profil client
@@ -164,7 +164,7 @@ export default function Header() {
                           setIsMenuOpen(false);
                           signOut({ callbackUrl: "/" });
                         }}
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-s-600 hover:bg-p-100 transition-colors w-full cursor-pointer"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-s-600 hover:bg-prin-100 transition-colors w-full cursor-pointer"
                       >
                         <LogOut className="h-4 w-4" />
                         Déconnexion
@@ -203,7 +203,7 @@ export default function Header() {
                   className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity"
                 >
                   {/* Avatar mobile */}
-                  <div className="h-9 w-9 rounded-full overflow-hidden bg-p-500 flex items-center justify-center border-2 border-p-100">
+                  <div className="h-9 w-9 rounded-full overflow-hidden bg-prin-500 flex items-center justify-center border-2 border-prin-100">
                     {session.user.image ? (
                       <Image
                         src={session.user.image}
@@ -213,13 +213,13 @@ export default function Header() {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <span className="text-p-100 font-semibold text-base">
+                      <span className="text-prin-100 font-semibold text-base">
                         {getInitial(session.user.name)}
                       </span>
                     )}
                   </div>
                   {/*  <ChevronDown
-                  className={`h-4 w-4 text-p-100 transition-transform duration-200 ${
+                  className={`h-4 w-4 text-prin-100 transition-transform duration-200 ${
                     isMobileMenuOpen ? "rotate-180" : ""
                   }`}
                 /> */}
@@ -227,11 +227,11 @@ export default function Header() {
 
                 {/* Menu déroulant mobile */}
                 {isMobileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-p-50 rounded-lg shadow-lg py-2 z-50 border border-n-100">
+                  <div className="absolute right-0 mt-2 w-48 bg-prin-50 rounded-lg shadow-lg py-2 z-50 border border-neu-100">
                     <Link
                       href="/profil"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-2 text-sm text-n-700 hover:bg-p-100 transition-colors"
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-neu-700 hover:bg-prin-100 transition-colors"
                     >
                       <UserPen className="h-4 w-4" />
                       Mon profil client
@@ -240,7 +240,7 @@ export default function Header() {
                       <Link
                         href="/vendor/dashboard"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-n-700 hover:bg-p-100 transition-colors cursor-pointer"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-neu-700 hover:bg-prin-100 transition-colors cursor-pointer"
                       >
                         <Store className="h-4 w-4" />
                         Mon commerce
@@ -251,7 +251,7 @@ export default function Header() {
                         setIsMobileMenuOpen(false);
                         signOut({ callbackUrl: "/" });
                       }}
-                      className="flex items-center gap-3 px-4 py-2 text-sm text-s-600 hover:bg-p-100 transition-colors w-full cursor-pointer"
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-s-600 hover:bg-prin-100 transition-colors w-full cursor-pointer"
                     >
                       <LogOut className="h-4 w-4" />
                       Déconnexion
@@ -275,12 +275,12 @@ export default function Header() {
       {showMobileSearch && (
         <div className="fixed inset-0 z-60 lg:hidden flex flex-col">
           <div
-            className=" bg-n-900/60"
+            className=" bg-neu-900/60"
             onClick={() => setShowMobileSearch(false)}
           />
           <div
             ref={searchModalRef}
-            className="bg-p-700 px-4 pt-7 pb-5 text-xs flex items-center gap-2"
+            className="bg-prin-700 px-4 pt-7 pb-5 text-xs flex items-center gap-2"
           >
             <SearchBar className="flex-1" />
             <button
@@ -292,7 +292,7 @@ export default function Header() {
             </button>
           </div>
           <div
-            className="flex-1 bg-n-900/60"
+            className="flex-1 bg-neu-900/60"
             onClick={() => setShowMobileSearch(false)}
           />
         </div>

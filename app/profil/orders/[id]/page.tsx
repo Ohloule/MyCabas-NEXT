@@ -64,7 +64,7 @@ export default function OrderDetailPage() {
   if (!order) {
     return (
       <div className="text-center py-16">
-        <p className="text-n-500">Commande non trouvée</p>
+        <p className="text-neu-500">Commande non trouvée</p>
       </div>
     );
   }
@@ -83,7 +83,7 @@ export default function OrderDetailPage() {
     <div className="max-w-2xl mx-auto">
       <Link
         href="/profil/orders"
-        className="inline-flex items-center gap-1 text-sm text-n-600 hover:text-n-900 mb-4"
+        className="inline-flex items-center gap-1 text-sm text-neu-600 hover:text-neu-900 mb-4"
       >
         <ArrowLeft className="h-4 w-4" />
         Mes commandes
@@ -92,10 +92,10 @@ export default function OrderDetailPage() {
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-2xl font-bold text-p-800">{order.orderNumber}</h1>
+          <h1 className="text-2xl font-bold text-prin-800">{order.orderNumber}</h1>
           <OrderStatusBadge status={order.status} />
         </div>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-n-500">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-neu-500">
           <span className="flex items-center gap-1">
             <MapPin className="h-3.5 w-3.5" />
             {order.market.name}, {order.market.town}
@@ -113,7 +113,7 @@ export default function OrderDetailPage() {
 
       {/* Note du vendor */}
       {order.vendorNote && (
-        <div className="bg-t-50 border border-t-200 rounded-lg p-4 mb-6 text-sm text-t-800">
+        <div className="bg-ter-50 border border-ter-200 rounded-lg p-4 mb-6 text-sm text-ter-800">
           <p className="font-medium mb-1">Note du commerçant :</p>
           <p>{order.vendorNote}</p>
         </div>
@@ -122,9 +122,9 @@ export default function OrderDetailPage() {
       {/* Items par vendor */}
       {Object.entries(itemsByVendor).map(([vendorName, items]) => (
         <Card key={vendorName} className="mb-4 ">
-          <CardHeader className="py-3 px-4 bg-p-50 border-b">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium text-n-700">
-              <Store className="h-4 w-4 text-p-600" />
+          <CardHeader className="py-3 px-4 bg-prin-50 border-b">
+            <CardTitle className="flex items-center gap-2 text-sm font-medium text-neu-700">
+              <Store className="h-4 w-4 text-prin-600" />
               {vendorName}
             </CardTitle>
           </CardHeader>
@@ -140,12 +140,12 @@ export default function OrderDetailPage() {
                   className="flex items-center justify-between px-4 py-3"
                 >
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-n-900">{item.productName}</p>
-                    <p className="text-sm text-n-500">
+                    <p className="font-medium text-neu-900">{item.productName}</p>
+                    <p className="text-sm text-neu-500">
                       {qty} {item.productUnit} x{" "}
                       {item.unitPriceEuros.toFixed(2)} €
                       {wasAdjusted && (
-                        <span className="text-t-600 ml-2">
+                        <span className="text-ter-600 ml-2">
                           (ajusté, était {item.quantity})
                         </span>
                       )}
@@ -162,9 +162,9 @@ export default function OrderDetailPage() {
       ))}
 
       {/* Total */}
-      <div className="flex justify-between items-center px-4 py-4 bg-n-50 rounded-lg mb-6">
+      <div className="flex justify-between items-center px-4 py-4 bg-neu-50 rounded-lg mb-6">
         <span className="font-semibold text-lg">Total</span>
-        <span className="font-bold text-xl text-p-600">
+        <span className="font-bold text-xl text-prin-600">
           {total.toFixed(2)} €
         </span>
       </div>
@@ -172,7 +172,7 @@ export default function OrderDetailPage() {
       {/* Timeline */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-sm font-medium text-n-700">
+          <CardTitle className="text-sm font-medium text-neu-700">
             Historique
           </CardTitle>
         </CardHeader>
@@ -196,9 +196,9 @@ export default function OrderDetailPage() {
 function TimelineEntry({ label, date }: { label: string; date: string }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="w-2 h-2 rounded-full bg-p-500" />
-      <span className="text-n-700">{label}</span>
-      <span className="text-n-400 ml-auto">
+      <div className="w-2 h-2 rounded-full bg-prin-500" />
+      <span className="text-neu-700">{label}</span>
+      <span className="text-neu-400 ml-auto">
         {new Date(date).toLocaleDateString("fr-FR", {
           day: "numeric",
           month: "short",

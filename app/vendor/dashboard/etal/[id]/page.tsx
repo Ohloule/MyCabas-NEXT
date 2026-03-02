@@ -85,20 +85,20 @@ export default function EditProductPage({
 
   if (loading) {
     return (
-      <div className="bg-n-50 rounded-xl p-12 shadow-sm border border-n-100 text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-p-600 mx-auto"></div>
-        <p className="mt-4 text-n-500">Chargement du produit...</p>
+      <div className="bg-neu-50 rounded-xl p-12 shadow-sm border border-neu-100 text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-prin-600 mx-auto"></div>
+        <p className="mt-4 text-neu-500">Chargement du produit...</p>
       </div>
     );
   }
 
   if (error || !product) {
     return (
-      <div className="bg-n-50 rounded-xl p-12 shadow-sm border border-n-100 text-center">
-        <p className="text-s-600 mb-4">{error || "Produit non trouvé"}</p>
+      <div className="bg-neu-50 rounded-xl p-12 shadow-sm border border-neu-100 text-center">
+        <p className="text-sec600 mb-4">{error || "Produit non trouvé"}</p>
         <button
           onClick={() => router.push("/vendor/dashboard/etal")}
-          className="text-p-600 hover:underline"
+          className="text-prin-600 hover:underline"
         >
           Retour à la liste
         </button>

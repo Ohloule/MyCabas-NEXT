@@ -51,14 +51,14 @@ interface ProductCardProps {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  "Fruits & Légumes": "bg-p-100 text-p-800 hover:bg-p-100",
-  "Viandes & Charcuterie": "bg-s-100 text-s-800 hover:bg-s-100",
-  "Poissons & Fruits de mer": "bg-t-100 text-t-800 hover:bg-t-100",
-  "Fromages & Produits laitiers": "bg-s-100 text-s-800 hover:bg-s-100",
-  "Boulangerie & Pâtisserie": "bg-s-100 text-s-800 hover:bg-s-100",
-  "Épicerie & Condiments": "bg-t-100 text-t-800 hover:bg-t-100",
-  Boissons: "bg-t-100 text-t-800 hover:bg-t-100",
-  "Bio & Nature": "bg-p-100 text-p-800 hover:bg-p-100",
+  "Fruits & Légumes": "bg-prin-100 text-prin-800 hover:bg-prin-100",
+  "Viandes & Charcuterie": "bg-sec100 text-sec800 hover:bg-sec100",
+  "Poissons & Fruits de mer": "bg-ter-100 text-ter-800 hover:bg-ter-100",
+  "Fromages & Produits laitiers": "bg-sec100 text-sec800 hover:bg-sec100",
+  "Boulangerie & Pâtisserie": "bg-sec100 text-sec800 hover:bg-sec100",
+  "Épicerie & Condiments": "bg-ter-100 text-ter-800 hover:bg-ter-100",
+  Boissons: "bg-ter-100 text-ter-800 hover:bg-ter-100",
+  "Bio & Nature": "bg-prin-100 text-prin-800 hover:bg-prin-100",
 };
 
 const CONTINUOUS_UNITS = ["kg", "g", "litre"];
@@ -286,7 +286,7 @@ export default function ProductCard({
               {cart?.market?.id === marketId ? (
                 <>
                   Votre panier contient des produits pour le marché{" "}
-                  <span className="font-medium text-n-800">
+                  <span className="font-medium text-neu-800">
                     {cart?.market?.name}
                   </span>{" "}
                   un autre jour. Changer de jour supprimera tous les articles
@@ -295,7 +295,7 @@ export default function ProductCard({
               ) : (
                 <>
                   Votre panier contient des produits du marché{" "}
-                  <span className="font-medium text-n-800">
+                  <span className="font-medium text-neu-800">
                     {cart?.market?.name}
                   </span>
                   . Ajouter ce produit d&apos;un autre marché supprimera tous
@@ -320,7 +320,7 @@ export default function ProductCard({
       </Dialog>
       <Card className="overflow-hidden hover:shadow-md transition-shadow flex flex-col min-h-82.5 min-w-50 ">
         {/* Image du produit */}
-        <div className="relative h-32 bg-n-100">
+        <div className="relative h-32 bg-neu-100">
           {product.imageUrl ? (
             <Image
               src={product.imageUrl}
@@ -329,7 +329,7 @@ export default function ProductCard({
               className="object-cover"
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-4xl text-n-300">
+            <div className="flex items-center justify-center h-full text-4xl text-neu-300">
               {product.category.icon || "🛒"}
             </div>
           )}
@@ -337,13 +337,13 @@ export default function ProductCard({
           {/* Badges Bio / Local */}
           <div className="absolute top-2 left-2 flex gap-1">
             {product.isOrganic && (
-              <Badge className="bg-p-500 hover:bg-p-600 text-n-50 text-xs">
+              <Badge className="bg-prin-500 hover:bg-prin-600 text-neu-50 text-xs">
                 <Leaf className="w-3 h-3 mr-1" />
                 Bio
               </Badge>
             )}
             {product.isLocal && (
-              <Badge className="bg-s-500 hover:bg-s-600 text-n-50 text-xs">
+              <Badge className="bg-sec500 hover:bg-sec600 text-neu-50 text-xs">
                 <MapPin className="w-3 h-3 mr-1" />
                 Local
               </Badge>
@@ -355,7 +355,7 @@ export default function ProductCard({
           {/* Nom + toggle weight/piece sur la même ligne */}
           <div className="flex items-center gap-1.5 min-w-0">
             <h4
-              className="font-medium text-n-900 truncate flex-1"
+              className="font-medium text-neu-900 truncate flex-1"
               title={product.name}
             >
               {product.name}
@@ -368,8 +368,8 @@ export default function ProductCard({
                   title={`Commander en ${product.unit}`}
                   className={`flex items-center justify-center w-6 h-6 rounded-full border transition-colors cursor-pointer ${
                     displayMode === "weight"
-                      ? "bg-p-600 border-p-600 text-n-50"
-                      : "bg-n-50 border-n-200 text-n-400 hover:border-p-300"
+                      ? "bg-prin-600 border-prin-600 text-neu-50"
+                      : "bg-neu-50 border-neu-200 text-neu-400 hover:border-prin-300"
                   }`}
                 >
                   <Weight className="w-3 h-3" />
@@ -380,8 +380,8 @@ export default function ProductCard({
                   title="Commander à la pièce"
                   className={`flex items-center justify-center w-6 h-6 rounded-full border transition-colors cursor-pointer ${
                     displayMode === "piece"
-                      ? "bg-p-600 border-p-600 text-n-50"
-                      : "bg-n-50 border-n-200 text-n-400 hover:border-p-300"
+                      ? "bg-prin-600 border-prin-600 text-neu-50"
+                      : "bg-neu-50 border-neu-200 text-neu-400 hover:border-prin-300"
                   }`}
                 >
                   <Carrot className="w-3 h-3" />
@@ -392,27 +392,29 @@ export default function ProductCard({
 
           {/* Catégorie */}
           <Badge
-            className={`mt-1 w-fit text-xs font-normal ${CATEGORY_COLORS[product.category.name] ?? "bg-n-100 text-n-700 hover:bg-n-100"}`}
+            className={`mt-1 w-fit text-xs font-normal ${CATEGORY_COLORS[product.category.name] ?? "bg-neu-100 text-neu-700 hover:bg-neu-100"}`}
           >
             {product.category.name}
           </Badge>
 
           {/* Description */}
           {product.description && (
-            <p className="text-xs text-n-500 mt-1.5 line-clamp-2">
+            <p className="text-xs text-neu-500 mt-1.5 line-clamp-2">
               {product.description}
             </p>
           )}
           {/* Prix */}
           <div className="mt-auto pt-2 flex justify-between gap-1 flex-1 items-start">
             <div className="flex items-baseline gap-1">
-              <span className="text-lg font-bold text-p-600">
+              <span className="text-lg font-bold text-prin-600">
                 {displayedPrice.toFixed(2)} €
               </span>
-              <span className="text-xs text-n-500">/ {displayedPriceUnit}</span>
+              <span className="text-xs text-neu-500">
+                / {displayedPriceUnit}
+              </span>
             </div>
             {quantity > 0 && (
-              <Badge className="text-sm font-bold bg-p-300 text-p-900 px-2.5 py-1">
+              <Badge className="text-sm font-bold bg-prin-300 text-prin-900 px-2.5 py-1">
                 {(canToggle &&
                 displayMode === "piece" &&
                 product.pricePerPiece &&
@@ -427,7 +429,7 @@ export default function ProductCard({
           </div>
           {/* Poids/conditionnement + récapitulatif commande */}
           {getOrderLabel() && (
-            <p className="text-xs text-n-400 mt-1">{getOrderLabel()}</p>
+            <p className="text-xs text-neu-400 mt-1">{getOrderLabel()}</p>
           )}
 
           {/* Bouton Panier */}
@@ -436,7 +438,7 @@ export default function ProductCard({
               onClick={() => handleUpdate(displayedToUnit(displayedMin))}
               disabled={loading || cartLoading}
               size="sm"
-              className="w-16 h-9 self-end mt-3 gap-1.5 text-xs bg-p-600 hover:bg-p-500 transition-colors"
+              className="w-16 h-9 self-end mt-3 gap-1.5 text-xs bg-prin-600 hover:bg-prin-500 transition-colors"
             >
               {loading || cartLoading ? (
                 <Loader2 className="animate-spin" size={14} />
@@ -450,7 +452,7 @@ export default function ProductCard({
               <button
                 onClick={() => handleUpdate(0)}
                 disabled={loading}
-                className="flex items-center justify-center w-8 h-8 rounded-full bg-s-50 hover:bg-s-100 text-s-400 hover:text-s-600 transition-colors disabled:opacity-50 cursor-pointer"
+                className="flex items-center justify-center w-8 h-8 rounded-full bg-sec50 hover:bg-sec100 text-sec400 hover:text-sec600 transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {loading ? (
                   <Loader2 className="animate-spin" size={14} />
@@ -460,7 +462,7 @@ export default function ProductCard({
               </button>
 
               {/* Sélecteur quantité */}
-              <div className="flex items-center rounded-full overflow-hidden border border-n-200">
+              <div className="flex items-center rounded-full overflow-hidden border border-neu-200">
                 {/* Bouton moins */}
                 <button
                   onClick={() => {
@@ -474,13 +476,13 @@ export default function ProductCard({
                     );
                   }}
                   disabled={loading || displayedQty <= displayedMin}
-                  className="flex items-center justify-center w-9 h-9 bg-p-600 hover:bg-p-500 active:bg-n-900 text-n-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  className="flex items-center justify-center w-9 h-9 bg-prin-600 hover:bg-prin-500 active:bg-neu-900 text-neu-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
 
                 {/* Input quantité + unité */}
-                <div className="flex items-center justify-center h-9 bg-n-50 border-x border-n-200 px-2 gap-1 min-w-0">
+                <div className="flex items-center justify-center h-9 bg-neu-50 border-x border-neu-200 px-2 gap-1 min-w-0">
                   <input
                     type="text"
                     inputMode={canToggle || useSubUnit ? "numeric" : "decimal"}
@@ -517,9 +519,9 @@ export default function ProductCard({
                         );
                       }
                     }}
-                    className="w-10 bg-transparent text-sm font-bold text-n-800 text-center outline-none"
+                    className="w-10 bg-transparent text-sm font-bold text-neu-800 text-center outline-none"
                   />
-                  <span className="text-xs text-n-400 shrink-0 font-normal">
+                  <span className="text-xs text-neu-400 shrink-0 font-normal">
                     {inputUnit}
                   </span>
                 </div>
@@ -538,10 +540,10 @@ export default function ProductCard({
                     )
                   }
                   disabled={loading}
-                  className="flex items-center justify-center w-9 h-9 bg-p-600 hover:bg-p-500 active:bg-p-700 text-n-50 transition-colors disabled:opacity-50 cursor-pointer"
+                  className="flex items-center justify-center w-9 h-9 bg-prin-600 hover:bg-prin-500 active:bg-prin-700 text-neu-50 transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   {loading ? (
-                    <Loader2 className="animate-spin text-p-100" size={20} />
+                    <Loader2 className="animate-spin text-prin-100" size={20} />
                   ) : (
                     <Plus className="w-4 h-4" />
                   )}

@@ -70,7 +70,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
       {/* Bouton hamburger mobile */}
       <button
         onClick={() => setIsOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 text-n-50 rounded-lg shadow-lg"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 text-neu-50 rounded-lg shadow-lg"
         aria-label="Ouvrir le menu"
       >
         <Menu className="w-6 h-6" />
@@ -79,14 +79,14 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
       {/* Overlay mobile */}
       {isOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-n-900/50 z-40"
+          className="lg:hidden fixed inset-0 bg-neu-900/50 z-40"
           onClick={closeSidebar}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-screen w-64 bg-slate-900 text-n-50 flex flex-col z-50 transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed left-0 top-0 h-screen w-64 bg-slate-900 text-neu-50 flex flex-col z-50 transition-transform duration-300 lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -95,13 +95,13 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center">
-                <ShieldCheck className="w-5 h-5 text-s-400" />
+                <ShieldCheck className="w-5 h-5 text-sec400" />
               </div>
               <div>
                 <h2 className="font-bold text-lg leading-tight">
                   Administration
                 </h2>
-                <p className="text-xs text-slate-400 truncate max-w-[120px]">
+                <p className="text-xs text-slate-400 truncate max-w-30">
                   {user.name}
                 </p>
               </div>
@@ -132,8 +132,8 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
                     onClick={closeSidebar}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                       isActive
-                        ? "bg-s-500 text-slate-900 font-semibold"
-                        : "text-slate-300 hover:bg-slate-700 hover:text-n-50"
+                        ? "bg-sec500 text-slate-900 font-semibold"
+                        : "text-slate-300 hover:bg-slate-700 hover:text-neu-50"
                     }`}
                   >
                     <item.icon className="w-5 h-5 shrink-0" />
@@ -149,14 +149,14 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
         <div className="p-3 border-t border-slate-700 space-y-1">
           <Link
             href="/"
-            className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-n-50 transition-colors"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-neu-50 transition-colors"
           >
             <ArrowLeft className="w-5 h-5 shrink-0" />
             <span>Retour au site</span>
           </Link>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-s-700 hover:text-n-50 transition-colors cursor-pointer"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-sec700 hover:text-neu-50 transition-colors cursor-pointer"
           >
             <LogOut className="w-5 h-5 shrink-0" />
             <span>Déconnexion</span>

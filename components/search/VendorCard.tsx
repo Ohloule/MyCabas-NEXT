@@ -21,13 +21,13 @@ import ProductCard from "./ProductCard";
 
 // Labels avec leurs couleurs
 const labelConfig: Record<string, { label: string; color: string }> = {
-  BIO: { label: "Bio", color: "bg-p-500" },
-  LOCAL: { label: "Local", color: "bg-s-500" },
-  ARTISAN: { label: "Artisan", color: "bg-t-500" },
-  FERMIER: { label: "Fermier", color: "bg-s-500" },
-  AOC_AOP: { label: "AOC/AOP", color: "bg-s-500" },
-  LABEL_ROUGE: { label: "Label Rouge", color: "bg-s-600" },
-  FAIR_TRADE: { label: "Commerce équitable", color: "bg-p-500" },
+  BIO: { label: "Bio", color: "bg-prin-500" },
+  LOCAL: { label: "Local", color: "bg-sec500" },
+  ARTISAN: { label: "Artisan", color: "bg-ter-500" },
+  FERMIER: { label: "Fermier", color: "bg-sec500" },
+  AOC_AOP: { label: "AOC/AOP", color: "bg-sec500" },
+  LABEL_ROUGE: { label: "Label Rouge", color: "bg-sec600" },
+  FAIR_TRADE: { label: "Commerce équitable", color: "bg-prin-500" },
 };
 
 const DAY_LABELS: Record<string, string> = {
@@ -119,12 +119,12 @@ export default function VendorCard({
   // Sélecteur de marché+jour (shadcn Select)
   const marketSelector = showMarketSelector ? (
     <div className="flex items-center gap-1.5 shrink-0">
-      <MapPin className="w-3.5 h-3.5 text-n-400 shrink-0" />
+      <MapPin className="w-3.5 h-3.5 text-neu-400 shrink-0" />
       {vendorMarkets!.length === 1 ? (
-        <span className="text-sm text-n-600">
+        <span className="text-sm text-neu-600">
           {vendorMarkets![0].name}
-          <span className="text-n-400 ml-1">({vendorMarkets![0].town})</span>
-          <span className="text-n-400 ml-1">
+          <span className="text-neu-400 ml-1">({vendorMarkets![0].town})</span>
+          <span className="text-neu-400 ml-1">
             · {DAY_LABELS[vendorMarkets![0].day] ?? vendorMarkets![0].day}
           </span>
         </span>
@@ -155,7 +155,7 @@ export default function VendorCard({
   const vendorHeader = (
     <div className="flex items-start gap-4 flex-1 min-w-0">
       {/* Logo du vendor */}
-      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-n-50 shadow-sm shrink-0">
+      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-neu-50 shadow-sm shrink-0">
         {vendor.logoUrl ? (
           <Image
             src={vendor.logoUrl}
@@ -164,18 +164,18 @@ export default function VendorCard({
             className="object-cover"
           />
         ) : (
-          <div className="flex items-center justify-center h-full bg-p-100">
-            <Store className="w-8 h-8 text-p-500" />
+          <div className="flex items-center justify-center h-full bg-prin-100">
+            <Store className="w-8 h-8 text-prin-500" />
           </div>
         )}
       </div>
 
       {/* Infos vendor */}
       <div className="flex-1 min-w-0">
-        <h3 className="text-xl font-bold text-n-900 truncate">
+        <h3 className="text-xl font-bold text-neu-900 truncate">
           {vendor.stallName}
         </h3>
-        <p className="text-sm text-n-600">
+        <p className="text-sm text-neu-600">
           {vendor.user.firstName} {vendor.user.lastName}
         </p>
 
@@ -188,7 +188,7 @@ export default function VendorCard({
               return (
                 <Badge
                   key={label}
-                  className={`${config.color} hover:${config.color} text-n-50 text-xs`}
+                  className={`${config.color} hover:${config.color} text-neu-50 text-xs`}
                 >
                   {config.label}
                 </Badge>
@@ -199,7 +199,7 @@ export default function VendorCard({
 
         {/* Description (dans le header accordéon) */}
         {collapsible && vendor.description && (
-          <p className="text-sm text-n-600 mt-2 line-clamp-2">
+          <p className="text-sm text-neu-600 mt-2 line-clamp-2">
             {vendor.description}
           </p>
         )}
@@ -211,10 +211,10 @@ export default function VendorCard({
 
         {/* Nombre de produits */}
         <div className="text-right">
-          <span className="text-2xl font-bold text-p-600">
+          <span className="text-2xl font-bold text-prin-600">
             {products.length}
           </span>
-          <p className="text-xs text-n-500">
+          <p className="text-xs text-neu-500">
             produit{products.length > 1 ? "s" : ""}
           </p>
         </div>
@@ -238,8 +238,8 @@ export default function VendorCard({
   if (collapsible) {
     return (
       <AccordionItem value={vendor.id} className="border-0">
-        <Card className="overflow-hidden border-2 border-n-100">
-          <AccordionTrigger className="px-6 py-4 bg-linear-to-r from-p-50 to-n-50 hover:no-underline hover:from-p-100 [&>svg]:shrink-0 [&>svg]:mt-1 [&>svg]:ml-3">
+        <Card className="overflow-hidden border-2 border-neu-100">
+          <AccordionTrigger className="px-6 py-4 bg-linear-to-r from-prin-50 to-neu-50 hover:no-underline hover:from-prin-100 [&>svg]:shrink-0 [&>svg]:mt-1 [&>svg]:ml-3">
             {vendorHeader}
           </AccordionTrigger>
           <AccordionContent className="pb-0">
@@ -251,13 +251,13 @@ export default function VendorCard({
   }
 
   return (
-    <Card className="overflow-hidden border-2 border-n-100">
-      <CardHeader className="bg-linear-to-r from-p-50 to-n-50 pb-4">
+    <Card className="overflow-hidden border-2 border-neu-100">
+      <CardHeader className="bg-linear-to-r from-prin-50 to-neu-50 pb-4">
         {vendorHeader}
 
         {/* Description */}
         {vendor.description && (
-          <p className="text-sm text-n-600 mt-3 line-clamp-2">
+          <p className="text-sm text-neu-600 mt-3 line-clamp-2">
             {vendor.description}
           </p>
         )}

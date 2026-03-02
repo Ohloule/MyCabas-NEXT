@@ -9,11 +9,11 @@ export default function Page() {
         </p>
       </HeadingPage>
 
-      <div className="w-full py-16 bg-n-50 text-noir">
+      <div className="w-full py-16 bg-neu-50 text-noir">
         <section className="align-center text-sm leading-relaxed space-y-10 text-justify max-w-3xl mx-auto px-4">
           {/* Coordonnées de contact */}
           <div>
-            <h2 className="text-3xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-3xl font-bold font-special text-prin-700 mb-2">
               Écrivez-nous
             </h2>
             <p>
@@ -24,7 +24,7 @@ export default function Page() {
               📩{" "}
               <a
                 href="mailto:contact@mycabas.fr"
-                className="text-p-700 underline font-medium hover:opacity-80"
+                className="text-prin-700 underline font-medium hover:opacity-80"
               >
                 contact@mycabas.fr
               </a>
@@ -33,7 +33,7 @@ export default function Page() {
 
           {/* Support commerçants */}
           <div>
-            <h2 className="text-3xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-3xl font-bold font-special text-prin-700 mb-2">
               Vous êtes commerçant ?
             </h2>
             <p>
@@ -46,7 +46,7 @@ export default function Page() {
 
           {/* Autres demandes */}
           <div>
-            <h2 className="text-3xl font-bold font-special text-p-700 mb-2">
+            <h2 className="text-3xl font-bold font-special text-prin-700 mb-2">
               Presse, partenariats, idées…
             </h2>
             <p>

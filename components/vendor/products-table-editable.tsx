@@ -70,14 +70,14 @@ interface ProductsTableEditableProps {
 }
 
 const categoryColors: Record<string, string> = {
-  "fruits-legumes": "bg-p-100 text-p-800",
-  "viandes-charcuterie": "bg-s-100 text-s-800",
-  "poissons-fruits-de-mer": "bg-t-100 text-t-800",
-  "fromages-produits-laitiers": "bg-s-100 text-s-800",
-  "boulangerie-patisserie": "bg-s-100 text-s-800",
-  "epicerie-condiments": "bg-s-100 text-s-800",
-  boissons: "bg-t-100 text-t-800",
-  "bio-nature": "bg-p-100 text-p-800",
+  "fruits-legumes": "bg-prin-100 text-prin-800",
+  "viandes-charcuterie": "bg-sec100 text-sec800",
+  "poissons-fruits-de-mer": "bg-ter-100 text-ter-800",
+  "fromages-produits-laitiers": "bg-sec100 text-sec800",
+  "boulangerie-patisserie": "bg-sec100 text-sec800",
+  "epicerie-condiments": "bg-sec100 text-sec800",
+  boissons: "bg-ter-100 text-ter-800",
+  "bio-nature": "bg-prin-100 text-prin-800",
 };
 
 export function ProductsTableEditable({
@@ -196,9 +196,9 @@ export function ProductsTableEditable({
 
   if (products.length === 0) {
     return (
-      <div className="bg-n-50 rounded-xl p-8 sm:p-12 shadow-sm border border-n-100 text-center">
-        <h3 className="text-lg font-medium text-n-900 mb-2">Aucun produit</h3>
-        <p className="text-n-500">
+      <div className="bg-neu-50 rounded-xl p-8 sm:p-12 shadow-sm border border-neu-100 text-center">
+        <h3 className="text-lg font-medium text-neu-900 mb-2">Aucun produit</h3>
+        <p className="text-neu-500">
           Vous n&apos;avez pas encore de produits sur votre étal.
         </p>
       </div>
@@ -212,15 +212,15 @@ export function ProductsTableEditable({
 
     return (
       <div
-        className={`bg-n-50 rounded-xl shadow-sm border p-4 transition-colors ${
-          row.isDirty ? "border-s-300 bg-s-50/50" : "border-n-100"
+        className={`bg-neu-50 rounded-xl shadow-sm border p-4 transition-colors ${
+          row.isDirty ? "border-sec300 bg-sec50/50" : "border-neu-100"
         }`}
       >
         {/* Header avec image et nom */}
         <div className="flex items-start gap-3 mb-4">
           <Link
             href={`/vendor/dashboard/etal/${product.id}`}
-            className="w-14 h-14 rounded-lg overflow-hidden bg-n-100 shrink-0 block"
+            className="w-14 h-14 rounded-lg overflow-hidden bg-neu-100 shrink-0 block"
           >
             <Image
               src={product.imageUrl || "/images/ingredients.jpg"}
@@ -234,31 +234,32 @@ export function ProductsTableEditable({
             <div className="flex items-center gap-1.5 flex-wrap">
               <Link
                 href={`/vendor/dashboard/etal/${product.id}`}
-                className="font-medium text-n-900 text-sm hover:text-p-600 transition-colors"
+                className="font-medium text-neu-900 text-sm hover:text-prin-600 transition-colors"
               >
                 {product.name}
               </Link>
               {product.isOrganic && (
-                <Leaf className="w-3.5 h-3.5 text-p-600 shrink-0" />
+                <Leaf className="w-3.5 h-3.5 text-prin-600 shrink-0" />
               )}
               {product.isLocal && (
-                <MapPin className="w-3.5 h-3.5 text-t-600 shrink-0" />
+                <MapPin className="w-3.5 h-3.5 text-ter-600 shrink-0" />
               )}
             </div>
             <div className="flex items-center gap-2 mt-1">
               <Badge
                 className={`text-xs ${
-                  categoryColors[product.category.slug] || "bg-n-100 text-n-800"
+                  categoryColors[product.category.slug] ||
+                  "bg-neu-100 text-neu-800"
                 }`}
               >
                 {product.category.name}
               </Badge>
-              <span className="text-xs text-n-500">
+              <span className="text-xs text-neu-500">
                 Base: {product.basePrice.toFixed(2)}€/{product.unit}
               </span>
             </div>
             {product.description && (
-              <p className="text-xs text-n-400 mt-1 line-clamp-2">
+              <p className="text-xs text-neu-400 mt-1 line-clamp-2">
                 {product.description}
               </p>
             )}
@@ -269,7 +270,7 @@ export function ProductsTableEditable({
         <div className="space-y-3">
           {/* Prix */}
           <div className="flex items-center justify-between gap-3">
-            <label className="text-sm text-n-600 shrink-0">Prix</label>
+            <label className="text-sm text-neu-600 shrink-0">Prix</label>
             <div className="flex items-center gap-1">
               <Input
                 type="number"
@@ -282,7 +283,7 @@ export function ProductsTableEditable({
                 className="w-24 h-9 text-sm"
                 placeholder="Prix"
               />
-              <span className="text-sm text-n-500">€/{product.unit}</span>
+              <span className="text-sm text-neu-500">€/{product.unit}</span>
             </div>
           </div>
 
@@ -291,16 +292,16 @@ export function ProductsTableEditable({
             product.approxWeightPerPiece &&
             row.price && (
               <div className="flex items-center justify-between gap-3">
-                <label className="text-sm text-n-600 shrink-0">
+                <label className="text-sm text-neu-600 shrink-0">
                   Prix/pièce
                 </label>
-                <span className="text-sm text-n-500">
+                <span className="text-sm text-neu-500">
                   ≈{" "}
                   {(
                     parseFloat(row.price) * product.approxWeightPerPiece
                   ).toFixed(2)}
                   €/pièce
-                  <span className="text-xs text-n-400 ml-1">
+                  <span className="text-xs text-neu-400 ml-1">
                     (~{product.approxWeightPerPiece}
                     {product.unit})
                   </span>
@@ -310,10 +311,10 @@ export function ProductsTableEditable({
 
           {/* Stock */}
           <div className="flex items-center justify-between gap-3">
-            <label className="text-sm text-n-600 shrink-0">Stock</label>
+            <label className="text-sm text-neu-600 shrink-0">Stock</label>
             <div className="flex items-center gap-2">
               {row.isUnlimited ? (
-                <div className="flex items-center gap-1 text-n-400 h-9 px-3">
+                <div className="flex items-center gap-1 text-neu-400 h-9 px-3">
                   <Infinity className="w-4 h-4" />
                   <span className="text-sm">Illimité</span>
                 </div>
@@ -329,14 +330,14 @@ export function ProductsTableEditable({
                     className="w-20 h-9 text-sm"
                     placeholder="Qté"
                   />
-                  <span className="text-sm text-n-500">{product.unit}</span>
+                  <span className="text-sm text-neu-500">{product.unit}</span>
                 </div>
               )}
             </div>
           </div>
 
           {/* Checkboxes */}
-          <div className="flex items-center justify-between pt-2 border-t border-n-100">
+          <div className="flex items-center justify-between pt-2 border-t border-neu-100">
             <label className="flex items-center gap-2 cursor-pointer">
               <Checkbox
                 checked={row.isUnlimited}
@@ -344,7 +345,7 @@ export function ProductsTableEditable({
                   handleFieldChange(product.id, "isUnlimited", !!checked)
                 }
               />
-              <span className="text-sm text-n-700">Stock illimité</span>
+              <span className="text-sm text-neu-700">Stock illimité</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <Checkbox
@@ -353,7 +354,7 @@ export function ProductsTableEditable({
                   handleFieldChange(product.id, "isAvailable", !!checked)
                 }
               />
-              <span className="text-sm text-n-700">Disponible</span>
+              <span className="text-sm text-neu-700">Disponible</span>
             </label>
           </div>
         </div>
@@ -364,13 +365,13 @@ export function ProductsTableEditable({
   return (
     <div className="space-y-4">
       {/* Barre d'actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-n-50 rounded-xl p-3 sm:p-4 shadow-sm border border-n-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-neu-50 rounded-xl p-3 sm:p-4 shadow-sm border border-neu-100">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm text-n-600">
-            Marché : <strong className="text-p-700">{marketName}</strong>
+          <span className="text-sm text-neu-600">
+            Marché : <strong className="text-prin-700">{marketName}</strong>
           </span>
           {dirtyCount > 0 && (
-            <Badge variant="secondary" className="bg-s-100 text-s-800">
+            <Badge variant="secondary" className="bg-sec100 text-sec800">
               {dirtyCount} modification{dirtyCount > 1 ? "s" : ""}
             </Badge>
           )}
@@ -407,32 +408,32 @@ export function ProductsTableEditable({
       </div>
 
       {/* Vue desktop - Tableau */}
-      <div className="hidden lg:block bg-n-50 rounded-xl shadow-sm border border-n-100">
+      <div className="hidden lg:block bg-neu-50 rounded-xl shadow-sm border border-neu-100">
         <div className="overflow-x-auto rounded-xl">
           <table className="w-full">
-            <thead className="bg-n-50 border-b border-n-100">
+            <thead className="bg-neu-50 border-b border-neu-100">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase tracking-wider">
                   Produit
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase tracking-wider">
                   Catégorie
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase tracking-wider w-32">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase tracking-wider w-32">
                   Prix
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase tracking-wider w-32">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase tracking-wider w-32">
                   Stock
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-n-500 uppercase tracking-wider w-24">
+                <th className="px-4 py-3 text-center text-xs font-medium text-neu-500 uppercase tracking-wider w-24">
                   Illimité
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-n-500 uppercase tracking-wider w-24">
+                <th className="px-4 py-3 text-center text-xs font-medium text-neu-500 uppercase tracking-wider w-24">
                   Disponible
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-n-100">
+            <tbody className="divide-y divide-neu-100">
               {products.map((product) => {
                 const row = editableRows[product.id];
                 if (!row) return null;
@@ -441,7 +442,7 @@ export function ProductsTableEditable({
                   <tr
                     key={product.id}
                     className={`transition-colors ${
-                      row.isDirty ? "bg-s-50" : "hover:bg-n-50"
+                      row.isDirty ? "bg-sec50" : "hover:bg-neu-50"
                     }`}
                   >
                     {/* Produit */}
@@ -449,7 +450,7 @@ export function ProductsTableEditable({
                       <div className="flex items-center gap-3">
                         <Link
                           href={`/vendor/dashboard/etal/${product.id}`}
-                          className="w-10 h-10 rounded-lg overflow-hidden bg-n-100 shrink-0 block"
+                          className="w-10 h-10 rounded-lg overflow-hidden bg-neu-100 shrink-0 block"
                         >
                           <Image
                             src={product.imageUrl || "/images/ingredients.jpg"}
@@ -463,22 +464,22 @@ export function ProductsTableEditable({
                           <div className="flex items-center gap-2">
                             <Link
                               href={`/vendor/dashboard/etal/${product.id}`}
-                              className="font-medium text-n-900 text-sm hover:text-p-600 transition-colors"
+                              className="font-medium text-neu-900 text-sm hover:text-prin-600 transition-colors"
                             >
                               {product.name}
                             </Link>
                             {product.isOrganic && (
-                              <Leaf className="w-3 h-3 text-p-600" />
+                              <Leaf className="w-3 h-3 text-prin-600" />
                             )}
                             {product.isLocal && (
-                              <MapPin className="w-3 h-3 text-t-600" />
+                              <MapPin className="w-3 h-3 text-ter-600" />
                             )}
                           </div>
-                          <span className="text-xs text-n-500">
+                          <span className="text-xs text-neu-500">
                             Base: {product.basePrice.toFixed(2)}€/{product.unit}
                           </span>
                           {product.description && (
-                            <p className="text-xs text-n-400 line-clamp-1 max-w-xs">
+                            <p className="text-xs text-neu-400 line-clamp-1 max-w-xs">
                               {product.description}
                             </p>
                           )}
@@ -491,7 +492,7 @@ export function ProductsTableEditable({
                       <Badge
                         className={`text-xs ${
                           categoryColors[product.category.slug] ||
-                          "bg-n-100 text-n-800"
+                          "bg-neu-100 text-neu-800"
                         }`}
                       >
                         {product.category.name}
@@ -527,12 +528,12 @@ export function ProductsTableEditable({
                           className="w-24 h-8 text-sm"
                           placeholder="Prix"
                         />
-                        <span className="text-xs text-n-500">€</span>
+                        <span className="text-xs text-neu-500">€</span>
                       </div>
                       {product.canSellByPiece &&
                         product.approxWeightPerPiece &&
                         row.price && (
-                          <div className="text-xs text-n-400 mt-1">
+                          <div className="text-xs text-neu-400 mt-1">
                             ≈{" "}
                             {(
                               parseFloat(row.price) *
@@ -547,7 +548,7 @@ export function ProductsTableEditable({
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1">
                         {row.isUnlimited ? (
-                          <div className="flex items-center gap-1 text-n-400 h-8 px-2">
+                          <div className="flex items-center gap-1 text-neu-400 h-8 px-2">
                             <Infinity className="w-4 h-4" />
                           </div>
                         ) : (
@@ -567,7 +568,7 @@ export function ProductsTableEditable({
                           />
                         )}
                         {!row.isUnlimited && (
-                          <span className="text-xs text-n-500">
+                          <span className="text-xs text-neu-500">
                             {product.unit}
                           </span>
                         )}

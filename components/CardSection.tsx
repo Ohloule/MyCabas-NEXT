@@ -29,7 +29,7 @@ export default function CardSection() {
     <section className="pt-8">
       <h1
         ref={titleRef}
-        className={`text-center font-special text-9xl text-p-700 py-16 transition-all duration-700 ${
+        className={`text-center font-special text-9xl text-prin-700 py-16 transition-all duration-700 ${
           isRevealed ? "opacity-100 scale-100" : "opacity-0 scale-0"
         }`}
       >
@@ -38,7 +38,7 @@ export default function CardSection() {
       <div className="align-center grid grid-cols-1 lg:grid-cols-3">
         <Card className="col-span-1 my-3 w-75 mx-auto">
           <CardHeader>
-            <CardTitle className="font-special text-p-700 text-center text-4xl">
+            <CardTitle className="font-special text-prin-700 text-center text-4xl">
               Consommateurs
             </CardTitle>
           </CardHeader>
@@ -53,7 +53,7 @@ export default function CardSection() {
         <Card className="col-span-1 my-3 w-75 mx-auto">
           {" "}
           <CardHeader>
-            <CardTitle className="font-special text-p-700 text-center text-4xl">
+            <CardTitle className="font-special text-prin-700 text-center text-4xl">
               Commerçants
             </CardTitle>
           </CardHeader>
@@ -67,7 +67,7 @@ export default function CardSection() {
         </Card>
         <Card className="col-span-1 my-3 w-75 mx-auto">
           <CardHeader>
-            <CardTitle className="font-special text-p-700 text-center text-4xl">
+            <CardTitle className="font-special text-prin-700 text-center text-4xl">
               Planète
             </CardTitle>
           </CardHeader>

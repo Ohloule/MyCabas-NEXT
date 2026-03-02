@@ -43,7 +43,7 @@ export default function SponsorPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-lg">
-            <Gift className="h-5 w-5 text-p-600" />
+            <Gift className="h-5 w-5 text-prin-600" />
             Mon code de parrainage
           </CardTitle>
           <CardDescription>
@@ -52,21 +52,21 @@ export default function SponsorPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="bg-p-50 border border-p-200 rounded-lg p-4 flex items-center justify-between">
+          <div className="bg-prin-50 border border-prin-200 rounded-lg p-4 flex items-center justify-between">
             <div>
-              <p className="text-xs text-n-500 mb-1">Votre code parrain</p>
-              <p className="font-mono font-bold text-lg text-p-700">
+              <p className="text-xs text-neu-500 mb-1">Votre code parrain</p>
+              <p className="font-mono font-bold text-lg text-prin-700">
                 {sponsorCode || "..."}
               </p>
             </div>
             <Button
               variant="outline"
               size="sm"
-              className="border-p-300 text-p-600 hover:bg-p-100"
+              className="border-prin-300 text-prin-600 hover:bg-prin-100"
               onClick={handleCopy}
             >
               {copied ? (
-                <CheckCircle className="h-4 w-4 text-p-600" />
+                <CheckCircle className="h-4 w-4 text-prin-600" />
               ) : (
                 <Copy className="h-4 w-4" />
               )}
@@ -83,15 +83,15 @@ export default function SponsorPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 bg-p-100 rounded-full flex items-center justify-center shrink-0 text-sm font-bold text-p-700">
+            <div className="w-8 h-8 bg-prin-100 rounded-full flex items-center justify-center shrink-0 text-sm font-bold text-prin-700">
               1
             </div>
             <div>
               <h4 className="font-semibold">Parrainez un commerçant</h4>
-              <p className="text-sm text-n-600">
+              <p className="text-sm text-neu-600">
                 S&apos;il s&apos;inscrit et réalise au moins 10 &euro; de
                 ventes, vous recevez{" "}
-                <span className="font-semibold text-p-700">
+                <span className="font-semibold text-prin-700">
                   10 &euro; de crédit
                 </span>
                 .
@@ -99,29 +99,29 @@ export default function SponsorPage() {
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 bg-p-100 rounded-full flex items-center justify-center shrink-0 text-sm font-bold text-p-700">
+            <div className="w-8 h-8 bg-prin-100 rounded-full flex items-center justify-center shrink-0 text-sm font-bold text-prin-700">
               2
             </div>
             <div>
               <h4 className="font-semibold">Parrainez un ami</h4>
-              <p className="text-sm text-n-600">
+              <p className="text-sm text-neu-600">
                 Votre filleul passe 4 commandes de 10 &euro; minimum ? Vous
                 gagnez{" "}
-                <span className="font-semibold text-p-700">5 &euro;</span>. Et{" "}
-                <span className="font-semibold text-p-700">2 &euro;</span> par
-                filleul indirect !
+                <span className="font-semibold text-prin-700">5 &euro;</span>.
+                Et <span className="font-semibold text-prin-700">2 &euro;</span>{" "}
+                par filleul indirect !
               </p>
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 bg-p-100 rounded-full flex items-center justify-center shrink-0 text-sm font-bold text-p-700">
+            <div className="w-8 h-8 bg-prin-100 rounded-full flex items-center justify-center shrink-0 text-sm font-bold text-prin-700">
               3
             </div>
             <div>
               <h4 className="font-semibold">Devenez Ambassadeur</h4>
-              <p className="text-sm text-n-600">
+              <p className="text-sm text-neu-600">
                 10 commerçants parrainés et actifs ?{" "}
-                <span className="font-semibold text-p-700">
+                <span className="font-semibold text-prin-700">
                   10 &euro;/mois + 1 &euro;/commerçant supplémentaire
                 </span>
                 .
@@ -133,7 +133,7 @@ export default function SponsorPage() {
             <Link href="/sponsorship">
               <Button
                 variant="outline"
-                className="border-p-300 text-p-600 hover:bg-p-50"
+                className="border-prin-300 text-prin-600 hover:bg-prin-50"
               >
                 En savoir plus sur le parrainage
               </Button>
@@ -149,21 +149,21 @@ export default function SponsorPage() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="text-center p-4 bg-n-50 rounded-lg">
-              <p className="text-2xl font-bold text-p-600">0</p>
-              <p className="text-xs text-n-500 mt-1">Amis parrainés</p>
+            <div className="text-center p-4 bg-neu-50 rounded-lg">
+              <p className="text-2xl font-bold text-prin-600">0</p>
+              <p className="text-xs text-neu-500 mt-1">Amis parrainés</p>
             </div>
-            <div className="text-center p-4 bg-n-50 rounded-lg">
-              <p className="text-2xl font-bold text-p-600">0</p>
-              <p className="text-xs text-n-500 mt-1">Commerçants parrainés</p>
+            <div className="text-center p-4 bg-neu-50 rounded-lg">
+              <p className="text-2xl font-bold text-prin-600">0</p>
+              <p className="text-xs text-neu-500 mt-1">Commerçants parrainés</p>
             </div>
-            <div className="text-center p-4 bg-n-50 rounded-lg">
-              <p className="text-2xl font-bold text-p-600">0 &euro;</p>
-              <p className="text-xs text-n-500 mt-1">Crédit gagné</p>
+            <div className="text-center p-4 bg-neu-50 rounded-lg">
+              <p className="text-2xl font-bold text-prin-600">0 &euro;</p>
+              <p className="text-xs text-neu-500 mt-1">Crédit gagné</p>
             </div>
-            <div className="text-center p-4 bg-n-50 rounded-lg">
-              <p className="text-2xl font-bold text-p-600">0 &euro;</p>
-              <p className="text-xs text-n-500 mt-1">Crédit disponible</p>
+            <div className="text-center p-4 bg-neu-50 rounded-lg">
+              <p className="text-2xl font-bold text-prin-600">0 &euro;</p>
+              <p className="text-xs text-neu-500 mt-1">Crédit disponible</p>
             </div>
           </div>
         </CardContent>

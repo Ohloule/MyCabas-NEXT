@@ -263,16 +263,16 @@ export default function NouveauMarchePage() {
   if (submitted) {
     return (
       <div className="max-w-lg mx-auto py-16 text-center">
-        <div className="p-4 bg-p-100 rounded-full w-fit mx-auto mb-6">
-          <CheckCircle className="w-12 h-12 text-p-600" />
+        <div className="p-4 bg-prin-100 rounded-full w-fit mx-auto mb-6">
+          <CheckCircle className="w-12 h-12 text-prin-600" />
         </div>
-        <h2 className="text-2xl font-bold text-n-900 mb-2">
+        <h2 className="text-2xl font-bold text-neu-900 mb-2">
           Marché soumis avec succès !
         </h2>
-        <p className="text-n-600 mb-2">
+        <p className="text-neu-600 mb-2">
           Votre proposition de marché a bien été enregistrée.
         </p>
-        <p className="text-sm text-n-500 mb-8">
+        <p className="text-sm text-neu-500 mb-8">
           Un administrateur va vérifier et valider votre demande. Une fois
           accepté, le marché apparaîtra dans la liste et vous pourrez vous y
           inscrire.
@@ -298,14 +298,14 @@ export default function NouveauMarchePage() {
             <ArrowLeft className="h-5 w-5" />
           </Button>
         </Link>
-        <div className="p-3 bg-p-100 rounded-lg">
-          <MapPin className="w-6 h-6 text-p-600" />
+        <div className="p-3 bg-prin-100 rounded-lg">
+          <MapPin className="w-6 h-6 text-prin-600" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-p-800">
+          <h1 className="text-2xl font-bold text-prin-800">
             Proposer un nouveau marché
           </h1>
-          <p className="text-sm text-n-500">
+          <p className="text-sm text-neu-500">
             Votre proposition sera examinée par un administrateur avant
             publication.
           </p>
@@ -317,7 +317,7 @@ export default function NouveauMarchePage() {
         <Card>
           <CardHeader>
             <CardTitle className="text-base flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-p-600" />
+              <MapPin className="h-4 w-4 text-prin-600" />
               Adresse du marché
             </CardTitle>
           </CardHeader>
@@ -352,20 +352,20 @@ export default function NouveauMarchePage() {
               {showAddressSuggestions && addressSuggestions.length > 0 && (
                 <div
                   ref={suggestionsRef}
-                  className="absolute top-full left-0 right-0 mt-1 bg-n-50 border border-n-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"
+                  className="absolute top-full left-0 right-0 mt-1 bg-neu-50 border border-neu-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"
                 >
                   {addressSuggestions.map((s, i) => (
                     <button
                       key={i}
                       onClick={() => handleSelectAddress(s)}
-                      className="w-full px-4 py-3 text-left hover:bg-n-50 flex items-start gap-3 transition-colors border-b border-n-100 last:border-0"
+                      className="w-full px-4 py-3 text-left hover:bg-neu-50 flex items-start gap-3 transition-colors border-b border-neu-100 last:border-0"
                     >
-                      <MapPin className="w-4 h-4 text-p-500 shrink-0 mt-0.5" />
+                      <MapPin className="w-4 h-4 text-prin-500 shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-medium text-sm text-n-900">
+                        <div className="font-medium text-sm text-neu-900">
                           {s.name}
                         </div>
-                        <div className="text-xs text-n-500">
+                        <div className="text-xs text-neu-500">
                           {s.postcode} {s.city}
                         </div>
                       </div>
@@ -377,9 +377,9 @@ export default function NouveauMarchePage() {
 
             {/* Adresse confirmée */}
             {selectedAddress && (
-              <div className="flex items-center gap-2 p-3 bg-p-50 border border-p-200 rounded-lg text-sm">
-                <CheckCircle className="h-4 w-4 text-p-600 shrink-0" />
-                <span className="text-p-800 font-medium">
+              <div className="flex items-center gap-2 p-3 bg-prin-50 border border-prin-200 rounded-lg text-sm">
+                <CheckCircle className="h-4 w-4 text-prin-600 shrink-0" />
+                <span className="text-prin-800 font-medium">
                   {selectedAddress.label}
                 </span>
               </div>
@@ -387,7 +387,7 @@ export default function NouveauMarchePage() {
 
             {/* Loader vérification doublons */}
             {nearbyLoading && (
-              <div className="flex items-center gap-2 text-sm text-n-500">
+              <div className="flex items-center gap-2 text-sm text-neu-500">
                 <Loader taille={16} />
                 <span>Vérification des marchés existants…</span>
               </div>
@@ -395,7 +395,7 @@ export default function NouveauMarchePage() {
 
             {/* Erreur vérification */}
             {nearbyError && (
-              <div className="flex items-center gap-2 p-3 bg-s-50 border border-s-200 rounded-lg text-sm text-s-800">
+              <div className="flex items-center gap-2 p-3 bg-sec50 border border-sec200 rounded-lg text-sm text-sec800">
                 <AlertTriangle className="h-4 w-4 shrink-0" />
                 {nearbyError}
               </div>
@@ -405,16 +405,16 @@ export default function NouveauMarchePage() {
 
         {/* Alerte doublons */}
         {nearbyChecked && nearbyMarkets.length > 0 && (
-          <div className="bg-s-50 border border-s-300 rounded-lg p-4">
+          <div className="bg-sec50 border border-sec300 rounded-lg p-4">
             <div className="flex items-start gap-3 mb-3">
-              <AlertTriangle className="h-5 w-5 text-s-600 shrink-0 mt-0.5" />
+              <AlertTriangle className="h-5 w-5 text-sec600 shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-s-800">
+                <p className="font-semibold text-sec800">
                   {nearbyMarkets.length} marché
                   {nearbyMarkets.length > 1 ? "s" : ""} déjà référencé
                   {nearbyMarkets.length > 1 ? "s" : ""} à moins de 2 km
                 </p>
-                <p className="text-sm text-s-700 mt-0.5">
+                <p className="text-sm text-sec700 mt-0.5">
                   Vérifiez que votre marché ne figure pas déjà dans cette liste.
                 </p>
               </div>
@@ -424,12 +424,12 @@ export default function NouveauMarchePage() {
               {nearbyMarkets.map((m) => (
                 <div
                   key={m.id}
-                  className="bg-n-50 border border-s-200 rounded-lg px-3 py-2 flex items-center gap-2"
+                  className="bg-neu-50 border border-sec200 rounded-lg px-3 py-2 flex items-center gap-2"
                 >
-                  <MapPin className="h-4 w-4 text-s-500 shrink-0" />
+                  <MapPin className="h-4 w-4 text-sec500 shrink-0" />
                   <div className="text-sm">
-                    <span className="font-medium text-n-800">{m.name}</span>
-                    <span className="text-n-500 ml-2">
+                    <span className="font-medium text-neu-800">{m.name}</span>
+                    <span className="text-neu-500 ml-2">
                       {m.address}, {m.zip} {m.town}
                     </span>
                     {m.distance !== undefined && (
@@ -449,9 +449,9 @@ export default function NouveauMarchePage() {
                 type="checkbox"
                 checked={confirmedNoDuplicate}
                 onChange={(e) => setConfirmedNoDuplicate(e.target.checked)}
-                className="w-4 h-4 accent-p-600"
+                className="w-4 h-4 accent-prin-600"
               />
-              <span className="text-sm font-medium text-s-800">
+              <span className="text-sm font-medium text-sec800">
                 Je confirme que ce marché n'existe pas déjà dans cette liste
               </span>
             </label>
@@ -460,8 +460,8 @@ export default function NouveauMarchePage() {
 
         {/* Confirmation : aucun doublon */}
         {nearbyChecked && nearbyMarkets.length === 0 && selectedAddress && (
-          <div className="flex items-center gap-2 p-3 bg-p-50 border border-p-200 rounded-lg text-sm text-p-800">
-            <CheckCircle className="h-4 w-4 text-p-600 shrink-0" />
+          <div className="flex items-center gap-2 p-3 bg-prin-50 border border-prin-200 rounded-lg text-sm text-prin-800">
+            <CheckCircle className="h-4 w-4 text-prin-600 shrink-0" />
             Aucun marché connu dans un rayon de 2 km. Vous pouvez continuer.
           </div>
         )}
@@ -488,7 +488,7 @@ export default function NouveauMarchePage() {
           <Card>
             <CardHeader>
               <CardTitle className="text-base flex items-center gap-2">
-                <Clock className="h-4 w-4 text-p-600" />
+                <Clock className="h-4 w-4 text-prin-600" />
                 Jours et horaires d'ouverture
               </CardTitle>
             </CardHeader>
@@ -502,7 +502,7 @@ export default function NouveauMarchePage() {
                   <select
                     value={opening.day}
                     onChange={(e) => updateOpening(i, "day", e.target.value)}
-                    className="flex-1 min-w-[130px] h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                    className="flex-1 min-w-32.5 h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                   >
                     {DAY_OPTIONS.map((d) => (
                       <option key={d} value={d}>
@@ -518,7 +518,7 @@ export default function NouveauMarchePage() {
                     onChange={(e) => updateOpening(i, "start", e.target.value)}
                     className="w-28"
                   />
-                  <span className="text-n-500 text-sm shrink-0">→</span>
+                  <span className="text-neu-500 text-sm shrink-0">→</span>
                   {/* Heure fin */}
                   <Input
                     type="time"
@@ -534,7 +534,7 @@ export default function NouveauMarchePage() {
                       variant="ghost"
                       size="icon"
                       onClick={() => removeOpening(i)}
-                      className="text-s-500 hover:text-s-600 hover:bg-s-50 shrink-0"
+                      className="text-sec500 hover:text-sec600 hover:bg-sec50 shrink-0"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>

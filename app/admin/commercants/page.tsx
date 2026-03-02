@@ -48,12 +48,12 @@ export default function AdminCommerciantsPage() {
     <div>
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-p-100 rounded-lg">
-          <Store className="w-6 h-6 text-p-600" />
+        <div className="p-3 bg-prin-100 rounded-lg">
+          <Store className="w-6 h-6 text-prin-600" />
         </div>
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Commerçants</h1>
-          <p className="text-sm text-n-500">
+          <p className="text-sm text-neu-500">
             {vendors.length} commerçant{vendors.length !== 1 ? "s" : ""}{" "}
             inscrits
           </p>
@@ -62,7 +62,7 @@ export default function AdminCommerciantsPage() {
 
       {/* Recherche */}
       <div className="relative mb-6">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-n-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neu-400" />
         <Input
           placeholder="Rechercher par nom, email ou SIRET…"
           value={search}
@@ -73,9 +73,9 @@ export default function AdminCommerciantsPage() {
 
       {/* Liste */}
       {loading ? (
-        <div className="text-center py-12 text-n-400">Chargement…</div>
+        <div className="text-center py-12 text-neu-400">Chargement…</div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-12 text-n-400">
+        <div className="text-center py-12 text-neu-400">
           Aucun commerçant trouvé
         </div>
       ) : (
@@ -83,42 +83,42 @@ export default function AdminCommerciantsPage() {
           {filtered.map((vendor) => (
             <div
               key={vendor.id}
-              className="bg-n-50 rounded-xl border border-n-200 p-4 md:p-5"
+              className="bg-neu-50 rounded-xl border border-neu-200 p-4 md:p-5"
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <h3 className="font-semibold text-n-800">
+                    <h3 className="font-semibold text-neu-800">
                       {vendor.stallName}
                     </h3>
                     {vendor.stripeOnboardingComplete && (
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-p-100 text-p-700 border border-p-200">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-prin-100 text-prin-700 border border-prin-200">
                         Stripe actif
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-n-600">{vendor.companyName}</p>
-                  <p className="text-sm text-n-400">
+                  <p className="text-sm text-neu-600">{vendor.companyName}</p>
+                  <p className="text-sm text-neu-400">
                     {vendor.user.firstName} {vendor.user.lastName} ·{" "}
                     {vendor.user.email}
                   </p>
-                  <p className="text-xs text-n-400 mt-0.5">
+                  <p className="text-xs text-neu-400 mt-0.5">
                     SIRET : {vendor.siret}
                   </p>
 
                   {/* Compteurs */}
                   <div className="flex flex-wrap gap-3 mt-3">
-                    <span className="flex items-center gap-1 text-xs text-n-500">
+                    <span className="flex items-center gap-1 text-xs text-neu-500">
                       <Package className="w-3.5 h-3.5" />
                       {vendor._count.products} produit
                       {vendor._count.products !== 1 ? "s" : ""}
                     </span>
-                    <span className="flex items-center gap-1 text-xs text-n-500">
+                    <span className="flex items-center gap-1 text-xs text-neu-500">
                       <MapPin className="w-3.5 h-3.5" />
                       {vendor._count.marketVendors} marché
                       {vendor._count.marketVendors !== 1 ? "s" : ""}
                     </span>
-                    <span className="flex items-center gap-1 text-xs text-n-500">
+                    <span className="flex items-center gap-1 text-xs text-neu-500">
                       <ShoppingBag className="w-3.5 h-3.5" />
                       {vendor._count.orderItems} ligne
                       {vendor._count.orderItems !== 1 ? "s" : ""} commandées
@@ -127,7 +127,7 @@ export default function AdminCommerciantsPage() {
                 </div>
 
                 <div className="text-right shrink-0">
-                  <p className="text-xs text-n-400">
+                  <p className="text-xs text-neu-400">
                     Inscrit le{" "}
                     {new Date(vendor.createdAt).toLocaleDateString("fr-FR")}
                   </p>

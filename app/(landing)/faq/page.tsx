@@ -28,7 +28,7 @@ const faqs = [
       "Chaque marché affiche les commerçants participants en temps réel. Vous ne voyez que ceux qui seront présents le jour sélectionné.",
   },
   {
-    question: "Y a-t-il des frais supplémentaires ?",
+    question: "Y a-ter-il des frais supplémentaires ?",
     answer:
       "Aucun frais caché. Vous ne payez que vos produits. Une petite commission est prise sur la vente, à la charge du commerçant.",
   },
@@ -59,12 +59,12 @@ export default function Page() {
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="border border-border rounded-xl bg-p-50 w-[85vw] md:max-w-6xl shadow text-justify"
+              className="border border-border rounded-xl bg-prin-50 w-[85vw] md:max-w-6xl shadow text-justify"
             >
-              <AccordionTrigger className="px-4 py-3 text-left text-base md:text-lg font-medium text-p-900 hover:underline hover:text-accent-foreground transition-all cursor-pointer">
+              <AccordionTrigger className="px-4 py-3 text-left text-base md:text-lg font-medium text-prin-900 hover:underline hover:text-accent-foreground transition-all cursor-pointer">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="px-4 pb-4   text-sm text-p-900 -foreground">
+              <AccordionContent className="px-4 pb-4   text-sm text-prin-900 -foreground">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

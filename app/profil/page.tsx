@@ -93,14 +93,14 @@ export default function ProfilInfosPage() {
   return (
     <>
       {error && (
-        <div className="bg-s-50 border border-s-200 text-s-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+        <div className="bg-sec50 border border-sec200 text-sec700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
           <AlertCircle className="h-5 w-5 shrink-0" />
           <span className="text-sm">{error}</span>
         </div>
       )}
 
       {success && (
-        <div className="bg-p-50 border border-p-200 text-p-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+        <div className="bg-prin-50 border border-prin-200 text-prin-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
           <CheckCircle className="h-5 w-5 shrink-0" />
           <span className="text-sm">{success}</span>
         </div>
@@ -110,7 +110,7 @@ export default function ProfilInfosPage() {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">
-              <User className="h-5 w-5 text-p-600" />
+              <User className="h-5 w-5 text-prin-600" />
               Informations personnelles
             </CardTitle>
             <CardDescription>
@@ -153,9 +153,9 @@ export default function ProfilInfosPage() {
                   id="email"
                   value={email}
                   disabled
-                  className="bg-n-50 text-n-500"
+                  className="bg-neu-50 text-neu-500"
                 />
-                <p className="text-xs text-n-500">
+                <p className="text-xs text-neu-500">
                   L&apos;email ne peut pas être modifié
                 </p>
               </div>
@@ -181,7 +181,7 @@ export default function ProfilInfosPage() {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">
-              <MapPin className="h-5 w-5 text-p-600" />
+              <MapPin className="h-5 w-5 text-prin-600" />
               Adresse
             </CardTitle>
             <CardDescription>
@@ -241,7 +241,7 @@ export default function ProfilInfosPage() {
         <Button
           type="submit"
           disabled={saving}
-          className="bg-p-500 hover:bg-p-600 text-n-50"
+          className="bg-prin-500 hover:bg-prin-600 text-neu-50"
         >
           {saving ? <Loader taille={45} /> : <Save className="h-4 w-4" />}
           Enregistrer les modifications

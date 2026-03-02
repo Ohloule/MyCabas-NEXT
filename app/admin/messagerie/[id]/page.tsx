@@ -111,7 +111,7 @@ export default function AdminConversationPage() {
   };
 
   if (loading) {
-    return <div className="text-center py-12 text-n-400">Chargement…</div>;
+    return <div className="text-center py-12 text-neu-400">Chargement…</div>;
   }
   if (!conversation) return null;
 
@@ -128,7 +128,7 @@ export default function AdminConversationPage() {
           <h1 className="text-lg font-bold text-slate-800 truncate">
             {conversation.subject}
           </h1>
-          <p className="text-sm text-n-500">
+          <p className="text-sm text-neu-500">
             {conversation.vendor.stallName} ·{" "}
             {conversation.vendor.user.firstName}{" "}
             {conversation.vendor.user.lastName}
@@ -136,11 +136,11 @@ export default function AdminConversationPage() {
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {conversation.status === "OPEN" ? (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-p-100 text-p-700 border border-p-200">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-prin-100 text-prin-700 border border-prin-200">
               Ouverte
             </span>
           ) : (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-n-100 text-n-500 border border-n-200 flex items-center gap-1">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-neu-100 text-neu-500 border border-neu-200 flex items-center gap-1">
               <CheckCheck className="w-3 h-3" /> Clôturée
             </span>
           )}
@@ -148,7 +148,7 @@ export default function AdminConversationPage() {
             <Button
               size="sm"
               variant="outline"
-              className="text-n-500 border-n-300"
+              className="text-neu-500 border-neu-300"
               onClick={handleClose}
               disabled={closing}
             >
@@ -160,7 +160,7 @@ export default function AdminConversationPage() {
       </div>
 
       {/* Messages */}
-      <div className="bg-n-50 rounded-xl border border-n-200 p-4 mb-4 space-y-4 max-h-[calc(100vh-320px)] overflow-y-auto">
+      <div className="bg-neu-50 rounded-xl border border-neu-200 p-4 mb-4 space-y-4 max-h-[calc(100vh-320px)] overflow-y-auto">
         {conversation.messages.map((msg) => {
           const isAdmin = msg.sender.role === "ADMIN";
           return (
@@ -171,13 +171,13 @@ export default function AdminConversationPage() {
               {/* Avatar */}
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                  isAdmin ? "bg-s-100" : "bg-p-100"
+                  isAdmin ? "bg-sec100" : "bg-prin-100"
                 }`}
               >
                 {isAdmin ? (
-                  <ShieldCheck className="w-4 h-4 text-s-600" />
+                  <ShieldCheck className="w-4 h-4 text-sec600" />
                 ) : (
-                  <Store className="w-4 h-4 text-p-600" />
+                  <Store className="w-4 h-4 text-prin-600" />
                 )}
               </div>
 
@@ -185,14 +185,14 @@ export default function AdminConversationPage() {
               <div
                 className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${
                   isAdmin
-                    ? "bg-slate-800 text-n-50 rounded-tr-sm"
-                    : "bg-n-100 text-n-800 rounded-tl-sm"
+                    ? "bg-slate-800 text-neu-50 rounded-tr-sm"
+                    : "bg-neu-100 text-neu-800 rounded-tl-sm"
                 }`}
               >
                 <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
                 <p
                   className={`text-xs mt-1 ${
-                    isAdmin ? "text-slate-400" : "text-n-400"
+                    isAdmin ? "text-slate-400" : "text-neu-400"
                   }`}
                 >
                   {msg.sender.firstName} ·{" "}
@@ -203,7 +203,7 @@ export default function AdminConversationPage() {
                     minute: "2-digit",
                   })}
                   {isAdmin && msg.readAt && (
-                    <span className="ml-1 text-t-300">
+                    <span className="ml-1 text-ter-300">
                       <CheckCheck className="inline w-3 h-3" />
                     </span>
                   )}
@@ -229,10 +229,10 @@ export default function AdminConversationPage() {
                 handleSend();
               }
             }}
-            className="flex-1 rounded-xl border border-n-200 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-slate-300"
+            className="flex-1 rounded-xl border border-neu-200 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-slate-300"
           />
           <Button
-            className="self-end bg-slate-800 hover:bg-slate-700 text-n-50"
+            className="self-end bg-slate-800 hover:bg-slate-700 text-neu-50"
             onClick={handleSend}
             disabled={!reply.trim() || sending}
           >
@@ -240,7 +240,7 @@ export default function AdminConversationPage() {
           </Button>
         </div>
       ) : (
-        <p className="text-center text-sm text-n-400 py-3 bg-n-50 rounded-xl border border-n-200">
+        <p className="text-center text-sm text-neu-400 py-3 bg-neu-50 rounded-xl border border-neu-200">
           Cette conversation est clôturée
         </p>
       )}

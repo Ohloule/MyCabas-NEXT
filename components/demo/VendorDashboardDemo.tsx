@@ -510,14 +510,14 @@ const INITIAL_PRODUCTS: Product[] = [
 // ─── Helpers ────────────────────────────────────────
 
 const categoryColors: Record<string, string> = {
-  "fruits-legumes": "bg-p-100 text-p-800",
-  "viandes-charcuterie": "bg-s-100 text-s-800",
-  "poissons-fruits-de-mer": "bg-t-100 text-t-800",
-  "fromages-produits-laitiers": "bg-s-100 text-s-800",
-  "boulangerie-patisserie": "bg-s-100 text-s-800",
-  "epicerie-condiments": "bg-s-100 text-s-800",
-  boissons: "bg-t-100 text-t-800",
-  "bio-nature": "bg-p-100 text-p-800",
+  "fruits-legumes": "bg-prin-100 text-prin-800",
+  "viandes-charcuterie": "bg-sec-100 text-sec-800",
+  "poissons-fruits-de-mer": "bg-ter-100 text-ter-800",
+  "fromages-produits-laitiers": "bg-sec-100 text-sec-800",
+  "boulangerie-patisserie": "bg-sec-100 text-sec-800",
+  "epicerie-condiments": "bg-sec-100 text-sec-800",
+  boissons: "bg-ter-100 text-ter-800",
+  "bio-nature": "bg-prin-100 text-prin-800",
 };
 
 let nextId = 100;
@@ -578,37 +578,37 @@ function SectionDashboard({ productCount }: { productCount: number }) {
       label: "Commandes à préparer",
       value: "5",
       icon: Package,
-      color: "bg-t-100 text-t-600",
+      color: "bg-ter-100 text-ter-600",
     },
     {
       label: "CA ce mois",
       value: "2 450€",
       icon: TrendingUp,
-      color: "bg-s-100 text-s-600",
+      color: "bg-sec-100 text-sec-600",
     },
     {
       label: "Marchés actifs",
       value: "2",
       icon: MapPin,
-      color: "bg-t-100 text-t-600",
+      color: "bg-ter-100 text-ter-600",
     },
     {
       label: "Produits en ligne",
       value: String(productCount),
       icon: Carrot,
-      color: "bg-s-100 text-s-600",
+      color: "bg-sec-100 text-sec-600",
     },
   ];
 
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-s-100 rounded-lg">
-          <LayoutDashboard className="w-6 h-6 text-s-600" />
+        <div className="p-3 bg-sec-100 rounded-lg">
+          <LayoutDashboard className="w-6 h-6 text-sec-600" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-s-800">Bonjour, Jean !</h1>
-          <p className="text-n-600">Voici un aperçu de votre activité</p>
+          <h1 className="text-3xl font-bold text-sec-800">Bonjour, Jean !</h1>
+          <p className="text-neu-600">Voici un aperçu de votre activité</p>
         </div>
       </div>
 
@@ -616,15 +616,15 @@ function SectionDashboard({ productCount }: { productCount: number }) {
         {stats.map((s) => (
           <div
             key={s.label}
-            className="bg-n-50 rounded-xl p-5 shadow-sm border border-n-100"
+            className="bg-neu-50 rounded-xl p-5 shadow-sm border border-neu-100"
           >
             <div className="flex items-center gap-3">
               <div className={`p-2.5 rounded-lg ${s.color}`}>
                 <s.icon className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-n-900">{s.value}</p>
-                <p className="text-sm text-n-500">{s.label}</p>
+                <p className="text-2xl font-bold text-neu-900">{s.value}</p>
+                <p className="text-sm text-neu-500">{s.label}</p>
               </div>
             </div>
           </div>
@@ -632,8 +632,8 @@ function SectionDashboard({ productCount }: { productCount: number }) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-          <h2 className="font-semibold text-n-900 mb-4">
+        <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+          <h2 className="font-semibold text-neu-900 mb-4">
             Prochaines commandes
           </h2>
           {[
@@ -661,35 +661,35 @@ function SectionDashboard({ productCount }: { productCount: number }) {
           ].map((o, i) => (
             <div
               key={i}
-              className="flex items-center justify-between py-3 border-b border-n-100 last:border-0"
+              className="flex items-center justify-between py-3 border-b border-neu-100 last:border-0"
             >
               <div>
-                <p className="font-medium text-n-900">{o.client}</p>
-                <p className="text-sm text-n-500">
+                <p className="font-medium text-neu-900">{o.client}</p>
+                <p className="text-sm text-neu-500">
                   {o.items} articles &middot; {o.market}
                 </p>
               </div>
               <div className="text-right">
-                <p className="font-medium text-n-900">{o.total}</p>
-                <p className="text-sm text-n-500">{o.date}</p>
+                <p className="font-medium text-neu-900">{o.total}</p>
+                <p className="text-sm text-neu-500">{o.date}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-          <h2 className="font-semibold text-n-900 mb-4">Prochains marchés</h2>
+        <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+          <h2 className="font-semibold text-neu-900 mb-4">Prochains marchés</h2>
           {DEMO_MARKETS.map((m) => (
             <div
               key={m.id}
-              className="flex items-center gap-3 py-3 border-b border-n-100 last:border-0"
+              className="flex items-center gap-3 py-3 border-b border-neu-100 last:border-0"
             >
-              <div className="p-2 bg-s-100 rounded-lg">
-                <MapPin className="w-5 h-5 text-s-600" />
+              <div className="p-2 bg-sec-100 rounded-lg">
+                <MapPin className="w-5 h-5 text-sec-600" />
               </div>
               <div>
-                <p className="font-medium text-n-900">{m.name}</p>
-                <p className="text-sm text-n-500">
+                <p className="font-medium text-neu-900">{m.name}</p>
+                <p className="text-sm text-neu-500">
                   {m.town} &middot; Samedi 8h-14h
                 </p>
               </div>
@@ -716,45 +716,45 @@ function SectionProfil() {
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-s-100 rounded-lg">
-          <User className="w-6 h-6 text-s-600" />
+        <div className="p-3 bg-sec-100 rounded-lg">
+          <User className="w-6 h-6 text-sec-600" />
         </div>
-        <h1 className="text-3xl font-bold text-s-800">Mes informations</h1>
+        <h1 className="text-3xl font-bold text-sec-800">Mes informations</h1>
       </div>
 
       <div className="space-y-6">
-        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-          <h2 className="font-semibold text-n-900 mb-4">
+        <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+          <h2 className="font-semibold text-neu-900 mb-4">
             Informations légales
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label>Raison sociale</Label>
-              <p className="mt-1 text-n-700 bg-n-50 px-3 py-2 rounded-lg">
+              <p className="mt-1 text-neu-700 bg-neu-50 px-3 py-2 rounded-lg">
                 {companyName}
               </p>
             </div>
             <div>
               <Label>SIRET</Label>
-              <p className="mt-1 text-n-700 bg-n-50 px-3 py-2 rounded-lg font-mono">
+              <p className="mt-1 text-neu-700 bg-neu-50 px-3 py-2 rounded-lg font-mono">
                 {siret}
               </p>
             </div>
             <div>
               <Label>Adresse du siège</Label>
-              <p className="mt-1 text-n-700 bg-n-50 px-3 py-2 rounded-lg">
+              <p className="mt-1 text-neu-700 bg-neu-50 px-3 py-2 rounded-lg">
                 12 rue des Fermiers, 75020 Paris
               </p>
             </div>
           </div>
-          <p className="text-xs text-n-500 mt-3">
+          <p className="text-xs text-neu-500 mt-3">
             Ces informations ne sont pas modifiables en ligne. Contactez le
             support pour toute modification.
           </p>
         </div>
 
-        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-          <h2 className="font-semibold text-n-900 mb-4">Coordonnées</h2>
+        <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+          <h2 className="font-semibold text-neu-900 mb-4">Coordonnées</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="demo-stall">Nom de l&apos;étal</Label>
@@ -796,14 +796,14 @@ function SectionProfil() {
           </div>
           <div className="flex items-center gap-3 mt-4">
             <Button
-              className="bg-s-600 hover:bg-s-700"
+              className="bg-sec-600 hover:bg-sec-700"
               onClick={() => setSaved(true)}
             >
               <Save className="w-4 h-4" />
               Enregistrer
             </Button>
             {saved && (
-              <span className="text-sm text-p-600 flex items-center gap-1">
+              <span className="text-sm text-prin-600 flex items-center gap-1">
                 <Check className="w-4 h-4" />
                 Sauvegardé
               </span>
@@ -811,20 +811,20 @@ function SectionProfil() {
           </div>
         </div>
 
-        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-          <h2 className="font-semibold text-n-900 mb-4">
+        <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+          <h2 className="font-semibold text-neu-900 mb-4">
             Informations bancaires
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label>IBAN</Label>
-              <p className="mt-1 text-n-700 bg-n-50 px-3 py-2 rounded-lg font-mono">
+              <p className="mt-1 text-neu-700 bg-neu-50 px-3 py-2 rounded-lg font-mono">
                 FR76 •••• •••• •••• •••• ••42
               </p>
             </div>
             <div>
               <Label>BIC</Label>
-              <p className="mt-1 text-n-700 bg-n-50 px-3 py-2 rounded-lg font-mono">
+              <p className="mt-1 text-neu-700 bg-neu-50 px-3 py-2 rounded-lg font-mono">
                 BNPAFRPP
               </p>
             </div>
@@ -860,12 +860,12 @@ function SectionVitrine() {
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-s-100 rounded-lg">
-          <Store className="w-6 h-6 text-s-600" />
+        <div className="p-3 bg-sec-100 rounded-lg">
+          <Store className="w-6 h-6 text-sec-600" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-s-800">Ma vitrine</h1>
-          <p className="text-n-600">
+          <h1 className="text-3xl font-bold text-sec-800">Ma vitrine</h1>
+          <p className="text-neu-600">
             Personnalisez votre page visible par les clients
           </p>
         </div>
@@ -873,24 +873,26 @@ function SectionVitrine() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-            <h2 className="font-semibold text-n-900 mb-4">Photo / Logo</h2>
+          <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+            <h2 className="font-semibold text-neu-900 mb-4">Photo / Logo</h2>
             <div className="flex items-center gap-4">
-              <div className="w-24 h-24 rounded-xl bg-s-100 flex items-center justify-center">
-                <ImageIcon className="w-10 h-10 text-s-400" />
+              <div className="w-24 h-24 rounded-xl bg-sec-100 flex items-center justify-center">
+                <ImageIcon className="w-10 h-10 text-sec-400" />
               </div>
               <div>
                 <Button variant="outline" size="sm">
                   <ImageIcon className="w-4 h-4" />
                   Changer la photo
                 </Button>
-                <p className="text-xs text-n-500 mt-1">JPG ou PNG, max 2 Mo</p>
+                <p className="text-xs text-neu-500 mt-1">
+                  JPG ou PNG, max 2 Mo
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-            <h2 className="font-semibold text-n-900 mb-4">Description</h2>
+          <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+            <h2 className="font-semibold text-neu-900 mb-4">Description</h2>
             <textarea
               value={description}
               onChange={(e) => {
@@ -898,12 +900,14 @@ function SectionVitrine() {
                 setSaved(false);
               }}
               rows={4}
-              className="w-full px-3 py-2 border border-n-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-s-500 resize-none"
+              className="w-full px-3 py-2 border border-neu-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sec-500 resize-none"
             />
           </div>
 
-          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-            <h2 className="font-semibold text-n-900 mb-4">Contact & Réseaux</h2>
+          <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+            <h2 className="font-semibold text-neu-900 mb-4">
+              Contact & Réseaux
+            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label className="flex items-center gap-1">
@@ -936,8 +940,8 @@ function SectionVitrine() {
             </div>
           </div>
 
-          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-            <h2 className="font-semibold text-n-900 mb-4">
+          <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+            <h2 className="font-semibold text-neu-900 mb-4">
               Moyens de paiement acceptés
             </h2>
             <div className="flex flex-wrap gap-4">
@@ -959,15 +963,15 @@ function SectionVitrine() {
                       setSaved(false);
                     }}
                   />
-                  <Icon className="w-4 h-4 text-n-500" />
+                  <Icon className="w-4 h-4 text-neu-500" />
                   <span className="text-sm">{label}</span>
                 </label>
               ))}
             </div>
           </div>
 
-          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-            <h2 className="font-semibold text-n-900 mb-4">
+          <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+            <h2 className="font-semibold text-neu-900 mb-4">
               Labels & Certifications
             </h2>
             <div className="flex flex-wrap gap-4">
@@ -989,7 +993,7 @@ function SectionVitrine() {
                       setSaved(false);
                     }}
                   />
-                  <Icon className="w-4 h-4 text-n-500" />
+                  <Icon className="w-4 h-4 text-neu-500" />
                   <span className="text-sm">{label}</span>
                 </label>
               ))}
@@ -998,14 +1002,14 @@ function SectionVitrine() {
 
           <div className="flex items-center gap-3">
             <Button
-              className="bg-s-600 hover:bg-s-700"
+              className="bg-sec-600 hover:bg-sec-700"
               onClick={() => setSaved(true)}
             >
               <Save className="w-4 h-4" />
               Enregistrer
             </Button>
             {saved && (
-              <span className="text-sm text-p-600 flex items-center gap-1">
+              <span className="text-sm text-prin-600 flex items-center gap-1">
                 <Check className="w-4 h-4" />
                 Sauvegardé
               </span>
@@ -1015,34 +1019,36 @@ function SectionVitrine() {
 
         {/* Preview card */}
         <div>
-          <div className="bg-n-50 rounded-xl shadow-sm border border-n-100 overflow-hidden sticky top-4">
-            <div className="bg-s-600 h-20" />
+          <div className="bg-neu-50 rounded-xl shadow-sm border border-neu-100 overflow-hidden sticky top-4">
+            <div className="bg-sec-600 h-20" />
             <div className="p-4 -mt-8">
-              <div className="w-16 h-16 rounded-xl bg-s-100 border-4 border-n-50 flex items-center justify-center mb-3">
-                <Store className="w-8 h-8 text-s-400" />
+              <div className="w-16 h-16 rounded-xl bg-sec-100 border-4 border-neu-50 flex items-center justify-center mb-3">
+                <Store className="w-8 h-8 text-sec-400" />
               </div>
-              <h3 className="font-bold text-n-900">La Ferme de Jean</h3>
-              <p className="text-sm text-n-500 mt-1 line-clamp-3">
+              <h3 className="font-bold text-neu-900">La Ferme de Jean</h3>
+              <p className="text-sm text-neu-500 mt-1 line-clamp-3">
                 {description}
               </p>
               <div className="flex flex-wrap gap-1.5 mt-3">
                 {labels.bio && (
-                  <Badge className="bg-p-100 text-p-800 text-xs">
+                  <Badge className="bg-prin-100 text-prin-800 text-xs">
                     <Leaf className="w-3 h-3" />
                     Bio
                   </Badge>
                 )}
                 {labels.local && (
-                  <Badge className="bg-t-100 text-t-800 text-xs">
+                  <Badge className="bg-ter-100 text-ter-800 text-xs">
                     <MapPin className="w-3 h-3" />
                     Local
                   </Badge>
                 )}
                 {labels.artisan && (
-                  <Badge className="bg-s-100 text-s-800 text-xs">Artisan</Badge>
+                  <Badge className="bg-sec-100 text-sec-800 text-xs">
+                    Artisan
+                  </Badge>
                 )}
               </div>
-              <div className="mt-3 pt-3 border-t border-n-100 space-y-1 text-sm text-n-600">
+              <div className="mt-3 pt-3 border-t border-neu-100 space-y-1 text-sm text-neu-600">
                 {website && (
                   <p className="flex items-center gap-1.5">
                     <Globe className="w-3.5 h-3.5" />
@@ -1056,7 +1062,7 @@ function SectionVitrine() {
                   </p>
                 )}
               </div>
-              <p className="text-xs text-n-400 mt-3 flex items-center gap-1">
+              <p className="text-xs text-neu-400 mt-3 flex items-center gap-1">
                 <Eye className="w-3 h-3" />
                 Aperçu client
               </p>
@@ -1093,17 +1099,17 @@ function SectionMarches() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-s-100 rounded-lg">
-            <MapPin className="w-6 h-6 text-s-600" />
+          <div className="p-3 bg-sec-100 rounded-lg">
+            <MapPin className="w-6 h-6 text-sec-600" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-s-800">Mes marchés</h1>
-            <p className="text-n-600">
+            <h1 className="text-3xl font-bold text-sec-800">Mes marchés</h1>
+            <p className="text-neu-600">
               {marketsData.length} marché(s) inscrits
             </p>
           </div>
         </div>
-        <Button className="bg-s-600 hover:bg-s-700">
+        <Button className="bg-sec-600 hover:bg-sec-700">
           <Plus className="w-4 h-4" />
           Trouver un marché
         </Button>
@@ -1113,29 +1119,29 @@ function SectionMarches() {
         {marketsData.map((m) => (
           <div
             key={m.id}
-            className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100"
+            className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100"
           >
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="font-semibold text-n-900 text-lg">{m.name}</h3>
-                <p className="text-sm text-n-500 flex items-center gap-1">
+                <h3 className="font-semibold text-neu-900 text-lg">{m.name}</h3>
+                <p className="text-sm text-neu-500 flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5" />
                   {m.address}, {m.town}
                 </p>
               </div>
-              <Badge className="bg-p-100 text-p-800">Actif</Badge>
+              <Badge className="bg-prin-100 text-prin-800">Actif</Badge>
             </div>
             <div className="space-y-2">
               {m.days.map((d) => (
                 <div key={d.day} className="flex items-center gap-2 text-sm">
-                  <Calendar className="w-4 h-4 text-n-400" />
-                  <span className="font-medium text-n-700 w-24">{d.day}</span>
-                  <Clock className="w-4 h-4 text-n-400" />
-                  <span className="text-n-600">{d.hours}</span>
+                  <Calendar className="w-4 h-4 text-neu-400" />
+                  <span className="font-medium text-neu-700 w-24">{d.day}</span>
+                  <Clock className="w-4 h-4 text-neu-400" />
+                  <span className="text-neu-600">{d.hours}</span>
                 </div>
               ))}
             </div>
-            <div className="flex items-center gap-2 mt-4 pt-4 border-t border-n-100">
+            <div className="flex items-center gap-2 mt-4 pt-4 border-t border-neu-100">
               <Button variant="outline" size="sm">
                 <Pencil className="w-4 h-4" />
                 Modifier les jours
@@ -1143,7 +1149,7 @@ function SectionMarches() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-s-600 hover:text-s-700 hover:bg-s-50"
+                className="text-sec-600 hover:text-sec-700 hover:bg-sec-50"
               >
                 Se désinscrire
               </Button>
@@ -1216,20 +1222,20 @@ function SectionCommandes() {
   const filtered =
     tab === "all" ? orders : orders.filter((o) => o.status === tab);
   const statusColors = {
-    pending: "bg-s-100 text-s-800",
-    confirmed: "bg-p-100 text-p-800",
+    pending: "bg-sec-100 text-sec-800",
+    confirmed: "bg-prin-100 text-prin-800",
   };
   const statusLabels = { pending: "À confirmer", confirmed: "Confirmée" };
 
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-s-100 rounded-lg">
-          <Package className="w-6 h-6 text-s-600" />
+        <div className="p-3 bg-sec-100 rounded-lg">
+          <Package className="w-6 h-6 text-sec-600" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-s-800">Commandes à venir</h1>
-          <p className="text-n-600">{orders.length} commande(s)</p>
+          <h1 className="text-3xl font-bold text-sec-800">Commandes à venir</h1>
+          <p className="text-neu-600">{orders.length} commande(s)</p>
         </div>
       </div>
 
@@ -1254,7 +1260,7 @@ function SectionCommandes() {
             variant={tab === id ? "default" : "outline"}
             size="sm"
             onClick={() => setTab(id)}
-            className={tab === id ? "bg-s-600 hover:bg-s-700" : ""}
+            className={tab === id ? "bg-sec-600 hover:bg-sec-700" : ""}
           >
             {label}{" "}
             <Badge variant="secondary" className="ml-1">
@@ -1268,43 +1274,44 @@ function SectionCommandes() {
         {filtered.map((o) => (
           <div
             key={o.id}
-            className="bg-n-50 rounded-xl p-5 shadow-sm border border-n-100"
+            className="bg-neu-50 rounded-xl p-5 shadow-sm border border-neu-100"
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-n-100 rounded-lg">
-                  <ShoppingBag className="w-5 h-5 text-n-600" />
+                <div className="p-2 bg-neu-100 rounded-lg">
+                  <ShoppingBag className="w-5 h-5 text-neu-600" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-n-900">{o.id}</span>
+                    <span className="font-semibold text-neu-900">{o.id}</span>
                     <Badge className={statusColors[o.status]}>
                       {statusLabels[o.status]}
                     </Badge>
                   </div>
-                  <p className="text-sm text-n-500">
+                  <p className="text-sm text-neu-500">
                     {o.client} &middot; {o.market} &middot; {o.date}
                   </p>
                 </div>
               </div>
-              <span className="text-lg font-bold text-n-900">{o.total}</span>
+              <span className="text-lg font-bold text-neu-900">{o.total}</span>
             </div>
-            <div className="bg-n-50 rounded-lg p-3 space-y-2">
+            <div className="bg-neu-50 rounded-lg p-3 space-y-2">
               {o.items.map((item, i) => (
                 <div
                   key={i}
                   className="flex items-center justify-between text-sm"
                 >
-                  <span className="text-n-700">
-                    {item.name} <span className="text-n-400">x {item.qty}</span>
+                  <span className="text-neu-700">
+                    {item.name}{" "}
+                    <span className="text-neu-400">x {item.qty}</span>
                   </span>
-                  <span className="font-medium text-n-900">{item.price}</span>
+                  <span className="font-medium text-neu-900">{item.price}</span>
                 </div>
               ))}
             </div>
             {o.status === "pending" && (
-              <div className="flex items-center gap-2 mt-4 pt-4 border-t border-n-100">
-                <Button size="sm" className="bg-s-600 hover:bg-s-700">
+              <div className="flex items-center gap-2 mt-4 pt-4 border-t border-neu-100">
+                <Button size="sm" className="bg-sec-600 hover:bg-sec-700">
                   <Check className="w-4 h-4" />
                   Confirmer
                 </Button>
@@ -1315,7 +1322,7 @@ function SectionCommandes() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-s-600 hover:bg-s-50"
+                  className="text-sec-600 hover:bg-sec-50"
                 >
                   Refuser
                 </Button>
@@ -1360,44 +1367,44 @@ function SectionFacturations() {
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-s-100 rounded-lg">
-          <Receipt className="w-6 h-6 text-s-600" />
+        <div className="p-3 bg-sec-100 rounded-lg">
+          <Receipt className="w-6 h-6 text-sec-600" />
         </div>
-        <h1 className="text-3xl font-bold text-s-800">Facturations</h1>
+        <h1 className="text-3xl font-bold text-sec-800">Facturations</h1>
       </div>
 
-      <div className="bg-n-50 rounded-xl shadow-sm border border-n-100 overflow-hidden">
+      <div className="bg-neu-50 rounded-xl shadow-sm border border-neu-100 overflow-hidden">
         <table className="w-full">
-          <thead className="bg-n-50 border-b border-n-100">
+          <thead className="bg-neu-50 border-b border-neu-100">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase">
+              <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase">
                 N° Facture
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase">
+              <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase">
                 Période
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase">
+              <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase">
                 Date
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase">
+              <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase">
                 Montant
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase">
+              <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase">
                 Statut
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-n-100">
+          <tbody className="divide-y divide-neu-100">
             {invoices.map((inv) => (
-              <tr key={inv.id} className="hover:bg-n-50">
-                <td className="px-4 py-4 font-medium text-n-900">{inv.id}</td>
-                <td className="px-4 py-4 text-n-600">{inv.period}</td>
-                <td className="px-4 py-4 text-n-600">{inv.date}</td>
-                <td className="px-4 py-4 font-medium text-n-900">
+              <tr key={inv.id} className="hover:bg-neu-50">
+                <td className="px-4 py-4 font-medium text-neu-900">{inv.id}</td>
+                <td className="px-4 py-4 text-neu-600">{inv.period}</td>
+                <td className="px-4 py-4 text-neu-600">{inv.date}</td>
+                <td className="px-4 py-4 font-medium text-neu-900">
                   {inv.amount}
                 </td>
                 <td className="px-4 py-4">
-                  <Badge className="bg-p-100 text-p-800">Payée</Badge>
+                  <Badge className="bg-prin-100 text-prin-800">Payée</Badge>
                 </td>
               </tr>
             ))}
@@ -1468,13 +1475,13 @@ function SectionNotifications() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-s-100 rounded-lg">
-            <Bell className="w-6 h-6 text-s-600" />
+          <div className="p-3 bg-sec-100 rounded-lg">
+            <Bell className="w-6 h-6 text-sec-600" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-s-800">Notifications</h1>
+            <h1 className="text-3xl font-bold text-sec-800">Notifications</h1>
             {unreadCount > 0 && (
-              <p className="text-n-600">{unreadCount} non lue(s)</p>
+              <p className="text-neu-600">{unreadCount} non lue(s)</p>
             )}
           </div>
         </div>
@@ -1490,7 +1497,7 @@ function SectionNotifications() {
         {notifications.map((n) => (
           <div
             key={n.id}
-            className={`bg-n-50 rounded-xl p-4 shadow-sm border transition-colors cursor-pointer ${n.read ? "border-n-100" : "border-s-200 bg-s-50/30"}`}
+            className={`bg-neu-50 rounded-xl p-4 shadow-sm border transition-colors cursor-pointer ${n.read ? "border-neu-100" : "bg-sec-50/30"}`}
             onClick={() =>
               setNotifications((prev) =>
                 prev.map((x) => (x.id === n.id ? { ...x, read: true } : x)),
@@ -1499,25 +1506,25 @@ function SectionNotifications() {
           >
             <div className="flex items-start gap-3">
               <div
-                className={`p-2 rounded-lg shrink-0 ${n.read ? "bg-n-100" : "bg-s-100"}`}
+                className={`p-2 rounded-lg shrink-0 ${n.read ? "bg-neu-100" : "bg-sec-100"}`}
               >
                 <n.icon
-                  className={`w-5 h-5 ${n.read ? "text-n-500" : "text-s-600"}`}
+                  className={`w-5 h-5 ${n.read ? "text-neu-500" : "text-sec-600"}`}
                 />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <h3
-                    className={`font-medium ${n.read ? "text-n-700" : "text-n-900"}`}
+                    className={`font-medium ${n.read ? "text-neu-700" : "text-neu-900"}`}
                   >
                     {n.title}
                   </h3>
                   {!n.read && (
-                    <span className="w-2 h-2 bg-s-600 rounded-full shrink-0" />
+                    <span className="w-2 h-2 bg-sec-600 rounded-full shrink-0" />
                   )}
                 </div>
-                <p className="text-sm text-n-500 mt-0.5">{n.message}</p>
-                <p className="text-xs text-n-400 mt-1">{n.time}</p>
+                <p className="text-sm text-neu-500 mt-0.5">{n.message}</p>
+                <p className="text-xs text-neu-400 mt-1">{n.time}</p>
               </div>
             </div>
           </div>
@@ -1541,15 +1548,15 @@ function SectionParametres() {
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-s-100 rounded-lg">
-          <Settings className="w-6 h-6 text-s-600" />
+        <div className="p-3 bg-sec-100 rounded-lg">
+          <Settings className="w-6 h-6 text-sec-600" />
         </div>
-        <h1 className="text-3xl font-bold text-s-800">Paramètres boutique</h1>
+        <h1 className="text-3xl font-bold text-sec-800">Paramètres boutique</h1>
       </div>
 
       <div className="space-y-6">
-        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-          <h2 className="font-semibold text-n-900 mb-4">Notifications</h2>
+        <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+          <h2 className="font-semibold text-neu-900 mb-4">Notifications</h2>
           <div className="space-y-4">
             {[
               {
@@ -1578,16 +1585,16 @@ function SectionParametres() {
                   className="mt-0.5"
                 />
                 <div>
-                  <p className="text-sm font-medium text-n-700">{s.label}</p>
-                  <p className="text-xs text-n-500">{s.desc}</p>
+                  <p className="text-sm font-medium text-neu-700">{s.label}</p>
+                  <p className="text-xs text-neu-500">{s.desc}</p>
                 </div>
               </label>
             ))}
           </div>
         </div>
 
-        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-          <h2 className="font-semibold text-n-900 mb-4">Commandes</h2>
+        <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+          <h2 className="font-semibold text-neu-900 mb-4">Commandes</h2>
           <label className="flex items-start gap-3 cursor-pointer">
             <Checkbox
               checked={autoConfirm}
@@ -1598,10 +1605,10 @@ function SectionParametres() {
               className="mt-0.5"
             />
             <div>
-              <p className="text-sm font-medium text-n-700">
+              <p className="text-sm font-medium text-neu-700">
                 Confirmation automatique des commandes
               </p>
-              <p className="text-xs text-n-500">
+              <p className="text-xs text-neu-500">
                 Les commandes seront confirmées automatiquement sans action de
                 votre part
               </p>
@@ -1609,8 +1616,8 @@ function SectionParametres() {
           </label>
         </div>
 
-        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
-          <h2 className="font-semibold text-n-900 mb-4">Mode vacances</h2>
+        <div className="bg-neu-50 rounded-xl p-6 shadow-sm border border-neu-100">
+          <h2 className="font-semibold text-neu-900 mb-4">Mode vacances</h2>
           <label className="flex items-start gap-3 cursor-pointer">
             <Checkbox
               checked={vacationMode}
@@ -1621,17 +1628,17 @@ function SectionParametres() {
               className="mt-0.5"
             />
             <div>
-              <p className="text-sm font-medium text-n-700">
+              <p className="text-sm font-medium text-neu-700">
                 Activer le mode vacances
               </p>
-              <p className="text-xs text-n-500">
+              <p className="text-xs text-neu-500">
                 Votre boutique sera temporairement invisible et les clients ne
                 pourront plus passer de commandes
               </p>
             </div>
           </label>
           {vacationMode && (
-            <div className="mt-3 bg-s-50 border border-s-200 text-s-800 px-3 py-2 rounded-lg text-sm">
+            <div className="mt-3 bg-sec-50 border border-sec-200 text-sec-800 px-3 py-2 rounded-lg text-sm">
               Votre boutique est actuellement en mode vacances.
             </div>
           )}
@@ -1639,14 +1646,14 @@ function SectionParametres() {
 
         <div className="flex items-center gap-3">
           <Button
-            className="bg-s-600 hover:bg-s-700"
+            className="bg-sec-600 hover:bg-sec-700"
             onClick={() => setSaved(true)}
           >
             <Save className="w-4 h-4" />
             Enregistrer
           </Button>
           {saved && (
-            <span className="text-sm text-p-600 flex items-center gap-1">
+            <span className="text-sm text-prin-600 flex items-center gap-1">
               <Check className="w-4 h-4" />
               Sauvegardé
             </span>
@@ -1766,7 +1773,7 @@ function DemoProductFormDialog({
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="bg-s-50 border border-s-200 text-s-700 px-3 py-2 rounded-lg text-sm">
+            <div className="bg-sec-50 border border-sec-200 text-sec-700 px-3 py-2 rounded-lg text-sm">
               {error}
             </div>
           )}
@@ -1788,7 +1795,7 @@ function DemoProductFormDialog({
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Description (optionnel)"
               rows={2}
-              className="mt-1 w-full px-3 py-2 border border-n-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-s-500 resize-none"
+              className="mt-1 w-full px-3 py-2 border border-neu-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sec-500 resize-none"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -1798,7 +1805,7 @@ function DemoProductFormDialog({
                 id="demo-cat"
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
-                className="mt-1 w-full px-3 py-2 border border-n-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-s-500"
+                className="mt-1 w-full px-3 py-2 border border-neu-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sec-500"
               >
                 <option value="">Sélectionner</option>
                 {DEMO_CATEGORIES.map((c) => (
@@ -1814,7 +1821,7 @@ function DemoProductFormDialog({
                 id="demo-unit"
                 value={unit}
                 onChange={(e) => setUnit(e.target.value)}
-                className="mt-1 w-full px-3 py-2 border border-n-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-s-500"
+                className="mt-1 w-full px-3 py-2 border border-neu-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sec-500"
               >
                 {UNITS.map((u) => (
                   <option key={u.value} value={u.value}>
@@ -1837,7 +1844,7 @@ function DemoProductFormDialog({
                 placeholder="0.00"
                 className="pr-16"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-n-500">
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neu-500">
                 €/{unit}
               </span>
             </div>
@@ -1848,9 +1855,9 @@ function DemoProductFormDialog({
                 type="checkbox"
                 checked={isOrganic}
                 onChange={(e) => setIsOrganic(e.target.checked)}
-                className="w-4 h-4 rounded border-n-300"
+                className="w-4 h-4 rounded border-neu-300"
               />
-              <Leaf className="w-4 h-4 text-p-600" />
+              <Leaf className="w-4 h-4 text-prin-600" />
               <span className="text-sm">Bio</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
@@ -1858,9 +1865,9 @@ function DemoProductFormDialog({
                 type="checkbox"
                 checked={isLocal}
                 onChange={(e) => setIsLocal(e.target.checked)}
-                className="w-4 h-4 rounded border-n-300"
+                className="w-4 h-4 rounded border-neu-300"
               />
-              <MapPin className="w-4 h-4 text-t-600" />
+              <MapPin className="w-4 h-4 text-ter-600" />
               <span className="text-sm">Local</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
@@ -1868,7 +1875,7 @@ function DemoProductFormDialog({
                 type="checkbox"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                className="w-4 h-4 rounded border-n-300"
+                className="w-4 h-4 rounded border-neu-300"
               />
               <span className="text-sm">Actif</span>
             </label>
@@ -1881,7 +1888,7 @@ function DemoProductFormDialog({
             >
               Annuler
             </Button>
-            <Button type="submit" className="bg-s-600 hover:bg-s-700">
+            <Button type="submit" className="bg-sec-600 hover:bg-sec-700">
               <Save className="w-4 h-4" />
               {isEditing ? "Enregistrer" : "Créer"}
             </Button>
@@ -1907,19 +1914,19 @@ function DemoProductsTable({
 
   if (products.length === 0)
     return (
-      <div className="bg-n-50 rounded-xl p-8 sm:p-12 shadow-sm border border-n-100 text-center">
-        <Carrot className="w-12 h-12 text-n-300 mx-auto mb-3" />
-        <h3 className="text-lg font-medium text-n-900 mb-2">Aucun produit</h3>
-        <p className="text-n-500">
+      <div className="bg-neu-50 rounded-xl p-8 sm:p-12 shadow-sm border border-neu-100 text-center">
+        <Carrot className="w-12 h-12 text-neu-300 mx-auto mb-3" />
+        <h3 className="text-lg font-medium text-neu-900 mb-2">Aucun produit</h3>
+        <p className="text-neu-500">
           Commencez par ajouter votre premier produit.
         </p>
       </div>
     );
 
   const ProductCard = ({ product }: { product: Product }) => (
-    <div className="bg-n-50 rounded-xl shadow-sm border border-n-100 p-4">
+    <div className="bg-neu-50 rounded-xl shadow-sm border border-neu-100 p-4">
       <div className="flex items-start gap-3">
-        <div className="w-16 h-16 rounded-lg overflow-hidden bg-n-100 shrink-0">
+        <div className="w-16 h-16 rounded-lg overflow-hidden bg-neu-100 shrink-0">
           <Image
             src={product.imageUrl || "/images/ingredients.jpg"}
             alt={product.name}
@@ -1932,25 +1939,25 @@ function DemoProductsTable({
           <div className="flex items-start justify-between gap-2">
             <div>
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="font-medium text-n-900 text-sm">
+                <span className="font-medium text-neu-900 text-sm">
                   {product.name}
                 </span>
                 {product.isOrganic && (
-                  <Leaf className="w-3.5 h-3.5 text-p-600 shrink-0" />
+                  <Leaf className="w-3.5 h-3.5 text-prin-600 shrink-0" />
                 )}
                 {product.isLocal && (
-                  <MapPin className="w-3.5 h-3.5 text-t-600 shrink-0" />
+                  <MapPin className="w-3.5 h-3.5 text-ter-600 shrink-0" />
                 )}
               </div>
-              <span className="text-xs text-n-500">/{product.unit}</span>
+              <span className="text-xs text-neu-500">/{product.unit}</span>
             </div>
             {product.isActive ? (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-p-100 text-p-800 shrink-0">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-prin-100 text-prin-800 shrink-0">
                 <Check className="w-3 h-3" />
                 Actif
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-n-100 text-n-600 shrink-0">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-neu-100 text-neu-600 shrink-0">
                 <X className="w-3 h-3" />
                 Inactif
               </span>
@@ -1958,38 +1965,38 @@ function DemoProductsTable({
           </div>
           <div className="mt-2">
             <Badge
-              className={`text-xs ${categoryColors[product.category.slug] || "bg-n-100 text-n-800"}`}
+              className={`text-xs ${categoryColors[product.category.slug] || "bg-neu-100 text-neu-800"}`}
             >
               {product.category.name}
             </Badge>
           </div>
         </div>
       </div>
-      <div className="mt-3 pt-3 border-t border-n-100 grid grid-cols-3 gap-2 text-center">
+      <div className="mt-3 pt-3 border-t border-neu-100 grid grid-cols-3 gap-2 text-center">
         <div>
-          <p className="text-xs text-n-500">Prix</p>
-          <p className="text-sm font-medium text-n-900">
+          <p className="text-xs text-neu-500">Prix</p>
+          <p className="text-sm font-medium text-neu-900">
             {getPriceRange(product)}
           </p>
         </div>
         <div>
-          <p className="text-xs text-n-500">Stock</p>
-          <div className="flex items-center justify-center text-sm font-medium text-n-900">
+          <p className="text-xs text-neu-500">Stock</p>
+          <div className="flex items-center justify-center text-sm font-medium text-neu-900">
             {getTotalStock(product) === null ? (
-              <InfinityIcon className="w-4 h-4 text-n-400" />
+              <InfinityIcon className="w-4 h-4 text-neu-400" />
             ) : (
               getTotalStock(product)
             )}
           </div>
         </div>
         <div>
-          <p className="text-xs text-n-500">Marchés</p>
-          <p className="text-sm font-medium text-n-900">
+          <p className="text-xs text-neu-500">Marchés</p>
+          <p className="text-sm font-medium text-neu-900">
             {getAvailableMarkets(product)}
           </p>
         </div>
       </div>
-      <div className="mt-3 pt-3 border-t border-n-100 flex items-center justify-end gap-1">
+      <div className="mt-3 pt-3 border-t border-neu-100 flex items-center justify-end gap-1">
         <Button
           variant="outline"
           size="sm"
@@ -2006,7 +2013,7 @@ function DemoProductsTable({
           variant="ghost"
           size="sm"
           onClick={() => onDelete(product.id)}
-          className="text-s-600 hover:text-s-700 hover:bg-s-50"
+          className="text-sec-600 hover:text-sec-700 hover:bg-sec-50"
         >
           <Trash2 className="w-4 h-4" />
         </Button>
@@ -2021,43 +2028,43 @@ function DemoProductsTable({
           <ProductCard key={p.id} product={p} />
         ))}
       </div>
-      <div className="hidden lg:block bg-n-50 rounded-xl shadow-sm border border-n-100">
+      <div className="hidden lg:block bg-neu-50 rounded-xl shadow-sm border border-neu-100">
         <div className="overflow-x-auto rounded-xl">
           <table className="w-full">
-            <thead className="bg-n-50 border-b border-n-100">
+            <thead className="bg-neu-50 border-b border-neu-100">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase tracking-wider">
                   Produit
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase tracking-wider">
                   Catégorie
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase tracking-wider">
                   Prix
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase tracking-wider">
                   Stock
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase tracking-wider">
                   Marchés
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase tracking-wider">
                   Statut
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-n-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-right text-xs font-medium text-neu-500 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-n-100">
+            <tbody className="divide-y divide-neu-100">
               {products.map((product) => (
                 <tr
                   key={product.id}
-                  className="hover:bg-n-50 transition-colors"
+                  className="hover:bg-neu-50 transition-colors"
                 >
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-n-100 shrink-0">
+                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-neu-100 shrink-0">
                         <Image
                           src={product.imageUrl || "/images/ingredients.jpg"}
                           alt={product.name}
@@ -2068,21 +2075,21 @@ function DemoProductsTable({
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-medium text-n-900">
+                          <span className="font-medium text-neu-900">
                             {product.name}
                           </span>
                           {product.isOrganic && (
                             <span title="Bio">
-                              <Leaf className="w-4 h-4 text-p-600" />
+                              <Leaf className="w-4 h-4 text-prin-600" />
                             </span>
                           )}
                           {product.isLocal && (
                             <span title="Local">
-                              <MapPin className="w-4 h-4 text-t-600" />
+                              <MapPin className="w-4 h-4 text-ter-600" />
                             </span>
                           )}
                         </div>
-                        <span className="text-sm text-n-500">
+                        <span className="text-sm text-neu-500">
                           /{product.unit}
                         </span>
                       </div>
@@ -2092,43 +2099,43 @@ function DemoProductsTable({
                     <Badge
                       className={
                         categoryColors[product.category.slug] ||
-                        "bg-n-100 text-n-800"
+                        "bg-neu-100 text-neu-800"
                       }
                     >
                       {product.category.name}
                     </Badge>
                   </td>
                   <td className="px-4 py-4">
-                    <span className="font-medium text-n-900">
+                    <span className="font-medium text-neu-900">
                       {getPriceRange(product)}
                     </span>
-                    <span className="text-n-500">/{product.unit}</span>
+                    <span className="text-neu-500">/{product.unit}</span>
                   </td>
                   <td className="px-4 py-4">
-                    <div className="flex items-center gap-1 text-n-700">
+                    <div className="flex items-center gap-1 text-neu-700">
                       {getTotalStock(product) === null ? (
-                        <InfinityIcon className="w-4 h-4 text-n-400" />
+                        <InfinityIcon className="w-4 h-4 text-neu-400" />
                       ) : (
                         <>
                           {getTotalStock(product)}{" "}
-                          <span className="text-n-500">{product.unit}</span>
+                          <span className="text-neu-500">{product.unit}</span>
                         </>
                       )}
                     </div>
                   </td>
                   <td className="px-4 py-4">
-                    <span className="text-n-700">
+                    <span className="text-neu-700">
                       {getAvailableMarkets(product)}
                     </span>
                   </td>
                   <td className="px-4 py-4">
                     {product.isActive ? (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-p-100 text-p-800">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-prin-100 text-prin-800">
                         <Check className="w-3 h-3" />
                         Actif
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-n-100 text-n-600">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-neu-100 text-neu-600">
                         <X className="w-3 h-3" />
                         Inactif
                       </span>
@@ -2162,13 +2169,13 @@ function DemoProductsTable({
                               className="fixed inset-0 z-10"
                               onClick={() => setOpenMenuId(null)}
                             />
-                            <div className="absolute right-10 -top-8 z-20 bg-n-50 rounded-lg shadow-lg border border-n-100 py-1 min-w-35">
+                            <div className="absolute right-10 -top-8 z-20 bg-neu-50 rounded-lg shadow-lg border border-neu-100 py-1 min-w-35">
                               <button
                                 onClick={() => {
                                   onDuplicate(product);
                                   setOpenMenuId(null);
                                 }}
-                                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-n-700 hover:bg-n-50"
+                                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-neu-700 hover:bg-neu-50"
                               >
                                 <Copy className="w-4 h-4" />
                                 Dupliquer
@@ -2178,7 +2185,7 @@ function DemoProductsTable({
                                   onDelete(product.id);
                                   setOpenMenuId(null);
                                 }}
-                                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-s-600 hover:bg-s-50"
+                                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-sec-600 hover:bg-sec-50"
                               >
                                 <Trash2 className="w-4 h-4" />
                                 Supprimer
@@ -2313,8 +2320,8 @@ function DemoProductsTableEditable({
 
   if (products.length === 0)
     return (
-      <div className="bg-n-50 rounded-xl p-8 shadow-sm border border-n-100 text-center">
-        <h3 className="text-lg font-medium text-n-900">Aucun produit</h3>
+      <div className="bg-neu-50 rounded-xl p-8 shadow-sm border border-neu-100 text-center">
+        <h3 className="text-lg font-medium text-neu-900">Aucun produit</h3>
       </div>
     );
 
@@ -2323,10 +2330,10 @@ function DemoProductsTableEditable({
     if (!row) return null;
     return (
       <div
-        className={`bg-n-50 rounded-xl shadow-sm border p-4 transition-colors ${row.isDirty ? "border-s-300 bg-s-50/50" : "border-n-100"}`}
+        className={`bg-neu-50 rounded-xl shadow-sm border p-4 transition-colors ${row.isDirty ? "border-sec-300 bg-sec-50/50" : "border-neu-100"}`}
       >
         <div className="flex items-start gap-3 mb-4">
-          <div className="w-14 h-14 rounded-lg overflow-hidden bg-n-100 shrink-0">
+          <div className="w-14 h-14 rounded-lg overflow-hidden bg-neu-100 shrink-0">
             <Image
               src={product.imageUrl || "/images/ingredients.jpg"}
               alt={product.name}
@@ -2337,19 +2344,23 @@ function DemoProductsTableEditable({
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="font-medium text-n-900 text-sm">
+              <span className="font-medium text-neu-900 text-sm">
                 {product.name}
               </span>
-              {product.isOrganic && <Leaf className="w-3.5 h-3.5 text-p-600" />}
-              {product.isLocal && <MapPin className="w-3.5 h-3.5 text-t-600" />}
+              {product.isOrganic && (
+                <Leaf className="w-3.5 h-3.5 text-prin-600" />
+              )}
+              {product.isLocal && (
+                <MapPin className="w-3.5 h-3.5 text-ter-600" />
+              )}
             </div>
             <div className="flex items-center gap-2 mt-1">
               <Badge
-                className={`text-xs ${categoryColors[product.category.slug] || "bg-n-100 text-n-800"}`}
+                className={`text-xs ${categoryColors[product.category.slug] || "bg-neu-100 text-neu-800"}`}
               >
                 {product.category.name}
               </Badge>
-              <span className="text-xs text-n-500">
+              <span className="text-xs text-neu-500">
                 Base: {product.basePrice.toFixed(2)}€/{product.unit}
               </span>
             </div>
@@ -2357,7 +2368,7 @@ function DemoProductsTableEditable({
         </div>
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-3">
-            <label className="text-sm text-n-600">Prix</label>
+            <label className="text-sm text-neu-600">Prix</label>
             <div className="flex items-center gap-1">
               <Input
                 type="number"
@@ -2369,13 +2380,13 @@ function DemoProductsTableEditable({
                 }
                 className="w-24 h-9 text-sm"
               />
-              <span className="text-sm text-n-500">€/{product.unit}</span>
+              <span className="text-sm text-neu-500">€/{product.unit}</span>
             </div>
           </div>
           <div className="flex items-center justify-between gap-3">
-            <label className="text-sm text-n-600">Stock</label>
+            <label className="text-sm text-neu-600">Stock</label>
             {row.isUnlimited ? (
-              <div className="flex items-center gap-1 text-n-400 h-9 px-3">
+              <div className="flex items-center gap-1 text-neu-400 h-9 px-3">
                 <InfinityIcon className="w-4 h-4" />
                 <span className="text-sm">Illimité</span>
               </div>
@@ -2390,11 +2401,11 @@ function DemoProductsTableEditable({
                   }
                   className="w-20 h-9 text-sm"
                 />
-                <span className="text-sm text-n-500">{product.unit}</span>
+                <span className="text-sm text-neu-500">{product.unit}</span>
               </div>
             )}
           </div>
-          <div className="flex items-center justify-between pt-2 border-t border-n-100">
+          <div className="flex items-center justify-between pt-2 border-t border-neu-100">
             <label className="flex items-center gap-2 cursor-pointer">
               <Checkbox
                 checked={row.isUnlimited}
@@ -2402,7 +2413,7 @@ function DemoProductsTableEditable({
                   handleFieldChange(product.id, "isUnlimited", !!c)
                 }
               />
-              <span className="text-sm text-n-700">Illimité</span>
+              <span className="text-sm text-neu-700">Illimité</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <Checkbox
@@ -2411,7 +2422,7 @@ function DemoProductsTableEditable({
                   handleFieldChange(product.id, "isAvailable", !!c)
                 }
               />
-              <span className="text-sm text-n-700">Disponible</span>
+              <span className="text-sm text-neu-700">Disponible</span>
             </label>
           </div>
         </div>
@@ -2421,13 +2432,13 @@ function DemoProductsTableEditable({
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-n-50 rounded-xl p-3 sm:p-4 shadow-sm border border-n-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-neu-50 rounded-xl p-3 sm:p-4 shadow-sm border border-neu-100">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm text-n-600">
-            Marché : <strong className="text-s-700">{marketName}</strong>
+          <span className="text-sm text-neu-600">
+            Marché : <strong className="text-sec-700">{marketName}</strong>
           </span>
           {dirtyCount > 0 && (
-            <Badge variant="secondary" className="bg-s-100 text-s-800">
+            <Badge variant="secondary" className="bg-sec-100 text-sec-800">
               {dirtyCount} modification{dirtyCount > 1 ? "s" : ""}
             </Badge>
           )}
@@ -2443,7 +2454,7 @@ function DemoProductsTableEditable({
             size="sm"
             onClick={handleSave}
             disabled={dirtyCount === 0}
-            className="flex-1 sm:flex-none bg-s-600 hover:bg-s-700"
+            className="flex-1 sm:flex-none bg-sec-600 hover:bg-sec-700"
           >
             <Save className="w-4 h-4" />
             Enregistrer
@@ -2451,7 +2462,7 @@ function DemoProductsTableEditable({
         </div>
       </div>
       {successMessage && (
-        <div className="bg-p-50 border border-p-200 text-p-700 px-4 py-3 rounded-lg text-sm">
+        <div className="bg-prin-50 border border-prin-200 text-prin-700 px-4 py-3 rounded-lg text-sm">
           {successMessage}
         </div>
       )}
@@ -2460,43 +2471,43 @@ function DemoProductsTableEditable({
           <EditableCard key={p.id} product={p} />
         ))}
       </div>
-      <div className="hidden lg:block bg-n-50 rounded-xl shadow-sm border border-n-100">
+      <div className="hidden lg:block bg-neu-50 rounded-xl shadow-sm border border-neu-100">
         <div className="overflow-x-auto rounded-xl">
           <table className="w-full">
-            <thead className="bg-n-50 border-b border-n-100">
+            <thead className="bg-neu-50 border-b border-neu-100">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase">
                   Produit
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase">
                   Catégorie
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase w-32">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase w-32">
                   Prix
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-n-500 uppercase w-32">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neu-500 uppercase w-32">
                   Stock
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-n-500 uppercase w-24">
+                <th className="px-4 py-3 text-center text-xs font-medium text-neu-500 uppercase w-24">
                   Illimité
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-n-500 uppercase w-24">
+                <th className="px-4 py-3 text-center text-xs font-medium text-neu-500 uppercase w-24">
                   Disponible
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-n-100">
+            <tbody className="divide-y divide-neu-100">
               {products.map((product) => {
                 const row = editableRows[product.id];
                 if (!row) return null;
                 return (
                   <tr
                     key={product.id}
-                    className={`transition-colors ${row.isDirty ? "bg-s-50" : "hover:bg-n-50"}`}
+                    className={`transition-colors ${row.isDirty ? "bg-sec-50" : "hover:bg-neu-50"}`}
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-n-100 shrink-0">
+                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-neu-100 shrink-0">
                           <Image
                             src={product.imageUrl || "/images/ingredients.jpg"}
                             alt={product.name}
@@ -2507,17 +2518,17 @@ function DemoProductsTableEditable({
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="font-medium text-n-900 text-sm">
+                            <span className="font-medium text-neu-900 text-sm">
                               {product.name}
                             </span>
                             {product.isOrganic && (
-                              <Leaf className="w-3 h-3 text-p-600" />
+                              <Leaf className="w-3 h-3 text-prin-600" />
                             )}
                             {product.isLocal && (
-                              <MapPin className="w-3 h-3 text-t-600" />
+                              <MapPin className="w-3 h-3 text-ter-600" />
                             )}
                           </div>
-                          <span className="text-xs text-n-500">
+                          <span className="text-xs text-neu-500">
                             Base: {product.basePrice.toFixed(2)}€/{product.unit}
                           </span>
                         </div>
@@ -2525,7 +2536,7 @@ function DemoProductsTableEditable({
                     </td>
                     <td className="px-4 py-3">
                       <Badge
-                        className={`text-xs ${categoryColors[product.category.slug] || "bg-n-100 text-n-800"}`}
+                        className={`text-xs ${categoryColors[product.category.slug] || "bg-neu-100 text-neu-800"}`}
                       >
                         {product.category.name}
                       </Badge>
@@ -2553,13 +2564,13 @@ function DemoProductsTableEditable({
                           }
                           className="w-24 h-8 text-sm"
                         />
-                        <span className="text-xs text-n-500">€</span>
+                        <span className="text-xs text-neu-500">€</span>
                       </div>
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1">
                         {row.isUnlimited ? (
-                          <div className="flex items-center gap-1 text-n-400 h-8 px-2">
+                          <div className="flex items-center gap-1 text-neu-400 h-8 px-2">
                             <InfinityIcon className="w-4 h-4" />
                           </div>
                         ) : (
@@ -2578,7 +2589,7 @@ function DemoProductsTableEditable({
                           />
                         )}
                         {!row.isUnlimited && (
-                          <span className="text-xs text-n-500">
+                          <span className="text-xs text-neu-500">
                             {product.unit}
                           </span>
                         )}
@@ -2700,18 +2711,18 @@ function SectionEtal({
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-s-100 rounded-lg">
-            <Carrot className="w-6 h-6 text-s-600" />
+          <div className="p-3 bg-sec-100 rounded-lg">
+            <Carrot className="w-6 h-6 text-sec-600" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-s-800">Mon étal</h1>
-            <p className="text-n-600">
+            <h1 className="text-3xl font-bold text-sec-800">Mon étal</h1>
+            <p className="text-neu-600">
               {products.length} produit{products.length > 1 ? "s" : ""}
             </p>
           </div>
         </div>
         <Button
-          className="bg-s-600 hover:bg-s-700"
+          className="bg-sec-600 hover:bg-sec-700"
           onClick={() => {
             setEditingProduct(null);
             setFormOpen(true);
@@ -2723,11 +2734,11 @@ function SectionEtal({
         </Button>
       </div>
 
-      <div className="bg-n-50 rounded-xl p-3 sm:p-4 shadow-sm border border-n-100 mb-4">
+      <div className="bg-neu-50 rounded-xl p-3 sm:p-4 shadow-sm border border-neu-100 mb-4">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
           <div className="flex items-center gap-2">
-            <Store className="w-5 h-5 text-s-600 shrink-0" />
-            <span className="text-sm font-medium text-n-700 hidden sm:inline">
+            <Store className="w-5 h-5 text-sec-600 shrink-0" />
+            <span className="text-sm font-medium text-neu-700 hidden sm:inline">
               Vue par marché :
             </span>
           </div>
@@ -2746,7 +2757,7 @@ function SectionEtal({
               </SelectContent>
             </Select>
             {selectedMarket !== "all" && (
-              <span className="text-xs text-s-600 bg-s-50 px-2 py-1 rounded whitespace-nowrap">
+              <span className="text-xs text-sec-600 bg-sec-50 px-2 py-1 rounded whitespace-nowrap">
                 Mode édition
               </span>
             )}
@@ -2754,10 +2765,10 @@ function SectionEtal({
         </div>
       </div>
 
-      <div className="bg-n-50 rounded-xl p-4 shadow-sm border border-n-100 mb-6">
+      <div className="bg-neu-50 rounded-xl p-4 shadow-sm border border-neu-100 mb-6">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-n-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neu-400" />
             <Input
               type="text"
               placeholder="Rechercher un produit..."
@@ -2769,21 +2780,21 @@ function SectionEtal({
           <Button
             variant="outline"
             onClick={() => setShowFilters(!showFilters)}
-            className={showFilters ? "bg-n-100" : ""}
+            className={showFilters ? "bg-neu-100" : ""}
           >
             <Filter className="w-4 h-4" />
             Filtres
             {hasActiveFilters && (
-              <span className="ml-1 w-2 h-2 bg-s-600 rounded-full" />
+              <span className="ml-1 w-2 h-2 bg-sec-600 rounded-full" />
             )}
           </Button>
         </div>
         {showFilters && (
-          <div className="mt-4 pt-4 border-t border-n-100 flex flex-wrap gap-3">
+          <div className="mt-4 pt-4 border-t border-neu-100 flex flex-wrap gap-3">
             <select
               value={selectedCategory || ""}
               onChange={(e) => setSelectedCategory(e.target.value || null)}
-              className="px-3 py-2 border border-n-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-s-500"
+              className="px-3 py-2 border border-neu-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sec-500"
             >
               <option value="">Toutes les catégories</option>
               {DEMO_CATEGORIES.map((c) => (
@@ -2795,7 +2806,7 @@ function SectionEtal({
             <select
               value={selectedStatus || ""}
               onChange={(e) => setSelectedStatus(e.target.value || null)}
-              className="px-3 py-2 border border-n-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-s-500"
+              className="px-3 py-2 border border-neu-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sec-500"
             >
               <option value="">Tous les statuts</option>
               <option value="active">Actif</option>
@@ -2851,11 +2862,11 @@ export function VendorDashboardDemo() {
   const notifCount = 2; // fake unread count
 
   return (
-    <div className="flex min-h-[80vh] bg-n-50 rounded-xl overflow-hidden border border-n-200 my-6 mx-auto max-w-[1400px]">
+    <div className="flex min-h-[80vh] bg-neu-50 rounded-xl overflow-hidden border border-neu-200 my-6 mx-auto max-w-350">
       {/* Mobile hamburger */}
       <button
         onClick={() => setSidebarOpen(true)}
-        className="lg:hidden fixed top-24 left-4 z-50 p-2 bg-s-800 text-n-50 rounded-lg shadow-lg"
+        className="lg:hidden fixed top-24 left-4 z-50 p-2 bg-sec-800 text-neu-50 rounded-lg shadow-lg"
         aria-label="Menu"
       >
         <Menu className="w-5 h-5" />
@@ -2864,29 +2875,29 @@ export function VendorDashboardDemo() {
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-n-900/50 z-40"
+          className="lg:hidden fixed inset-0 bg-neu-900/50 z-40"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`w-64 bg-s-800 text-n-50 flex flex-col shrink-0 fixed lg:relative top-0 left-0 h-screen lg:h-auto z-50 lg:z-auto transition-transform duration-300 lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`w-64 bg-sec-800 text-neu-50 flex flex-col shrink-0 fixed lg:relative top-0 left-0 h-screen lg:h-auto z-50 lg:z-auto transition-transform duration-300 lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <div className="p-5 border-b border-s-700">
+        <div className="p-5 border-b ">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-s-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-sec-600 flex items-center justify-center">
                 <Store className="w-5 h-5" />
               </div>
               <div>
                 <h2 className="font-bold">La Ferme de Jean</h2>
-                <p className="text-xs text-s-300">Mode démo</p>
+                <p className="text-xs text-sec-300">Mode démo</p>
               </div>
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-1 hover:bg-s-700 rounded"
+              className="lg:hidden p-1 hover:bg-sec-700 rounded"
             >
               <X className="w-5 h-5" />
             </button>
@@ -2902,12 +2913,12 @@ export function VendorDashboardDemo() {
                     setActiveSection(item.id);
                     setSidebarOpen(false);
                   }}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors text-sm ${activeSection === item.id ? "bg-s-600 text-n-50" : "text-s-200 hover:bg-s-700 hover:text-n-50"}`}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors text-sm ${activeSection === item.id ? "bg-sec-600 text-neu-50" : "text-sec-200 hover:bg-sec-700 hover:text-neu-50"}`}
                 >
                   <item.icon className="w-5 h-5 shrink-0" />
                   <span className="flex-1 text-left">{item.label}</span>
                   {item.id === "notifications" && notifCount > 0 && (
-                    <span className="bg-s-500 text-n-50 text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="bg-sec-500 text-neu-50 text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {notifCount}
                     </span>
                   )}
@@ -2917,8 +2928,8 @@ export function VendorDashboardDemo() {
           </ul>
         </nav>
 
-        <div className="p-2 border-t border-s-700">
-          <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-s-200 opacity-50 cursor-not-allowed text-sm">
+        <div className="p-2 border-t ">
+          <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sec-200 opacity-50 cursor-not-allowed text-sm">
             <Phone className="w-5 h-5 shrink-0" />
             <span>Support</span>
           </button>
@@ -2928,9 +2939,9 @@ export function VendorDashboardDemo() {
       {/* Main content */}
       <main className="flex-1 p-4 lg:p-8 min-w-0">
         {/* Demo banner */}
-        <div className="mb-6 bg-gradient-to-r from-s-50 to-s-50 border border-s-200 rounded-xl p-4">
-          <h2 className="font-semibold text-s-800">Mode démonstration</h2>
-          <p className="text-sm text-s-600 mt-0.5">
+        <div className="mb-6 bg-linear-to-r from-sec-50 to-sec-50 border rounded-xl p-4">
+          <h2 className="font-semibold text-sec-800">Mode démonstration</h2>
+          <p className="text-sm text-sec-600 mt-0.5">
             Explorez le tableau de bord vendeur librement. Toutes les données
             sont fictives et les modifications restent en local.
           </p>
