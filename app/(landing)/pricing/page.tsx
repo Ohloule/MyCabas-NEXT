@@ -104,8 +104,8 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="bg-sec100 py-12 px-0 md:px-16 ">
-        <div className="align-center text-center selection:bg-sec300">
+      <section className="bg-sec-100 py-12 px-0 md:px-16 ">
+        <div className="align-center text-center selection:bg-sec-300">
           <h2 className="text-2xl font-semibold mb-4">
             🔐 Une tarification pensée pour vous, pas contre vous
           </h2>

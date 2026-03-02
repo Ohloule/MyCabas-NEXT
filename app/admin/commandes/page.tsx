@@ -22,9 +22,9 @@ const STATUS_COLORS: Record<string, string> = {
   ADJUSTED: "bg-ter-100 text-ter-700",
   CAPTURED: "bg-prin-200 text-prin-800",
   PICKED_UP: "bg-prin-100 text-prin-700",
-  CANCELLED: "bg-sec100 text-sec700",
-  EXPIRED: "bg-sec100 text-sec700",
-  REFUNDED: "bg-sec100 text-sec700",
+  CANCELLED: "bg-sec-100 text-sec-700",
+  EXPIRED: "bg-sec-100 text-sec-700",
+  REFUNDED: "bg-sec-100 text-sec-700",
 };
 
 export default async function AdminCommandesPage() {

@@ -56,11 +56,11 @@ interface ProductsTableProps {
 // Couleurs par catégorie
 const categoryColors: Record<string, string> = {
   "fruits-legumes": "bg-prin-100 text-prin-800",
-  "viandes-charcuterie": "bg-sec100 text-sec800",
+  "viandes-charcuterie": "bg-sec-100 text-sec-800",
   "poissons-fruits-de-mer": "bg-ter-100 text-ter-800",
-  "fromages-produits-laitiers": "bg-sec100 text-sec800",
-  "boulangerie-patisserie": "bg-sec100 text-sec800",
-  "epicerie-condiments": "bg-sec100 text-sec800",
+  "fromages-produits-laitiers": "bg-sec-100 text-sec-800",
+  "boulangerie-patisserie": "bg-sec-100 text-sec-800",
+  "epicerie-condiments": "bg-sec-100 text-sec-800",
   boissons: "bg-ter-100 text-ter-800",
   "bio-nature": "bg-prin-100 text-prin-800",
 };
@@ -247,7 +247,7 @@ export function ProductsTable({
             e.stopPropagation();
             onDelete(product.id);
           }}
-          className="text-sec600 hover:text-sec700 hover:bg-sec50"
+          className="text-sec-600 hover:text-sec-700 hover:bg-sec-50"
         >
           <Trash2 className="w-4 h-4" />
           Supprimer
@@ -428,7 +428,7 @@ export function ProductsTable({
                           onDelete(product.id);
                         }}
                         title="Supprimer"
-                        className="text-sec600 hover:text-sec700 hover:bg-sec50"
+                        className="text-sec-600 hover:text-sec-700 hover:bg-sec-50"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>

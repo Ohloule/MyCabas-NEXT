@@ -42,7 +42,7 @@ export default function ProfilTabs() {
               href={tab.href}
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors border-b-2 whitespace-nowrap ${
                 isActive
-                  ? "border-sec500 text-sec700"
+                  ? "border-sec-500 text-sec-700"
                   : "border-transparent text-neu-500 hover:text-neu-700 hover:border-neu-300"
               }`}
             >

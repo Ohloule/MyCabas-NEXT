@@ -15,10 +15,10 @@ export default function CarouselIndicator({
             current === index + 1
               ? index % 2 === 0
                 ? "bg-prin-700 scale-125"
-                : "bg-sec700 scale-125"
+                : "bg-sec-700 scale-125"
               : index % 2 === 0
                 ? "bg-prin-300"
-                : "bg-sec300"
+                : "bg-sec-300"
           }`}
         />
       ))}

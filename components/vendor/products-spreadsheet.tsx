@@ -404,7 +404,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
     <div
       className={`bg-neu-50 rounded-xl shadow-sm border p-4 transition-colors overflow-hidden ${
         row.status === "error"
-          ? "border-sec300 bg-sec50/30"
+          ? "border-sec-300 bg-sec-50/30"
           : row.status === "valid"
             ? "border-prin-300 bg-prin-50/30"
             : "border-neu-100"
@@ -417,7 +417,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="h-7 w-7 text-neu-400 hover:text-sec500"
+          className="h-7 w-7 text-neu-400 hover:text-sec-500"
           onClick={() => removeRow(row.id)}
         >
           <Trash2 className="w-3.5 h-3.5" />
@@ -443,12 +443,12 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
             placeholder="Nom du produit"
             className={`w-full h-9 px-3 text-sm border rounded-lg focus:ring-2 focus:outline-none ${
               row.errors.name
-                ? "border-sec300 bg-sec50 focus:ring-sec500"
+                ? "border-sec-300 bg-sec-50 focus:ring-sec-500"
                 : "border-neu-200 focus:ring-prin-500"
             }`}
           />
           {row.errors.name && (
-            <p className="text-xs text-sec500 mt-0.5">{row.errors.name}</p>
+            <p className="text-xs text-sec-500 mt-0.5">{row.errors.name}</p>
           )}
         </div>
 
@@ -478,7 +478,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               <button
                 type="button"
                 onClick={() => removeImage(row.id)}
-                className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-sec500 text-neu-50 rounded-full flex items-center justify-center hover:bg-sec600"
+                className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-sec-500 text-neu-50 rounded-full flex items-center justify-center hover:bg-sec-600"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -516,7 +516,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               onChange={(e) => updateCell(row.id, "categoryId", e.target.value)}
               className={`w-full min-w-0 h-9 px-2 text-sm border rounded-lg focus:ring-2 focus:outline-none ${
                 row.errors.categoryId
-                  ? "border-sec300 bg-sec50 focus:ring-sec500"
+                  ? "border-sec-300 bg-sec-50 focus:ring-sec-500"
                   : "border-neu-200 focus:ring-prin-500"
               }`}
             >
@@ -528,7 +528,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               ))}
             </select>
             {row.errors.categoryId && (
-              <p className="text-xs text-sec500 mt-0.5">
+              <p className="text-xs text-sec-500 mt-0.5">
                 {row.errors.categoryId}
               </p>
             )}
@@ -542,7 +542,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               onChange={(e) => updateCell(row.id, "unit", e.target.value)}
               className={`w-full min-w-0 h-9 px-2 text-sm border rounded-lg focus:ring-2 focus:outline-none ${
                 row.errors.unit
-                  ? "border-sec300 bg-sec50 focus:ring-sec500"
+                  ? "border-sec-300 bg-sec-50 focus:ring-sec-500"
                   : "border-neu-200 focus:ring-prin-500"
               }`}
             >
@@ -558,7 +558,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               ))}
             </select>
             {row.errors.unit && (
-              <p className="text-xs text-sec500 mt-0.5">{row.errors.unit}</p>
+              <p className="text-xs text-sec-500 mt-0.5">{row.errors.unit}</p>
             )}
           </div>
         </div>
@@ -584,12 +584,12 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               placeholder="0.00"
               className={`w-full h-9 px-3 text-sm border rounded-lg focus:ring-2 focus:outline-none ${
                 row.errors.basePrice
-                  ? "border-sec300 bg-sec50 focus:ring-sec500"
+                  ? "border-sec-300 bg-sec-50 focus:ring-sec-500"
                   : "border-neu-200 focus:ring-prin-500"
               }`}
             />
             {row.errors.basePrice && (
-              <p className="text-xs text-sec500 mt-0.5">
+              <p className="text-xs text-sec-500 mt-0.5">
                 {row.errors.basePrice}
               </p>
             )}
@@ -652,12 +652,12 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                   placeholder="Ex: 0.80 €/pièce"
                   className={`w-full h-9 px-3 text-sm border rounded-lg focus:ring-2 focus:outline-none ${
                     row.errors.pricePerPiece
-                      ? "border-sec300 bg-sec50 focus:ring-sec500"
+                      ? "border-sec-300 bg-sec-50 focus:ring-sec-500"
                       : "border-neu-200 focus:ring-prin-500"
                   }`}
                 />
                 {row.errors.pricePerPiece && (
-                  <p className="text-xs text-sec500 mt-0.5">
+                  <p className="text-xs text-sec-500 mt-0.5">
                     {row.errors.pricePerPiece}
                   </p>
                 )}
@@ -707,7 +707,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                   </Badge>
                 )}
                 {errorCount > 0 && (
-                  <Badge className="bg-sec100 text-sec800">
+                  <Badge className="bg-sec-100 text-sec-800">
                     {errorCount} erreur{errorCount > 1 ? "s" : ""}
                   </Badge>
                 )}
@@ -810,7 +810,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                   key={row.id}
                   className={`transition-colors ${
                     row.status === "error"
-                      ? "bg-sec50/50"
+                      ? "bg-sec-50/50"
                       : row.status === "valid"
                         ? "bg-prin-50/30"
                         : "hover:bg-neu-50/50"
@@ -843,12 +843,12 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         placeholder="Nom du produit"
                         className={`w-full h-8 px-2 text-sm border rounded focus:ring-2 focus:outline-none ${
                           row.errors.name
-                            ? "border-sec300 bg-sec50 focus:ring-sec500"
+                            ? "border-sec-300 bg-sec-50 focus:ring-sec-500"
                             : "border-neu-200 focus:ring-prin-500 focus:border-prin-500"
                         }`}
                       />
                       {row.errors.name && (
-                        <p className="text-[11px] text-sec500 mt-0.5 leading-tight">
+                        <p className="text-[11px] text-sec-500 mt-0.5 leading-tight">
                           {row.errors.name}
                         </p>
                       )}
@@ -882,7 +882,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         <button
                           type="button"
                           onClick={() => removeImage(row.id)}
-                          className="absolute -top-1 -right-1 w-4 h-4 bg-sec500 text-neu-50 rounded-full flex items-center justify-center hover:bg-sec600"
+                          className="absolute -top-1 -right-1 w-4 h-4 bg-sec-500 text-neu-50 rounded-full flex items-center justify-center hover:bg-sec-600"
                           tabIndex={-1}
                         >
                           <X className="w-2.5 h-2.5" />
@@ -920,7 +920,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         onKeyDown={(e) => handleKeyDown(e, index)}
                         className={`w-full h-8 px-1.5 text-sm border rounded focus:ring-2 focus:outline-none ${
                           row.errors.categoryId
-                            ? "border-sec300 bg-sec50 focus:ring-sec500"
+                            ? "border-sec-300 bg-sec-50 focus:ring-sec-500"
                             : "border-neu-200 focus:ring-prin-500 focus:border-prin-500"
                         }`}
                       >
@@ -932,7 +932,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         ))}
                       </select>
                       {row.errors.categoryId && (
-                        <p className="text-[11px] text-sec500 mt-0.5 leading-tight">
+                        <p className="text-[11px] text-sec-500 mt-0.5 leading-tight">
                           {row.errors.categoryId}
                         </p>
                       )}
@@ -950,7 +950,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         onKeyDown={(e) => handleKeyDown(e, index)}
                         className={`w-full h-8 px-1.5 text-sm border rounded focus:ring-2 focus:outline-none ${
                           row.errors.unit
-                            ? "border-sec300 bg-sec50 focus:ring-sec500"
+                            ? "border-sec-300 bg-sec-50 focus:ring-sec-500"
                             : "border-neu-200 focus:ring-prin-500 focus:border-prin-500"
                         }`}
                       >
@@ -966,7 +966,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         ))}
                       </select>
                       {row.errors.unit && (
-                        <p className="text-[11px] text-sec500 mt-0.5 leading-tight">
+                        <p className="text-[11px] text-sec-500 mt-0.5 leading-tight">
                           {row.errors.unit}
                         </p>
                       )}
@@ -994,12 +994,12 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         placeholder="0.00"
                         className={`w-full h-8 px-2 text-sm border rounded focus:ring-2 focus:outline-none ${
                           row.errors.basePrice
-                            ? "border-sec300 bg-sec50 focus:ring-sec500"
+                            ? "border-sec-300 bg-sec-50 focus:ring-sec-500"
                             : "border-neu-200 focus:ring-prin-500 focus:border-prin-500"
                         }`}
                       />
                       {row.errors.basePrice && (
-                        <p className="text-[11px] text-sec500 mt-0.5 leading-tight">
+                        <p className="text-[11px] text-sec-500 mt-0.5 leading-tight">
                           {row.errors.basePrice}
                         </p>
                       )}
@@ -1038,7 +1038,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                               placeholder="€/pièce"
                               className={`w-full h-7 px-2 text-sm border rounded focus:ring-2 focus:outline-none ${
                                 row.errors.pricePerPiece
-                                  ? "border-sec300 bg-sec50 focus:ring-sec500"
+                                  ? "border-sec-300 bg-sec-50 focus:ring-sec-500"
                                   : "border-neu-200 focus:ring-prin-500 focus:border-prin-500"
                               }`}
                             />
@@ -1047,14 +1047,14 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                               onClick={() =>
                                 toggleCanSellByPiece(row.id, false)
                               }
-                              className="shrink-0 text-neu-400 hover:text-sec500 transition-colors"
+                              className="shrink-0 text-neu-400 hover:text-sec-500 transition-colors"
                               tabIndex={-1}
                             >
                               <X className="w-3.5 h-3.5" />
                             </button>
                           </div>
                           {row.errors.pricePerPiece && (
-                            <p className="text-[11px] text-sec500 mt-0.5 leading-tight">
+                            <p className="text-[11px] text-sec-500 mt-0.5 leading-tight">
                               {row.errors.pricePerPiece}
                             </p>
                           )}
@@ -1099,7 +1099,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-7 w-7 text-neu-400 hover:text-sec500"
+                      className="h-7 w-7 text-neu-400 hover:text-sec-500"
                       onClick={() => removeRow(row.id)}
                       tabIndex={-1}
                     >

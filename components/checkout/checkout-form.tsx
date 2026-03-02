@@ -71,7 +71,7 @@ export default function CheckoutForm({
       />
 
       {error && (
-        <div className="bg-sec50 border border-sec200 text-sec700 px-4 py-3 rounded-lg text-sm">
+        <div className="bg-sec-50 border border-sec-200 text-sec-700 px-4 py-3 rounded-lg text-sm">
           {error}
         </div>
       )}
@@ -79,7 +79,7 @@ export default function CheckoutForm({
       <Button
         type="submit"
         disabled={isProcessing || !stripe || !elements}
-        className="w-full bg-sec500 hover:bg-sec600 h-12 text-base gap-2"
+        className="w-full bg-sec-500 hover:bg-sec-600 h-12 text-base gap-2"
       >
         {isProcessing ? <Loader taille={45} /> : <Lock className="h-4 w-4" />}
         {isProcessing

@@ -337,7 +337,7 @@ export default function ParametresPage() {
 
       {/* Messages */}
       {error && (
-        <div className="bg-sec50 border border-sec200 text-sec700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+        <div className="bg-sec-50 border border-sec-200 text-sec-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
           <AlertCircle className="h-5 w-5 shrink-0" />
           <span className="text-sm">{error}</span>
         </div>
@@ -444,7 +444,7 @@ export default function ParametresPage() {
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="mt-2 text-sec600 hover:text-sec700 hover:bg-sec50"
+                      className="mt-2 text-sec-600 hover:text-sec-700 hover:bg-sec-50"
                       onClick={handleDeleteLogo}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -475,7 +475,7 @@ export default function ParametresPage() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="stallName">
-                    Nom de la boutique <span className="text-sec500">*</span>
+                    Nom de la boutique <span className="text-sec-500">*</span>
                   </Label>
                   <Input
                     id="stallName"

@@ -95,7 +95,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center">
-                <ShieldCheck className="w-5 h-5 text-sec400" />
+                <ShieldCheck className="w-5 h-5 text-sec-400" />
               </div>
               <div>
                 <h2 className="font-bold text-lg leading-tight">
@@ -132,8 +132,8 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
                     onClick={closeSidebar}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                       isActive
-                        ? "bg-sec500 text-slate-900 font-semibold"
-                        : "text-slate-300 hover:bg-slate-700 hover:text-neu-50"
+                        ? "bg-sec-500 text-slate-900 font-semibold"
+                        : "text-slate-300 hover:bg-sec-700 hover:text-neu-50"
                     }`}
                   >
                     <item.icon className="w-5 h-5 shrink-0" />
@@ -156,7 +156,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
           </Link>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-sec700 hover:text-neu-50 transition-colors cursor-pointer"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-sec-700 hover:text-neu-50 transition-colors cursor-pointer"
           >
             <LogOut className="w-5 h-5 shrink-0" />
             <span>Déconnexion</span>

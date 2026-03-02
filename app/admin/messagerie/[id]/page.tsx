@@ -171,11 +171,11 @@ export default function AdminConversationPage() {
               {/* Avatar */}
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                  isAdmin ? "bg-sec100" : "bg-prin-100"
+                  isAdmin ? "bg-sec-100" : "bg-prin-100"
                 }`}
               >
                 {isAdmin ? (
-                  <ShieldCheck className="w-4 h-4 text-sec600" />
+                  <ShieldCheck className="w-4 h-4 text-sec-600" />
                 ) : (
                   <Store className="w-4 h-4 text-prin-600" />
                 )}

@@ -520,7 +520,7 @@ export default function MarketsPage() {
   const isLocationSearch = userLocation || selectedLocation;
 
   return (
-    <div className="min-h-screen bg-sec50/50">
+    <div className="min-h-screen bg-sec-50/50">
       <HeadingPage title="Trouver un marché près de chez vous !">
         {" "}
         <p className="text-lg ">
@@ -532,21 +532,21 @@ export default function MarketsPage() {
         {/* Alerte si l'utilisateur doit choisir un marché favori */}
         {showFavoriteAlert && (
           <div className="mb-6 relative">
-            <div className="flex items-start gap-3 p-4 rounded-lg bg-sec50 border border-sec200">
-              <AlertCircle className="h-5 w-5 text-sec600 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3 p-4 rounded-lg bg-sec-50 border border-sec-200">
+              <AlertCircle className="h-5 w-5 text-sec-600 shrink-0 mt-0.5" />
               <div className="flex-1">
-                <h3 className="font-semibold text-sec800">
+                <h3 className="font-semibold text-sec-800">
                   Choisissez votre marché favori
                 </h3>
-                <p className="text-sm text-sec700 mt-1">
+                <p className="text-sm text-sec-700 mt-1">
                   Pour accéder à la recherche de produits, vous devez
                   d&apos;abord ajouter au moins un marché à vos favoris. Trouvez
                   un marché près de chez vous et cliquez sur le bouton{" "}
-                  <Heart className="inline h-4 w-4 text-sec500" /> pour
+                  <Heart className="inline h-4 w-4 text-sec-500" /> pour
                   l&apos;ajouter.
                 </p>
                 {(pendingQuery || pendingCategory) && (
-                  <p className="text-xs text-sec600 mt-2">
+                  <p className="text-xs text-sec-600 mt-2">
                     Votre recherche{" "}
                     {pendingQuery && <>&quot;{pendingQuery}&quot;</>}{" "}
                     {pendingCategory && `(catégorie: ${pendingCategory})`} sera
@@ -556,7 +556,7 @@ export default function MarketsPage() {
               </div>
               <button
                 onClick={() => setShowFavoriteAlert(false)}
-                className="text-sec600 hover:text-sec800 p-1"
+                className="text-sec-600 hover:text-sec-800 p-1"
               >
                 <X className="h-4 w-4" />
               </button>

@@ -58,7 +58,7 @@ export default async function AdminDashboardPage() {
           title="Marchés en attente"
           value={pendingMarkets}
           icon={Clock}
-          color="bg-sec500"
+          color="bg-sec-500"
           href="/admin/marches?status=PENDING"
           urgent={pendingMarkets > 0}
         />
@@ -104,7 +104,7 @@ export default async function AdminDashboardPage() {
       <div className="bg-neu-50 rounded-xl shadow-sm border border-neu-200 p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-neu-800 flex items-center gap-2">
-            <Clock className="w-5 h-5 text-sec500" />
+            <Clock className="w-5 h-5 text-sec-500" />
             Marchés en attente de validation
           </h2>
           <Link
@@ -125,7 +125,7 @@ export default async function AdminDashboardPage() {
               <Link
                 key={market.id}
                 href="/admin/marches?status=PENDING"
-                className="flex items-center justify-between p-3 rounded-lg border border-sec100 bg-sec50 hover:bg-sec100 transition-colors group"
+                className="flex items-center justify-between p-3 rounded-lg border border-sec-100 bg-sec-50 hover:bg-sec-100 transition-colors group"
               >
                 <div>
                   <p className="font-medium text-neu-800">{market.name}</p>
@@ -143,7 +143,7 @@ export default async function AdminDashboardPage() {
                     </p>
                   )}
                 </div>
-                <span className="text-xs font-semibold px-2 py-1 rounded-full bg-sec200 text-sec800">
+                <span className="text-xs font-semibold px-2 py-1 rounded-full bg-sec-200 text-sec-800">
                   PENDING
                 </span>
               </Link>
@@ -174,7 +174,7 @@ function StatCard({
     <Link href={href}>
       <div
         className={`bg-neu-50 rounded-xl p-4 md:p-5 shadow-sm border transition-shadow hover:shadow-md cursor-pointer ${
-          urgent ? "border-sec300" : "border-neu-200"
+          urgent ? "border-sec-300" : "border-neu-200"
         }`}
       >
         <div className="flex items-center justify-between gap-2">
@@ -189,7 +189,9 @@ function StatCard({
           </div>
         </div>
         {urgent && value > 0 && (
-          <p className="text-xs text-sec600 font-medium mt-2">Action requise</p>
+          <p className="text-xs text-sec-600 font-medium mt-2">
+            Action requise
+          </p>
         )}
       </div>
     </Link>

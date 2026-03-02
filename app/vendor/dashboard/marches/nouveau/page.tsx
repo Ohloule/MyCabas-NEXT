@@ -395,7 +395,7 @@ export default function NouveauMarchePage() {
 
             {/* Erreur vérification */}
             {nearbyError && (
-              <div className="flex items-center gap-2 p-3 bg-sec50 border border-sec200 rounded-lg text-sm text-sec800">
+              <div className="flex items-center gap-2 p-3 bg-sec-50 border border-sec-200 rounded-lg text-sm text-sec-800">
                 <AlertTriangle className="h-4 w-4 shrink-0" />
                 {nearbyError}
               </div>
@@ -405,16 +405,16 @@ export default function NouveauMarchePage() {
 
         {/* Alerte doublons */}
         {nearbyChecked && nearbyMarkets.length > 0 && (
-          <div className="bg-sec50 border border-sec300 rounded-lg p-4">
+          <div className="bg-sec-50 border border-sec-300 rounded-lg p-4">
             <div className="flex items-start gap-3 mb-3">
-              <AlertTriangle className="h-5 w-5 text-sec600 shrink-0 mt-0.5" />
+              <AlertTriangle className="h-5 w-5 text-sec-600 shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-sec800">
+                <p className="font-semibold text-sec-800">
                   {nearbyMarkets.length} marché
                   {nearbyMarkets.length > 1 ? "s" : ""} déjà référencé
                   {nearbyMarkets.length > 1 ? "s" : ""} à moins de 2 km
                 </p>
-                <p className="text-sm text-sec700 mt-0.5">
+                <p className="text-sm text-sec-700 mt-0.5">
                   Vérifiez que votre marché ne figure pas déjà dans cette liste.
                 </p>
               </div>
@@ -424,9 +424,9 @@ export default function NouveauMarchePage() {
               {nearbyMarkets.map((m) => (
                 <div
                   key={m.id}
-                  className="bg-neu-50 border border-sec200 rounded-lg px-3 py-2 flex items-center gap-2"
+                  className="bg-neu-50 border border-sec-200 rounded-lg px-3 py-2 flex items-center gap-2"
                 >
-                  <MapPin className="h-4 w-4 text-sec500 shrink-0" />
+                  <MapPin className="h-4 w-4 text-sec-500 shrink-0" />
                   <div className="text-sm">
                     <span className="font-medium text-neu-800">{m.name}</span>
                     <span className="text-neu-500 ml-2">
@@ -451,7 +451,7 @@ export default function NouveauMarchePage() {
                 onChange={(e) => setConfirmedNoDuplicate(e.target.checked)}
                 className="w-4 h-4 accent-prin-600"
               />
-              <span className="text-sm font-medium text-sec800">
+              <span className="text-sm font-medium text-sec-800">
                 Je confirme que ce marché n'existe pas déjà dans cette liste
               </span>
             </label>
@@ -534,7 +534,7 @@ export default function NouveauMarchePage() {
                       variant="ghost"
                       size="icon"
                       onClick={() => removeOpening(i)}
-                      className="text-sec500 hover:text-sec600 hover:bg-sec50 shrink-0"
+                      className="text-sec-500 hover:text-sec-600 hover:bg-sec-50 shrink-0"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>

@@ -251,7 +251,7 @@ export default function PanierPage() {
               <button
                 onClick={handleClearCart}
                 disabled={clearing}
-                className="text-sm text-sec500 hover:text-sec700 flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                className="text-sm text-sec-500 hover:text-sec-700 flex items-center gap-1 cursor-pointer disabled:opacity-50"
               >
                 {clearing ? (
                   <Loader2 className="animate-spin h-3 w-3" />
@@ -311,7 +311,7 @@ export default function PanierPage() {
                         <button
                           onClick={() => handleRemoveItem(item.id)}
                           disabled={updatingItems.has(item.id)}
-                          className="sm:hidden p-1 text-neu-400 hover:text-sec500 cursor-pointer disabled:opacity-50"
+                          className="sm:hidden p-1 text-neu-400 hover:text-sec-500 cursor-pointer disabled:opacity-50"
                           title="Supprimer"
                         >
                           <X className="h-4 w-4" />
@@ -367,7 +367,7 @@ export default function PanierPage() {
                         <button
                           onClick={() => handleRemoveItem(item.id)}
                           disabled={updatingItems.has(item.id)}
-                          className="hidden sm:block p-1 text-neu-400 hover:text-sec500 cursor-pointer disabled:opacity-50"
+                          className="hidden sm:block p-1 text-neu-400 hover:text-sec-500 cursor-pointer disabled:opacity-50"
                           title="Supprimer"
                         >
                           <X className="h-4 w-4" />
@@ -501,7 +501,7 @@ export default function PanierPage() {
 
                 <Button
                   onClick={() => router.push("/checkout")}
-                  className="w-full bg-sec500 hover:bg-sec600 mt-4 hover:text-neu-50"
+                  className="w-full bg-sec-500 hover:bg-sec-600 mt-4 hover:text-neu-50"
                 >
                   Passer la commande
                 </Button>
@@ -520,7 +520,7 @@ export default function PanierPage() {
                   {total.toFixed(2)} €
                 </p>
               </div>
-              <Button className="bg-sec500 hover:bg-sec600 flex-1 max-w-50">
+              <Button className="bg-sec-500 hover:bg-sec-600 flex-1 max-w-50">
                 Passer la commande
               </Button>
             </div>

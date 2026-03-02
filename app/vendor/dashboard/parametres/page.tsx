@@ -483,8 +483,8 @@ export default function ParametresPage() {
                 </span>
               </div>
             ) : (
-              <div className="flex items-start gap-2.5 bg-sec50 border border-sec200 rounded-lg px-4 py-3 text-sm text-sec800">
-                <CreditCard className="h-4 w-4 shrink-0 mt-0.5 text-sec600" />
+              <div className="flex items-start gap-2.5 bg-sec-50 border border-sec-200 rounded-lg px-4 py-3 text-sm text-sec-800">
+                <CreditCard className="h-4 w-4 shrink-0 mt-0.5 text-sec-600" />
                 <span>
                   Les frais Stripe seront affichés séparément et ajoutés au
                   total de la commande lors du paiement. Certains clients
@@ -524,7 +524,7 @@ export default function ParametresPage() {
               <>
                 <Separator />
                 <div className="space-y-3">
-                  <p className="text-sm text-sec700 bg-sec50 border border-sec200 rounded-lg px-4 py-2.5">
+                  <p className="text-sm text-sec-700 bg-sec-50 border border-sec-200 rounded-lg px-4 py-2.5">
                     Pendant le mode vacances, votre boutique ne sera plus
                     visible et aucune commande ne pourra être passée.
                   </p>

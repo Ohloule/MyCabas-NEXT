@@ -117,7 +117,7 @@ export default function SearchResults({
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
-        <div className="text-sec500 text-center">
+        <div className="text-sec-500 text-center">
           <p className="text-lg font-medium">Oups !</p>
           <p className="text-neu-600 mt-2">{error}</p>
         </div>

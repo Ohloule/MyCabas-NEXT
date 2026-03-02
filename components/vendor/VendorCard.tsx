@@ -172,7 +172,7 @@ export function VendorCard({
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-1.5 rounded-full bg-linear-to-br from-ter-500 via-ter-500 to-sec400 text-neu-50 hover:opacity-80 transition-opacity"
+                  className="p-1.5 rounded-full bg-linear-to-br from-ter-500 via-ter-500 to-sec-400 text-neu-50 hover:opacity-80 transition-opacity"
                   title="Instagram"
                   onClick={(e) => e.stopPropagation()}
                 >

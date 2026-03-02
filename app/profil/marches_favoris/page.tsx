@@ -206,7 +206,7 @@ export default function MarchesFavorisPage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-sec400 hover:text-sec600 hover:bg-sec50 shrink-0"
+                      className="text-sec-400 hover:text-sec-600 hover:bg-sec-50 shrink-0"
                       disabled={isDeletingThis}
                       onClick={() => deleteMarket(group.market.id, group.days)}
                       aria-label="Retirer ce marché des favoris"

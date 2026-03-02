@@ -71,11 +71,11 @@ interface ProductsTableEditableProps {
 
 const categoryColors: Record<string, string> = {
   "fruits-legumes": "bg-prin-100 text-prin-800",
-  "viandes-charcuterie": "bg-sec100 text-sec800",
+  "viandes-charcuterie": "bg-sec-100 text-sec-800",
   "poissons-fruits-de-mer": "bg-ter-100 text-ter-800",
-  "fromages-produits-laitiers": "bg-sec100 text-sec800",
-  "boulangerie-patisserie": "bg-sec100 text-sec800",
-  "epicerie-condiments": "bg-sec100 text-sec800",
+  "fromages-produits-laitiers": "bg-sec-100 text-sec-800",
+  "boulangerie-patisserie": "bg-sec-100 text-sec-800",
+  "epicerie-condiments": "bg-sec-100 text-sec-800",
   boissons: "bg-ter-100 text-ter-800",
   "bio-nature": "bg-prin-100 text-prin-800",
 };
@@ -213,7 +213,7 @@ export function ProductsTableEditable({
     return (
       <div
         className={`bg-neu-50 rounded-xl shadow-sm border p-4 transition-colors ${
-          row.isDirty ? "border-sec300 bg-sec50/50" : "border-neu-100"
+          row.isDirty ? "border-sec-300 bg-sec-50/50" : "border-neu-100"
         }`}
       >
         {/* Header avec image et nom */}
@@ -371,7 +371,7 @@ export function ProductsTableEditable({
             Marché : <strong className="text-prin-700">{marketName}</strong>
           </span>
           {dirtyCount > 0 && (
-            <Badge variant="secondary" className="bg-sec100 text-sec800">
+            <Badge variant="secondary" className="bg-sec-100 text-sec-800">
               {dirtyCount} modification{dirtyCount > 1 ? "s" : ""}
             </Badge>
           )}
@@ -442,7 +442,7 @@ export function ProductsTableEditable({
                   <tr
                     key={product.id}
                     className={`transition-colors ${
-                      row.isDirty ? "bg-sec50" : "hover:bg-neu-50"
+                      row.isDirty ? "bg-sec-50" : "hover:bg-neu-50"
                     }`}
                   >
                     {/* Produit */}

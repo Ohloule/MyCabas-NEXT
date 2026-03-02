@@ -26,7 +26,7 @@ export default function Page() {
             un clic — directement auprès des artisans près de chez vous.
           </p>
 
-          <div className="text-neu-50 food-motif bg-sec700 rounded-2xl px-3 py-6 md:py-12 border mb-8 max-w-3xl mx-auto selection:bg-sec300">
+          <div className="text-neu-50 food-motif bg-sec-700 rounded-2xl px-3 py-6 md:py-12 border mb-8 max-w-3xl mx-auto selection:bg-sec-300">
             <h3 className="text-4xl text-center font-bold  font-special mb-4">
               Ce que comprend l’abonnement
             </h3>

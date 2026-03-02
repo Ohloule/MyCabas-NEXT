@@ -73,7 +73,7 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             {error && (
-              <div className="flex items-center gap-2 rounded-md bg-sec500/10 p-3 text-sm text-sec900">
+              <div className="flex items-center gap-2 rounded-md bg-sec-500/10 p-3 text-sm text-sec-900">
                 <AlertCircle className="h-4 w-4" />
                 {error}
               </div>

@@ -96,7 +96,7 @@ export default function CheckoutPage() {
       <>
         <HeadingPage title="Paiement" />
         <div className="align-center py-16 text-center">
-          <AlertCircle className="h-16 w-16 text-sec300 mx-auto mb-4" />
+          <AlertCircle className="h-16 w-16 text-sec-300 mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-neu-700 mb-2">
             Impossible de créer la commande
           </h2>

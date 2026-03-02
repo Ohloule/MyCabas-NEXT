@@ -52,10 +52,10 @@ interface ProductCardProps {
 
 const CATEGORY_COLORS: Record<string, string> = {
   "Fruits & Légumes": "bg-prin-100 text-prin-800 hover:bg-prin-100",
-  "Viandes & Charcuterie": "bg-sec100 text-sec800 hover:bg-sec100",
+  "Viandes & Charcuterie": "bg-sec-100 text-sec-800 hover:bg-sec-100",
   "Poissons & Fruits de mer": "bg-ter-100 text-ter-800 hover:bg-ter-100",
-  "Fromages & Produits laitiers": "bg-sec100 text-sec800 hover:bg-sec100",
-  "Boulangerie & Pâtisserie": "bg-sec100 text-sec800 hover:bg-sec100",
+  "Fromages & Produits laitiers": "bg-sec-100 text-sec-800 hover:bg-sec-100",
+  "Boulangerie & Pâtisserie": "bg-sec-100 text-sec-800 hover:bg-sec-100",
   "Épicerie & Condiments": "bg-ter-100 text-ter-800 hover:bg-ter-100",
   Boissons: "bg-ter-100 text-ter-800 hover:bg-ter-100",
   "Bio & Nature": "bg-prin-100 text-prin-800 hover:bg-prin-100",
@@ -343,7 +343,7 @@ export default function ProductCard({
               </Badge>
             )}
             {product.isLocal && (
-              <Badge className="bg-sec500 hover:bg-sec600 text-neu-50 text-xs">
+              <Badge className="bg-sec-500 hover:bg-sec-600 text-neu-50 text-xs">
                 <MapPin className="w-3 h-3 mr-1" />
                 Local
               </Badge>
@@ -452,7 +452,7 @@ export default function ProductCard({
               <button
                 onClick={() => handleUpdate(0)}
                 disabled={loading}
-                className="flex items-center justify-center w-8 h-8 rounded-full bg-sec50 hover:bg-sec100 text-sec400 hover:text-sec600 transition-colors disabled:opacity-50 cursor-pointer"
+                className="flex items-center justify-center w-8 h-8 rounded-full bg-sec-50 hover:bg-sec-100 text-sec-400 hover:text-sec-600 transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {loading ? (
                   <Loader2 className="animate-spin" size={14} />

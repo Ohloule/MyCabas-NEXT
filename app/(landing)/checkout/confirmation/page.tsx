@@ -67,9 +67,9 @@ export default function ConfirmationPage() {
                   votre commande avant le jour du marché. Vous ne serez débité
                   qu&apos;après sa confirmation.
                 </p>
-                <div className="bg-sec50 border border-sec200 rounded-lg p-4 flex items-start gap-3 text-left">
-                  <Clock className="h-5 w-5 text-sec600 shrink-0 mt-0.5" />
-                  <div className="text-sm text-sec800">
+                <div className="bg-sec-50 border border-sec-200 rounded-lg p-4 flex items-start gap-3 text-left">
+                  <Clock className="h-5 w-5 text-sec-600 shrink-0 mt-0.5" />
+                  <div className="text-sm text-sec-800">
                     <p className="font-medium">En attente de confirmation</p>
                     <p>
                       Le commerçant peut ajuster les quantités (ex: poids exact
@@ -94,7 +94,7 @@ export default function ConfirmationPage() {
               </>
             ) : isFailed ? (
               <>
-                <XCircle className="h-16 w-16 text-sec500 mx-auto" />
+                <XCircle className="h-16 w-16 text-sec-500 mx-auto" />
                 <div>
                   <h2 className="text-2xl font-bold text-neu-900 mb-2">
                     Paiement échoué

@@ -114,9 +114,9 @@ export default function Page() {
                 </Card>
               </CarouselItem>
               <CarouselItem className="min-w-70 sm:min-w-87.5">
-                <Card className="bg-sec100 border-0 rounded-2xl shadow-md">
+                <Card className="bg-sec-100 border-0 rounded-2xl shadow-md">
                   <CardContent className="p-6">
-                    <h3 className="font-special text-3xl font-semibold mb-2 text-sec800">
+                    <h3 className="font-special text-3xl font-semibold mb-2 text-sec-800">
                       Qualité locale garantie
                     </h3>
                     <p>
@@ -140,9 +140,9 @@ export default function Page() {
                 </Card>
               </CarouselItem>
               <CarouselItem className="min-w-70  sm:min-w-87.5">
-                <Card className="bg-sec100 border-0 rounded-2xl shadow-md ">
+                <Card className="bg-sec-100 border-0 rounded-2xl shadow-md ">
                   <CardContent className="p-6">
-                    <h3 className="font-special text-3xl font-semibold mb-2 text-sec800">
+                    <h3 className="font-special text-3xl font-semibold mb-2 text-sec-800">
                       Qualité locale garantie
                     </h3>
                     <p>

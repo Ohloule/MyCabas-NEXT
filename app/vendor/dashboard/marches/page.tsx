@@ -644,7 +644,7 @@ export default function MarchesPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="w-full text-sec600 hover:text-sec700 hover:bg-sec50"
+                          className="w-full text-sec-600 hover:text-sec-700 hover:bg-sec-50"
                           onClick={() => handleUnregister(market.id)}
                           disabled={actionLoading === market.id}
                         >
@@ -675,7 +675,7 @@ export default function MarchesPage() {
 
           {/* Message d'info sur la localisation */}
           {locationError && !searchQuery && (
-            <div className="bg-sec50 border border-sec200 text-sec700 px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
+            <div className="bg-sec-50 border border-sec-200 text-sec-700 px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
               <MapPin className="h-5 w-5 shrink-0" />
               <span>{locationError}</span>
             </div>

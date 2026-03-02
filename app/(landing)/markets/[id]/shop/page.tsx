@@ -216,7 +216,7 @@ export default function ShopPage() {
 
   if (status === "loading" || (status === "authenticated" && loading)) {
     return (
-      <div className="min-h-screen bg-sec50/50 flex items-center justify-center">
+      <div className="min-h-screen bg-sec-50/50 flex items-center justify-center">
         <Loader taille={45} />
       </div>
     );
@@ -224,7 +224,7 @@ export default function ShopPage() {
 
   if (error || !market) {
     return (
-      <div className="min-h-screen bg-sec50/50 flex items-center justify-center">
+      <div className="min-h-screen bg-sec-50/50 flex items-center justify-center">
         <div className="text-center">
           <p className="text-lg font-medium text-neu-700">
             {error || "Marché introuvable"}
@@ -244,7 +244,7 @@ export default function ShopPage() {
   const nextMarketDate = selectedDay ? getNextMarketDate(selectedDay) : "";
 
   return (
-    <div className="min-h-screen bg-sec25">
+    <div className="min-h-screen bg-sec-25">
       <HeadingPage title={market.name}>
         <div className="flex items-center justify-center gap-2 mt-2 text-prin-100">
           <ShoppingBasket className="h-5 w-5" />
@@ -282,7 +282,7 @@ export default function ShopPage() {
 
         {/* Filtres sticky */}
         {vendors.length > 0 && (
-          <div className="sticky top-0 z-20 -mx-4 px-4 py-3 mb-6 bg-sec25/95 backdrop-blur-sm border-b border-neu-100 space-y-3">
+          <div className="sticky top-0 z-20 -mx-4 px-4 py-3 mb-6 bg-sec-25/95 backdrop-blur-sm border-b border-neu-100 space-y-3">
             {/* Barre de recherche + bouton panier */}
             <div className="flex items-center gap-2">
               <div className="relative flex-1">
@@ -306,7 +306,7 @@ export default function ShopPage() {
 
               {/* Bouton panier */}
               <Link href="/panier">
-                <Button className="bg-sec500 hover:bg-sec600 gap-2 whitespace-nowrap">
+                <Button className="bg-sec-500 hover:bg-sec-600 gap-2 whitespace-nowrap">
                   <ShoppingCart className="h-4 w-4" />
                   {cartTotalLabel ? cartTotalLabel : "Panier"}
                 </Button>

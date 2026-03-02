@@ -41,8 +41,8 @@ const STATUS_LABELS: Record<MarketStatus, string> = {
 
 const STATUS_COLORS: Record<MarketStatus, string> = {
   ACTIVE: "bg-prin-100 text-prin-800 border-prin-200",
-  PENDING: "bg-sec100 text-sec800 border-sec200",
-  REJECTED: "bg-sec100 text-sec800 border-sec200",
+  PENDING: "bg-sec-100 text-sec-800 border-sec-200",
+  REJECTED: "bg-sec-100 text-sec-800 border-sec-200",
 };
 
 const DAYS_FR: Record<string, string> = {
@@ -189,7 +189,7 @@ export default function AdminMarchesPage() {
           </p>
         </div>
         {filter === "PENDING" && total > 0 && (
-          <span className="ml-auto px-3 py-1 rounded-full bg-sec100 text-sec800 text-sm font-semibold border border-sec200">
+          <span className="ml-auto px-3 py-1 rounded-full bg-sec-100 text-sec-800 text-sm font-semibold border border-sec-200">
             {total} en attente
           </span>
         )}
@@ -285,7 +285,7 @@ export default function AdminMarchesPage() {
 
                     {/* Raison du rejet */}
                     {market.status === "REJECTED" && market.rejectionReason && (
-                      <p className="text-xs text-sec600 mt-1 bg-sec50 px-2 py-1 rounded">
+                      <p className="text-xs text-sec-600 mt-1 bg-sec-50 px-2 py-1 rounded">
                         Raison : {market.rejectionReason}
                       </p>
                     )}
@@ -312,7 +312,7 @@ export default function AdminMarchesPage() {
                       <Button
                         size="sm"
                         variant="outline"
-                        className="border-sec300 text-sec600 hover:bg-sec50"
+                        className="border-sec-300 text-sec-600 hover:bg-sec-50"
                         onClick={() => {
                           setRejectTarget(market.id);
                           setRejectReason("");
@@ -329,7 +329,7 @@ export default function AdminMarchesPage() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-sec300 text-sec600 hover:bg-sec50 shrink-0"
+                      className="border-sec-300 text-sec-600 hover:bg-sec-50 shrink-0"
                       onClick={() => {
                         setRejectTarget(market.id);
                         setRejectReason("");
@@ -387,7 +387,7 @@ export default function AdminMarchesPage() {
         <div className="fixed inset-0 bg-neu-900/50 z-50 flex items-center justify-center p-4">
           <div className="bg-neu-50 rounded-xl shadow-xl p-6 w-full max-w-md">
             <h3 className="text-lg font-semibold text-neu-800 mb-1 flex items-center gap-2">
-              <XCircle className="w-5 h-5 text-sec500" />
+              <XCircle className="w-5 h-5 text-sec-500" />
               {markets.find((m) => m.id === rejectTarget)?.status === "ACTIVE"
                 ? "Désactiver le marché"
                 : "Rejeter le marché"}
@@ -401,7 +401,7 @@ export default function AdminMarchesPage() {
               onChange={(e) => setRejectReason(e.target.value)}
               placeholder="Raison du rejet (optionnel)…"
               rows={3}
-              className="w-full rounded-lg border border-neu-200 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-sec300 mb-4"
+              className="w-full rounded-lg border border-neu-200 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-sec-300 mb-4"
             />
             <div className="flex gap-3 justify-end">
               <Button
@@ -412,7 +412,7 @@ export default function AdminMarchesPage() {
                 Annuler
               </Button>
               <Button
-                className="bg-sec600 hover:bg-sec700 text-neu-50"
+                className="bg-sec-600 hover:bg-sec-700 text-neu-50"
                 onClick={handleReject}
                 disabled={actionLoading}
               >

@@ -8810,9 +8810,9 @@
     ]
   },
   {
-    "name": "Marché de Lagny-le-Sec",
+    "name": "Marché de Lagny-le-sec-",
     "address": "Centre ville",
-    "town": "Lagny-le-Sec",
+    "town": "Lagny-le-sec-",
     "zip": "60330",
     "lat": 49.0873758,
     "lng": 2.7441499,
@@ -56562,9 +56562,9 @@
     ]
   },
   {
-    "name": "Marché de Savigny-le-sec",
+    "name": "Marché de Savigny-le-sec-",
     "address": "Place du Marché - sous les Halles",
-    "town": "Savigny-le-Sec",
+    "town": "Savigny-le-sec-",
     "zip": "21380",
     "lat": 47.430255,
     "lng": 5.053217,
@@ -111228,7 +111228,7 @@
   {
     "name": "marché du sunday",
     "address": "place de la mairie",
-    "town": "Breuil-le-Sec",
+    "town": "Breuil-le-sec-",
     "zip": "60840",
     "lat": 49.374547,
     "lng": 2.486598,
@@ -130791,9 +130791,9 @@
     ]
   },
   {
-    "name": "Marché de Noisy-le-Sec",
+    "name": "Marché de Noisy-le-sec-",
     "address": "Place des Découvertes",
-    "town": "Noisy-le-Sec",
+    "town": "Noisy-le-sec-",
     "zip": "93130",
     "lat": 48.8912328,
     "lng": 2.4558671,

@@ -12,7 +12,7 @@ const buttonVariants = cva(
         default:
           "bg-prin-800 text-prin-50 shadow-sm hover:bg-prin-600 focus-visible:ring-2 focus-visible:ring-prin-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 transition-colors",
         secondary:
-          "bg-sec550 text-sec50 shadow-sm hover:bg-sec600 focus-visible:ring-2 focus-visible:ring-sec400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 transition-colors",
+          "bg-sec-550 text-sec-50 shadow-sm hover:bg-sec-600 focus-visible:ring-2 focus-visible:ring-sec-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 transition-colors",
         destructive:
           "bg-destructive text-neu-50 hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:

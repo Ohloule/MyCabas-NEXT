@@ -880,7 +880,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
               )}
             </div>
           ) : (
-            <div className="bg-sec50 border border-sec200 text-sec800 px-4 py-3 rounded-lg">
+            <div className="bg-sec-50 border border-sec-200 text-sec-800 px-4 py-3 rounded-lg">
               <p className="font-medium">Aucun marché configuré</p>
               <p className="text-sm mt-1">
                 Vous devez d&apos;abord vous inscrire à des marchés pour
@@ -902,7 +902,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                   variant="outline"
                   size="sm"
                   onClick={() => setImageUrl("")}
-                  className="text-sec500 hover:text-sec700 hover:bg-sec50"
+                  className="text-sec-500 hover:text-sec-700 hover:bg-sec-50"
                 >
                   <Trash2 className="w-4 h-4 mr-1" />
                   Supprimer

@@ -37,7 +37,7 @@ export default async function VendorDashboardPage() {
           title="Stocks bas"
           value="0"
           icon={AlertTriangle}
-          color="bg-sec500"
+          color="bg-sec-500"
         />
       </div>
 

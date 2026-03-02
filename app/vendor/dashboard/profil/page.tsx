@@ -356,7 +356,7 @@ export default function ProfilPage() {
                         variant="ghost"
                         onClick={handleDeleteBankInfo}
                         disabled={deleting}
-                        className="text-sec600 hover:text-sec700 hover:bg-sec50"
+                        className="text-sec-600 hover:text-sec-700 hover:bg-sec-50"
                       >
                         {deleting ? (
                           <Loader taille={45} />
@@ -383,9 +383,9 @@ export default function ProfilPage() {
               </>
             ) : (
               <form onSubmit={handleSaveBankInfo} className="space-y-4">
-                <div className="bg-sec50 border border-sec200 rounded-lg p-3 flex items-start gap-2">
-                  <ShieldCheck className="h-5 w-5 text-sec600 shrink-0 mt-0.5" />
-                  <p className="text-sm text-sec800">
+                <div className="bg-sec-50 border border-sec-200 rounded-lg p-3 flex items-start gap-2">
+                  <ShieldCheck className="h-5 w-5 text-sec-600 shrink-0 mt-0.5" />
+                  <p className="text-sm text-sec-800">
                     Ce RIB ne sert qu&apos;à vous envoyer de l&apos;argent, ce
                     n&apos;est en aucun cas une autorisation de prélèvement.{" "}
                     <span className="font-mycabas">MyCabas</span> ne vous
@@ -395,7 +395,7 @@ export default function ProfilPage() {
                 {/* Titulaire */}
                 <div className="space-y-2">
                   <Label htmlFor="bankHolder">
-                    Titulaire du compte <span className="text-sec500">*</span>
+                    Titulaire du compte <span className="text-sec-500">*</span>
                   </Label>
                   <Input
                     id="bankHolder"
@@ -415,7 +415,7 @@ export default function ProfilPage() {
                 {/* IBAN */}
                 <div className="space-y-2">
                   <Label htmlFor="iban">
-                    IBAN <span className="text-sec500">*</span>
+                    IBAN <span className="text-sec-500">*</span>
                   </Label>
                   <Input
                     id="iban"
@@ -438,7 +438,7 @@ export default function ProfilPage() {
                 {/* BIC */}
                 <div className="space-y-2">
                   <Label htmlFor="bic">
-                    BIC / SWIFT <span className="text-sec500">*</span>
+                    BIC / SWIFT <span className="text-sec-500">*</span>
                   </Label>
                   <Input
                     id="bic"

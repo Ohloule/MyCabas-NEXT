@@ -7,7 +7,7 @@ const STATUS_CONFIG: Record<string, { label: string; className: string }> = {
   },
   AUTHORIZED: {
     label: "A confirmer",
-    className: "bg-sec100 text-sec800 border-sec200",
+    className: "bg-sec-100 text-sec-800 border-sec-200",
   },
   CONFIRMED: {
     label: "Confirmée",
@@ -27,7 +27,7 @@ const STATUS_CONFIG: Record<string, { label: string; className: string }> = {
   },
   CANCELLED: {
     label: "Annulée",
-    className: "bg-sec100 text-sec700 border-sec200",
+    className: "bg-sec-100 text-sec-700 border-sec-200",
   },
   EXPIRED: {
     label: "Expirée",
@@ -35,7 +35,7 @@ const STATUS_CONFIG: Record<string, { label: string; className: string }> = {
   },
   REFUNDED: {
     label: "Remboursée",
-    className: "bg-sec100 text-sec700 border-sec200",
+    className: "bg-sec-100 text-sec-700 border-sec-200",
   },
 };
 

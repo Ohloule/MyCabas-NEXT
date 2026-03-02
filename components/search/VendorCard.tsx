@@ -22,11 +22,11 @@ import ProductCard from "./ProductCard";
 // Labels avec leurs couleurs
 const labelConfig: Record<string, { label: string; color: string }> = {
   BIO: { label: "Bio", color: "bg-prin-500" },
-  LOCAL: { label: "Local", color: "bg-sec500" },
+  LOCAL: { label: "Local", color: "bg-sec-500" },
   ARTISAN: { label: "Artisan", color: "bg-ter-500" },
-  FERMIER: { label: "Fermier", color: "bg-sec500" },
-  AOC_AOP: { label: "AOC/AOP", color: "bg-sec500" },
-  LABEL_ROUGE: { label: "Label Rouge", color: "bg-sec600" },
+  FERMIER: { label: "Fermier", color: "bg-sec-500" },
+  AOC_AOP: { label: "AOC/AOP", color: "bg-sec-500" },
+  LABEL_ROUGE: { label: "Label Rouge", color: "bg-sec-600" },
   FAIR_TRADE: { label: "Commerce équitable", color: "bg-prin-500" },
 };
 

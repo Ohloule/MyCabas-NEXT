@@ -319,7 +319,7 @@ export default function EtalPage() {
                 </SelectContent>
               </Select>
               {selectedMarket !== "all" && (
-                <span className="text-xs text-sec600 bg-sec50 px-2 py-1 rounded whitespace-nowrap">
+                <span className="text-xs text-sec-600 bg-sec-50 px-2 py-1 rounded whitespace-nowrap">
                   Mode édition
                 </span>
               )}
@@ -406,7 +406,7 @@ export default function EtalPage() {
           </div>
         ) : error ? (
           <div className="bg-neu-50 rounded-xl p-12 shadow-sm border border-neu-100 text-center">
-            <p className="text-sec600">{error}</p>
+            <p className="text-sec-600">{error}</p>
             <Button variant="outline" className="mt-4" onClick={fetchProducts}>
               Réessayer
             </Button>

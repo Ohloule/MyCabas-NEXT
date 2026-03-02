@@ -196,7 +196,7 @@ export default function MarketDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-sec50/50">
+      <div className="min-h-screen bg-sec-50/50">
         <div className="flex items-center justify-center py-24">
           <Loader taille={45} />
         </div>
@@ -206,7 +206,7 @@ export default function MarketDetailPage() {
 
   if (error || !market) {
     return (
-      <div className="min-h-screen bg-sec50/50">
+      <div className="min-h-screen bg-sec-50/50">
         <div className="container mx-auto px-4 py-12">
           <div className="rounded-lg border border-dashed p-12 text-center">
             <MapPin className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
@@ -229,7 +229,7 @@ export default function MarketDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-sec50/50">
+    <div className="min-h-screen bg-sec-50/50">
       <HeadingPage title={market.name}>
         {/* Bouton favori - visible uniquement si un jour est sélectionné */}
         {isAuthenticated && selectedDay && (
@@ -239,8 +239,8 @@ export default function MarketDetailPage() {
               disabled={favoriteLoading}
               className={`flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full transition-all ${
                 isFavorite
-                  ? "bg-sec500 text-neu-50 hover:bg-prin-800"
-                  : "bg-prin-50 text-neu-900 hover:bg-sec200"
+                  ? "bg-sec-500 text-neu-50 hover:bg-prin-800"
+                  : "bg-prin-50 text-neu-900 hover:bg-sec-200"
               } ${favoriteLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
             >
               <Heart
@@ -318,8 +318,8 @@ export default function MarketDetailPage() {
             {selectedOpening ? (
               <span></span>
             ) : (
-              <div className="mt-4 p-3 bg-sec50 border border-sec200 rounded-lg">
-                <p className="text-sm text-sec700">
+              <div className="mt-4 p-3 bg-sec-50 border border-sec-200 rounded-lg">
+                <p className="text-sm text-sec-700">
                   Sélectionnez un jour pour voir la liste des commerçants
                   présents.
                 </p>

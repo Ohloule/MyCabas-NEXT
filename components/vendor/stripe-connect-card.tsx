@@ -94,7 +94,7 @@ export default function StripeConnectCard() {
       </CardHeader>
       <CardContent className="space-y-4">
         {error && (
-          <div className="flex items-center gap-2 text-sm text-sec600 bg-sec50 rounded-lg px-3 py-2">
+          <div className="flex items-center gap-2 text-sm text-sec-600 bg-sec-50 rounded-lg px-3 py-2">
             <AlertCircle className="h-4 w-4 shrink-0" />
             {error}
           </div>
@@ -114,7 +114,7 @@ export default function StripeConnectCard() {
                 {status.chargesEnabled ? (
                   <span className="text-prin-600 font-medium">Activés</span>
                 ) : (
-                  <span className="text-sec600 font-medium">En attente</span>
+                  <span className="text-sec-600 font-medium">En attente</span>
                 )}
               </span>
               <span>
@@ -122,7 +122,7 @@ export default function StripeConnectCard() {
                 {status.payoutsEnabled ? (
                   <span className="text-prin-600 font-medium">Activés</span>
                 ) : (
-                  <span className="text-sec600 font-medium">En attente</span>
+                  <span className="text-sec-600 font-medium">En attente</span>
                 )}
               </span>
             </div>
@@ -130,7 +130,7 @@ export default function StripeConnectCard() {
         ) : status?.connected ? (
           // Compte créé mais onboarding incomplet
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-sm text-sec700 bg-sec50 rounded-lg px-3 py-2">
+            <div className="flex items-center gap-2 text-sm text-sec-700 bg-sec-50 rounded-lg px-3 py-2">
               <AlertCircle className="h-4 w-4 shrink-0" />
               Votre compte Stripe a été créé mais la configuration n&apos;est
               pas terminée. Complétez-la pour recevoir des paiements.

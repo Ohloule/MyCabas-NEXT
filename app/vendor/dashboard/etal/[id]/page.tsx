@@ -95,7 +95,7 @@ export default function EditProductPage({
   if (error || !product) {
     return (
       <div className="bg-neu-50 rounded-xl p-12 shadow-sm border border-neu-100 text-center">
-        <p className="text-sec600 mb-4">{error || "Produit non trouvé"}</p>
+        <p className="text-sec-600 mb-4">{error || "Produit non trouvé"}</p>
         <button
           onClick={() => router.push("/vendor/dashboard/etal")}
           className="text-prin-600 hover:underline"
