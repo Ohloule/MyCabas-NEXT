@@ -10,6 +10,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Calendar,
@@ -17,6 +25,7 @@ import {
   Clock,
   Edit2,
   HelpCircle,
+  Loader2,
   MapPin,
   Plus,
   Search,
@@ -113,6 +122,10 @@ export default function MarchesPage() {
   // État pour l'édition des jours (marchés existants)
   const [editingMarketId, setEditingMarketId] = useState<string | null>(null);
   const [editDays, setEditDays] = useState<string[]>([]);
+
+  // État pour la confirmation de désinscription
+  const [unregisterMarketId, setUnregisterMarketId] = useState<string | null>(null);
+  const unregisterMarket = myMarkets.find((m) => m.id === unregisterMarketId);
 
   // Charger les marchés du vendeur
   const fetchMyMarkets = useCallback(async () => {
@@ -399,11 +412,16 @@ export default function MarchesPage() {
     setEditDays([]);
   };
 
-  // Se désinscrire d'un marché
-  const handleUnregister = async (marketId: string) => {
-    if (!confirm("Voulez-vous vraiment vous désinscrire de ce marché ?"))
-      return;
+  // Se désinscrire d'un marché — ouvre le dialog de confirmation
+  const handleUnregister = (marketId: string) => {
+    setUnregisterMarketId(marketId);
+  };
 
+  // Confirmer la désinscription
+  const confirmUnregister = async () => {
+    if (!unregisterMarketId) return;
+    const marketId = unregisterMarketId;
+    setUnregisterMarketId(null);
     setActionLoading(marketId);
     try {
       const response = await fetch(`/api/vendor/markets/${marketId}`, {
@@ -418,7 +436,7 @@ export default function MarchesPage() {
       setMyMarkets((prev) => prev.filter((m) => m.id !== marketId));
     } catch (err) {
       console.error(err);
-      alert(
+      toast.error(
         err instanceof Error ? err.message : "Erreur lors de la désinscription",
       );
     } finally {
@@ -442,6 +460,27 @@ export default function MarchesPage() {
   }
 
   return (
+    <>
+    <Dialog open={!!unregisterMarketId} onOpenChange={(open) => { if (!open) setUnregisterMarketId(null); }}>
+      <DialogContent showCloseButton={false} className="max-w-sm">
+        <DialogHeader>
+          <DialogTitle>Se désinscrire du marché ?</DialogTitle>
+          <DialogDescription>
+            Vous êtes sur le point de vous désinscrire du marché{" "}
+            <span className="font-medium text-gray-800">{unregisterMarket?.name}</span>.
+            Cette action supprimera votre inscription et vos jours de présence pour ce marché.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="gap-2 sm:gap-0">
+          <Button variant="outline" onClick={() => setUnregisterMarketId(null)}>
+            Annuler
+          </Button>
+          <Button variant="secondary" className="ml-3" onClick={confirmUnregister}>
+            Se désinscrire
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
     <div>
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
@@ -564,7 +603,7 @@ export default function MarchesPage() {
                           }
                         >
                           {actionLoading === market.id ? (
-                            <Loader taille={45} />
+                            <Loader2 className="animate-spin h-3 w-3" />
                           ) : (
                             <>
                               <Check className="h-4 w-4" />
@@ -590,7 +629,7 @@ export default function MarchesPage() {
                         disabled={actionLoading === market.id}
                       >
                         {actionLoading === market.id ? (
-                          <Loader taille={45} />
+                          <Loader2 className="animate-spin h-3 w-3" />
                         ) : (
                           <>
                             <X className="h-4 w-4" />
@@ -752,7 +791,7 @@ export default function MarchesPage() {
                       }
                     >
                       {actionLoading === market.id ? (
-                        <Loader taille={45} />
+                        <Loader2 className="animate-spin h-3 w-3" />
                       ) : (
                         <>
                           <Plus className="h-4 w-4" />
@@ -783,7 +822,10 @@ export default function MarchesPage() {
         {/* Bouton "marché introuvable" */}
         <div className="mt-8 flex justify-center">
           <Link href="/vendor/dashboard/marches/nouveau">
-            <Button variant="outline" className="gap-2 text-principale-700 border-principale-300 hover:bg-principale-50">
+            <Button
+              variant="outline"
+              className="gap-2 text-principale-700 border-principale-300 hover:bg-principale-50"
+            >
               <HelpCircle className="h-4 w-4" />
               Vous ne trouvez pas votre marché ? Proposez-le !
             </Button>
@@ -791,5 +833,6 @@ export default function MarchesPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

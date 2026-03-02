@@ -117,7 +117,7 @@ export async function PUT(
         ? (approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null)
         : undefined;
       if (parsedPricePerPiece && parsedBasePrice && parsedBasePrice > 0) {
-        return parseFloat((parsedPricePerPiece / parsedBasePrice).toFixed(4));
+        return parseFloat((parsedPricePerPiece / parsedBasePrice).toPrecision(2));
       }
       return approxWeightPerPiece !== undefined
         ? (approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null)

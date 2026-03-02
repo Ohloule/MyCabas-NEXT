@@ -505,7 +505,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                             <Input
                               id="approxWeight"
                               type="number"
-                              step="0.001"
+                              step="any"
                               min="0.001"
                               value={approxWeightPerPiece}
                               onChange={(e) => {

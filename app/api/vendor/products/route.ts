@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const {
+    let {
       name,
       description,
       imageUrl,
@@ -68,6 +68,12 @@ export async function POST(request: NextRequest) {
       pricePerPiece,
       marketPrices // Array of { marketId, price, isAvailable, quantity, isUnlimited }
     } = body;
+
+    // Normaliser le nom : majuscule au début, reste en minuscule
+    if (name) {
+      const trimmed = name.trim();
+      name = trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
+    }
 
     // Validation
     if (!name || !basePrice || !categoryId || !unit) {
@@ -87,7 +93,7 @@ export async function POST(request: NextRequest) {
     // Recalcul côté serveur : approxWeightPerPiece = pricePerPiece / basePrice
     const computedApproxWeight =
       canSellByPiece && parsedPricePerPiece && parsedBasePrice > 0
-        ? parseFloat((parsedPricePerPiece / parsedBasePrice).toFixed(4))
+        ? parseFloat((parsedPricePerPiece / parsedBasePrice).toPrecision(2))
         : approxWeightPerPiece ? parseFloat(approxWeightPerPiece) : null;
 
     // Créer le produit avec ses prix et stocks par marché

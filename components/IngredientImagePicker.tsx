@@ -9,11 +9,13 @@ import Loader from "./Loader";
 interface IngredientImagePickerProps {
   onImageSelect?: (url: string) => void;
   defaultQuery?: string;
+  disableHoverPreview?: boolean;
 }
 
 export default function IngredientImagePicker({
   onImageSelect,
   defaultQuery = "",
+  disableHoverPreview = false,
 }: IngredientImagePickerProps) {
   const [query, setQuery] = useState(defaultQuery);
   const [images, setImages] = useState<any[]>([]);
@@ -231,8 +233,8 @@ export default function IngredientImagePicker({
                     setSelectedUrl(img.urls.regular);
                     onImageSelect?.(img.urls.regular);
                   }}
-                  onMouseEnter={() => handleMouseEnter(img.urls.regular)}
-                  onMouseLeave={handleMouseLeave}
+                  onMouseEnter={disableHoverPreview ? undefined : () => handleMouseEnter(img.urls.regular)}
+                  onMouseLeave={disableHoverPreview ? undefined : handleMouseLeave}
                   className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all hover:opacity-80 ${
                     selectedUrl === img.urls.regular
                       ? "border-blue-500 ring-2 ring-blue-200"
@@ -284,7 +286,7 @@ export default function IngredientImagePicker({
       </div>
 
       {/* Aperçu agrandi au survol */}
-      {hoveredImg && (
+      {!disableHoverPreview && hoveredImg && (
         <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
           <div className="rounded-xl overflow-hidden shadow-2xl border border-gray-200 bg-white">
             <img

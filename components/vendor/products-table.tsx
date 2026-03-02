@@ -181,6 +181,11 @@ export function ProductsTable({
                 )}
               </div>
               <span className="text-xs text-gray-500">/{product.unit}</span>
+              {product.description && (
+                <p className="text-xs text-gray-400 line-clamp-1 mt-0.5">
+                  {product.description}
+                </p>
+              )}
             </div>
 
             {/* Statut */}
@@ -212,13 +217,21 @@ export function ProductsTable({
       </div>
 
       {/* Infos secondaires */}
-      <div className="mt-3 pt-3 border-t border-gray-100 grid grid-cols-3 gap-2 text-center">
+      <div className={`mt-3 pt-3 border-t border-gray-100 grid gap-2 text-center ${product.canSellByPiece && product.approxWeightPerPiece ? "grid-cols-4" : "grid-cols-3"}`}>
         <div>
           <p className="text-xs text-gray-500">Prix</p>
           <p className="text-sm font-medium text-gray-900">
             {getPriceRange(product)}
           </p>
         </div>
+        {product.canSellByPiece && product.approxWeightPerPiece && (
+          <div>
+            <p className="text-xs text-gray-500">Prix/pièce</p>
+            <p className="text-sm font-medium text-gray-900">
+              ≈ {(product.basePrice * product.approxWeightPerPiece).toFixed(2)}€
+            </p>
+          </div>
+        )}
         <div>
           <p className="text-xs text-gray-500">Stock</p>
           <div className="flex items-center justify-center gap-1 text-sm font-medium text-gray-900">
@@ -266,25 +279,28 @@ export function ProductsTable({
           <table className="w-full">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-full">
                   Produit
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Catégorie
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Prix
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  Prix/pièce
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Stock
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Marchés
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Statut
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Actions
                 </th>
               </tr>
@@ -327,12 +343,17 @@ export function ProductsTable({
                         <span className="text-sm text-gray-500">
                           /{product.unit}
                         </span>
+                        {product.description && (
+                          <p className="text-xs text-gray-400 line-clamp-1 max-w-xs">
+                            {product.description}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </td>
 
                   {/* Catégorie */}
-                  <td className="px-4 py-4">
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <Badge
                       className={
                         categoryColors[product.category.slug] ||
@@ -344,16 +365,32 @@ export function ProductsTable({
                   </td>
 
                   {/* Prix */}
-                  <td className="px-4 py-4">
+                  <td className="px-6 py-4 text-right whitespace-nowrap">
                     <span className="font-medium text-gray-900">
                       {getPriceRange(product)}
                     </span>
                     <span className="text-gray-500">/{product.unit}</span>
                   </td>
 
+                  {/* Prix/pièce */}
+                  <td className="px-6 py-4 text-right whitespace-nowrap">
+                    {product.canSellByPiece && product.approxWeightPerPiece ? (
+                      <div>
+                        <span className="font-medium text-gray-900">
+                          ≈ {(product.basePrice * product.approxWeightPerPiece).toFixed(2)}€
+                        </span>
+                        <span className="text-xs text-gray-400 block">
+                          ~{product.approxWeightPerPiece}{product.unit}/pièce
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-gray-300">—</span>
+                    )}
+                  </td>
+
                   {/* Stock */}
-                  <td className="px-4 py-4">
-                    <div className="flex items-center gap-1 text-gray-700">
+                  <td className="px-6 py-4 text-center whitespace-nowrap">
+                    <div className="flex items-center justify-center gap-1 text-gray-700">
                       {getTotalStock(product)}
                       {typeof getTotalStock(product) === "number" && (
                         <span className="text-gray-500">{product.unit}</span>
@@ -362,14 +399,14 @@ export function ProductsTable({
                   </td>
 
                   {/* Marchés disponibles */}
-                  <td className="px-4 py-4">
+                  <td className="px-6 py-4 text-center whitespace-nowrap">
                     <span className="text-gray-700">
                       {getAvailableMarkets(product)}
                     </span>
                   </td>
 
                   {/* Statut */}
-                  <td className="px-4 py-4">
+                  <td className="px-6 py-4 text-center whitespace-nowrap">
                     {product.isActive ? (
                       <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         <Check className="w-3 h-3" />
@@ -384,7 +421,7 @@ export function ProductsTable({
                   </td>
 
                   {/* Actions */}
-                  <td className="px-4 py-4">
+                  <td className="px-6 py-4 text-right whitespace-nowrap">
                     <div className="flex items-center justify-end">
                       <Button
                         variant="ghost"

@@ -2,6 +2,14 @@
 
 import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -12,11 +20,11 @@ import {
 } from "@/components/ui/select";
 import { ProductsTable } from "@/components/vendor/products-table";
 import { ProductsTableEditable } from "@/components/vendor/products-table-editable";
-import { ImportProductsDialog } from "@/components/vendor/import-products-dialog";
 import {
   Carrot,
   FileSpreadsheet,
   Filter,
+  Loader2,
   Plus,
   Search,
   Store,
@@ -160,25 +168,38 @@ export default function EtalPage() {
     setFilteredProducts(result);
   }, [products, searchQuery, selectedCategory, selectedStatus]);
 
+  // Dialog de confirmation de suppression
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deletingProductId, setDeletingProductId] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
+
   // Actions
   const handleEdit = (product: Product) => {
     router.push(`/vendor/dashboard/etal/${product.id}`);
   };
 
-  const handleDelete = async (productId: string) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) return;
+  const handleDelete = (productId: string) => {
+    setDeletingProductId(productId);
+    setDeleteDialogOpen(true);
+  };
 
+  const confirmDelete = async () => {
+    if (!deletingProductId) return;
+    setDeleting(true);
     try {
-      const response = await fetch(`/api/vendor/products/${productId}`, {
+      const response = await fetch(`/api/vendor/products/${deletingProductId}`, {
         method: "DELETE",
       });
 
       if (!response.ok) throw new Error("Erreur lors de la suppression");
 
-      setProducts((prev) => prev.filter((p) => p.id !== productId));
+      setProducts((prev) => prev.filter((p) => p.id !== deletingProductId));
     } catch (err) {
       console.error(err);
-      alert("Erreur lors de la suppression du produit");
+    } finally {
+      setDeleting(false);
+      setDeleteDialogOpen(false);
+      setDeletingProductId(null);
     }
   };
 
@@ -190,7 +211,42 @@ export default function EtalPage() {
 
   const hasActiveFilters = searchQuery || selectedCategory || selectedStatus;
 
+  const deletingProduct = products.find((p) => p.id === deletingProductId);
+
   return (
+    <>
+    <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+      <DialogContent showCloseButton={false} className="max-w-sm" onKeyDown={(e) => { if (e.key === "Enter" && !deleting) { e.preventDefault(); confirmDelete(); } }}>
+        <DialogHeader>
+          <DialogTitle>Supprimer ce produit ?</DialogTitle>
+          <DialogDescription>
+            Le produit{" "}
+            <span className="font-medium text-gray-800">
+              {deletingProduct?.name}
+            </span>{" "}
+            sera définitivement supprimé. Cette action est irréversible.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="gap-2 sm:gap-0">
+          <Button
+            variant="outline"
+            onClick={() => setDeleteDialogOpen(false)}
+            disabled={deleting}
+          >
+            Annuler
+          </Button>
+          <Button
+            variant="secondary"
+            className="ml-3"
+            onClick={confirmDelete}
+            disabled={deleting}
+          >
+            {deleting && <Loader2 className="animate-spin w-4 h-4 mr-1.5" />}
+            Supprimer
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
     <div>
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
@@ -206,12 +262,10 @@ export default function EtalPage() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <ImportProductsDialog onImportSuccess={fetchProducts}>
-            <Button variant="outline">
-              <FileSpreadsheet className="w-4 h-4" />
-              <span className="hidden md:inline">Importer</span>
-            </Button>
-          </ImportProductsDialog>
+          <Button variant="outline" onClick={() => router.push("/vendor/dashboard/etal/ajout-rapide")}>
+            <FileSpreadsheet className="w-4 h-4" />
+            <span className="hidden md:inline">Ajout rapide</span>
+          </Button>
           <Button onClick={() => router.push("/vendor/dashboard/etal/nouveau")}>
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">Ajouter un produit</span>
@@ -351,5 +405,6 @@ export default function EtalPage() {
         />
       )}
     </div>
+    </>
   );
 }

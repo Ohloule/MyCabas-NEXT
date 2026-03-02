@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Infinity, Leaf, MapPin, Save, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Loader from "../Loader";
@@ -45,6 +46,8 @@ interface Product {
   isOrganic: boolean;
   isLocal: boolean;
   isActive: boolean;
+  canSellByPiece: boolean;
+  approxWeightPerPiece: number | null;
   category: Category;
   pricesByMarket: ProductPrice[];
   stocksByMarket: ProductStock[];
@@ -215,7 +218,7 @@ export function ProductsTableEditable({
       >
         {/* Header avec image et nom */}
         <div className="flex items-start gap-3 mb-4">
-          <div className="w-14 h-14 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+          <Link href={`/vendor/dashboard/etal/${product.id}`} className="w-14 h-14 rounded-lg overflow-hidden bg-gray-100 shrink-0 block">
             <Image
               src={product.imageUrl || "/images/ingredients.jpg"}
               alt={product.name}
@@ -223,12 +226,12 @@ export function ProductsTableEditable({
               height={56}
               className="w-full h-full object-cover"
             />
-          </div>
+          </Link>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="font-medium text-gray-900 text-sm">
+              <Link href={`/vendor/dashboard/etal/${product.id}`} className="font-medium text-gray-900 text-sm hover:text-principale-600 transition-colors">
                 {product.name}
-              </span>
+              </Link>
               {product.isOrganic && (
                 <Leaf className="w-3.5 h-3.5 text-green-600 shrink-0" />
               )}
@@ -249,6 +252,11 @@ export function ProductsTableEditable({
                 Base: {product.basePrice.toFixed(2)}€/{product.unit}
               </span>
             </div>
+            {product.description && (
+              <p className="text-xs text-gray-400 mt-1 line-clamp-2">
+                {product.description}
+              </p>
+            )}
           </div>
         </div>
 
@@ -272,6 +280,19 @@ export function ProductsTableEditable({
               <span className="text-sm text-gray-500">€/{product.unit}</span>
             </div>
           </div>
+
+          {/* Prix par pièce */}
+          {product.canSellByPiece && product.approxWeightPerPiece && row.price && (
+            <div className="flex items-center justify-between gap-3">
+              <label className="text-sm text-gray-600 shrink-0">Prix/pièce</label>
+              <span className="text-sm text-gray-500">
+                ≈ {(parseFloat(row.price) * product.approxWeightPerPiece).toFixed(2)}€/pièce
+                <span className="text-xs text-gray-400 ml-1">
+                  (~{product.approxWeightPerPiece}{product.unit})
+                </span>
+              </span>
+            </div>
+          )}
 
           {/* Stock */}
           <div className="flex items-center justify-between gap-3">
@@ -413,7 +434,7 @@ export function ProductsTableEditable({
                     {/* Produit */}
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+                        <Link href={`/vendor/dashboard/etal/${product.id}`} className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 shrink-0 block">
                           <Image
                             src={product.imageUrl || "/images/ingredients.jpg"}
                             alt={product.name}
@@ -421,12 +442,12 @@ export function ProductsTableEditable({
                             height={40}
                             className="w-full h-full object-cover"
                           />
-                        </div>
+                        </Link>
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="font-medium text-gray-900 text-sm">
+                            <Link href={`/vendor/dashboard/etal/${product.id}`} className="font-medium text-gray-900 text-sm hover:text-principale-600 transition-colors">
                               {product.name}
-                            </span>
+                            </Link>
                             {product.isOrganic && (
                               <Leaf className="w-3 h-3 text-green-600" />
                             )}
@@ -437,6 +458,11 @@ export function ProductsTableEditable({
                           <span className="text-xs text-gray-500">
                             Base: {product.basePrice.toFixed(2)}€/{product.unit}
                           </span>
+                          {product.description && (
+                            <p className="text-xs text-gray-400 line-clamp-1 max-w-xs">
+                              {product.description}
+                            </p>
+                          )}
                         </div>
                       </div>
                     </td>
@@ -484,6 +510,11 @@ export function ProductsTableEditable({
                         />
                         <span className="text-xs text-gray-500">€</span>
                       </div>
+                      {product.canSellByPiece && product.approxWeightPerPiece && row.price && (
+                        <div className="text-xs text-gray-400 mt-1">
+                          ≈ {(parseFloat(row.price) * product.approxWeightPerPiece).toFixed(2)}€/pièce
+                        </div>
+                      )}
                     </td>
 
                     {/* Stock */}

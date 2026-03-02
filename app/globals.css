@@ -23,7 +23,8 @@
   --secondaire-200: oklch(92% 0.055 60);
   --secondaire-300: oklch(86% 0.085 60);
   --secondaire-400: oklch(78% 0.115 60);
-  --secondaire-500: #db883c; /* Beige avec du caractère */
+  --secondaire-500: oklch(70.044% 0.13526 59.801); 
+  --secondaire-550: oklch(68.354% 0.1898 44.924); 
   --secondaire-600: oklch(60% 0.115 60);
   --secondaire-700: oklch(50% 0.095 60);
   --secondaire-800: oklch(38% 0.075 60);
@@ -89,6 +90,7 @@
   --color-secondaire-300: var(--secondaire-300);
   --color-secondaire-400: var(--secondaire-400);
   --color-secondaire-500: var(--secondaire-500);
+  --color-secondaire-550: var(--secondaire-550);
   --color-secondaire-600: var(--secondaire-600);
   --color-secondaire-700: var(--secondaire-700);
   --color-secondaire-800: var(--secondaire-800);
