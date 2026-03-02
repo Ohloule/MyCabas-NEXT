@@ -4,6 +4,7 @@ import {
   LogIn,
   LogOut,
   Search,
+  Shield,
   Store,
   User,
   UserPen,
@@ -107,9 +108,18 @@ export default function Header() {
               <div className="h-9 w-24 animate-pulse rounded-md bg-muted" />
             ) : session?.user ? (
               <>
+                {session.user.role === "ADMIN" && (
+                  <Link href="/admin">
+                    <Button>
+                      <Shield className="h-4 w-4" />
+                      Console admin
+                    </Button>
+                  </Link>
+                )}
+
                 {session.user.role === "VENDOR" && (
                   <Link href="/vendor/dashboard">
-                    <Button className="bg-prin-600 hover:bg-prin-500">
+                    <Button>
                       <Store className="h-4 w-4" />
                       Mon commerce
                     </Button>
@@ -164,7 +174,7 @@ export default function Header() {
                           setIsMenuOpen(false);
                           signOut({ callbackUrl: "/" });
                         }}
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-s-600 hover:bg-prin-100 transition-colors w-full cursor-pointer"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-sec-600 hover:bg-prin-100 transition-colors w-full cursor-pointer"
                       >
                         <LogOut className="h-4 w-4" />
                         Déconnexion
@@ -236,6 +246,16 @@ export default function Header() {
                       <UserPen className="h-4 w-4" />
                       Mon profil client
                     </Link>
+                    {session.user.role === "ADMIN" && (
+                      <Link
+                        href="/admin"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-neu-700 hover:bg-prin-100 transition-colors cursor-pointer"
+                      >
+                        <Shield className="h-4 w-4" />
+                        Console admin
+                      </Link>
+                    )}
                     {session.user.role === "VENDOR" && (
                       <Link
                         href="/vendor/dashboard"
@@ -251,7 +271,7 @@ export default function Header() {
                         setIsMobileMenuOpen(false);
                         signOut({ callbackUrl: "/" });
                       }}
-                      className="flex items-center gap-3 px-4 py-2 text-sm text-s-600 hover:bg-prin-100 transition-colors w-full cursor-pointer"
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-sec-600 hover:bg-prin-100 transition-colors w-full cursor-pointer"
                     >
                       <LogOut className="h-4 w-4" />
                       Déconnexion

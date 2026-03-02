@@ -16,13 +16,13 @@ export default function HeroSectionForm() {
         value={selectedRole}
         onValueChange={(value) => setSelectedRole(value as "client" | "vendor")}
       >
-        <div className="flex items-center space-x-2 bg-s-50 px-3 rounded-2xl">
+        <div className="flex items-center space-x-2 bg-sec-50 px-3 rounded-2xl">
           <RadioGroupItem value="client" id="client" />
           <Label htmlFor="client" className="cursor-pointer w-full py-3">
             Consommateurs
           </Label>
         </div>
-        <div className="flex items-center space-x-2 bg-s-50 px-3 rounded-2xl">
+        <div className="flex items-center space-x-2 bg-sec-50 px-3 rounded-2xl">
           <RadioGroupItem value="vendor" id="vendor" />
           <Label htmlFor="vendor" className="cursor-pointer w-full py-3">
             Commerçants
@@ -31,7 +31,7 @@ export default function HeroSectionForm() {
       </RadioGroup>
 
       <Link href={`/register`}>
-        <Button className="bg-s-500 hover:bg-s-600 w-full uppercase font-bold py-5 rounded-2xl">
+        <Button className="bg-sec-500 hover:bg-sec-600 w-full uppercase font-bold py-5 rounded-2xl">
           Inscription gratuite !
         </Button>
       </Link>

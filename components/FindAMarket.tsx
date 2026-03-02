@@ -105,7 +105,7 @@ export default function FindMarket() {
         );
 
   return (
-    <section className="bg-s-50">
+    <section className="bg-sec-50">
       <div className="align-center p-6 space-y-6 min-h-[50vh] ">
         <h2 className="font-special text-4xl">
           Rechercher les marchés proches de vous
@@ -167,7 +167,7 @@ export default function FindMarket() {
             )}
           </div>
         </form>
-        {error && <p className="text-s-500 text-sm">{error}</p>}
+        {error && <p className="text-sec-500 text-sm">{error}</p>}
 
         {filteredMarkets.length === 0 && (
           <Image

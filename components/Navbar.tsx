@@ -34,11 +34,11 @@ import { Button } from "./ui/button";
 // Icônes des catégories pour le menu mobile
 const categoryIcons: Record<string, React.ReactNode> = {
   "fruits-legumes": <Apple className="h-5 w-5 text-prin-600" />,
-  "viandes-charcuterie": <Beef className="h-5 w-5 text-s-600" />,
+  "viandes-charcuterie": <Beef className="h-5 w-5 text-sec-600" />,
   "poissons-fruits-de-mer": <Fish className="h-5 w-5 text-ter-600" />,
-  "fromages-produits-laitiers": <Milk className="h-5 w-5 text-s-600" />,
-  "boulangerie-patisserie": <Croissant className="h-5 w-5 text-s-600" />,
-  "epicerie-condiments": <UtensilsCrossed className="h-5 w-5 text-s-600" />,
+  "fromages-produits-laitiers": <Milk className="h-5 w-5 text-sec-600" />,
+  "boulangerie-patisserie": <Croissant className="h-5 w-5 text-sec-600" />,
+  "epicerie-condiments": <UtensilsCrossed className="h-5 w-5 text-sec-600" />,
   boissons: <Wine className="h-5 w-5 text-ter-600" />,
   "bio-nature": <Leaf className="h-5 w-5 text-prin-600" />,
 };
@@ -194,14 +194,14 @@ export default function Navbar() {
             )}
             {session ? (
               <Link href="/panier">
-                <Button className="bg-s-500 hover:bg-s-600 gap-2">
+                <Button className="bg-sec-500 hover:bg-sec-600 gap-2">
                   <ShoppingCart className="h-4 w-4" />
                   {cartTotalLabel ? `${cartTotalLabel}` : "Mon Panier"}
                 </Button>
               </Link>
             ) : (
               <Link href="/register">
-                <Button className="bg-s-500 hover:bg-s-600">
+                <Button className="bg-sec-500 hover:bg-sec-600">
                   Inscription Gratuite
                 </Button>
               </Link>
@@ -441,14 +441,14 @@ export default function Navbar() {
           <div className="p-4 border-t mt-auto">
             {session ? (
               <Link href="/panier" onClick={closeMobileMenu}>
-                <Button className="w-full bg-s-500 hover:bg-s-600 gap-2">
+                <Button className="w-full bg-sec-500 hover:bg-sec-600 gap-2">
                   <ShoppingCart className="h-4 w-4" />
                   {cartTotalLabel ? `${cartTotalLabel}` : "Mon Panier"}
                 </Button>
               </Link>
             ) : (
               <Link href="/register" onClick={closeMobileMenu}>
-                <Button className="w-full bg-s-500 hover:bg-s-600 gap-2">
+                <Button className="w-full bg-sec-500 hover:bg-sec-600 gap-2">
                   <UserPlus className="h-4 w-4" />
                   Inscription Gratuite
                 </Button>

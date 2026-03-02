@@ -38,11 +38,11 @@ const iconMap: Record<string, React.ReactNode> = {
 // Couleurs par catégorie
 const colorMap: Record<string, string> = {
   "fruits-legumes": "text-prin-600 bg-prin-50",
-  "viandes-charcuterie": "text-s-600 bg-s-50",
+  "viandes-charcuterie": "text-sec-600 bg-sec-50",
   "poissons-fruits-de-mer": "text-ter-600 bg-ter-50",
-  "fromages-produits-laitiers": "text-s-600 bg-s-50",
-  "boulangerie-patisserie": "text-s-600 bg-s-50",
-  "epicerie-condiments": "text-s-600 bg-s-50",
+  "fromages-produits-laitiers": "text-sec-600 bg-sec-50",
+  "boulangerie-patisserie": "text-sec-600 bg-sec-50",
+  "epicerie-condiments": "text-sec-600 bg-sec-50",
   boissons: "text-ter-600 bg-ter-50",
   "bio-nature": "text-prin-600 bg-prin-50",
 };

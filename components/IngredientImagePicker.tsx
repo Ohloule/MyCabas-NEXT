@@ -284,7 +284,7 @@ export default function IngredientImagePicker({
             </div>
           </>
         ) : error ? (
-          <div className="flex flex-col items-center justify-center h-75 text-s-500">
+          <div className="flex flex-col items-center justify-center h-75 text-sec-500">
             <p className="text-sm text-center px-4">{error}</p>
           </div>
         ) : (
