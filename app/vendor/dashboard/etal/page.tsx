@@ -294,7 +294,7 @@ export default function EtalPage() {
         </div>
 
         {/* Sélecteur de marché */}
-        <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border border-n-100 mb-4">
+        <div className="bg-n-50 rounded-xl p-3 sm:p-4 shadow-sm border border-n-100 mb-4">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
             <div className="flex items-center gap-2">
               <Store className="w-5 h-5 text-p-600 shrink-0" />
@@ -328,7 +328,7 @@ export default function EtalPage() {
         </div>
 
         {/* Barre de recherche et filtres */}
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-n-100 mb-6">
+        <div className="bg-n-50 rounded-xl p-4 shadow-sm border border-n-100 mb-6">
           <div className="flex flex-col sm:flex-row gap-3">
             {/* Recherche */}
             <div className="relative flex-1">
@@ -399,13 +399,13 @@ export default function EtalPage() {
 
         {/* Contenu */}
         {loading ? (
-          <div className="bg-white rounded-xl p-12 shadow-sm border border-n-100 text-center">
+          <div className="bg-n-50 rounded-xl p-12 shadow-sm border border-n-100 text-center">
             {/* <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-p-600 mx-auto"></div> */}
             <Loader taille={30} />
             <p className="mt-4 text-n-500">Chargement des produits...</p>
           </div>
         ) : error ? (
-          <div className="bg-white rounded-xl p-12 shadow-sm border border-n-100 text-center">
+          <div className="bg-n-50 rounded-xl p-12 shadow-sm border border-n-100 text-center">
             <p className="text-s-600">{error}</p>
             <Button variant="outline" className="mt-4" onClick={fetchProducts}>
               Réessayer

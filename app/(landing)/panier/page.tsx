@@ -389,7 +389,7 @@ export default function PanierPage() {
                       onClick={() => setRecapView("vendor")}
                       className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
                         recapView === "vendor"
-                          ? "bg-white text-p-700 shadow-sm"
+                          ? "bg-n-50 text-p-700 shadow-sm"
                           : "text-n-500 hover:text-n-700"
                       }`}
                       title="Par commerçant"
@@ -401,7 +401,7 @@ export default function PanierPage() {
                       onClick={() => setRecapView("category")}
                       className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
                         recapView === "category"
-                          ? "bg-white text-p-700 shadow-sm"
+                          ? "bg-n-50 text-p-700 shadow-sm"
                           : "text-n-500 hover:text-n-700"
                       }`}
                       title="Par catégorie"
@@ -499,7 +499,7 @@ export default function PanierPage() {
 
                 <Button
                   onClick={() => router.push("/checkout")}
-                  className="w-full bg-s-500 hover:bg-s-600 mt-4 hover:text-white"
+                  className="w-full bg-s-500 hover:bg-s-600 mt-4 hover:text-n-50"
                 >
                   Passer la commande
                 </Button>
@@ -508,7 +508,7 @@ export default function PanierPage() {
           </div>
 
           {/* Barre fixe en bas sur mobile */}
-          <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 lg:hidden z-50">
+          <div className="fixed bottom-0 left-0 right-0 bg-n-50 border-t shadow-lg p-4 lg:hidden z-50">
             <div className="flex items-center justify-between gap-4 max-w-2xl mx-auto">
               <div>
                 <p className="text-xs text-n-500">

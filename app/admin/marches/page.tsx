@@ -203,8 +203,8 @@ export default function AdminMarchesPage() {
             onClick={() => setFilter(s)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
               filter === s
-                ? "bg-slate-800 text-white border-slate-800"
-                : "bg-white text-n-600 border-n-200 hover:border-slate-400"
+                ? "bg-slate-800 text-n-50 border-slate-800"
+                : "bg-n-50 text-n-600 border-n-200 hover:border-slate-400"
             }`}
           >
             {s === "ALL" ? "Tous" : STATUS_LABELS[s]}
@@ -234,7 +234,7 @@ export default function AdminMarchesPage() {
             {markets.map((market) => (
               <div
                 key={market.id}
-                className="bg-white rounded-xl border border-n-200 p-4 md:p-5"
+                className="bg-n-50 rounded-xl border border-n-200 p-4 md:p-5"
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
@@ -300,7 +300,7 @@ export default function AdminMarchesPage() {
                     <div className="flex gap-2 shrink-0">
                       <Button
                         size="sm"
-                        className="bg-p-600 hover:bg-p-700 text-white"
+                        className="bg-p-600 hover:bg-p-700 text-n-50"
                         onClick={() => handleApprove(market.id)}
                         disabled={actionLoading}
                       >
@@ -342,7 +342,7 @@ export default function AdminMarchesPage() {
                   {market.status === "REJECTED" && (
                     <Button
                       size="sm"
-                      className="bg-p-600 hover:bg-p-700 text-white shrink-0"
+                      className="bg-p-600 hover:bg-p-700 text-n-50 shrink-0"
                       onClick={() => handleApprove(market.id)}
                       disabled={actionLoading}
                     >
@@ -382,8 +382,8 @@ export default function AdminMarchesPage() {
 
       {/* Modal rejet */}
       {rejectTarget && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md">
+        <div className="fixed inset-0 bg-n-900/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-n-50 rounded-xl shadow-xl p-6 w-full max-w-md">
             <h3 className="text-lg font-semibold text-n-800 mb-1 flex items-center gap-2">
               <XCircle className="w-5 h-5 text-s-500" />
               {markets.find((m) => m.id === rejectTarget)?.status === "ACTIVE"
@@ -410,7 +410,7 @@ export default function AdminMarchesPage() {
                 Annuler
               </Button>
               <Button
-                className="bg-s-600 hover:bg-s-700 text-white"
+                className="bg-s-600 hover:bg-s-700 text-n-50"
                 onClick={handleReject}
                 disabled={actionLoading}
               >

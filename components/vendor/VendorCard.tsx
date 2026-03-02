@@ -144,7 +144,7 @@ export function VendorCard({
               return (
                 <Badge
                   key={label}
-                  className="text-xs bg-white/90 text-p-700 border-0 shadow-sm backdrop-blur-sm"
+                  className="text-xs bg-n-50/90 text-p-700 border-0 shadow-sm backdrop-blur-sm"
                 >
                   {labelInfo.icon} {labelInfo.label}
                 </Badge>
@@ -172,7 +172,7 @@ export function VendorCard({
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-1.5 rounded-full bg-linear-to-br from-t-500 via-t-500 to-s-400 text-white hover:opacity-80 transition-opacity"
+                  className="p-1.5 rounded-full bg-linear-to-br from-t-500 via-t-500 to-s-400 text-n-50 hover:opacity-80 transition-opacity"
                   title="Instagram"
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -188,7 +188,7 @@ export function VendorCard({
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-1.5 rounded-full bg-[#1877F2] text-white hover:opacity-80 transition-opacity"
+                  className="p-1.5 rounded-full bg-[#1877F2] text-n-50 hover:opacity-80 transition-opacity"
                   title="Facebook"
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -204,7 +204,7 @@ export function VendorCard({
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-1.5 rounded-full bg-black text-white hover:opacity-80 transition-opacity"
+                  className="p-1.5 rounded-full bg-n-900 text-n-50 hover:opacity-80 transition-opacity"
                   title="TikTok"
                   onClick={(e) => e.stopPropagation()}
                 >

@@ -185,7 +185,7 @@ export default function Page() {
 
           <div
             ref={resumeRef}
-            className={`text-white food-motif bg-p-700 rounded-2xl shadow-xl p-8 space-y-4 text-lg max-w-175 mx-auto transition-all duration-700 ${
+            className={`text-n-50 food-motif bg-p-700 rounded-2xl shadow-xl p-8 space-y-4 text-lg max-w-175 mx-auto transition-all duration-700 ${
               isResumeRevealed ? "opacity-100 scale-100" : "opacity-0 scale-0"
             }`}
           >

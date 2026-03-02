@@ -9,7 +9,7 @@ export default function Page() {
         </p>
       </HeadingPage>
 
-      <div className="w-full py-16 bg-white text-noir">
+      <div className="w-full py-16 bg-n-50 text-noir">
         <section className="align-center text-sm leading-relaxed space-y-10 text-justify max-w-3xl mx-auto px-4">
           {/* Coordonnées de contact */}
           <div>

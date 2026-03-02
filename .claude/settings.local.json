@@ -42,7 +42,9 @@
       "Bash(npx tsx:*)",
       "Bash(echo:*)",
       "Bash(find:*)",
-      "Bash(xargs grep -l \"import.*dialog\\\\|importProducts\\\\|ImportProducts\")"
+      "Bash(xargs grep -l \"import.*dialog\\\\|importProducts\\\\|ImportProducts\")",
+      "Bash(xargs grep -l \"reset\\\\|forgot\")",
+      "mcp__chrome-devtools__list_pages"
     ]
   }
 }

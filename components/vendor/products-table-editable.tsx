@@ -196,7 +196,7 @@ export function ProductsTableEditable({
 
   if (products.length === 0) {
     return (
-      <div className="bg-white rounded-xl p-8 sm:p-12 shadow-sm border border-n-100 text-center">
+      <div className="bg-n-50 rounded-xl p-8 sm:p-12 shadow-sm border border-n-100 text-center">
         <h3 className="text-lg font-medium text-n-900 mb-2">Aucun produit</h3>
         <p className="text-n-500">
           Vous n&apos;avez pas encore de produits sur votre étal.
@@ -212,7 +212,7 @@ export function ProductsTableEditable({
 
     return (
       <div
-        className={`bg-white rounded-xl shadow-sm border p-4 transition-colors ${
+        className={`bg-n-50 rounded-xl shadow-sm border p-4 transition-colors ${
           row.isDirty ? "border-s-300 bg-s-50/50" : "border-n-100"
         }`}
       >
@@ -364,7 +364,7 @@ export function ProductsTableEditable({
   return (
     <div className="space-y-4">
       {/* Barre d'actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white rounded-xl p-3 sm:p-4 shadow-sm border border-n-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-n-50 rounded-xl p-3 sm:p-4 shadow-sm border border-n-100">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-sm text-n-600">
             Marché : <strong className="text-p-700">{marketName}</strong>
@@ -407,7 +407,7 @@ export function ProductsTableEditable({
       </div>
 
       {/* Vue desktop - Tableau */}
-      <div className="hidden lg:block bg-white rounded-xl shadow-sm border border-n-100">
+      <div className="hidden lg:block bg-n-50 rounded-xl shadow-sm border border-n-100">
         <div className="overflow-x-auto rounded-xl">
           <table className="w-full">
             <thead className="bg-n-50 border-b border-n-100">

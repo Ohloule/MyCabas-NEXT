@@ -26,7 +26,7 @@ export default function Page() {
             un clic — directement auprès des artisans près de chez vous.
           </p>
 
-          <div className="text-white food-motif bg-s-700 rounded-2xl px-3 py-6 md:py-12 border mb-8 max-w-3xl mx-auto selection:bg-s-300">
+          <div className="text-n-50 food-motif bg-s-700 rounded-2xl px-3 py-6 md:py-12 border mb-8 max-w-3xl mx-auto selection:bg-s-300">
             <h3 className="text-4xl text-center font-bold  font-special mb-4">
               Ce que comprend l’abonnement
             </h3>
@@ -64,7 +64,7 @@ export default function Page() {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-center">
-              <div className="bg-white rounded-lg border p-4">
+              <div className="bg-n-50 rounded-lg border p-4">
                 <h4 className="font-bold text-p-700">
                   0 à 30 % d’ingrédients achetés
                 </h4>
@@ -72,7 +72,7 @@ export default function Page() {
                   <strong>20 €/mois</strong>
                 </p>
               </div>
-              <div className="bg-white rounded-lg border p-4">
+              <div className="bg-n-50 rounded-lg border p-4">
                 <h4 className=" font-bold text-p-700">
                   31 à 60 % d’ingrédients achetés
                 </h4>
@@ -98,7 +98,7 @@ export default function Page() {
             </p>
           </div>
 
-          <p className="text-sm text-p-800 bg-white shadow rounded-lg p-6 border space-y-4">
+          <p className="text-sm text-p-800 bg-n-50 shadow rounded-lg p-6 border space-y-4">
             💡 Le taux d’ingrédients achetés est calculé automatiquement à
             partir de vos recettes planifiées et des commandes associées. Vous
             pouvez suivre l’évolution de votre réduction en temps réel depuis

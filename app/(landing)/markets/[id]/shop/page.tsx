@@ -320,8 +320,8 @@ export default function ShopPage() {
                   onClick={() => setSelectedCategory(null)}
                   className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                     selectedCategory === null
-                      ? "bg-p-600 text-white"
-                      : "bg-white border border-n-200 text-n-600 hover:border-p-300"
+                      ? "bg-p-600 text-n-50"
+                      : "bg-n-50 border border-n-200 text-n-600 hover:border-p-300"
                   }`}
                 >
                   Tout
@@ -334,8 +334,8 @@ export default function ShopPage() {
                     }
                     className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                       selectedCategory === cat
-                        ? "bg-p-600 text-white"
-                        : "bg-white border border-n-200 text-n-600 hover:border-p-300"
+                        ? "bg-p-600 text-n-50"
+                        : "bg-n-50 border border-n-200 text-n-600 hover:border-p-300"
                     }`}
                   >
                     {cat}

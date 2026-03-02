@@ -43,14 +43,14 @@ export default async function VendorDashboardPage() {
 
       {/* Sections à venir */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
           <h2 className="text-xl font-semibold text-n-800 mb-4">
             Prochaines commandes
           </h2>
           <p className="text-n-500 text-center py-8">Aucune commande à venir</p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
           <h2 className="text-xl font-semibold text-n-800 mb-4">
             Prochains marchés
           </h2>
@@ -73,7 +73,7 @@ function DashboardCard({
   color: string;
 }) {
   return (
-    <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm border border-n-100">
+    <div className="bg-n-50 rounded-xl p-4 md:p-6 shadow-sm border border-n-100">
       <div className="flex items-center justify-between gap-2">
         <div className="min-w-0">
           <p className="text-xs md:text-sm text-n-500 truncate">{title}</p>
@@ -82,7 +82,7 @@ function DashboardCard({
           </p>
         </div>
         <div className={`${color} p-2 md:p-3 rounded-lg shrink-0`}>
-          <Icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
+          <Icon className="w-5 h-5 md:w-6 md:h-6 text-n-50" />
         </div>
       </div>
     </div>

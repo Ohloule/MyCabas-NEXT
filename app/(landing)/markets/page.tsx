@@ -589,7 +589,7 @@ export default function MarketsPage() {
 
                   {/* Liste des suggestions */}
                   {showSuggestions && (
-                    <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-auto rounded-lg border bg-white shadow-lg">
+                    <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-auto rounded-lg border bg-n-50 shadow-lg">
                       {suggestionsLoading ? (
                         <div className="flex items-center justify-center py-4">
                           <Loader taille={45} />

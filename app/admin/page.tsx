@@ -101,7 +101,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Marchés en attente */}
-      <div className="bg-white rounded-xl shadow-sm border border-n-200 p-6">
+      <div className="bg-n-50 rounded-xl shadow-sm border border-n-200 p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-n-800 flex items-center gap-2">
             <Clock className="w-5 h-5 text-s-500" />
@@ -173,7 +173,7 @@ function StatCard({
   return (
     <Link href={href}>
       <div
-        className={`bg-white rounded-xl p-4 md:p-5 shadow-sm border transition-shadow hover:shadow-md cursor-pointer ${
+        className={`bg-n-50 rounded-xl p-4 md:p-5 shadow-sm border transition-shadow hover:shadow-md cursor-pointer ${
           urgent ? "border-s-300" : "border-n-200"
         }`}
       >
@@ -185,7 +185,7 @@ function StatCard({
             </p>
           </div>
           <div className={`${color} p-2 md:p-3 rounded-lg shrink-0`}>
-            <Icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            <Icon className="w-5 h-5 md:w-6 md:h-6 text-n-50" />
           </div>
         </div>
         {urgent && value > 0 && (

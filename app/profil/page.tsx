@@ -241,7 +241,7 @@ export default function ProfilInfosPage() {
         <Button
           type="submit"
           disabled={saving}
-          className="bg-p-500 hover:bg-p-600 text-white"
+          className="bg-p-500 hover:bg-p-600 text-n-50"
         >
           {saving ? <Loader taille={45} /> : <Save className="h-4 w-4" />}
           Enregistrer les modifications

@@ -337,13 +337,13 @@ export default function ProductCard({
           {/* Badges Bio / Local */}
           <div className="absolute top-2 left-2 flex gap-1">
             {product.isOrganic && (
-              <Badge className="bg-p-500 hover:bg-p-600 text-white text-xs">
+              <Badge className="bg-p-500 hover:bg-p-600 text-n-50 text-xs">
                 <Leaf className="w-3 h-3 mr-1" />
                 Bio
               </Badge>
             )}
             {product.isLocal && (
-              <Badge className="bg-s-500 hover:bg-s-600 text-white text-xs">
+              <Badge className="bg-s-500 hover:bg-s-600 text-n-50 text-xs">
                 <MapPin className="w-3 h-3 mr-1" />
                 Local
               </Badge>
@@ -368,8 +368,8 @@ export default function ProductCard({
                   title={`Commander en ${product.unit}`}
                   className={`flex items-center justify-center w-6 h-6 rounded-full border transition-colors cursor-pointer ${
                     displayMode === "weight"
-                      ? "bg-p-600 border-p-600 text-white"
-                      : "bg-white border-n-200 text-n-400 hover:border-p-300"
+                      ? "bg-p-600 border-p-600 text-n-50"
+                      : "bg-n-50 border-n-200 text-n-400 hover:border-p-300"
                   }`}
                 >
                   <Weight className="w-3 h-3" />
@@ -380,8 +380,8 @@ export default function ProductCard({
                   title="Commander à la pièce"
                   className={`flex items-center justify-center w-6 h-6 rounded-full border transition-colors cursor-pointer ${
                     displayMode === "piece"
-                      ? "bg-p-600 border-p-600 text-white"
-                      : "bg-white border-n-200 text-n-400 hover:border-p-300"
+                      ? "bg-p-600 border-p-600 text-n-50"
+                      : "bg-n-50 border-n-200 text-n-400 hover:border-p-300"
                   }`}
                 >
                   <Carrot className="w-3 h-3" />
@@ -474,13 +474,13 @@ export default function ProductCard({
                     );
                   }}
                   disabled={loading || displayedQty <= displayedMin}
-                  className="flex items-center justify-center w-9 h-9 bg-p-600 hover:bg-p-500 active:bg-n-900 text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  className="flex items-center justify-center w-9 h-9 bg-p-600 hover:bg-p-500 active:bg-n-900 text-n-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
 
                 {/* Input quantité + unité */}
-                <div className="flex items-center justify-center h-9 bg-white border-x border-n-200 px-2 gap-1 min-w-0">
+                <div className="flex items-center justify-center h-9 bg-n-50 border-x border-n-200 px-2 gap-1 min-w-0">
                   <input
                     type="text"
                     inputMode={canToggle || useSubUnit ? "numeric" : "decimal"}
@@ -538,7 +538,7 @@ export default function ProductCard({
                     )
                   }
                   disabled={loading}
-                  className="flex items-center justify-center w-9 h-9 bg-p-600 hover:bg-p-500 active:bg-p-700 text-white transition-colors disabled:opacity-50 cursor-pointer"
+                  className="flex items-center justify-center w-9 h-9 bg-p-600 hover:bg-p-500 active:bg-p-700 text-n-50 transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   {loading ? (
                     <Loader2 className="animate-spin text-p-100" size={20} />

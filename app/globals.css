@@ -57,23 +57,23 @@
   --n-900: oklch(14% 0.03 175); /* Presque noir coloré */
   --n-950: oklch(08% 0.025 175); /* Noir profond organique */
 
-  --blanc: oklch(100% 0.00011 271.152);
-  --noir: oklch(0% 0 0);
+  --blanc: oklch(99% 0.015 175);
+  --noir: oklch(14% 0.03 175);
 
   --radius: 0.625rem;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(59% 0.11 175);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+  --secondary: oklch(70.044% 0.13526 59.801);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: oklch(70.044% 0.13526 59.801);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -158,7 +158,7 @@ body {
   @apply max-w-7xl mx-auto px-8;
 }
 .test {
-  @apply border-solid border-2 border-black;
+  @apply border-solid border-2 border-n-900;
 }
 
 .food-motif {

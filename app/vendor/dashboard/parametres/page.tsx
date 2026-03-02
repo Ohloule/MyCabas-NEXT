@@ -396,7 +396,7 @@ export default function ParametresPage() {
                   "relative text-left rounded-xl border-2 p-4 transition-all focus:outline-none",
                   stripeFeePaidBy === "VENDOR"
                     ? "border-p-500 bg-p-50"
-                    : "border-n-200 bg-white hover:border-n-300",
+                    : "border-n-200 bg-n-50 hover:border-n-300",
                 )}
               >
                 {/* Badge recommandé */}
@@ -415,7 +415,7 @@ export default function ParametresPage() {
                     )}
                   >
                     {stripeFeePaidBy === "VENDOR" && (
-                      <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                      <div className="h-1.5 w-1.5 rounded-full bg-n-50" />
                     )}
                   </div>
                   <div className="space-y-1">
@@ -439,7 +439,7 @@ export default function ParametresPage() {
                   "relative text-left rounded-xl border-2 p-4 transition-all focus:outline-none",
                   stripeFeePaidBy === "CUSTOMER"
                     ? "border-p-500 bg-p-50"
-                    : "border-n-200 bg-white hover:border-n-300",
+                    : "border-n-200 bg-n-50 hover:border-n-300",
                 )}
               >
                 <div className="flex items-start gap-3">
@@ -452,7 +452,7 @@ export default function ParametresPage() {
                     )}
                   >
                     {stripeFeePaidBy === "CUSTOMER" && (
-                      <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                      <div className="h-1.5 w-1.5 rounded-full bg-n-50" />
                     )}
                   </div>
                   <div className="space-y-1">

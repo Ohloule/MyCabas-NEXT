@@ -352,7 +352,7 @@ export default function NouveauMarchePage() {
               {showAddressSuggestions && addressSuggestions.length > 0 && (
                 <div
                   ref={suggestionsRef}
-                  className="absolute top-full left-0 right-0 mt-1 bg-white border border-n-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"
+                  className="absolute top-full left-0 right-0 mt-1 bg-n-50 border border-n-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"
                 >
                   {addressSuggestions.map((s, i) => (
                     <button
@@ -424,7 +424,7 @@ export default function NouveauMarchePage() {
               {nearbyMarkets.map((m) => (
                 <div
                   key={m.id}
-                  className="bg-white border border-s-200 rounded-lg px-3 py-2 flex items-center gap-2"
+                  className="bg-n-50 border border-s-200 rounded-lg px-3 py-2 flex items-center gap-2"
                 >
                   <MapPin className="h-4 w-4 text-s-500 shrink-0" />
                   <div className="text-sm">

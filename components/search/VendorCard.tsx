@@ -155,7 +155,7 @@ export default function VendorCard({
   const vendorHeader = (
     <div className="flex items-start gap-4 flex-1 min-w-0">
       {/* Logo du vendor */}
-      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-white shadow-sm shrink-0">
+      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-n-50 shadow-sm shrink-0">
         {vendor.logoUrl ? (
           <Image
             src={vendor.logoUrl}
@@ -188,7 +188,7 @@ export default function VendorCard({
               return (
                 <Badge
                   key={label}
-                  className={`${config.color} hover:${config.color} text-white text-xs`}
+                  className={`${config.color} hover:${config.color} text-n-50 text-xs`}
                 >
                   {config.label}
                 </Badge>
@@ -239,7 +239,7 @@ export default function VendorCard({
     return (
       <AccordionItem value={vendor.id} className="border-0">
         <Card className="overflow-hidden border-2 border-n-100">
-          <AccordionTrigger className="px-6 py-4 bg-linear-to-r from-p-50 to-white hover:no-underline hover:from-p-100 [&>svg]:shrink-0 [&>svg]:mt-1 [&>svg]:ml-3">
+          <AccordionTrigger className="px-6 py-4 bg-linear-to-r from-p-50 to-n-50 hover:no-underline hover:from-p-100 [&>svg]:shrink-0 [&>svg]:mt-1 [&>svg]:ml-3">
             {vendorHeader}
           </AccordionTrigger>
           <AccordionContent className="pb-0">
@@ -252,7 +252,7 @@ export default function VendorCard({
 
   return (
     <Card className="overflow-hidden border-2 border-n-100">
-      <CardHeader className="bg-linear-to-r from-p-50 to-white pb-4">
+      <CardHeader className="bg-linear-to-r from-p-50 to-n-50 pb-4">
         {vendorHeader}
 
         {/* Description */}

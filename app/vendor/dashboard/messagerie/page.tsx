@@ -102,7 +102,7 @@ export default function VendorMessageriePage() {
             <Link
               key={conv.id}
               href={`/vendor/dashboard/messagerie/${conv.id}`}
-              className={`block bg-white rounded-xl border p-4 hover:shadow-md transition-shadow ${
+              className={`block bg-n-50 rounded-xl border p-4 hover:shadow-md transition-shadow ${
                 conv._count.messages > 0 && conv.status === "OPEN"
                   ? "border-p-200"
                   : "border-n-200"
@@ -145,8 +145,8 @@ export default function VendorMessageriePage() {
 
       {/* Modale nouvelle conversation */}
       {showNew && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md">
+        <div className="fixed inset-0 bg-n-900/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-n-50 rounded-xl shadow-xl p-6 w-full max-w-md">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-n-800">
                 Nouveau message

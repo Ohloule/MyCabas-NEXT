@@ -402,7 +402,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
     index: number;
   }) => (
     <div
-      className={`bg-white rounded-xl shadow-sm border p-4 transition-colors overflow-hidden ${
+      className={`bg-n-50 rounded-xl shadow-sm border p-4 transition-colors overflow-hidden ${
         row.status === "error"
           ? "border-s-300 bg-s-50/30"
           : row.status === "valid"
@@ -478,7 +478,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               <button
                 type="button"
                 onClick={() => removeImage(row.id)}
-                className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-s-500 text-white rounded-full flex items-center justify-center hover:bg-s-600"
+                className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-s-500 text-n-50 rounded-full flex items-center justify-center hover:bg-s-600"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -693,7 +693,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
       </div>
 
       {/* Barre d'actions sticky */}
-      <div className="sticky top-2 ml-auto z-10 bg-white w-[80%] lg:w-full  rounded-xl p-3 sm:p-4 shadow-sm border border-n-100 mb-4">
+      <div className="sticky top-2 ml-auto z-10 bg-n-50 w-[80%] lg:w-full  rounded-xl p-3 sm:p-4 shadow-sm border border-n-100 mb-4">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-wrap min-w-0">
             <span className="text-sm text-n-600 whitespace-nowrap">
@@ -766,7 +766,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
       </div>
 
       {/* Vue desktop - Tableau */}
-      <div className="hidden lg:block bg-white rounded-xl shadow-sm border border-n-100">
+      <div className="hidden lg:block bg-n-50 rounded-xl shadow-sm border border-n-100">
         <div className="overflow-x-auto rounded-xl">
           <table className="w-full">
             <thead className="bg-n-50 border-b border-n-100">
@@ -882,7 +882,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         <button
                           type="button"
                           onClick={() => removeImage(row.id)}
-                          className="absolute -top-1 -right-1 w-4 h-4 bg-s-500 text-white rounded-full flex items-center justify-center hover:bg-s-600"
+                          className="absolute -top-1 -right-1 w-4 h-4 bg-s-500 text-n-50 rounded-full flex items-center justify-center hover:bg-s-600"
                           tabIndex={-1}
                         >
                           <X className="w-2.5 h-2.5" />

@@ -292,7 +292,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl p-12 shadow-sm border border-n-100 text-center">
+      <div className="bg-n-50 rounded-xl p-12 shadow-sm border border-n-100 text-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-p-600 mx-auto"></div>
         <p className="mt-4 text-n-500">Chargement...</p>
       </div>
@@ -333,7 +333,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
           <Button type="submit" disabled={saving}>
             {saving ? (
               <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-n-50"></div>
                 Enregistrement...
               </>
             ) : (
@@ -350,7 +350,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         {/* Colonne principale */}
         <div className="lg:col-span-2 space-y-6">
           {/* Informations générales */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
             <h2 className="text-lg font-semibold text-n-900 mb-4">
               Informations générales
             </h2>
@@ -693,7 +693,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
           {/* Prix & Disponibilité par marché */}
           {markets.length > 0 ? (
-            <div className="bg-white rounded-xl shadow-sm border border-n-100 overflow-hidden">
+            <div className="bg-n-50 rounded-xl shadow-sm border border-n-100 overflow-hidden">
               <div className="p-6 border-b border-n-100">
                 <h2 className="text-lg font-semibold text-n-900">
                   Prix & Disponibilité par marché
@@ -893,7 +893,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         {/* Colonne latérale */}
         <div className="space-y-6">
           {/* Image */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-n-900">Image</h2>
               {imageUrl && (
@@ -929,7 +929,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
           </div>
 
           {/* Statut */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
             <h2 className="text-lg font-semibold text-n-900 mb-4">Statut</h2>
 
             <label className="flex items-center gap-3 cursor-pointer">

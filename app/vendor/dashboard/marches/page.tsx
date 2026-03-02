@@ -593,7 +593,7 @@ export default function MarchesPage() {
                                 ${isEditing ? "cursor-pointer" : "cursor-default"}
                                 ${
                                   isSelected
-                                    ? "bg-p-600 text-white shadow-sm"
+                                    ? "bg-p-600 text-n-50 shadow-sm"
                                     : isEditing
                                       ? "bg-n-100 text-n-600 hover:bg-n-200"
                                       : "bg-n-100 text-n-400"
@@ -681,7 +681,7 @@ export default function MarchesPage() {
             </div>
           )}
 
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-n-100 mb-4">
+          <div className="bg-n-50 rounded-xl p-4 shadow-sm border border-n-100 mb-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-n-400 z-10" />
               <Input
@@ -706,7 +706,7 @@ export default function MarchesPage() {
               {showSuggestions && suggestions.length > 0 && (
                 <div
                   ref={suggestionsRef}
-                  className="absolute top-full left-0 right-0 mt-1 bg-white border border-n-200 rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto"
+                  className="absolute top-full left-0 right-0 mt-1 bg-n-50 border border-n-200 rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto"
                 >
                   {suggestions.map((suggestion, index) => (
                     <button
@@ -788,7 +788,7 @@ export default function MarchesPage() {
                                 px-3 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer
                                 ${
                                   isSelected
-                                    ? "bg-p-600 text-white shadow-sm"
+                                    ? "bg-p-600 text-n-50 shadow-sm"
                                     : "bg-n-100 text-n-600 hover:bg-n-200"
                                 }
                               `}

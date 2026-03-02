@@ -134,7 +134,7 @@ export default function CommandesPage() {
             onClick={() => setActiveTab(tab.key)}
             className={`flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer whitespace-nowrap ${
               activeTab === tab.key
-                ? "bg-p-700 text-white shadow-sm"
+                ? "bg-p-700 text-n-50 shadow-sm"
                 : "text-n-600 hover:text-n-900"
             }`}
           >
@@ -149,7 +149,7 @@ export default function CommandesPage() {
           <Loader taille={45} />
         </div>
       ) : orders.length === 0 ? (
-        <div className="bg-white rounded-xl p-8 shadow-sm border border-n-100 text-center">
+        <div className="bg-n-50 rounded-xl p-8 shadow-sm border border-n-100 text-center">
           <Package className="h-12 w-12 text-n-300 mx-auto mb-3" />
           <p className="text-n-500">Aucune commande dans cette catégorie.</p>
         </div>
@@ -230,7 +230,7 @@ export default function CommandesPage() {
                     <Button
                       onClick={() => handleConfirm(order.id)}
                       disabled={actionLoading === order.id}
-                      className="bg-p-500 hover:bg-p-700 hover:text-white gap-2 "
+                      className="bg-p-500 hover:bg-p-700 hover:text-n-50 gap-2 "
                     >
                       {actionLoading === order.id ? (
                         <Loader taille={45} />

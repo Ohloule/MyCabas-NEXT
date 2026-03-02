@@ -2,7 +2,7 @@ import HeadingPage from "@/components/HeadingPage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export default function Page() {
   return (
-    <main className="bg-white text-n-900">
+    <main className="bg-n-50 text-n-900">
       <HeadingPage title="Tarifs & Fonctionnement">
         {" "}
         <p className="text-lg">
@@ -186,7 +186,7 @@ export default function Page() {
             un encaissement individuel.
           </p>
 
-          <div className="bg-white shadow rounded-xl p-6 space-y-4 border">
+          <div className="bg-n-50 shadow rounded-xl p-6 space-y-4 border">
             <h3 className="text-3xl font-special font-bold">
               {" "}
               Exemple concret :
@@ -254,7 +254,7 @@ export default function Page() {
                 </ul>
               </div>
 
-              <div className="bg-white border p-4 rounded-lg text-p-800/50">
+              <div className="bg-n-50 border p-4 rounded-lg text-p-800/50">
                 <strong className="block h-8">Sans partage des frais :</strong>
                 <ul className="list-disc list-inside mt-2">
                   <li className="flex flex-row justify-between">

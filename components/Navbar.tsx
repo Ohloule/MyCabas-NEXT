@@ -241,7 +241,7 @@ export default function Navbar() {
                   />
                 </button>
                 {showMobileFavMenu && (
-                  <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50 border border-n-100">
+                  <div className="absolute right-0 top-full mt-2 w-56 bg-n-50 rounded-lg shadow-lg py-2 z-50 border border-n-100">
                     {mobileFavMarkets.length === 0 ? (
                       <Link
                         href="/markets"
@@ -303,14 +303,14 @@ export default function Navbar() {
       {/* Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-n-900/50 z-40 lg:hidden"
           onClick={closeMobileMenu}
         />
       )}
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-[85%] max-w-sm bg-white z-50 transform transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed top-0 left-0 h-full w-[85%] max-w-sm bg-n-50 z-50 transform transition-transform duration-300 ease-out lg:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

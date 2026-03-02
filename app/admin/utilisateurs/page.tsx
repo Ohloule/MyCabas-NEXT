@@ -71,8 +71,8 @@ export default function AdminUtilisateursPage() {
             onClick={() => setFilter(r)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
               filter === r
-                ? "bg-slate-800 text-white border-slate-800"
-                : "bg-white text-n-600 border-n-200 hover:border-slate-400"
+                ? "bg-slate-800 text-n-50 border-slate-800"
+                : "bg-n-50 text-n-600 border-n-200 hover:border-slate-400"
             }`}
           >
             {r === "ALL" ? "Tous" : r}
@@ -103,7 +103,7 @@ export default function AdminUtilisateursPage() {
           {filtered.map((user) => (
             <div
               key={user.id}
-              className="bg-white rounded-xl border border-n-200 p-4 flex flex-wrap items-center justify-between gap-3"
+              className="bg-n-50 rounded-xl border border-n-200 p-4 flex flex-wrap items-center justify-between gap-3"
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">

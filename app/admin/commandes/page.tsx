@@ -69,7 +69,7 @@ export default async function AdminCommandesPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-n-200 overflow-hidden">
+      <div className="bg-n-50 rounded-xl border border-n-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>

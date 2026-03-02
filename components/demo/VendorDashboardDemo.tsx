@@ -616,7 +616,7 @@ function SectionDashboard({ productCount }: { productCount: number }) {
         {stats.map((s) => (
           <div
             key={s.label}
-            className="bg-white rounded-xl p-5 shadow-sm border border-n-100"
+            className="bg-n-50 rounded-xl p-5 shadow-sm border border-n-100"
           >
             <div className="flex items-center gap-3">
               <div className={`p-2.5 rounded-lg ${s.color}`}>
@@ -632,7 +632,7 @@ function SectionDashboard({ productCount }: { productCount: number }) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
           <h2 className="font-semibold text-n-900 mb-4">
             Prochaines commandes
           </h2>
@@ -677,7 +677,7 @@ function SectionDashboard({ productCount }: { productCount: number }) {
           ))}
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
           <h2 className="font-semibold text-n-900 mb-4">Prochains marchés</h2>
           {DEMO_MARKETS.map((m) => (
             <div
@@ -723,7 +723,7 @@ function SectionProfil() {
       </div>
 
       <div className="space-y-6">
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
           <h2 className="font-semibold text-n-900 mb-4">
             Informations légales
           </h2>
@@ -753,7 +753,7 @@ function SectionProfil() {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
           <h2 className="font-semibold text-n-900 mb-4">Coordonnées</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -811,7 +811,7 @@ function SectionProfil() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
           <h2 className="font-semibold text-n-900 mb-4">
             Informations bancaires
           </h2>
@@ -873,7 +873,7 @@ function SectionVitrine() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
             <h2 className="font-semibold text-n-900 mb-4">Photo / Logo</h2>
             <div className="flex items-center gap-4">
               <div className="w-24 h-24 rounded-xl bg-s-100 flex items-center justify-center">
@@ -889,7 +889,7 @@ function SectionVitrine() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
             <h2 className="font-semibold text-n-900 mb-4">Description</h2>
             <textarea
               value={description}
@@ -902,7 +902,7 @@ function SectionVitrine() {
             />
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
             <h2 className="font-semibold text-n-900 mb-4">Contact & Réseaux</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -936,7 +936,7 @@ function SectionVitrine() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
             <h2 className="font-semibold text-n-900 mb-4">
               Moyens de paiement acceptés
             </h2>
@@ -966,7 +966,7 @@ function SectionVitrine() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+          <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
             <h2 className="font-semibold text-n-900 mb-4">
               Labels & Certifications
             </h2>
@@ -1015,10 +1015,10 @@ function SectionVitrine() {
 
         {/* Preview card */}
         <div>
-          <div className="bg-white rounded-xl shadow-sm border border-n-100 overflow-hidden sticky top-4">
+          <div className="bg-n-50 rounded-xl shadow-sm border border-n-100 overflow-hidden sticky top-4">
             <div className="bg-s-600 h-20" />
             <div className="p-4 -mt-8">
-              <div className="w-16 h-16 rounded-xl bg-s-100 border-4 border-white flex items-center justify-center mb-3">
+              <div className="w-16 h-16 rounded-xl bg-s-100 border-4 border-n-50 flex items-center justify-center mb-3">
                 <Store className="w-8 h-8 text-s-400" />
               </div>
               <h3 className="font-bold text-n-900">La Ferme de Jean</h3>
@@ -1113,7 +1113,7 @@ function SectionMarches() {
         {marketsData.map((m) => (
           <div
             key={m.id}
-            className="bg-white rounded-xl p-6 shadow-sm border border-n-100"
+            className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100"
           >
             <div className="flex items-start justify-between mb-4">
               <div>
@@ -1268,7 +1268,7 @@ function SectionCommandes() {
         {filtered.map((o) => (
           <div
             key={o.id}
-            className="bg-white rounded-xl p-5 shadow-sm border border-n-100"
+            className="bg-n-50 rounded-xl p-5 shadow-sm border border-n-100"
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div className="flex items-center gap-3">
@@ -1366,7 +1366,7 @@ function SectionFacturations() {
         <h1 className="text-3xl font-bold text-s-800">Facturations</h1>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-n-100 overflow-hidden">
+      <div className="bg-n-50 rounded-xl shadow-sm border border-n-100 overflow-hidden">
         <table className="w-full">
           <thead className="bg-n-50 border-b border-n-100">
             <tr>
@@ -1490,7 +1490,7 @@ function SectionNotifications() {
         {notifications.map((n) => (
           <div
             key={n.id}
-            className={`bg-white rounded-xl p-4 shadow-sm border transition-colors cursor-pointer ${n.read ? "border-n-100" : "border-s-200 bg-s-50/30"}`}
+            className={`bg-n-50 rounded-xl p-4 shadow-sm border transition-colors cursor-pointer ${n.read ? "border-n-100" : "border-s-200 bg-s-50/30"}`}
             onClick={() =>
               setNotifications((prev) =>
                 prev.map((x) => (x.id === n.id ? { ...x, read: true } : x)),
@@ -1548,7 +1548,7 @@ function SectionParametres() {
       </div>
 
       <div className="space-y-6">
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
           <h2 className="font-semibold text-n-900 mb-4">Notifications</h2>
           <div className="space-y-4">
             {[
@@ -1586,7 +1586,7 @@ function SectionParametres() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
           <h2 className="font-semibold text-n-900 mb-4">Commandes</h2>
           <label className="flex items-start gap-3 cursor-pointer">
             <Checkbox
@@ -1609,7 +1609,7 @@ function SectionParametres() {
           </label>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-n-100">
+        <div className="bg-n-50 rounded-xl p-6 shadow-sm border border-n-100">
           <h2 className="font-semibold text-n-900 mb-4">Mode vacances</h2>
           <label className="flex items-start gap-3 cursor-pointer">
             <Checkbox
@@ -1907,7 +1907,7 @@ function DemoProductsTable({
 
   if (products.length === 0)
     return (
-      <div className="bg-white rounded-xl p-8 sm:p-12 shadow-sm border border-n-100 text-center">
+      <div className="bg-n-50 rounded-xl p-8 sm:p-12 shadow-sm border border-n-100 text-center">
         <Carrot className="w-12 h-12 text-n-300 mx-auto mb-3" />
         <h3 className="text-lg font-medium text-n-900 mb-2">Aucun produit</h3>
         <p className="text-n-500">
@@ -1917,7 +1917,7 @@ function DemoProductsTable({
     );
 
   const ProductCard = ({ product }: { product: Product }) => (
-    <div className="bg-white rounded-xl shadow-sm border border-n-100 p-4">
+    <div className="bg-n-50 rounded-xl shadow-sm border border-n-100 p-4">
       <div className="flex items-start gap-3">
         <div className="w-16 h-16 rounded-lg overflow-hidden bg-n-100 shrink-0">
           <Image
@@ -2021,7 +2021,7 @@ function DemoProductsTable({
           <ProductCard key={p.id} product={p} />
         ))}
       </div>
-      <div className="hidden lg:block bg-white rounded-xl shadow-sm border border-n-100">
+      <div className="hidden lg:block bg-n-50 rounded-xl shadow-sm border border-n-100">
         <div className="overflow-x-auto rounded-xl">
           <table className="w-full">
             <thead className="bg-n-50 border-b border-n-100">
@@ -2162,7 +2162,7 @@ function DemoProductsTable({
                               className="fixed inset-0 z-10"
                               onClick={() => setOpenMenuId(null)}
                             />
-                            <div className="absolute right-10 -top-8 z-20 bg-white rounded-lg shadow-lg border border-n-100 py-1 min-w-35">
+                            <div className="absolute right-10 -top-8 z-20 bg-n-50 rounded-lg shadow-lg border border-n-100 py-1 min-w-35">
                               <button
                                 onClick={() => {
                                   onDuplicate(product);
@@ -2313,7 +2313,7 @@ function DemoProductsTableEditable({
 
   if (products.length === 0)
     return (
-      <div className="bg-white rounded-xl p-8 shadow-sm border border-n-100 text-center">
+      <div className="bg-n-50 rounded-xl p-8 shadow-sm border border-n-100 text-center">
         <h3 className="text-lg font-medium text-n-900">Aucun produit</h3>
       </div>
     );
@@ -2323,7 +2323,7 @@ function DemoProductsTableEditable({
     if (!row) return null;
     return (
       <div
-        className={`bg-white rounded-xl shadow-sm border p-4 transition-colors ${row.isDirty ? "border-s-300 bg-s-50/50" : "border-n-100"}`}
+        className={`bg-n-50 rounded-xl shadow-sm border p-4 transition-colors ${row.isDirty ? "border-s-300 bg-s-50/50" : "border-n-100"}`}
       >
         <div className="flex items-start gap-3 mb-4">
           <div className="w-14 h-14 rounded-lg overflow-hidden bg-n-100 shrink-0">
@@ -2421,7 +2421,7 @@ function DemoProductsTableEditable({
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white rounded-xl p-3 sm:p-4 shadow-sm border border-n-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-n-50 rounded-xl p-3 sm:p-4 shadow-sm border border-n-100">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-sm text-n-600">
             Marché : <strong className="text-s-700">{marketName}</strong>
@@ -2460,7 +2460,7 @@ function DemoProductsTableEditable({
           <EditableCard key={p.id} product={p} />
         ))}
       </div>
-      <div className="hidden lg:block bg-white rounded-xl shadow-sm border border-n-100">
+      <div className="hidden lg:block bg-n-50 rounded-xl shadow-sm border border-n-100">
         <div className="overflow-x-auto rounded-xl">
           <table className="w-full">
             <thead className="bg-n-50 border-b border-n-100">
@@ -2723,7 +2723,7 @@ function SectionEtal({
         </Button>
       </div>
 
-      <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border border-n-100 mb-4">
+      <div className="bg-n-50 rounded-xl p-3 sm:p-4 shadow-sm border border-n-100 mb-4">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
           <div className="flex items-center gap-2">
             <Store className="w-5 h-5 text-s-600 shrink-0" />
@@ -2754,7 +2754,7 @@ function SectionEtal({
         </div>
       </div>
 
-      <div className="bg-white rounded-xl p-4 shadow-sm border border-n-100 mb-6">
+      <div className="bg-n-50 rounded-xl p-4 shadow-sm border border-n-100 mb-6">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-n-400" />
@@ -2855,7 +2855,7 @@ export function VendorDashboardDemo() {
       {/* Mobile hamburger */}
       <button
         onClick={() => setSidebarOpen(true)}
-        className="lg:hidden fixed top-24 left-4 z-50 p-2 bg-s-800 text-white rounded-lg shadow-lg"
+        className="lg:hidden fixed top-24 left-4 z-50 p-2 bg-s-800 text-n-50 rounded-lg shadow-lg"
         aria-label="Menu"
       >
         <Menu className="w-5 h-5" />
@@ -2864,14 +2864,14 @@ export function VendorDashboardDemo() {
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          className="lg:hidden fixed inset-0 bg-n-900/50 z-40"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`w-64 bg-s-800 text-white flex flex-col shrink-0 fixed lg:sticky top-0 left-0 h-screen lg:h-auto lg:min-h-[80vh] z-50 lg:z-auto transition-transform duration-300 lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`w-64 bg-s-800 text-n-50 flex flex-col shrink-0 fixed lg:relative top-0 left-0 h-screen lg:h-auto z-50 lg:z-auto transition-transform duration-300 lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="p-5 border-b border-s-700">
           <div className="flex items-center justify-between">
@@ -2902,12 +2902,12 @@ export function VendorDashboardDemo() {
                     setActiveSection(item.id);
                     setSidebarOpen(false);
                   }}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors text-sm ${activeSection === item.id ? "bg-s-600 text-white" : "text-s-200 hover:bg-s-700 hover:text-white"}`}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors text-sm ${activeSection === item.id ? "bg-s-600 text-n-50" : "text-s-200 hover:bg-s-700 hover:text-n-50"}`}
                 >
                   <item.icon className="w-5 h-5 shrink-0" />
                   <span className="flex-1 text-left">{item.label}</span>
                   {item.id === "notifications" && notifCount > 0 && (
-                    <span className="bg-s-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="bg-s-500 text-n-50 text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {notifCount}
                     </span>
                   )}

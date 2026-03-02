@@ -114,7 +114,7 @@ export default function VendorConversationPage() {
       </div>
 
       {/* Messages */}
-      <div className="bg-white rounded-xl border border-n-200 p-4 mb-4 space-y-4 max-h-[calc(100vh-300px)] overflow-y-auto">
+      <div className="bg-n-50 rounded-xl border border-n-200 p-4 mb-4 space-y-4 max-h-[calc(100vh-300px)] overflow-y-auto">
         {conversation.messages.map((msg) => {
           const isVendor = msg.sender.role === "VENDOR";
           return (
@@ -139,7 +139,7 @@ export default function VendorConversationPage() {
               <div
                 className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${
                   isVendor
-                    ? "bg-p-700 text-white rounded-tr-sm"
+                    ? "bg-p-700 text-n-50 rounded-tr-sm"
                     : "bg-n-100 text-n-800 rounded-tl-sm"
                 }`}
               >

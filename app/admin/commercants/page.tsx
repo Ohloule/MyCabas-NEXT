@@ -83,7 +83,7 @@ export default function AdminCommerciantsPage() {
           {filtered.map((vendor) => (
             <div
               key={vendor.id}
-              className="bg-white rounded-xl border border-n-200 p-4 md:p-5"
+              className="bg-n-50 rounded-xl border border-n-200 p-4 md:p-5"
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">

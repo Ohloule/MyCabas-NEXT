@@ -96,7 +96,7 @@ export default function CategoriesMenu() {
 
       {/* Mega menu */}
       {isOpen && (
-        <div className="absolute left-0 top-full mt-2 w-80 md:w-125 bg-white rounded-xl shadow-xl border border-n-100 z-50 p-4">
+        <div className="absolute left-0 top-full mt-2 w-80 md:w-125 bg-n-50 rounded-xl shadow-xl border border-n-100 z-50 p-4">
           <h3 className="text-sm font-semibold text-n-500 uppercase tracking-wide mb-3 px-2">
             Parcourir par catégorie
           </h3>

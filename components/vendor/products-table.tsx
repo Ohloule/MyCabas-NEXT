@@ -119,7 +119,7 @@ export function ProductsTable({
 
   if (products.length === 0) {
     return (
-      <div className="bg-white rounded-xl p-8 sm:p-12 shadow-sm border border-n-100 text-center">
+      <div className="bg-n-50 rounded-xl p-8 sm:p-12 shadow-sm border border-n-100 text-center">
         <div className="w-16 h-16 bg-n-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <Image
             src="/images/ingredients.jpg"
@@ -140,7 +140,7 @@ export function ProductsTable({
   // Composant carte pour mobile
   const ProductCard = ({ product }: { product: Product }) => (
     <div
-      className="bg-white rounded-xl shadow-sm border border-n-100 p-4 cursor-pointer"
+      className="bg-n-50 rounded-xl shadow-sm border border-n-100 p-4 cursor-pointer"
       onClick={() => onEdit(product)}
     >
       <div className="flex items-start gap-3">
@@ -265,7 +265,7 @@ export function ProductsTable({
       </div>
 
       {/* Vue desktop - Tableau */}
-      <div className="hidden lg:block bg-white rounded-xl shadow-sm border border-n-100">
+      <div className="hidden lg:block bg-n-50 rounded-xl shadow-sm border border-n-100">
         <div className="overflow-x-auto rounded-xl">
           <table className="w-full">
             <thead className="bg-n-50 border-b border-n-100">

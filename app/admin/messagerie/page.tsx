@@ -64,8 +64,8 @@ export default function AdminMessageriePage() {
             onClick={() => setFilter(f)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
               filter === f
-                ? "bg-slate-800 text-white border-slate-800"
-                : "bg-white text-n-600 border-n-200 hover:border-slate-400"
+                ? "bg-slate-800 text-n-50 border-slate-800"
+                : "bg-n-50 text-n-600 border-n-200 hover:border-slate-400"
             }`}
           >
             {f === "ALL" ? "Toutes" : f === "OPEN" ? "Ouvertes" : "Clôturées"}
@@ -84,7 +84,7 @@ export default function AdminMessageriePage() {
             <Link
               key={conv.id}
               href={`/admin/messagerie/${conv.id}`}
-              className={`block bg-white rounded-xl border p-4 hover:shadow-md transition-shadow ${
+              className={`block bg-n-50 rounded-xl border p-4 hover:shadow-md transition-shadow ${
                 conv.status === "OPEN" && conv._count.messages > 0
                   ? "border-p-200"
                   : "border-n-200"

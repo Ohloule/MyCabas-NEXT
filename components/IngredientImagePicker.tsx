@@ -217,7 +217,7 @@ export default function IngredientImagePicker({
       {/* Grille d'images */}
       <div className="relative min-h-75 border rounded-xl p-2 bg-n-50">
         {loading && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/60 backdrop-blur-[1px]">
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-n-50/60 backdrop-blur-[1px]">
             <Loader taille={45} />
           </div>
         )}
@@ -254,7 +254,7 @@ export default function IngredientImagePicker({
                   />
                   {selectedUrl === img.urls.regular && (
                     <div className="absolute inset-0 flex items-center justify-center bg-t-500/20">
-                      <Check className="text-white bg-t-500 rounded-full p-1" />
+                      <Check className="text-n-50 bg-t-500 rounded-full p-1" />
                     </div>
                   )}
                 </button>
@@ -299,7 +299,7 @@ export default function IngredientImagePicker({
       {/* Aperçu agrandi au survol */}
       {!disableHoverPreview && hoveredImg && (
         <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-          <div className="rounded-xl overflow-hidden shadow-2xl border border-n-200 bg-white">
+          <div className="rounded-xl overflow-hidden shadow-2xl border border-n-200 bg-n-50">
             <img
               src={hoveredImg}
               alt="Aperçu"

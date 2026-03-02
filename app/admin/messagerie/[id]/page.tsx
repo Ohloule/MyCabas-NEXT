@@ -160,7 +160,7 @@ export default function AdminConversationPage() {
       </div>
 
       {/* Messages */}
-      <div className="bg-white rounded-xl border border-n-200 p-4 mb-4 space-y-4 max-h-[calc(100vh-320px)] overflow-y-auto">
+      <div className="bg-n-50 rounded-xl border border-n-200 p-4 mb-4 space-y-4 max-h-[calc(100vh-320px)] overflow-y-auto">
         {conversation.messages.map((msg) => {
           const isAdmin = msg.sender.role === "ADMIN";
           return (
@@ -185,7 +185,7 @@ export default function AdminConversationPage() {
               <div
                 className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${
                   isAdmin
-                    ? "bg-slate-800 text-white rounded-tr-sm"
+                    ? "bg-slate-800 text-n-50 rounded-tr-sm"
                     : "bg-n-100 text-n-800 rounded-tl-sm"
                 }`}
               >
@@ -232,7 +232,7 @@ export default function AdminConversationPage() {
             className="flex-1 rounded-xl border border-n-200 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-slate-300"
           />
           <Button
-            className="self-end bg-slate-800 hover:bg-slate-700 text-white"
+            className="self-end bg-slate-800 hover:bg-slate-700 text-n-50"
             onClick={handleSend}
             disabled={!reply.trim() || sending}
           >

@@ -6,7 +6,7 @@ export default function Page() {
       <HeadingPage title="Politique de confidentialité">
         <p className="text-lg">Dernière mise à jour : 31 juillet 2025</p>
       </HeadingPage>
-      <div className="w-full py-16 bg-white text-noir">
+      <div className="w-full py-16 bg-n-50 text-noir">
         <section className="align-center text-sm leading-relaxed space-y-10 text-justify">
           {/* Préambule */}
           <div>

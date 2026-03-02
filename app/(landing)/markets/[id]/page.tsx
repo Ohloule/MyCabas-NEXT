@@ -239,8 +239,8 @@ export default function MarketDetailPage() {
               disabled={favoriteLoading}
               className={`flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full transition-all ${
                 isFavorite
-                  ? "bg-s-500 text-white hover:bg-p-800"
-                  : "bg-p-50 text-black hover:bg-s-200"
+                  ? "bg-s-500 text-n-50 hover:bg-p-800"
+                  : "bg-p-50 text-n-900 hover:bg-s-200"
               } ${favoriteLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
             >
               <Heart
@@ -254,7 +254,7 @@ export default function MarketDetailPage() {
             </button>
             <Link
               href={`/markets/${marketId}/shop?day=${selectedDay.toLowerCase()}`}
-              className="flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full bg-p-600 text-white hover:bg-p-500 transition-colors cursor-pointer"
+              className="flex min-w-64 justify-center items-center gap-2 px-4 py-2 rounded-full bg-p-600 text-n-50 hover:bg-p-500 transition-colors cursor-pointer"
             >
               <ShoppingBasket className="h-5 w-5" />
               <span className="text-sm font-medium">Faire son marché</span>
@@ -368,8 +368,8 @@ export default function MarketDetailPage() {
                 </div>
 
                 {/* Overlay avec bouton de connexion */}
-                <div className="absolute -top-3 -bottom-2 -right-4 -left-4 flex items-center justify-center rounded-4xl bg-white/60 backdrop-blur-[2px]">
-                  <div className="text-center p-8 bg-white rounded-xl shadow-lg border max-w-md mx-4">
+                <div className="absolute -top-3 -bottom-2 -right-4 -left-4 flex items-center justify-center rounded-4xl bg-n-50/60 backdrop-blur-[2px]">
+                  <div className="text-center p-8 bg-n-50 rounded-xl shadow-lg border max-w-md mx-4">
                     <Store className="mx-auto mb-4 h-12 w-12 text-p-600" />
                     <h3 className="text-xl font-semibold mb-2">
                       Connectez-vous pour voir les commerçants

@@ -62,13 +62,13 @@ export default function SearchBar({ className }: SearchBarProps) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Code postal ou produit, commerçant..."
-            className="w-full h-10 pl-10 pr-4 rounded-l-full border-0 bg-white text-n-900 placeholder:text-n-400 focus:outline-none focus:ring-2 focus:ring-p-500"
+            className="w-full h-10 pl-10 pr-4 rounded-l-full border-0 bg-n-50 text-n-900 placeholder:text-n-400 focus:outline-none focus:ring-2 focus:ring-p-500"
           />
         </div>
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-10 px-6 rounded-r-full bg-p-400 hover:bg-p-500 text-white"
+          className="h-10 px-6 rounded-r-full bg-p-400 hover:bg-p-500 text-n-50"
         >
           {isLoading ? (
             <Loader2 className="h-4 w-4 animate-spin" />

@@ -118,10 +118,10 @@ export default function FindMarket() {
             placeholder="Ville ou code postal"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            className="bg-white w-full md:min-w-48 lg:min-w-64 md:w-auto"
+            className="bg-n-50 w-full md:min-w-48 lg:min-w-64 md:w-auto"
           />
           <Select value={selectedDay} onValueChange={setSelectedDay}>
-            <SelectTrigger className=" bg-white w-full md:w-auto">
+            <SelectTrigger className=" bg-n-50 w-full md:w-auto">
               <SelectValue placeholder="Jour de la semaine" />
             </SelectTrigger>
             <SelectContent>
@@ -191,7 +191,7 @@ export default function FindMarket() {
                   className="w-xs p-0 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-start"
                 >
                   <CardTitle className="bg-p-600 food-motif py-6">
-                    <h4 className="px-2 font-semibold text-2xl font-special text-white text-center uppercase truncate whitespace-nowrap leading-none">
+                    <h4 className="px-2 font-semibold text-2xl font-special text-n-50 text-center uppercase truncate whitespace-nowrap leading-none">
                       {market.name}
                     </h4>
                   </CardTitle>

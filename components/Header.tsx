@@ -275,7 +275,7 @@ export default function Header() {
       {showMobileSearch && (
         <div className="fixed inset-0 z-60 lg:hidden flex flex-col">
           <div
-            className=" bg-black/60"
+            className=" bg-n-900/60"
             onClick={() => setShowMobileSearch(false)}
           />
           <div
@@ -292,7 +292,7 @@ export default function Header() {
             </button>
           </div>
           <div
-            className="flex-1 bg-black/60"
+            className="flex-1 bg-n-900/60"
             onClick={() => setShowMobileSearch(false)}
           />
         </div>

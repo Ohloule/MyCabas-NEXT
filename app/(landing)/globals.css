@@ -99,7 +99,7 @@ body {
   @apply max-w-6xl mx-auto px-8;
 }
 .test {
-  @apply border-solid border-2 border-black;
+  @apply border-solid border-2 border-n-900;
 }
 
 .food-motif {

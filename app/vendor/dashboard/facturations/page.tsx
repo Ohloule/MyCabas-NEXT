@@ -13,7 +13,7 @@ export default function FacturationsPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl p-8 shadow-sm border border-n-100">
+      <div className="bg-n-50 rounded-xl p-8 shadow-sm border border-n-100">
         <p className="text-n-500 text-center">
           L&apos;historique de vos facturations sera disponible ici.
         </p>
