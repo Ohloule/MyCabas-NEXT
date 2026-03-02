@@ -124,7 +124,9 @@ export default function MarchesPage() {
   const [editDays, setEditDays] = useState<string[]>([]);
 
   // État pour la confirmation de désinscription
-  const [unregisterMarketId, setUnregisterMarketId] = useState<string | null>(null);
+  const [unregisterMarketId, setUnregisterMarketId] = useState<string | null>(
+    null,
+  );
   const unregisterMarket = myMarkets.find((m) => m.id === unregisterMarketId);
 
   // Charger les marchés du vendeur
@@ -461,378 +463,405 @@ export default function MarchesPage() {
 
   return (
     <>
-    <Dialog open={!!unregisterMarketId} onOpenChange={(open) => { if (!open) setUnregisterMarketId(null); }}>
-      <DialogContent showCloseButton={false} className="max-w-sm">
-        <DialogHeader>
-          <DialogTitle>Se désinscrire du marché ?</DialogTitle>
-          <DialogDescription>
-            Vous êtes sur le point de vous désinscrire du marché{" "}
-            <span className="font-medium text-gray-800">{unregisterMarket?.name}</span>.
-            Cette action supprimera votre inscription et vos jours de présence pour ce marché.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter className="gap-2 sm:gap-0">
-          <Button variant="outline" onClick={() => setUnregisterMarketId(null)}>
-            Annuler
-          </Button>
-          <Button variant="secondary" className="ml-3" onClick={confirmUnregister}>
-            Se désinscrire
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-    <div>
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-principale-100 rounded-lg">
-          <MapPin className="w-6 h-6 text-principale-600" />
+      <Dialog
+        open={!!unregisterMarketId}
+        onOpenChange={(open) => {
+          if (!open) setUnregisterMarketId(null);
+        }}
+      >
+        <DialogContent showCloseButton={false} className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Se désinscrire du marché ?</DialogTitle>
+            <DialogDescription>
+              Vous êtes sur le point de vous désinscrire du marché{" "}
+              <span className="font-medium text-neutre-800">
+                {unregisterMarket?.name}
+              </span>
+              . Cette action supprimera votre inscription et vos jours de
+              présence pour ce marché.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setUnregisterMarketId(null)}
+            >
+              Annuler
+            </Button>
+            <Button
+              variant="secondary"
+              className="ml-3"
+              onClick={confirmUnregister}
+            >
+              Se désinscrire
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <div>
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-3 bg-principale-100 rounded-lg">
+            <MapPin className="w-6 h-6 text-principale-600" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold text-principale-800">
+              Mes marchés
+            </h1>
+            <p className="text-neutre-600">
+              Gérez vos inscriptions aux marchés
+            </p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-3xl font-bold text-principale-800">
-            Mes marchés
-          </h1>
-          <p className="text-gray-600">Gérez vos inscriptions aux marchés</p>
-        </div>
-      </div>
 
-      {/* Mes marchés */}
-      <div className="mb-8">
-        <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
-          <Store className="h-5 w-5" />
-          Marchés où je suis inscrit
-          <Badge variant="secondary" className="ml-2">
-            {myMarkets.length}
-          </Badge>
-        </h2>
+        {/* Mes marchés */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
+            <Store className="h-5 w-5" />
+            Marchés où je suis inscrit
+            <Badge variant="secondary" className="ml-2">
+              {myMarkets.length}
+            </Badge>
+          </h2>
 
-        {myMarkets.length === 0 ? (
-          <Card>
-            <CardContent className="py-12 text-center">
-              <MapPin className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500">
-                Vous n'êtes inscrit à aucun marché pour le moment.
-              </p>
-              <p className="text-sm text-gray-400 mt-1">
-                Recherchez un marché ci-dessous pour vous inscrire.
-              </p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {myMarkets.map((market) => {
-              const isEditing = editingMarketId === market.id;
+          {myMarkets.length === 0 ? (
+            <Card>
+              <CardContent className="py-12 text-center">
+                <MapPin className="h-12 w-12 text-neutre-300 mx-auto mb-4" />
+                <p className="text-neutre-500">
+                  Vous n'êtes inscrit à aucun marché pour le moment.
+                </p>
+                <p className="text-sm text-neutre-400 mt-1">
+                  Recherchez un marché ci-dessous pour vous inscrire.
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {myMarkets.map((market) => {
+                const isEditing = editingMarketId === market.id;
 
-              return (
-                <Card key={market.id} className="relative">
-                  <CardHeader className="pb-2">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <CardTitle className="text-lg">{market.name}</CardTitle>
-                        <CardDescription className="flex items-center gap-1 mt-1">
-                          <MapPin className="h-3 w-3" />
-                          {market.town} ({market.zip})
-                        </CardDescription>
+                return (
+                  <Card key={market.id} className="relative">
+                    <CardHeader className="pb-2">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <CardTitle className="text-lg">
+                            {market.name}
+                          </CardTitle>
+                          <CardDescription className="flex items-center gap-1 mt-1">
+                            <MapPin className="h-3 w-3" />
+                            {market.town} ({market.zip})
+                          </CardDescription>
+                        </div>
+                        <Badge
+                          variant="default"
+                          className="bg-principale-100 text-principale-700 hover:bg-principale-100"
+                        >
+                          <Check className="h-3 w-3 mr-1" />
+                          Inscrit
+                        </Badge>
                       </div>
-                      <Badge
-                        variant="default"
-                        className="bg-green-100 text-green-700 hover:bg-green-100"
-                      >
-                        <Check className="h-3 w-3 mr-1" />
-                        Inscrit
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="mb-3">
-                      <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                        <Calendar className="h-4 w-4" />
-                        <span className="font-medium">Jours de présence :</span>
-                        {!isEditing && (
-                          <button
-                            onClick={() => startEditDays(market)}
-                            className="ml-auto text-principale-600 hover:text-principale-700"
-                          >
-                            <Edit2 className="h-4 w-4" />
-                          </button>
-                        )}
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {sortOpenings(market.openings).map((opening) => {
-                          const isSelected = isEditing
-                            ? editDays.includes(opening.day)
-                            : market.selectedDays?.includes(opening.day);
-
-                          return (
+                    </CardHeader>
+                    <CardContent>
+                      <div className="mb-3">
+                        <div className="flex items-center gap-2 text-sm text-neutre-600 mb-2">
+                          <Calendar className="h-4 w-4" />
+                          <span className="font-medium">
+                            Jours de présence :
+                          </span>
+                          {!isEditing && (
                             <button
-                              key={opening.id}
-                              onClick={() =>
-                                isEditing && toggleEditDay(opening.day)
-                              }
-                              disabled={!isEditing}
-                              className={`
+                              onClick={() => startEditDays(market)}
+                              className="ml-auto text-principale-600 hover:text-principale-700"
+                            >
+                              <Edit2 className="h-4 w-4" />
+                            </button>
+                          )}
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {sortOpenings(market.openings).map((opening) => {
+                            const isSelected = isEditing
+                              ? editDays.includes(opening.day)
+                              : market.selectedDays?.includes(opening.day);
+
+                            return (
+                              <button
+                                key={opening.id}
+                                onClick={() =>
+                                  isEditing && toggleEditDay(opening.day)
+                                }
+                                disabled={!isEditing}
+                                className={`
                                 px-3 py-2 rounded-lg text-sm font-medium transition-all
                                 ${isEditing ? "cursor-pointer" : "cursor-default"}
                                 ${
                                   isSelected
                                     ? "bg-principale-600 text-white shadow-sm"
                                     : isEditing
-                                      ? "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                                      : "bg-gray-100 text-gray-400"
+                                      ? "bg-neutre-100 text-neutre-600 hover:bg-neutre-200"
+                                      : "bg-neutre-100 text-neutre-400"
                                 }
                               `}
-                            >
-                              {DAYS_FR[opening.day]}
-                              <span className="block text-xs opacity-75">
-                                {opening.start}-{opening.end}
-                              </span>
-                            </button>
-                          );
-                        })}
+                              >
+                                {DAYS_FR[opening.day]}
+                                <span className="block text-xs opacity-75">
+                                  {opening.start}-{opening.end}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
 
-                    {isEditing ? (
-                      <div className="flex gap-2">
+                      {isEditing ? (
+                        <div className="flex gap-2">
+                          <Button
+                            variant="default"
+                            size="sm"
+                            className="flex-1"
+                            onClick={() => saveEditDays(market.id)}
+                            disabled={
+                              actionLoading === market.id ||
+                              editDays.length === 0
+                            }
+                          >
+                            {actionLoading === market.id ? (
+                              <Loader2 className="animate-spin h-3 w-3" />
+                            ) : (
+                              <>
+                                <Check className="h-4 w-4" />
+                                Enregistrer
+                              </>
+                            )}
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={cancelEdit}
+                            disabled={actionLoading === market.id}
+                          >
+                            Annuler
+                          </Button>
+                        </div>
+                      ) : (
                         <Button
-                          variant="default"
+                          variant="outline"
                           size="sm"
-                          className="flex-1"
-                          onClick={() => saveEditDays(market.id)}
-                          disabled={
-                            actionLoading === market.id || editDays.length === 0
-                          }
+                          className="w-full text-secondaire-600 hover:text-secondaire-700 hover:bg-secondaire-50"
+                          onClick={() => handleUnregister(market.id)}
+                          disabled={actionLoading === market.id}
                         >
                           {actionLoading === market.id ? (
                             <Loader2 className="animate-spin h-3 w-3" />
                           ) : (
                             <>
-                              <Check className="h-4 w-4" />
-                              Enregistrer
+                              <X className="h-4 w-4" />
+                              Se désinscrire
                             </>
                           )}
                         </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={cancelEdit}
-                          disabled={actionLoading === market.id}
-                        >
-                          Annuler
-                        </Button>
+                      )}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Rechercher un marché */}
+        <div>
+          <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
+            <Search className="h-5 w-5" />
+            Trouver un marché
+          </h2>
+
+          {/* Message d'info sur la localisation */}
+          {locationError && !searchQuery && (
+            <div className="bg-secondaire-50 border border-secondaire-200 text-secondaire-700 px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
+              <MapPin className="h-5 w-5 shrink-0" />
+              <span>{locationError}</span>
+            </div>
+          )}
+
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-neutre-100 mb-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutre-400 z-10" />
+              <Input
+                ref={searchInputRef}
+                type="text"
+                placeholder="Rechercher par ville, code postal ou nom de marché..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setShowSuggestions(true);
+                  setSelectedSuggestionIndex(-1);
+                }}
+                onFocus={() => {
+                  if (suggestions.length > 0) setShowSuggestions(true);
+                }}
+                onKeyDown={handleKeyDown}
+                className="pl-10"
+                autoComplete="off"
+              />
+
+              {/* Dropdown des suggestions */}
+              {showSuggestions && suggestions.length > 0 && (
+                <div
+                  ref={suggestionsRef}
+                  className="absolute top-full left-0 right-0 mt-1 bg-white border border-neutre-200 rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto"
+                >
+                  {suggestions.map((suggestion, index) => (
+                    <button
+                      key={suggestion.id}
+                      onClick={() => handleSelectSuggestion(suggestion)}
+                      className={`w-full px-4 py-3 text-left hover:bg-neutre-50 flex items-center gap-3 transition-colors ${
+                        index === selectedSuggestionIndex
+                          ? "bg-principale-50"
+                          : ""
+                      } ${index !== suggestions.length - 1 ? "border-b border-neutre-100" : ""}`}
+                    >
+                      <MapPin className="w-4 h-4 text-principale-500 shrink-0" />
+                      <div className="min-w-0">
+                        <div className="font-medium text-neutre-900 truncate">
+                          {suggestion.name}
+                        </div>
+                        <div className="text-sm text-neutre-500">
+                          {suggestion.town} ({suggestion.zip})
+                        </div>
                       </div>
-                    ) : (
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {searchLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader taille={45} />
+            </div>
+          ) : filteredMarkets.length === 0 ? (
+            <Card>
+              <CardContent className="py-12 text-center">
+                <MapPin className="h-12 w-12 text-neutre-300 mx-auto mb-4" />
+                <p className="text-neutre-500">
+                  {searchQuery
+                    ? "Aucun marché trouvé pour cette recherche."
+                    : "Tous les marchés sont déjà dans votre liste."}
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {filteredMarkets.slice(0, 9).map((market) => {
+                const selectedDays = selectedDaysMap[market.id] || [];
+
+                return (
+                  <Card
+                    key={market.id}
+                    className="hover:shadow-md transition-shadow"
+                  >
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg">{market.name}</CardTitle>
+                      <CardDescription className="flex items-center gap-1">
+                        <MapPin className="h-3 w-3" />
+                        {market.address}, {market.zip} {market.town}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="mb-3">
+                        <div className="flex items-center gap-2 text-sm text-neutre-600 mb-2">
+                          <Clock className="h-4 w-4" />
+                          <span className="font-medium">
+                            Sélectionnez vos jours :
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {sortOpenings(market.openings).map((opening) => {
+                            const isSelected = selectedDays.includes(
+                              opening.day,
+                            );
+
+                            return (
+                              <button
+                                key={opening.id}
+                                onClick={() =>
+                                  toggleDay(market.id, opening.day)
+                                }
+                                className={`
+                                px-3 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer
+                                ${
+                                  isSelected
+                                    ? "bg-principale-600 text-white shadow-sm"
+                                    : "bg-neutre-100 text-neutre-600 hover:bg-neutre-200"
+                                }
+                              `}
+                              >
+                                {DAYS_FR[opening.day]}
+                                <span className="block text-xs opacity-75">
+                                  {opening.start}-{opening.end}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
                       <Button
-                        variant="outline"
+                        variant="default"
                         size="sm"
-                        className="w-full text-red-600 hover:text-red-700 hover:bg-secondaire-50"
-                        onClick={() => handleUnregister(market.id)}
-                        disabled={actionLoading === market.id}
+                        className="w-full"
+                        onClick={() => handleRegister(market.id)}
+                        disabled={
+                          actionLoading === market.id ||
+                          selectedDays.length === 0
+                        }
                       >
                         {actionLoading === market.id ? (
                           <Loader2 className="animate-spin h-3 w-3" />
                         ) : (
                           <>
-                            <X className="h-4 w-4" />
-                            Se désinscrire
+                            <Plus className="h-4 w-4" />
+                            S'inscrire
+                            {selectedDays.length > 0 && (
+                              <span className="ml-1">
+                                ({selectedDays.length} jour
+                                {selectedDays.length > 1 ? "s" : ""})
+                              </span>
+                            )}
                           </>
                         )}
                       </Button>
-                    )}
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        )}
-      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
 
-      {/* Rechercher un marché */}
-      <div>
-        <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
-          <Search className="h-5 w-5" />
-          Trouver un marché
-        </h2>
+          {filteredMarkets.length > 9 && (
+            <p className="text-center text-sm text-neutre-500 mt-4">
+              {filteredMarkets.length - 9} autres marchés disponibles. Affinez
+              votre recherche.
+            </p>
+          )}
 
-        {/* Message d'info sur la localisation */}
-        {locationError && !searchQuery && (
-          <div className="bg-amber-50 border border-amber-200 text-amber-700 px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
-            <MapPin className="h-5 w-5 shrink-0" />
-            <span>{locationError}</span>
-          </div>
-        )}
-
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
-            <Input
-              ref={searchInputRef}
-              type="text"
-              placeholder="Rechercher par ville, code postal ou nom de marché..."
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setShowSuggestions(true);
-                setSelectedSuggestionIndex(-1);
-              }}
-              onFocus={() => {
-                if (suggestions.length > 0) setShowSuggestions(true);
-              }}
-              onKeyDown={handleKeyDown}
-              className="pl-10"
-              autoComplete="off"
-            />
-
-            {/* Dropdown des suggestions */}
-            {showSuggestions && suggestions.length > 0 && (
-              <div
-                ref={suggestionsRef}
-                className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto"
+          {/* Bouton "marché introuvable" */}
+          <div className="mt-8 flex justify-center">
+            <Link href="/vendor/dashboard/marches/nouveau">
+              <Button
+                variant="outline"
+                className="gap-2 text-principale-700 border-principale-300 hover:bg-principale-50"
               >
-                {suggestions.map((suggestion, index) => (
-                  <button
-                    key={suggestion.id}
-                    onClick={() => handleSelectSuggestion(suggestion)}
-                    className={`w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3 transition-colors ${
-                      index === selectedSuggestionIndex
-                        ? "bg-principale-50"
-                        : ""
-                    } ${index !== suggestions.length - 1 ? "border-b border-gray-100" : ""}`}
-                  >
-                    <MapPin className="w-4 h-4 text-principale-500 shrink-0" />
-                    <div className="min-w-0">
-                      <div className="font-medium text-gray-900 truncate">
-                        {suggestion.name}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        {suggestion.town} ({suggestion.zip})
-                      </div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
+                <HelpCircle className="h-4 w-4" />
+                Vous ne trouvez pas votre marché ? Proposez-le !
+              </Button>
+            </Link>
           </div>
-        </div>
-
-        {searchLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader taille={45} />
-          </div>
-        ) : filteredMarkets.length === 0 ? (
-          <Card>
-            <CardContent className="py-12 text-center">
-              <MapPin className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500">
-                {searchQuery
-                  ? "Aucun marché trouvé pour cette recherche."
-                  : "Tous les marchés sont déjà dans votre liste."}
-              </p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filteredMarkets.slice(0, 9).map((market) => {
-              const selectedDays = selectedDaysMap[market.id] || [];
-
-              return (
-                <Card
-                  key={market.id}
-                  className="hover:shadow-md transition-shadow"
-                >
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">{market.name}</CardTitle>
-                    <CardDescription className="flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />
-                      {market.address}, {market.zip} {market.town}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="mb-3">
-                      <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                        <Clock className="h-4 w-4" />
-                        <span className="font-medium">
-                          Sélectionnez vos jours :
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {sortOpenings(market.openings).map((opening) => {
-                          const isSelected = selectedDays.includes(opening.day);
-
-                          return (
-                            <button
-                              key={opening.id}
-                              onClick={() => toggleDay(market.id, opening.day)}
-                              className={`
-                                px-3 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer
-                                ${
-                                  isSelected
-                                    ? "bg-principale-600 text-white shadow-sm"
-                                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                                }
-                              `}
-                            >
-                              {DAYS_FR[opening.day]}
-                              <span className="block text-xs opacity-75">
-                                {opening.start}-{opening.end}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    <Button
-                      variant="default"
-                      size="sm"
-                      className="w-full"
-                      onClick={() => handleRegister(market.id)}
-                      disabled={
-                        actionLoading === market.id || selectedDays.length === 0
-                      }
-                    >
-                      {actionLoading === market.id ? (
-                        <Loader2 className="animate-spin h-3 w-3" />
-                      ) : (
-                        <>
-                          <Plus className="h-4 w-4" />
-                          S'inscrire
-                          {selectedDays.length > 0 && (
-                            <span className="ml-1">
-                              ({selectedDays.length} jour
-                              {selectedDays.length > 1 ? "s" : ""})
-                            </span>
-                          )}
-                        </>
-                      )}
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        )}
-
-        {filteredMarkets.length > 9 && (
-          <p className="text-center text-sm text-gray-500 mt-4">
-            {filteredMarkets.length - 9} autres marchés disponibles. Affinez
-            votre recherche.
-          </p>
-        )}
-
-        {/* Bouton "marché introuvable" */}
-        <div className="mt-8 flex justify-center">
-          <Link href="/vendor/dashboard/marches/nouveau">
-            <Button
-              variant="outline"
-              className="gap-2 text-principale-700 border-principale-300 hover:bg-principale-50"
-            >
-              <HelpCircle className="h-4 w-4" />
-              Vous ne trouvez pas votre marché ? Proposez-le !
-            </Button>
-          </Link>
         </div>
       </div>
-    </div>
     </>
   );
 }

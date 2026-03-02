@@ -167,7 +167,7 @@ export default function FindMarket() {
             )}
           </div>
         </form>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p className="text-secondaire-500 text-sm">{error}</p>}
 
         {filteredMarkets.length === 0 && (
           <Image

@@ -2,14 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Check,
-  Infinity,
-  Leaf,
-  MapPin,
-  Trash2,
-  X,
-} from "lucide-react";
+import { Check, Infinity, Leaf, MapPin, Trash2, X } from "lucide-react";
 import Image from "next/image";
 
 interface Category {
@@ -62,14 +55,14 @@ interface ProductsTableProps {
 
 // Couleurs par catégorie
 const categoryColors: Record<string, string> = {
-  "fruits-legumes": "bg-green-100 text-green-800",
-  "viandes-charcuterie": "bg-red-100 text-red-800",
-  "poissons-fruits-de-mer": "bg-blue-100 text-blue-800",
-  "fromages-produits-laitiers": "bg-yellow-100 text-yellow-800",
-  "boulangerie-patisserie": "bg-amber-100 text-amber-800",
-  "epicerie-condiments": "bg-orange-100 text-orange-800",
-  boissons: "bg-purple-100 text-purple-800",
-  "bio-nature": "bg-emerald-100 text-emerald-800",
+  "fruits-legumes": "bg-principale-100 text-principale-800",
+  "viandes-charcuterie": "bg-secondaire-100 text-secondaire-800",
+  "poissons-fruits-de-mer": "bg-tertiaire-100 text-tertiaire-800",
+  "fromages-produits-laitiers": "bg-secondaire-100 text-secondaire-800",
+  "boulangerie-patisserie": "bg-secondaire-100 text-secondaire-800",
+  "epicerie-condiments": "bg-secondaire-100 text-secondaire-800",
+  boissons: "bg-tertiaire-100 text-tertiaire-800",
+  "bio-nature": "bg-principale-100 text-principale-800",
 };
 
 export function ProductsTable({
@@ -77,7 +70,6 @@ export function ProductsTable({
   onEdit,
   onDelete,
 }: ProductsTableProps) {
-
   // Calculer la fourchette de prix
   const getPriceRange = (product: Product) => {
     const prices = product.pricesByMarket
@@ -105,7 +97,7 @@ export function ProductsTable({
   const getTotalStock = (product: Product) => {
     const hasUnlimited = product.stocksByMarket.some((s) => s.isUnlimited);
     if (hasUnlimited || product.stocksByMarket.length === 0) {
-      return <Infinity className="w-4 h-4 text-gray-400" />;
+      return <Infinity className="w-4 h-4 text-neutre-400" />;
     }
 
     const total = product.stocksByMarket.reduce(
@@ -127,8 +119,8 @@ export function ProductsTable({
 
   if (products.length === 0) {
     return (
-      <div className="bg-white rounded-xl p-8 sm:p-12 shadow-sm border border-gray-100 text-center">
-        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="bg-white rounded-xl p-8 sm:p-12 shadow-sm border border-neutre-100 text-center">
+        <div className="w-16 h-16 bg-neutre-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <Image
             src="/images/ingredients.jpg"
             alt="Produit"
@@ -137,10 +129,10 @@ export function ProductsTable({
             className="rounded-full object-cover"
           />
         </div>
-        <h3 className="text-lg font-medium text-gray-900 mb-2">
+        <h3 className="text-lg font-medium text-neutre-900 mb-2">
           Aucun produit
         </h3>
-        <p className="text-gray-500 mb-4">
+        <p className="text-neutre-500 mb-4">
           Commencez par ajouter votre premier produit à votre étal.
         </p>
       </div>
@@ -150,12 +142,12 @@ export function ProductsTable({
   // Composant carte pour mobile
   const ProductCard = ({ product }: { product: Product }) => (
     <div
-      className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 cursor-pointer"
+      className="bg-white rounded-xl shadow-sm border border-neutre-100 p-4 cursor-pointer"
       onClick={() => onEdit(product)}
     >
       <div className="flex items-start gap-3">
         {/* Image */}
-        <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+        <div className="w-16 h-16 rounded-lg overflow-hidden bg-neutre-100 shrink-0">
           <Image
             src={product.imageUrl || "/images/ingredients.jpg"}
             alt={product.name}
@@ -170,19 +162,19 @@ export function ProductsTable({
           <div className="flex items-start justify-between gap-2">
             <div>
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="font-medium text-gray-900 text-sm">
+                <span className="font-medium text-neutre-900 text-sm">
                   {product.name}
                 </span>
                 {product.isOrganic && (
-                  <Leaf className="w-3.5 h-3.5 text-green-600 shrink-0" />
+                  <Leaf className="w-3.5 h-3.5 text-principale-600 shrink-0" />
                 )}
                 {product.isLocal && (
-                  <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <MapPin className="w-3.5 h-3.5 text-tertiaire-600 shrink-0" />
                 )}
               </div>
-              <span className="text-xs text-gray-500">/{product.unit}</span>
+              <span className="text-xs text-neutre-500">/{product.unit}</span>
               {product.description && (
-                <p className="text-xs text-gray-400 line-clamp-1 mt-0.5">
+                <p className="text-xs text-neutre-400 line-clamp-1 mt-0.5">
                   {product.description}
                 </p>
               )}
@@ -190,12 +182,12 @@ export function ProductsTable({
 
             {/* Statut */}
             {product.isActive ? (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 shrink-0">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-principale-100 text-principale-800 shrink-0">
                 <Check className="w-3 h-3" />
                 Actif
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 shrink-0">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-neutre-100 text-neutre-600 shrink-0">
                 <X className="w-3 h-3" />
                 Inactif
               </span>
@@ -207,7 +199,7 @@ export function ProductsTable({
             <Badge
               className={`text-xs ${
                 categoryColors[product.category.slug] ||
-                "bg-gray-100 text-gray-800"
+                "bg-neutre-100 text-neutre-800"
               }`}
             >
               {product.category.name}
@@ -217,37 +209,39 @@ export function ProductsTable({
       </div>
 
       {/* Infos secondaires */}
-      <div className={`mt-3 pt-3 border-t border-gray-100 grid gap-2 text-center ${product.canSellByPiece && product.approxWeightPerPiece ? "grid-cols-4" : "grid-cols-3"}`}>
+      <div
+        className={`mt-3 pt-3 border-t border-neutre-100 grid gap-2 text-center ${product.canSellByPiece && product.approxWeightPerPiece ? "grid-cols-4" : "grid-cols-3"}`}
+      >
         <div>
-          <p className="text-xs text-gray-500">Prix</p>
-          <p className="text-sm font-medium text-gray-900">
+          <p className="text-xs text-neutre-500">Prix</p>
+          <p className="text-sm font-medium text-neutre-900">
             {getPriceRange(product)}
           </p>
         </div>
         {product.canSellByPiece && product.approxWeightPerPiece && (
           <div>
-            <p className="text-xs text-gray-500">Prix/pièce</p>
-            <p className="text-sm font-medium text-gray-900">
+            <p className="text-xs text-neutre-500">Prix/pièce</p>
+            <p className="text-sm font-medium text-neutre-900">
               ≈ {(product.basePrice * product.approxWeightPerPiece).toFixed(2)}€
             </p>
           </div>
         )}
         <div>
-          <p className="text-xs text-gray-500">Stock</p>
-          <div className="flex items-center justify-center gap-1 text-sm font-medium text-gray-900">
+          <p className="text-xs text-neutre-500">Stock</p>
+          <div className="flex items-center justify-center gap-1 text-sm font-medium text-neutre-900">
             {getTotalStock(product)}
           </div>
         </div>
         <div>
-          <p className="text-xs text-gray-500">Marchés</p>
-          <p className="text-sm font-medium text-gray-900">
+          <p className="text-xs text-neutre-500">Marchés</p>
+          <p className="text-sm font-medium text-neutre-900">
             {getAvailableMarkets(product)}
           </p>
         </div>
       </div>
 
       {/* Actions */}
-      <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-end">
+      <div className="mt-3 pt-3 border-t border-neutre-100 flex items-center justify-end">
         <Button
           variant="ghost"
           size="sm"
@@ -255,7 +249,7 @@ export function ProductsTable({
             e.stopPropagation();
             onDelete(product.id);
           }}
-          className="text-red-600 hover:text-red-700 hover:bg-secondaire-50"
+          className="text-secondaire-600 hover:text-secondaire-700 hover:bg-secondaire-50"
         >
           <Trash2 className="w-4 h-4" />
           Supprimer
@@ -274,48 +268,48 @@ export function ProductsTable({
       </div>
 
       {/* Vue desktop - Tableau */}
-      <div className="hidden lg:block bg-white rounded-xl shadow-sm border border-gray-100">
+      <div className="hidden lg:block bg-white rounded-xl shadow-sm border border-neutre-100">
         <div className="overflow-x-auto rounded-xl">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-neutre-50 border-b border-neutre-100">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-full">
+                <th className="px-4 py-3 text-left text-xs font-medium text-neutre-500 uppercase tracking-wider w-full">
                   Produit
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-left text-xs font-medium text-neutre-500 uppercase tracking-wider whitespace-nowrap">
                   Catégorie
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-right text-xs font-medium text-neutre-500 uppercase tracking-wider whitespace-nowrap">
                   Prix
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-right text-xs font-medium text-neutre-500 uppercase tracking-wider whitespace-nowrap">
                   Prix/pièce
                 </th>
-                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-center text-xs font-medium text-neutre-500 uppercase tracking-wider whitespace-nowrap">
                   Stock
                 </th>
-                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-center text-xs font-medium text-neutre-500 uppercase tracking-wider whitespace-nowrap">
                   Marchés
                 </th>
-                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-center text-xs font-medium text-neutre-500 uppercase tracking-wider whitespace-nowrap">
                   Statut
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-right text-xs font-medium text-neutre-500 uppercase tracking-wider whitespace-nowrap">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-neutre-100">
               {products.map((product) => (
                 <tr
                   key={product.id}
-                  className="hover:bg-gray-50 transition-colors cursor-pointer"
+                  className="hover:bg-neutre-50 transition-colors cursor-pointer"
                   onClick={() => onEdit(product)}
                 >
                   {/* Produit (image + nom + badges) */}
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-neutre-100 shrink-0">
                         <Image
                           src={product.imageUrl || "/images/ingredients.jpg"}
                           alt={product.name}
@@ -326,25 +320,25 @@ export function ProductsTable({
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-medium text-gray-900">
+                          <span className="font-medium text-neutre-900">
                             {product.name}
                           </span>
                           {product.isOrganic && (
                             <span title="Bio">
-                              <Leaf className="w-4 h-4 text-green-600" />
+                              <Leaf className="w-4 h-4 text-principale-600" />
                             </span>
                           )}
                           {product.isLocal && (
                             <span title="Local">
-                              <MapPin className="w-4 h-4 text-blue-600" />
+                              <MapPin className="w-4 h-4 text-tertiaire-600" />
                             </span>
                           )}
                         </div>
-                        <span className="text-sm text-gray-500">
+                        <span className="text-sm text-neutre-500">
                           /{product.unit}
                         </span>
                         {product.description && (
-                          <p className="text-xs text-gray-400 line-clamp-1 max-w-xs">
+                          <p className="text-xs text-neutre-400 line-clamp-1 max-w-xs">
                             {product.description}
                           </p>
                         )}
@@ -357,7 +351,7 @@ export function ProductsTable({
                     <Badge
                       className={
                         categoryColors[product.category.slug] ||
-                        "bg-gray-100 text-gray-800"
+                        "bg-neutre-100 text-neutre-800"
                       }
                     >
                       {product.category.name}
@@ -366,41 +360,46 @@ export function ProductsTable({
 
                   {/* Prix */}
                   <td className="px-6 py-4 text-right whitespace-nowrap">
-                    <span className="font-medium text-gray-900">
+                    <span className="font-medium text-neutre-900">
                       {getPriceRange(product)}
                     </span>
-                    <span className="text-gray-500">/{product.unit}</span>
+                    <span className="text-neutre-500">/{product.unit}</span>
                   </td>
 
                   {/* Prix/pièce */}
                   <td className="px-6 py-4 text-right whitespace-nowrap">
                     {product.canSellByPiece && product.approxWeightPerPiece ? (
                       <div>
-                        <span className="font-medium text-gray-900">
-                          ≈ {(product.basePrice * product.approxWeightPerPiece).toFixed(2)}€
+                        <span className="font-medium text-neutre-900">
+                          ≈{" "}
+                          {(
+                            product.basePrice * product.approxWeightPerPiece
+                          ).toFixed(2)}
+                          €
                         </span>
-                        <span className="text-xs text-gray-400 block">
-                          ~{product.approxWeightPerPiece}{product.unit}/pièce
+                        <span className="text-xs text-neutre-400 block">
+                          ~{product.approxWeightPerPiece}
+                          {product.unit}/pièce
                         </span>
                       </div>
                     ) : (
-                      <span className="text-gray-300">—</span>
+                      <span className="text-neutre-300">—</span>
                     )}
                   </td>
 
                   {/* Stock */}
                   <td className="px-6 py-4 text-center whitespace-nowrap">
-                    <div className="flex items-center justify-center gap-1 text-gray-700">
+                    <div className="flex items-center justify-center gap-1 text-neutre-700">
                       {getTotalStock(product)}
                       {typeof getTotalStock(product) === "number" && (
-                        <span className="text-gray-500">{product.unit}</span>
+                        <span className="text-neutre-500">{product.unit}</span>
                       )}
                     </div>
                   </td>
 
                   {/* Marchés disponibles */}
                   <td className="px-6 py-4 text-center whitespace-nowrap">
-                    <span className="text-gray-700">
+                    <span className="text-neutre-700">
                       {getAvailableMarkets(product)}
                     </span>
                   </td>
@@ -408,12 +407,12 @@ export function ProductsTable({
                   {/* Statut */}
                   <td className="px-6 py-4 text-center whitespace-nowrap">
                     {product.isActive ? (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-principale-100 text-principale-800">
                         <Check className="w-3 h-3" />
                         Actif
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-neutre-100 text-neutre-600">
                         <X className="w-3 h-3" />
                         Inactif
                       </span>
@@ -431,7 +430,7 @@ export function ProductsTable({
                           onDelete(product.id);
                         }}
                         title="Supprimer"
-                        className="text-red-600 hover:text-red-700 hover:bg-secondaire-50"
+                        className="text-secondaire-600 hover:text-secondaire-700 hover:bg-secondaire-50"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>

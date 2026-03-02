@@ -144,7 +144,7 @@ export function VendorCard({
               return (
                 <Badge
                   key={label}
-                  className="text-xs bg-white/90 text-green-700 border-0 shadow-sm backdrop-blur-sm"
+                  className="text-xs bg-white/90 text-principale-700 border-0 shadow-sm backdrop-blur-sm"
                 >
                   {labelInfo.icon} {labelInfo.label}
                 </Badge>
@@ -172,7 +172,7 @@ export function VendorCard({
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-1.5 rounded-full bg-linear-to-br from-purple-500 via-pink-500 to-orange-400 text-white hover:opacity-80 transition-opacity"
+                  className="p-1.5 rounded-full bg-linear-to-br from-tertiaire-500 via-tertiaire-500 to-secondaire-400 text-white hover:opacity-80 transition-opacity"
                   title="Instagram"
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -231,7 +231,11 @@ export function VendorCard({
               <Link
                 href={isPreview ? "#" : `tel:${vendor.phone}`}
                 className="flex items-center gap-2 text-sm text-principale-600 hover:underline"
-                onClick={isPreview ? (e) => e.preventDefault() : (e) => e.stopPropagation()}
+                onClick={
+                  isPreview
+                    ? (e) => e.preventDefault()
+                    : (e) => e.stopPropagation()
+                }
               >
                 <Phone className="h-4 w-4" />
                 {vendor.phone}
@@ -241,7 +245,11 @@ export function VendorCard({
               <Link
                 href={isPreview ? "#" : `mailto:${vendor.email}`}
                 className="flex items-center gap-2 text-sm text-principale-600 hover:underline"
-                onClick={isPreview ? (e) => e.preventDefault() : (e) => e.stopPropagation()}
+                onClick={
+                  isPreview
+                    ? (e) => e.preventDefault()
+                    : (e) => e.stopPropagation()
+                }
               >
                 <Mail className="h-4 w-4" />
                 {vendor.email}
@@ -253,7 +261,11 @@ export function VendorCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm text-principale-600 hover:underline"
-                onClick={isPreview ? (e) => e.preventDefault() : (e) => e.stopPropagation()}
+                onClick={
+                  isPreview
+                    ? (e) => e.preventDefault()
+                    : (e) => e.stopPropagation()
+                }
               >
                 <Globe className="h-4 w-4" />
                 {vendor.website.length > 30
@@ -267,7 +279,7 @@ export function VendorCard({
         {/* Modes de paiement */}
         {vendor.paymentMethods && vendor.paymentMethods.length > 0 && (
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
+            <div className="flex items-center gap-2 text-sm font-medium text-neutre-700">
               <CreditCard className="h-4 w-4" />
               Modes de paiement acceptés
             </div>

@@ -94,7 +94,7 @@ export default function StripeConnectCard() {
       </CardHeader>
       <CardContent className="space-y-4">
         {error && (
-          <div className="flex items-center gap-2 text-sm text-red-600 bg-secondaire-50 rounded-lg px-3 py-2">
+          <div className="flex items-center gap-2 text-sm text-secondaire-600 bg-secondaire-50 rounded-lg px-3 py-2">
             <AlertCircle className="h-4 w-4 shrink-0" />
             {error}
           </div>
@@ -103,26 +103,34 @@ export default function StripeConnectCard() {
         {status?.onboardingComplete ? (
           // Compte connecté et opérationnel
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 rounded-lg px-3 py-2">
+            <div className="flex items-center gap-2 text-sm text-principale-700 bg-principale-50 rounded-lg px-3 py-2">
               <CheckCircle className="h-4 w-4 shrink-0" />
               Votre compte Stripe est actif. Vous pouvez recevoir des paiements
               en ligne.
             </div>
-            <div className="flex gap-4 text-sm text-gray-600">
+            <div className="flex gap-4 text-sm text-neutre-600">
               <span>
                 Encaissements :{" "}
                 {status.chargesEnabled ? (
-                  <span className="text-green-600 font-medium">Activés</span>
+                  <span className="text-principale-600 font-medium">
+                    Activés
+                  </span>
                 ) : (
-                  <span className="text-amber-600 font-medium">En attente</span>
+                  <span className="text-secondaire-600 font-medium">
+                    En attente
+                  </span>
                 )}
               </span>
               <span>
                 Virements :{" "}
                 {status.payoutsEnabled ? (
-                  <span className="text-green-600 font-medium">Activés</span>
+                  <span className="text-principale-600 font-medium">
+                    Activés
+                  </span>
                 ) : (
-                  <span className="text-amber-600 font-medium">En attente</span>
+                  <span className="text-secondaire-600 font-medium">
+                    En attente
+                  </span>
                 )}
               </span>
             </div>
@@ -130,7 +138,7 @@ export default function StripeConnectCard() {
         ) : status?.connected ? (
           // Compte créé mais onboarding incomplet
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-sm text-amber-700 bg-amber-50 rounded-lg px-3 py-2">
+            <div className="flex items-center gap-2 text-sm text-secondaire-700 bg-secondaire-50 rounded-lg px-3 py-2">
               <AlertCircle className="h-4 w-4 shrink-0" />
               Votre compte Stripe a été créé mais la configuration n&apos;est
               pas terminée. Complétez-la pour recevoir des paiements.
@@ -151,7 +159,7 @@ export default function StripeConnectCard() {
         ) : (
           // Pas encore connecté
           <div className="space-y-3">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-neutre-600">
               Connectez votre compte Stripe pour recevoir les paiements de vos
               clients en ligne. Stripe gère la sécurité des transactions et les
               virements sur votre compte bancaire.
@@ -168,7 +176,7 @@ export default function StripeConnectCard() {
               )}
               Configurer Stripe
             </Button>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-neutre-500">
               Vous serez redirigé vers Stripe pour vérifier votre identité et
               renseigner vos coordonnées bancaires.
             </p>

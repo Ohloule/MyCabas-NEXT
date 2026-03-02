@@ -1,7 +1,7 @@
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import SearchResults from "@/components/search/SearchResults";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 interface SearchPageProps {
   searchParams: Promise<{
@@ -53,27 +53,29 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-neutre-50">
       <div className="container mx-auto px-4 py-8">
         {/* En-tête de recherche */}
         <div className="mb-8">
           {query && (
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-neutre-900">
               Résultats pour &quot;{query}&quot;
               {categoryName && (
-                <span className="text-principale-600"> dans {categoryName}</span>
+                <span className="text-principale-600">
+                  {" "}
+                  dans {categoryName}
+                </span>
               )}
             </h1>
           )}
           {!query && categoryName && (
-            <h1 className="text-2xl font-bold text-gray-900">
-              Catégorie : <span className="text-principale-600">{categoryName}</span>
+            <h1 className="text-2xl font-bold text-neutre-900">
+              Catégorie :{" "}
+              <span className="text-principale-600">{categoryName}</span>
             </h1>
           )}
           {!query && !categorySlug && (
-            <h1 className="text-2xl font-bold text-gray-900">
-              Recherche
-            </h1>
+            <h1 className="text-2xl font-bold text-neutre-900">Recherche</h1>
           )}
         </div>
 

@@ -532,21 +532,21 @@ export default function MarketsPage() {
         {/* Alerte si l'utilisateur doit choisir un marché favori */}
         {showFavoriteAlert && (
           <div className="mb-6 relative">
-            <div className="flex items-start gap-3 p-4 rounded-lg bg-amber-50 border border-amber-200">
-              <AlertCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3 p-4 rounded-lg bg-secondaire-50 border border-secondaire-200">
+              <AlertCircle className="h-5 w-5 text-secondaire-600 shrink-0 mt-0.5" />
               <div className="flex-1">
-                <h3 className="font-semibold text-amber-800">
+                <h3 className="font-semibold text-secondaire-800">
                   Choisissez votre marché favori
                 </h3>
-                <p className="text-sm text-amber-700 mt-1">
+                <p className="text-sm text-secondaire-700 mt-1">
                   Pour accéder à la recherche de produits, vous devez
                   d&apos;abord ajouter au moins un marché à vos favoris. Trouvez
                   un marché près de chez vous et cliquez sur le bouton{" "}
-                  <Heart className="inline h-4 w-4 text-red-500" /> pour
+                  <Heart className="inline h-4 w-4 text-secondaire-500" /> pour
                   l&apos;ajouter.
                 </p>
                 {(pendingQuery || pendingCategory) && (
-                  <p className="text-xs text-amber-600 mt-2">
+                  <p className="text-xs text-secondaire-600 mt-2">
                     Votre recherche{" "}
                     {pendingQuery && <>&quot;{pendingQuery}&quot;</>}{" "}
                     {pendingCategory && `(catégorie: ${pendingCategory})`} sera
@@ -556,7 +556,7 @@ export default function MarketsPage() {
               </div>
               <button
                 onClick={() => setShowFavoriteAlert(false)}
-                className="text-amber-600 hover:text-amber-800 p-1"
+                className="text-secondaire-600 hover:text-secondaire-800 p-1"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -600,21 +600,21 @@ export default function MarketsPage() {
                             key={index}
                             type="button"
                             onClick={() => handleSelectSuggestion(suggestion)}
-                            className="flex w-full items-start gap-2 px-4 py-3 text-left hover:bg-gray-50 transition-colors"
+                            className="flex w-full items-start gap-2 px-4 py-3 text-left hover:bg-neutre-50 transition-colors"
                           >
                             <MapPin className="h-4 w-4 mt-0.5 text-principale-600 shrink-0" />
                             <div>
                               <div className="font-medium">
                                 {suggestion.city || suggestion.label}
                               </div>
-                              <div className="text-sm text-gray-500">
+                              <div className="text-sm text-neutre-500">
                                 {suggestion.postcode} - {suggestion.context}
                               </div>
                             </div>
                           </button>
                         ))
                       ) : (
-                        <div className="px-4 py-3 text-sm text-gray-500">
+                        <div className="px-4 py-3 text-sm text-neutre-500">
                           Aucun résultat
                         </div>
                       )}

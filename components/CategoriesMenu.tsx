@@ -37,14 +37,14 @@ const iconMap: Record<string, React.ReactNode> = {
 
 // Couleurs par catégorie
 const colorMap: Record<string, string> = {
-  "fruits-legumes": "text-green-600 bg-green-50",
-  "viandes-charcuterie": "text-red-600 bg-secondaire-50",
-  "poissons-fruits-de-mer": "text-blue-600 bg-blue-50",
-  "fromages-produits-laitiers": "text-yellow-600 bg-yellow-50",
-  "boulangerie-patisserie": "text-amber-600 bg-amber-50",
-  "epicerie-condiments": "text-orange-600 bg-orange-50",
-  boissons: "text-purple-600 bg-purple-50",
-  "bio-nature": "text-emerald-600 bg-emerald-50",
+  "fruits-legumes": "text-principale-600 bg-principale-50",
+  "viandes-charcuterie": "text-secondaire-600 bg-secondaire-50",
+  "poissons-fruits-de-mer": "text-tertiaire-600 bg-tertiaire-50",
+  "fromages-produits-laitiers": "text-secondaire-600 bg-secondaire-50",
+  "boulangerie-patisserie": "text-secondaire-600 bg-secondaire-50",
+  "epicerie-condiments": "text-secondaire-600 bg-secondaire-50",
+  boissons: "text-tertiaire-600 bg-tertiaire-50",
+  "bio-nature": "text-principale-600 bg-principale-50",
 };
 
 export default function CategoriesMenu() {
@@ -96,8 +96,8 @@ export default function CategoriesMenu() {
 
       {/* Mega menu */}
       {isOpen && (
-        <div className="absolute left-0 top-full mt-2 w-80 md:w-125 bg-white rounded-xl shadow-xl border border-gray-100 z-50 p-4">
-          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3 px-2">
+        <div className="absolute left-0 top-full mt-2 w-80 md:w-125 bg-white rounded-xl shadow-xl border border-neutre-100 z-50 p-4">
+          <h3 className="text-sm font-semibold text-neutre-500 uppercase tracking-wide mb-3 px-2">
             Parcourir par catégorie
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -106,20 +106,20 @@ export default function CategoriesMenu() {
                 key={category.id}
                 href={`/search?category=${category.slug}`}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-neutre-50 transition-colors group"
               >
                 <div
                   className={`p-2 rounded-lg ${
-                    colorMap[category.slug] || "text-gray-600 bg-gray-100"
+                    colorMap[category.slug] || "text-neutre-600 bg-neutre-100"
                   }`}
                 >
                   {iconMap[category.slug] || <Store className="h-5 w-5" />}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-900 group-hover:text-principale-600 transition-colors">
+                  <p className="font-medium text-neutre-900 group-hover:text-principale-600 transition-colors">
                     {category.name}
                   </p>
-                  <p className="text-xs text-gray-500 truncate">
+                  <p className="text-xs text-neutre-500 truncate">
                     {category.description}
                   </p>
                 </div>
@@ -128,7 +128,7 @@ export default function CategoriesMenu() {
           </div>
 
           {/* Lien voir tous les commerçants */}
-          <div className="mt-4 pt-4 border-t border-gray-100">
+          <div className="mt-4 pt-4 border-t border-neutre-100">
             <Link
               href="/vendors"
               onClick={() => setIsOpen(false)}

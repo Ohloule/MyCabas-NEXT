@@ -7,7 +7,15 @@ import { useEffect, useRef, useState } from "react";
 type FavoriteEntry = {
   id: string;
   day: string;
-  market: { id: string; name: string; address: string; town: string; zip: string; lat: number; lng: number };
+  market: {
+    id: string;
+    name: string;
+    address: string;
+    town: string;
+    zip: string;
+    lat: number;
+    lng: number;
+  };
 };
 
 const DAY_LABELS: Record<string, string> = {
@@ -66,7 +74,7 @@ export default function FavoriteMarketsSelect() {
   }, []);
 
   if (!loaded) return null;
-  
+
   if (favorites.length === 0)
     return (
       <Link
@@ -92,9 +100,12 @@ export default function FavoriteMarketsSelect() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-4 w-56 lg:w-max bg-principale-50 rounded-lg shadow-lg py-2 z-50 border border-gray-100">
+        <div className="absolute right-0 mt-4 w-56 lg:w-max bg-principale-50 rounded-lg shadow-lg py-2 z-50 border border-neutre-100">
           {favorites.map((f) => (
-            <div key={f.id} className="flex items-center gap-2 px-4 py-2 hover:bg-principale-100 transition-colors">
+            <div
+              key={f.id}
+              className="flex items-center gap-2 px-4 py-2 hover:bg-principale-100 transition-colors"
+            >
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                   `${f.market.name}, ${f.market.address}, ${f.market.zip} ${f.market.town}`,
@@ -116,10 +127,10 @@ export default function FavoriteMarketsSelect() {
                 }}
                 className="flex flex-col flex-1 text-left cursor-pointer"
               >
-                <span className="text-sm font-medium text-gray-800">
+                <span className="text-sm font-medium text-neutre-800">
                   {f.market.name}
                 </span>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-neutre-500">
                   {f.market.town} · {DAY_LABELS[f.day] ?? f.day}
                 </span>
               </button>

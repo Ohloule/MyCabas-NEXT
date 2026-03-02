@@ -33,16 +33,20 @@ import { Button } from "./ui/button";
 
 // Icônes des catégories pour le menu mobile
 const categoryIcons: Record<string, React.ReactNode> = {
-  "fruits-legumes": <Apple className="h-5 w-5 text-green-600" />,
-  "viandes-charcuterie": <Beef className="h-5 w-5 text-red-600" />,
-  "poissons-fruits-de-mer": <Fish className="h-5 w-5 text-blue-600" />,
-  "fromages-produits-laitiers": <Milk className="h-5 w-5 text-yellow-600" />,
-  "boulangerie-patisserie": <Croissant className="h-5 w-5 text-amber-600" />,
-  "epicerie-condiments": (
-    <UtensilsCrossed className="h-5 w-5 text-orange-600" />
+  "fruits-legumes": <Apple className="h-5 w-5 text-principale-600" />,
+  "viandes-charcuterie": <Beef className="h-5 w-5 text-secondaire-600" />,
+  "poissons-fruits-de-mer": <Fish className="h-5 w-5 text-tertiaire-600" />,
+  "fromages-produits-laitiers": (
+    <Milk className="h-5 w-5 text-secondaire-600" />
   ),
-  boissons: <Wine className="h-5 w-5 text-purple-600" />,
-  "bio-nature": <Leaf className="h-5 w-5 text-emerald-600" />,
+  "boulangerie-patisserie": (
+    <Croissant className="h-5 w-5 text-secondaire-600" />
+  ),
+  "epicerie-condiments": (
+    <UtensilsCrossed className="h-5 w-5 text-secondaire-600" />
+  ),
+  boissons: <Wine className="h-5 w-5 text-tertiaire-600" />,
+  "bio-nature": <Leaf className="h-5 w-5 text-principale-600" />,
 };
 
 interface Category {
@@ -243,12 +247,12 @@ export default function Navbar() {
                   />
                 </button>
                 {showMobileFavMenu && (
-                  <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50 border border-gray-100">
+                  <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50 border border-neutre-100">
                     {mobileFavMarkets.length === 0 ? (
                       <Link
                         href="/markets"
                         onClick={() => setShowMobileFavMenu(false)}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-neutre-700 hover:bg-neutre-50"
                       >
                         <Plus className="h-4 w-4 text-principale-600" />
                         Ajouter un marché
@@ -259,12 +263,12 @@ export default function Navbar() {
                           key={f.id}
                           href={`/markets/${f.market.id}/shop?day=${f.day.toLowerCase()}`}
                           onClick={() => setShowMobileFavMenu(false)}
-                          className="flex flex-col px-4 py-2 hover:bg-gray-50"
+                          className="flex flex-col px-4 py-2 hover:bg-neutre-50"
                         >
-                          <span className="text-sm font-medium text-gray-800">
+                          <span className="text-sm font-medium text-neutre-800">
                             {f.market.name}
                           </span>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-neutre-500">
                             {f.market.town} · {DAY_LABELS[f.day] ?? f.day}
                           </span>
                         </Link>
@@ -335,16 +339,16 @@ export default function Navbar() {
             {/* Bouton Vos commerçants avec sous-menu */}
             <button
               onClick={() => setShowCategories(!showCategories)}
-              className="flex items-center justify-between w-full px-4 py-3 text-left hover:bg-gray-50 cursor-pointer"
+              className="flex items-center justify-between w-full px-4 py-3 text-left hover:bg-neutre-50 cursor-pointer"
             >
               <div className="flex items-center gap-3">
                 <Store className="h-5 w-5 text-principale-600" />
-                <span className="font-medium text-gray-900">
+                <span className="font-medium text-neutre-900">
                   Vos commerçants
                 </span>
               </div>
               <ChevronRight
-                className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${
+                className={`h-5 w-5 text-neutre-400 transition-transform duration-200 ${
                   showCategories ? "rotate-90" : ""
                 }`}
               />
@@ -356,34 +360,34 @@ export default function Navbar() {
                 showCategories ? "max-h-125" : "max-h-0"
               }`}
             >
-              <div className="bg-gray-50 py-2">
+              <div className="bg-neutre-50 py-2">
                 {categories.map((category) => (
                   <Link
                     key={category.id}
                     href={`/search?category=${category.slug}`}
                     onClick={closeMobileMenu}
-                    className="flex items-center gap-3 px-6 py-2.5 hover:bg-gray-100"
+                    className="flex items-center gap-3 px-6 py-2.5 hover:bg-neutre-100"
                   >
                     {categoryIcons[category.slug] || (
-                      <Store className="h-5 w-5 text-gray-400" />
+                      <Store className="h-5 w-5 text-neutre-400" />
                     )}
-                    <span className="text-gray-700">{category.name}</span>
+                    <span className="text-neutre-700">{category.name}</span>
                   </Link>
                 ))}
               </div>
             </div>
 
             {/* Séparateur */}
-            <div className="h-px bg-gray-200 my-2" />
+            <div className="h-px bg-neutre-200 my-2" />
 
             {/* Liens de navigation */}
             <Link
               href="/markets"
               onClick={closeMobileMenu}
-              className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
+              className="flex items-center gap-3 px-4 py-3 hover:bg-neutre-50"
             >
               <MapPin className="h-5 w-5 text-principale-600" />
-              <span className="font-medium text-gray-900">
+              <span className="font-medium text-neutre-900">
                 Trouver un marché
               </span>
             </Link>
@@ -393,10 +397,10 @@ export default function Navbar() {
                 <Link
                   href="/livre-de-cuisine"
                   onClick={closeMobileMenu}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-neutre-50"
                 >
                   <BookOpen className="h-5 w-5 text-principale-600" />
-                  <span className="font-medium text-gray-900">
+                  <span className="font-medium text-neutre-900">
                     Idées de recettes
                   </span>
                 </Link>
@@ -404,10 +408,10 @@ export default function Navbar() {
                 <Link
                   href="/ticket-de-caisse"
                   onClick={closeMobileMenu}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-neutre-50"
                 >
                   <Receipt className="h-5 w-5 text-principale-600" />
-                  <span className="font-medium text-gray-900">
+                  <span className="font-medium text-neutre-900">
                     Comparer mon ticket de caisse
                   </span>
                 </Link>
@@ -417,10 +421,10 @@ export default function Navbar() {
                 <Link
                   href="/about"
                   onClick={closeMobileMenu}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-neutre-50"
                 >
                   <HelpCircle className="h-5 w-5 text-principale-600" />
-                  <span className="font-medium text-gray-900">
+                  <span className="font-medium text-neutre-900">
                     Comment ça marche ?
                   </span>
                 </Link>
@@ -428,10 +432,10 @@ export default function Navbar() {
                 <Link
                   href="/pricing"
                   onClick={closeMobileMenu}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-neutre-50"
                 >
                   <CreditCard className="h-5 w-5 text-principale-600" />
-                  <span className="font-medium text-gray-900">
+                  <span className="font-medium text-neutre-900">
                     Tarifs & fonctionnement
                   </span>
                 </Link>

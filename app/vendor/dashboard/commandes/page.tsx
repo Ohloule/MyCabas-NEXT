@@ -122,12 +122,12 @@ export default function CommandesPage() {
           <h1 className="text-2xl sm:text-3xl font-bold text-principale-800">
             Commandes
           </h1>
-          <p className="text-gray-600">Gérez vos commandes clients</p>
+          <p className="text-neutre-600">Gérez vos commandes clients</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 bg-gray-100 rounded-lg p-1 w-full sm:w-fit overflow-x-auto">
+      <div className="flex gap-1 mb-6 bg-neutre-100 rounded-lg p-1 w-full sm:w-fit overflow-x-auto">
         {tabs.map((tab) => (
           <button
             key={tab.key}
@@ -135,7 +135,7 @@ export default function CommandesPage() {
             className={`flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer whitespace-nowrap ${
               activeTab === tab.key
                 ? "bg-principale-700 text-white shadow-sm"
-                : "text-gray-600 hover:text-gray-900"
+                : "text-neutre-600 hover:text-neutre-900"
             }`}
           >
             {tab.label}
@@ -149,9 +149,11 @@ export default function CommandesPage() {
           <Loader taille={45} />
         </div>
       ) : orders.length === 0 ? (
-        <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 text-center">
-          <Package className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-          <p className="text-gray-500">Aucune commande dans cette catégorie.</p>
+        <div className="bg-white rounded-xl p-8 shadow-sm border border-neutre-100 text-center">
+          <Package className="h-12 w-12 text-neutre-300 mx-auto mb-3" />
+          <p className="text-neutre-500">
+            Aucune commande dans cette catégorie.
+          </p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -166,7 +168,7 @@ export default function CommandesPage() {
                       </span>
                       <OrderStatusBadge status={order.status} />
                     </div>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-neutre-500">
                       <span className="flex items-center gap-1">
                         <User className="h-3.5 w-3.5" />
                         {order.user.firstName} {order.user.lastName}
@@ -192,7 +194,7 @@ export default function CommandesPage() {
                     <p className="font-bold text-lg text-principale-600">
                       {getVendorSubtotal(order).toFixed(2)} €
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-neutre-500">
                       {order.items.length} article
                       {order.items.length > 1 ? "s" : ""}
                     </p>
@@ -206,9 +208,9 @@ export default function CommandesPage() {
                       key={item.id}
                       className="flex items-baseline justify-between gap-2 text-sm"
                     >
-                      <span className="text-gray-700 min-w-0">
+                      <span className="text-neutre-700 min-w-0">
                         {item.productName} —{" "}
-                        <span className="text-gray-500">
+                        <span className="text-neutre-500">
                           {item.adjustedQuantity ?? item.quantity}{" "}
                           {item.productUnit}
                         </span>
@@ -239,9 +241,7 @@ export default function CommandesPage() {
                       )}
                       Confirmer
                     </Button>
-                    <Link
-                      href={`/vendor/dashboard/commandes/${order.id}`}
-                    >
+                    <Link href={`/vendor/dashboard/commandes/${order.id}`}>
                       <Button variant="outline" className="w-full gap-2">
                         Ajuster les quantités
                       </Button>
@@ -250,7 +250,7 @@ export default function CommandesPage() {
                       variant="ghost"
                       onClick={() => handleCancel(order.id)}
                       disabled={actionLoading === order.id}
-                      className="text-red-600 hover:text-red-700 hover:bg-secondaire-50 gap-2"
+                      className="text-secondaire-600 hover:text-secondaire-700 hover:bg-secondaire-50 gap-2"
                     >
                       <XCircle className="h-4 w-4" />
                       Annuler

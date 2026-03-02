@@ -43,7 +43,7 @@ export default function Page() {
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     if (resumeRef.current) {
@@ -58,12 +58,13 @@ export default function Page() {
       <HeadingPage title="Comment ça marche ?">
         {" "}
         <p className="text-lg ">
-          Manger mieux, soutenir nos commerçants, retrouver du bon sens. <span className="font-mycabas">MyCabas</span>{" "}
-          remet le marché au cœur de la ville..
+          Manger mieux, soutenir nos commerçants, retrouver du bon sens.{" "}
+          <span className="font-mycabas">MyCabas</span> remet le marché au cœur
+          de la ville..
         </p>
       </HeadingPage>
 
-      <section className="bg-principale-50/10 text-gray-800 py-16 px-0 md:px-20">
+      <section className="bg-principale-50/10 text-neutre-800 py-16 px-0 md:px-20">
         <div className="align-center">
           <div className="grid md:grid-cols-2 gap-10 items-center mb-16">
             <div className="space-y-6 text-lg text-justify">

@@ -1,22 +1,22 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
-import { useState } from "react";
 import {
+  ArrowLeft,
   LayoutDashboard,
+  LogOut,
   MapPin,
-  Store,
-  Users,
+  Menu,
   MessageSquare,
   Package,
   ShieldCheck,
-  LogOut,
-  ArrowLeft,
-  Menu,
+  Store,
+  Users,
   X,
 } from "lucide-react";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 interface AdminSidebarProps {
   user: {
@@ -95,10 +95,12 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center">
-                <ShieldCheck className="w-5 h-5 text-amber-400" />
+                <ShieldCheck className="w-5 h-5 text-secondaire-400" />
               </div>
               <div>
-                <h2 className="font-bold text-lg leading-tight">Administration</h2>
+                <h2 className="font-bold text-lg leading-tight">
+                  Administration
+                </h2>
                 <p className="text-xs text-slate-400 truncate max-w-[120px]">
                   {user.name}
                 </p>
@@ -120,7 +122,8 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
             {menuItems.map((item) => {
               const isActive = item.exact
                 ? pathname === item.href
-                : pathname === item.href || pathname.startsWith(item.href + "/");
+                : pathname === item.href ||
+                  pathname.startsWith(item.href + "/");
 
               return (
                 <li key={item.href}>
@@ -129,7 +132,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
                     onClick={closeSidebar}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                       isActive
-                        ? "bg-amber-500 text-slate-900 font-semibold"
+                        ? "bg-secondaire-500 text-slate-900 font-semibold"
                         : "text-slate-300 hover:bg-slate-700 hover:text-white"
                     }`}
                   >
@@ -153,7 +156,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
           </Link>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-red-700 hover:text-white transition-colors cursor-pointer"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-secondaire-700 hover:text-white transition-colors cursor-pointer"
           >
             <LogOut className="w-5 h-5 shrink-0" />
             <span>Déconnexion</span>

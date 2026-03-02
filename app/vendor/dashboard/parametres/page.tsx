@@ -61,7 +61,9 @@ export default function ParametresPage() {
   const [deadlineMinute, setDeadlineMinute] = useState("00");
 
   // --- Frais bancaires ---
-  const [stripeFeePaidBy, setStripeFeePaidBy] = useState<"VENDOR" | "CUSTOMER">("VENDOR");
+  const [stripeFeePaidBy, setStripeFeePaidBy] = useState<"VENDOR" | "CUSTOMER">(
+    "VENDOR",
+  );
 
   // --- Mode vacances ---
   const [vacationMode, setVacationMode] = useState(false);
@@ -86,9 +88,15 @@ export default function ParametresPage() {
         setDeadlineHour(String(data.deadlineHour).padStart(2, "0"));
         setDeadlineMinute(String(data.deadlineMinute).padStart(2, "0"));
         setVacationMode(data.vacationMode);
-        setVacationStart(data.vacationStart ? new Date(data.vacationStart) : undefined);
-        setVacationEnd(data.vacationEnd ? new Date(data.vacationEnd) : undefined);
-        setStripeFeePaidBy(data.stripeFeePaidBy === "CUSTOMER" ? "CUSTOMER" : "VENDOR");
+        setVacationStart(
+          data.vacationStart ? new Date(data.vacationStart) : undefined,
+        );
+        setVacationEnd(
+          data.vacationEnd ? new Date(data.vacationEnd) : undefined,
+        );
+        setStripeFeePaidBy(
+          data.stripeFeePaidBy === "CUSTOMER" ? "CUSTOMER" : "VENDOR",
+        );
       } catch (err) {
         toast.error("Impossible de charger vos paramètres");
         console.error(err);
@@ -129,7 +137,9 @@ export default function ParametresPage() {
 
       toast.success("Paramètres enregistrés avec succès");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Erreur lors de la sauvegarde");
+      toast.error(
+        err instanceof Error ? err.message : "Erreur lors de la sauvegarde",
+      );
     } finally {
       setSaving(false);
     }
@@ -154,7 +164,7 @@ export default function ParametresPage() {
           <h1 className="text-2xl sm:text-3xl font-bold text-principale-800">
             Paramètres boutique
           </h1>
-          <p className="text-gray-600">
+          <p className="text-neutre-600">
             Gérez les préférences de votre espace vendeur
           </p>
         </div>
@@ -181,7 +191,7 @@ export default function ParametresPage() {
                 >
                   Notifications push
                 </Label>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-neutre-500">
                   Alertes en temps réel sur votre appareil
                 </p>
               </div>
@@ -202,7 +212,7 @@ export default function ParametresPage() {
                 >
                   Notifications par e-mail
                 </Label>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-neutre-500">
                   Résumés et alertes envoyés par e-mail
                 </p>
               </div>
@@ -223,7 +233,7 @@ export default function ParametresPage() {
                 >
                   Notifications par SMS
                 </Label>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-neutre-500">
                   Messages courts pour les alertes urgentes
                 </p>
               </div>
@@ -252,7 +262,7 @@ export default function ParametresPage() {
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label className="font-medium">Confirmation automatique</Label>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-neutre-500">
                   Accepter les nouvelles commandes sans validation manuelle
                 </p>
               </div>
@@ -265,7 +275,7 @@ export default function ParametresPage() {
             <div className="space-y-3">
               <div>
                 <Label className="font-medium">Date limite de commande</Label>
-                <p className="text-sm text-gray-500 mt-0.5">
+                <p className="text-sm text-neutre-500 mt-0.5">
                   Jusqu'à quand les clients peuvent-ils commander avant le jour
                   du marché ?
                 </p>
@@ -274,13 +284,10 @@ export default function ParametresPage() {
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-[1fr_auto_auto] sm:items-end">
                 {/* Nombre de jours avant */}
                 <div className="space-y-1.5">
-                  <Label className="text-sm text-gray-600">
+                  <Label className="text-sm text-neutre-600">
                     Jours avant le marché
                   </Label>
-                  <Select
-                    value={deadlineDays}
-                    onValueChange={setDeadlineDays}
-                  >
+                  <Select value={deadlineDays} onValueChange={setDeadlineDays}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -298,20 +305,14 @@ export default function ParametresPage() {
 
                 {/* Heure */}
                 <div className="space-y-1.5">
-                  <Label className="text-sm text-gray-600">Heure</Label>
-                  <Select
-                    value={deadlineHour}
-                    onValueChange={setDeadlineHour}
-                  >
+                  <Label className="text-sm text-neutre-600">Heure</Label>
+                  <Select value={deadlineHour} onValueChange={setDeadlineHour}>
                     <SelectTrigger className="w-24">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 24 }, (_, i) => (
-                        <SelectItem
-                          key={i}
-                          value={String(i).padStart(2, "0")}
-                        >
+                        <SelectItem key={i} value={String(i).padStart(2, "0")}>
                           {String(i).padStart(2, "0")} h
                         </SelectItem>
                       ))}
@@ -321,7 +322,7 @@ export default function ParametresPage() {
 
                 {/* Minutes */}
                 <div className="space-y-1.5">
-                  <Label className="text-sm text-gray-600">Minutes</Label>
+                  <Label className="text-sm text-neutre-600">Minutes</Label>
                   <Select
                     value={deadlineMinute}
                     onValueChange={setDeadlineMinute}
@@ -370,18 +371,20 @@ export default function ParametresPage() {
             </CardTitle>
             <CardDescription>
               Chaque paiement en ligne coûte{" "}
-              <strong className="text-gray-700">0,25€ + 1,5%</strong> du
+              <strong className="text-neutre-700">0,25€ + 1,5%</strong> du
               montant de la commande
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
             {/* Explication contextuelle des frais */}
-            <div className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-600 space-y-1">
-              <p className="font-medium text-gray-700">Exemple concret</p>
+            <div className="bg-neutre-50 border border-neutre-200 rounded-lg px-4 py-3 text-sm text-neutre-600 space-y-1">
+              <p className="font-medium text-neutre-700">Exemple concret</p>
               <p>
                 Pour une commande de <strong>30€</strong> :{" "}
-                <span className="text-gray-500">0,25€ + 0,45€</span> ={" "}
-                <strong className="text-gray-800">0,70€ de frais Stripe</strong>
+                <span className="text-neutre-500">0,25€ + 0,45€</span> ={" "}
+                <strong className="text-neutre-800">
+                  0,70€ de frais Stripe
+                </strong>
               </p>
             </div>
 
@@ -395,7 +398,7 @@ export default function ParametresPage() {
                   "relative text-left rounded-xl border-2 p-4 transition-all focus:outline-none",
                   stripeFeePaidBy === "VENDOR"
                     ? "border-principale-500 bg-principale-50"
-                    : "border-gray-200 bg-white hover:border-gray-300",
+                    : "border-neutre-200 bg-white hover:border-neutre-300",
                 )}
               >
                 {/* Badge recommandé */}
@@ -410,7 +413,7 @@ export default function ParametresPage() {
                       "mt-0.5 h-4 w-4 shrink-0 rounded-full border-2 flex items-center justify-center",
                       stripeFeePaidBy === "VENDOR"
                         ? "border-principale-500 bg-principale-500"
-                        : "border-gray-300",
+                        : "border-neutre-300",
                     )}
                   >
                     {stripeFeePaidBy === "VENDOR" && (
@@ -418,13 +421,13 @@ export default function ParametresPage() {
                     )}
                   </div>
                   <div className="space-y-1">
-                    <p className="font-semibold text-gray-800 text-sm">
+                    <p className="font-semibold text-neutre-800 text-sm">
                       Je les inclus dans mes prix
                     </p>
-                    <p className="text-xs text-gray-500 leading-relaxed">
+                    <p className="text-xs text-neutre-500 leading-relaxed">
                       Aucune surprise pour le client. Intégrez simplement les
-                      frais dans vos tarifs — c'est la méthode la plus fluide
-                      et la plus transparente.
+                      frais dans vos tarifs — c'est la méthode la plus fluide et
+                      la plus transparente.
                     </p>
                   </div>
                 </div>
@@ -438,7 +441,7 @@ export default function ParametresPage() {
                   "relative text-left rounded-xl border-2 p-4 transition-all focus:outline-none",
                   stripeFeePaidBy === "CUSTOMER"
                     ? "border-principale-500 bg-principale-50"
-                    : "border-gray-200 bg-white hover:border-gray-300",
+                    : "border-neutre-200 bg-white hover:border-neutre-300",
                 )}
               >
                 <div className="flex items-start gap-3">
@@ -447,7 +450,7 @@ export default function ParametresPage() {
                       "mt-0.5 h-4 w-4 shrink-0 rounded-full border-2 flex items-center justify-center",
                       stripeFeePaidBy === "CUSTOMER"
                         ? "border-principale-500 bg-principale-500"
-                        : "border-gray-300",
+                        : "border-neutre-300",
                     )}
                   >
                     {stripeFeePaidBy === "CUSTOMER" && (
@@ -456,12 +459,12 @@ export default function ParametresPage() {
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <p className="font-semibold text-gray-800 text-sm">
+                      <p className="font-semibold text-neutre-800 text-sm">
                         Le client les paie
                       </p>
-                      <Users className="h-3.5 w-3.5 text-gray-400" />
+                      <Users className="h-3.5 w-3.5 text-neutre-400" />
                     </div>
-                    <p className="text-xs text-gray-500 leading-relaxed">
+                    <p className="text-xs text-neutre-500 leading-relaxed">
                       Les frais sont calculés et ajoutés automatiquement au
                       total lors du paiement.
                     </p>
@@ -472,8 +475,8 @@ export default function ParametresPage() {
 
             {/* Message contextuel selon le choix */}
             {stripeFeePaidBy === "VENDOR" ? (
-              <div className="flex items-start gap-2.5 bg-green-50 border border-green-200 rounded-lg px-4 py-3 text-sm text-green-800">
-                <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5 text-green-600" />
+              <div className="flex items-start gap-2.5 bg-principale-50 border border-principale-200 rounded-lg px-4 py-3 text-sm text-principale-800">
+                <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5 text-principale-600" />
                 <span>
                   <strong>Astuce :</strong> Ajoutez environ{" "}
                   <strong>2 à 3 %</strong> à vos prix pour couvrir les frais
@@ -482,8 +485,8 @@ export default function ParametresPage() {
                 </span>
               </div>
             ) : (
-              <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 text-sm text-amber-800">
-                <CreditCard className="h-4 w-4 shrink-0 mt-0.5 text-amber-600" />
+              <div className="flex items-start gap-2.5 bg-secondaire-50 border border-secondaire-200 rounded-lg px-4 py-3 text-sm text-secondaire-800">
+                <CreditCard className="h-4 w-4 shrink-0 mt-0.5 text-secondaire-600" />
                 <span>
                   Les frais Stripe seront affichés séparément et ajoutés au
                   total de la commande lors du paiement. Certains clients
@@ -508,10 +511,8 @@ export default function ParametresPage() {
           <CardContent className="space-y-5">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label className="font-medium">
-                  Activer le mode vacances
-                </Label>
-                <p className="text-sm text-gray-500">
+                <Label className="font-medium">Activer le mode vacances</Label>
+                <p className="text-sm text-neutre-500">
                   Votre boutique sera suspendue pendant la période définie
                 </p>
               </div>
@@ -525,7 +526,7 @@ export default function ParametresPage() {
               <>
                 <Separator />
                 <div className="space-y-3">
-                  <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2.5">
+                  <p className="text-sm text-secondaire-700 bg-secondaire-50 border border-secondaire-200 rounded-lg px-4 py-2.5">
                     Pendant le mode vacances, votre boutique ne sera plus
                     visible et aucune commande ne pourra être passée.
                   </p>
@@ -533,7 +534,7 @@ export default function ParametresPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Date de début */}
                     <div className="space-y-1.5">
-                      <Label className="text-sm text-gray-600 font-medium">
+                      <Label className="text-sm text-neutre-600 font-medium">
                         Début des vacances
                       </Label>
                       <Popover>
@@ -567,7 +568,7 @@ export default function ParametresPage() {
 
                     {/* Date de fin */}
                     <div className="space-y-1.5">
-                      <Label className="text-sm text-gray-600 font-medium">
+                      <Label className="text-sm text-neutre-600 font-medium">
                         Fin des vacances
                       </Label>
                       <Popover>

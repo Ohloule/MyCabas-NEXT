@@ -64,7 +64,7 @@ export default function OrderDetailPage() {
   if (!order) {
     return (
       <div className="text-center py-16">
-        <p className="text-gray-500">Commande non trouvée</p>
+        <p className="text-neutre-500">Commande non trouvée</p>
       </div>
     );
   }
@@ -83,7 +83,7 @@ export default function OrderDetailPage() {
     <div className="max-w-2xl mx-auto">
       <Link
         href="/profil/orders"
-        className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 mb-4"
+        className="inline-flex items-center gap-1 text-sm text-neutre-600 hover:text-neutre-900 mb-4"
       >
         <ArrowLeft className="h-4 w-4" />
         Mes commandes
@@ -97,7 +97,7 @@ export default function OrderDetailPage() {
           </h1>
           <OrderStatusBadge status={order.status} />
         </div>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-neutre-500">
           <span className="flex items-center gap-1">
             <MapPin className="h-3.5 w-3.5" />
             {order.market.name}, {order.market.town}
@@ -115,7 +115,7 @@ export default function OrderDetailPage() {
 
       {/* Note du vendor */}
       {order.vendorNote && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-sm text-blue-800">
+        <div className="bg-tertiaire-50 border border-tertiaire-200 rounded-lg p-4 mb-6 text-sm text-tertiaire-800">
           <p className="font-medium mb-1">Note du commerçant :</p>
           <p>{order.vendorNote}</p>
         </div>
@@ -125,7 +125,7 @@ export default function OrderDetailPage() {
       {Object.entries(itemsByVendor).map(([vendorName, items]) => (
         <Card key={vendorName} className="mb-4 ">
           <CardHeader className="py-3 px-4 bg-principale-50 border-b">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium text-gray-700">
+            <CardTitle className="flex items-center gap-2 text-sm font-medium text-neutre-700">
               <Store className="h-4 w-4 text-principale-600" />
               {vendorName}
             </CardTitle>
@@ -142,14 +142,14 @@ export default function OrderDetailPage() {
                   className="flex items-center justify-between px-4 py-3"
                 >
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-neutre-900">
                       {item.productName}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-neutre-500">
                       {qty} {item.productUnit} x{" "}
                       {item.unitPriceEuros.toFixed(2)} €
                       {wasAdjusted && (
-                        <span className="text-purple-600 ml-2">
+                        <span className="text-tertiaire-600 ml-2">
                           (ajusté, était {item.quantity})
                         </span>
                       )}
@@ -166,7 +166,7 @@ export default function OrderDetailPage() {
       ))}
 
       {/* Total */}
-      <div className="flex justify-between items-center px-4 py-4 bg-gray-50 rounded-lg mb-6">
+      <div className="flex justify-between items-center px-4 py-4 bg-neutre-50 rounded-lg mb-6">
         <span className="font-semibold text-lg">Total</span>
         <span className="font-bold text-xl text-principale-600">
           {total.toFixed(2)} €
@@ -176,7 +176,7 @@ export default function OrderDetailPage() {
       {/* Timeline */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-sm font-medium text-gray-700">
+          <CardTitle className="text-sm font-medium text-neutre-700">
             Historique
           </CardTitle>
         </CardHeader>
@@ -201,8 +201,8 @@ function TimelineEntry({ label, date }: { label: string; date: string }) {
   return (
     <div className="flex items-center gap-3">
       <div className="w-2 h-2 rounded-full bg-principale-500" />
-      <span className="text-gray-700">{label}</span>
-      <span className="text-gray-400 ml-auto">
+      <span className="text-neutre-700">{label}</span>
+      <span className="text-neutre-400 ml-auto">
         {new Date(date).toLocaleDateString("fr-FR", {
           day: "numeric",
           month: "short",

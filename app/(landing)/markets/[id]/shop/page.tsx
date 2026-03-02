@@ -2,11 +2,11 @@
 
 import HeadingPage from "@/components/HeadingPage";
 import Loader from "@/components/Loader";
+import { useCart } from "@/components/providers/cart-provider";
 import VendorCard from "@/components/search/VendorCard";
 import { Accordion } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useCart } from "@/components/providers/cart-provider";
 import {
   ArrowLeft,
   CalendarDays,
@@ -166,7 +166,9 @@ export default function ShopPage() {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ marketId, day: selectedDay }),
-        }).catch(() => {/* silencieux */});
+        }).catch(() => {
+          /* silencieux */
+        });
       } catch (err) {
         setError(err instanceof Error ? err.message : "Erreur inconnue");
       } finally {
@@ -224,7 +226,7 @@ export default function ShopPage() {
     return (
       <div className="min-h-screen bg-secondaire-50/50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-lg font-medium text-gray-700">
+          <p className="text-lg font-medium text-neutre-700">
             {error || "Marché introuvable"}
           </p>
           <Link href="/markets" className="mt-4 inline-block">
@@ -269,7 +271,7 @@ export default function ShopPage() {
               </span>
             </div>
           )}
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-neutre-500">
             {vendors.length} commerçant{vendors.length > 1 ? "s" : ""} présent
             {vendors.length > 1 ? "s" : ""} le {dayLabel}
           </span>
@@ -280,11 +282,11 @@ export default function ShopPage() {
 
         {/* Filtres sticky */}
         {vendors.length > 0 && (
-          <div className="sticky top-0 z-20 -mx-4 px-4 py-3 mb-6 bg-secondaire-25/95 backdrop-blur-sm border-b border-gray-100 space-y-3">
+          <div className="sticky top-0 z-20 -mx-4 px-4 py-3 mb-6 bg-secondaire-25/95 backdrop-blur-sm border-b border-neutre-100 space-y-3">
             {/* Barre de recherche + bouton panier */}
             <div className="flex items-center gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutre-400 pointer-events-none" />
                 <Input
                   type="text"
                   placeholder="Rechercher un produit ou un commerçant…"
@@ -295,7 +297,7 @@ export default function ShopPage() {
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutre-400 hover:text-neutre-600"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -319,7 +321,7 @@ export default function ShopPage() {
                   className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                     selectedCategory === null
                       ? "bg-principale-600 text-white"
-                      : "bg-white border border-gray-200 text-gray-600 hover:border-principale-300"
+                      : "bg-white border border-neutre-200 text-neutre-600 hover:border-principale-300"
                   }`}
                 >
                   Tout
@@ -333,7 +335,7 @@ export default function ShopPage() {
                     className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                       selectedCategory === cat
                         ? "bg-principale-600 text-white"
-                        : "bg-white border border-gray-200 text-gray-600 hover:border-principale-300"
+                        : "bg-white border border-neutre-200 text-neutre-600 hover:border-principale-300"
                     }`}
                   >
                     {cat}

@@ -182,7 +182,7 @@ export default function IngredientImagePicker({
       {/* Input de recherche + bouton importer */}
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutre-400" />
           <Input
             placeholder="Rechercher une image..."
             value={query}
@@ -215,10 +215,10 @@ export default function IngredientImagePicker({
       </div>
 
       {/* Grille d'images */}
-      <div className="relative min-h-75 border rounded-xl p-2 bg-gray-50">
+      <div className="relative min-h-75 border rounded-xl p-2 bg-neutre-50">
         {loading && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/60 backdrop-blur-[1px]">
-              <Loader taille={45} />
+            <Loader taille={45} />
           </div>
         )}
 
@@ -233,11 +233,17 @@ export default function IngredientImagePicker({
                     setSelectedUrl(img.urls.regular);
                     onImageSelect?.(img.urls.regular);
                   }}
-                  onMouseEnter={disableHoverPreview ? undefined : () => handleMouseEnter(img.urls.regular)}
-                  onMouseLeave={disableHoverPreview ? undefined : handleMouseLeave}
+                  onMouseEnter={
+                    disableHoverPreview
+                      ? undefined
+                      : () => handleMouseEnter(img.urls.regular)
+                  }
+                  onMouseLeave={
+                    disableHoverPreview ? undefined : handleMouseLeave
+                  }
                   className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all hover:opacity-80 ${
                     selectedUrl === img.urls.regular
-                      ? "border-blue-500 ring-2 ring-blue-200"
+                      ? "border-tertiaire-500 ring-2 ring-tertiaire-200"
                       : "border-transparent"
                   }`}
                 >
@@ -247,8 +253,8 @@ export default function IngredientImagePicker({
                     className="w-full h-full object-cover"
                   />
                   {selectedUrl === img.urls.regular && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-blue-500/20">
-                      <Check className="text-white bg-blue-500 rounded-full p-1" />
+                    <div className="absolute inset-0 flex items-center justify-center bg-tertiaire-500/20">
+                      <Check className="text-white bg-tertiaire-500 rounded-full p-1" />
                     </div>
                   )}
                 </button>
@@ -266,18 +272,23 @@ export default function IngredientImagePicker({
               >
                 <ChevronLeft className="h-4 w-4 mr-1" /> Précédent
               </Button>
-              <span className="text-xs text-gray-500">Page {page}</span>
-              <Button type="button" variant="outline" size="sm" onClick={handleNextPage}>
+              <span className="text-xs text-neutre-500">Page {page}</span>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleNextPage}
+              >
                 Suivant <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
             </div>
           </>
         ) : error ? (
-          <div className="flex flex-col items-center justify-center h-75 text-red-500">
+          <div className="flex flex-col items-center justify-center h-75 text-secondaire-500">
             <p className="text-sm text-center px-4">{error}</p>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center h-75 text-gray-400">
+          <div className="flex flex-col items-center justify-center h-75 text-neutre-400">
             <p className="text-sm text-center px-4">
               Tapez le nom d'un ingrédient pour voir les images
             </p>
@@ -288,7 +299,7 @@ export default function IngredientImagePicker({
       {/* Aperçu agrandi au survol */}
       {!disableHoverPreview && hoveredImg && (
         <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-          <div className="rounded-xl overflow-hidden shadow-2xl border border-gray-200 bg-white">
+          <div className="rounded-xl overflow-hidden shadow-2xl border border-neutre-200 bg-white">
             <img
               src={hoveredImg}
               alt="Aperçu"
@@ -300,7 +311,7 @@ export default function IngredientImagePicker({
 
       {/* Crédit Unsplash */}
       {selectedUrl && (
-        <p className="text-[10px] text-gray-400 italic text-center">
+        <p className="text-[10px] text-neutre-400 italic text-center">
           Crédit photo : Unsplash
         </p>
       )}

@@ -2,7 +2,7 @@ import HeadingPage from "@/components/HeadingPage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export default function Page() {
   return (
-    <main className="bg-white text-gray-900">
+    <main className="bg-white text-neutre-900">
       <HeadingPage title="Tarifs & Fonctionnement">
         {" "}
         <p className="text-lg">
@@ -125,7 +125,7 @@ export default function Page() {
             <CardHeader>
               <CardTitle className="text-xl">Sans engagement</CardTitle>
             </CardHeader>
-            <CardContent className="text-gray-700">
+            <CardContent className="text-neutre-700">
               Arrêtez quand vous voulez. Vous n'avez rien à perdre : pas de
               ventes = pas de frais.
             </CardContent>
@@ -135,7 +135,7 @@ export default function Page() {
             <CardHeader>
               <CardTitle className="text-xl">Tarif plafonné</CardTitle>
             </CardHeader>
-            <CardContent className="text-gray-700">
+            <CardContent className="text-neutre-700">
               Même si vous faites 500€ ou 5000€ de vente, vous ne paierez jamais
               plus de 5€ à <span className="font-mycabas text-xl">MyCabas</span>{" "}
               pour ce marché.
@@ -146,7 +146,7 @@ export default function Page() {
             <CardHeader>
               <CardTitle className="text-xl">Zéro frais cachés</CardTitle>
             </CardHeader>
-            <CardContent className="text-gray-700">
+            <CardContent className="text-neutre-700">
               Pas de commission supplémentaire, pas de frais Stripe pour vous :
               tout est inclus dans les 10% ou les 5€ max.
             </CardContent>
@@ -166,7 +166,7 @@ export default function Page() {
             frais bancaires sur chaque transaction :
           </p>
 
-          <ul className="list-none list-inside text-gray-800">
+          <ul className="list-none list-inside text-neutre-800">
             <li className="">
               💳 <strong>1,5 % + 0,25 €</strong> pour les cartes bancaires
               européennes (carte française, etc.)
@@ -288,7 +288,7 @@ export default function Page() {
               </div>
             </div>
 
-            <p className="mt-4 text-green-700 font-semibold">
+            <p className="mt-4 text-principale-700 font-semibold">
               ✅ Résultat : grâce à{" "}
               <span className="font-mycabas text-xl">MyCabas</span>, les
               commerçants paient ensemble
@@ -304,7 +304,7 @@ export default function Page() {
             </p>
           </div>
 
-          <p className="text-sm text-gray-600 mt-4">
+          <p className="text-sm text-neutre-600 mt-4">
             💡 Ces frais sont automatiquement déduits lors du reversement de vos
             gains. Vous recevez un récapitulatif clair après chaque marché.
           </p>

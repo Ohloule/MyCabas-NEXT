@@ -93,14 +93,14 @@ export default function ProfilInfosPage() {
   return (
     <>
       {error && (
-        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+        <div className="bg-secondaire-50 border border-secondaire-200 text-secondaire-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
           <AlertCircle className="h-5 w-5 shrink-0" />
           <span className="text-sm">{error}</span>
         </div>
       )}
 
       {success && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+        <div className="bg-principale-50 border border-principale-200 text-principale-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
           <CheckCircle className="h-5 w-5 shrink-0" />
           <span className="text-sm">{success}</span>
         </div>
@@ -153,9 +153,9 @@ export default function ProfilInfosPage() {
                   id="email"
                   value={email}
                   disabled
-                  className="bg-gray-50 text-gray-500"
+                  className="bg-neutre-50 text-neutre-500"
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-neutre-500">
                   L&apos;email ne peut pas être modifié
                 </p>
               </div>

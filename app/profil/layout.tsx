@@ -1,10 +1,10 @@
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import ProfilTabs from "@/components/profil/ProfilTabs";
+import { auth } from "@/lib/auth";
 import { User } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export default async function ProfilLayout({
   children,
@@ -21,7 +21,7 @@ export default async function ProfilLayout({
     <>
       <Header />
       <Navbar />
-      <main className="min-h-screen bg-gray-50">
+      <main className="min-h-screen bg-neutre-50">
         <div className="max-w-7xl mx-auto px-8 py-8">
           {/* Header */}
           <div className="flex items-center gap-3 mb-8">
@@ -32,7 +32,7 @@ export default async function ProfilLayout({
               <h1 className="text-2xl sm:text-3xl font-special text-principale-800">
                 Mon profil
               </h1>
-              <p className="text-gray-600">
+              <p className="text-neutre-600">
                 Gérez vos informations personnelles et vos préférences
               </p>
             </div>

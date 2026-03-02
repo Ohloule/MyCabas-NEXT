@@ -150,13 +150,13 @@ export default function MarchesFavorisPage() {
         <Card>
           <CardContent className="pt-6">
             <div className="text-center py-8">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="h-8 w-8 text-gray-300" />
+              <div className="w-16 h-16 bg-neutre-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Heart className="h-8 w-8 text-neutre-300" />
               </div>
-              <h3 className="font-semibold text-gray-700 mb-2">
+              <h3 className="font-semibold text-neutre-700 mb-2">
                 Aucun marché favori
               </h3>
-              <p className="text-sm text-gray-500 mb-4">
+              <p className="text-sm text-neutre-500 mb-4">
                 Explorez les marchés et ajoutez vos préférés pour les retrouver
                 facilement.
               </p>
@@ -199,14 +199,14 @@ export default function MarchesFavorisPage() {
                       <h3 className="font-semibold text-lg">
                         {group.market.name}
                       </h3>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-neutre-500">
                         {group.market.address}, {group.market.town}
                       </p>
                     </div>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-red-400 hover:text-red-600 hover:bg-red-50 shrink-0"
+                      className="text-secondaire-400 hover:text-secondaire-600 hover:bg-secondaire-50 shrink-0"
                       disabled={isDeletingThis}
                       onClick={() => deleteMarket(group.market.id, group.days)}
                       aria-label="Retirer ce marché des favoris"
@@ -238,10 +238,10 @@ export default function MarchesFavorisPage() {
                               toggleDay(group.market.id, opening.day)
                             }
                           />
-                          <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                          <span className="text-sm font-medium text-neutre-700 group-hover:text-neutre-900">
                             {DAY_LABELS[opening.day] || opening.day}
                           </span>
-                          <span className="text-xs text-gray-400">
+                          <span className="text-xs text-neutre-400">
                             {opening.start}–{opening.end}
                           </span>
                           {isToggling && (

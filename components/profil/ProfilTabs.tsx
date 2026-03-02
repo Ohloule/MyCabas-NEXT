@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Gift,
-  Heart,
-  Package,
-  ShoppingBag,
-  User,
-} from "lucide-react";
+import { Gift, Heart, Package, ShoppingBag, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -39,7 +33,7 @@ export default function ProfilTabs() {
 
   return (
     <div className="mb-6 overflow-x-auto">
-      <div className="flex gap-1 min-w-max border-b border-gray-200">
+      <div className="flex gap-1 min-w-max border-b border-neutre-200">
         {TABS.map((tab) => {
           const isActive = pathname === tab.href;
           return (
@@ -49,7 +43,7 @@ export default function ProfilTabs() {
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors border-b-2 whitespace-nowrap ${
                 isActive
                   ? "border-secondaire-500 text-secondaire-700"
-                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  : "border-transparent text-neutre-500 hover:text-neutre-700 hover:border-neutre-300"
               }`}
             >
               {tab.icon}

@@ -1,5 +1,6 @@
 "use client";
 
+import IngredientImagePicker from "@/components/IngredientImagePicker";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -10,7 +11,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import IngredientImagePicker from "@/components/IngredientImagePicker";
 import {
   ArrowLeft,
   ImagePlus,
@@ -22,9 +22,9 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 interface Category {
   id: string;
@@ -224,8 +224,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
           `https://api.mymemory.translated.net/get?q=${encodeURIComponent(name)}&langpair=fr|en`,
         );
         const data = await res.json();
-        const englishName =
-          data?.responseData?.translatedText?.trim() || name;
+        const englishName = data?.responseData?.translatedText?.trim() || name;
         // Pré-charge la recherche Unsplash (chauffe le cache navigateur + serveur)
         await fetch(
           `/api/unsplash/search?query=${encodeURIComponent(englishName)}&page=1`,
@@ -405,20 +404,20 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
     <div
       className={`bg-white rounded-xl shadow-sm border p-4 transition-colors overflow-hidden ${
         row.status === "error"
-          ? "border-red-300 bg-red-50/30"
+          ? "border-secondaire-300 bg-secondaire-50/30"
           : row.status === "valid"
-            ? "border-green-300 bg-green-50/30"
-            : "border-gray-100"
+            ? "border-principale-300 bg-principale-50/30"
+            : "border-neutre-100"
       }`}
     >
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-medium text-gray-400">
+        <span className="text-xs font-medium text-neutre-400">
           Ligne {index + 1}
         </span>
         <Button
           variant="ghost"
           size="icon"
-          className="h-7 w-7 text-gray-400 hover:text-red-500"
+          className="h-7 w-7 text-neutre-400 hover:text-secondaire-500"
           onClick={() => removeRow(row.id)}
         >
           <Trash2 className="w-3.5 h-3.5" />
@@ -428,7 +427,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
       <div className="space-y-3">
         {/* Nom */}
         <div>
-          <label className="text-xs font-medium text-gray-600 mb-1 block">
+          <label className="text-xs font-medium text-neutre-600 mb-1 block">
             Nom *
           </label>
           <input
@@ -444,12 +443,14 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
             placeholder="Nom du produit"
             className={`w-full h-9 px-3 text-sm border rounded-lg focus:ring-2 focus:outline-none ${
               row.errors.name
-                ? "border-red-300 bg-red-50 focus:ring-red-500"
-                : "border-gray-200 focus:ring-principale-500"
+                ? "border-secondaire-300 bg-secondaire-50 focus:ring-secondaire-500"
+                : "border-neutre-200 focus:ring-principale-500"
             }`}
           />
           {row.errors.name && (
-            <p className="text-xs text-red-500 mt-0.5">{row.errors.name}</p>
+            <p className="text-xs text-secondaire-500 mt-0.5">
+              {row.errors.name}
+            </p>
           )}
         </div>
 
@@ -462,7 +463,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               className={`w-16 h-16 rounded-xl border-2 border-dashed flex items-center justify-center overflow-hidden transition-colors ${
                 row.imagePreview
                   ? "border-principale-300"
-                  : "border-gray-200 hover:border-principale-300"
+                  : "border-neutre-200 hover:border-principale-300"
               }`}
             >
               {row.imagePreview ? (
@@ -472,25 +473,25 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                   className="w-full h-full object-cover rounded-lg"
                 />
               ) : (
-                <ImagePlus className="w-6 h-6 text-gray-300" />
+                <ImagePlus className="w-6 h-6 text-neutre-300" />
               )}
             </button>
             {row.imagePreview && (
               <button
                 type="button"
                 onClick={() => removeImage(row.id)}
-                className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+                className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-secondaire-500 text-white rounded-full flex items-center justify-center hover:bg-secondaire-600"
               >
                 <X className="w-3 h-3" />
               </button>
             )}
           </div>
-          <span className="text-xs text-gray-400">Photo (optionnel)</span>
+          <span className="text-xs text-neutre-400">Photo (optionnel)</span>
         </div>
 
         {/* Description */}
         <div>
-          <label className="text-xs font-medium text-gray-600 mb-1 block">
+          <label className="text-xs font-medium text-neutre-600 mb-1 block">
             Description
           </label>
           <input
@@ -502,25 +503,23 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               updateCell(row.id, "description", e.target.value.trim())
             }
             placeholder="Description, origine..."
-            className="w-full h-9 px-3 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:outline-none focus:ring-principale-500"
+            className="w-full h-9 px-3 text-sm border border-neutre-200 rounded-lg focus:ring-2 focus:outline-none focus:ring-principale-500"
           />
         </div>
 
         {/* Catégorie + Unité */}
         <div className="grid grid-cols-2 gap-3 min-w-0">
           <div className="min-w-0">
-            <label className="text-xs font-medium text-gray-600 mb-1 block">
+            <label className="text-xs font-medium text-neutre-600 mb-1 block">
               Catégorie *
             </label>
             <select
               value={row.categoryId}
-              onChange={(e) =>
-                updateCell(row.id, "categoryId", e.target.value)
-              }
+              onChange={(e) => updateCell(row.id, "categoryId", e.target.value)}
               className={`w-full min-w-0 h-9 px-2 text-sm border rounded-lg focus:ring-2 focus:outline-none ${
                 row.errors.categoryId
-                  ? "border-red-300 bg-red-50 focus:ring-red-500"
-                  : "border-gray-200 focus:ring-principale-500"
+                  ? "border-secondaire-300 bg-secondaire-50 focus:ring-secondaire-500"
+                  : "border-neutre-200 focus:ring-principale-500"
               }`}
             >
               <option value="">Catégorie...</option>
@@ -531,13 +530,13 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               ))}
             </select>
             {row.errors.categoryId && (
-              <p className="text-xs text-red-500 mt-0.5">
+              <p className="text-xs text-secondaire-500 mt-0.5">
                 {row.errors.categoryId}
               </p>
             )}
           </div>
           <div className="min-w-0">
-            <label className="text-xs font-medium text-gray-600 mb-1 block">
+            <label className="text-xs font-medium text-neutre-600 mb-1 block">
               Unité *
             </label>
             <select
@@ -545,8 +544,8 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               onChange={(e) => updateCell(row.id, "unit", e.target.value)}
               className={`w-full min-w-0 h-9 px-2 text-sm border rounded-lg focus:ring-2 focus:outline-none ${
                 row.errors.unit
-                  ? "border-red-300 bg-red-50 focus:ring-red-500"
-                  : "border-gray-200 focus:ring-principale-500"
+                  ? "border-secondaire-300 bg-secondaire-50 focus:ring-secondaire-500"
+                  : "border-neutre-200 focus:ring-principale-500"
               }`}
             >
               <option value="">Unité...</option>
@@ -561,7 +560,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               ))}
             </select>
             {row.errors.unit && (
-              <p className="text-xs text-red-500 mt-0.5">
+              <p className="text-xs text-secondaire-500 mt-0.5">
                 {row.errors.unit}
               </p>
             )}
@@ -571,7 +570,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
         {/* Prix + Bio/Local */}
         <div className="flex items-end gap-3">
           <div className="flex-1">
-            <label className="text-xs font-medium text-gray-600 mb-1 block">
+            <label className="text-xs font-medium text-neutre-600 mb-1 block">
               Prix (€) *
             </label>
             <input
@@ -579,9 +578,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               step="0.01"
               min="0.01"
               value={row.basePrice}
-              onChange={(e) =>
-                updateCell(row.id, "basePrice", e.target.value)
-              }
+              onChange={(e) => updateCell(row.id, "basePrice", e.target.value)}
               onBlur={(e) => {
                 const val = parseFloat(e.target.value);
                 if (!isNaN(val) && val > 0) {
@@ -591,12 +588,12 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
               placeholder="0.00"
               className={`w-full h-9 px-3 text-sm border rounded-lg focus:ring-2 focus:outline-none ${
                 row.errors.basePrice
-                  ? "border-red-300 bg-red-50 focus:ring-red-500"
-                  : "border-gray-200 focus:ring-principale-500"
+                  ? "border-secondaire-300 bg-secondaire-50 focus:ring-secondaire-500"
+                  : "border-neutre-200 focus:ring-principale-500"
               }`}
             />
             {row.errors.basePrice && (
-              <p className="text-xs text-red-500 mt-0.5">
+              <p className="text-xs text-secondaire-500 mt-0.5">
                 {row.errors.basePrice}
               </p>
             )}
@@ -609,7 +606,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                   updateCheckbox(row.id, "isOrganic", !!checked)
                 }
               />
-              <Leaf className="w-3.5 h-3.5 text-green-600" />
+              <Leaf className="w-3.5 h-3.5 text-principale-600" />
             </label>
             <label className="flex items-center gap-1.5 cursor-pointer">
               <Checkbox
@@ -618,7 +615,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                   updateCheckbox(row.id, "isLocal", !!checked)
                 }
               />
-              <MapPin className="w-3.5 h-3.5 text-blue-600" />
+              <MapPin className="w-3.5 h-3.5 text-tertiaire-600" />
             </label>
           </div>
         </div>
@@ -633,13 +630,13 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                   toggleCanSellByPiece(row.id, !!checked)
                 }
               />
-              <span className="text-xs font-medium text-gray-600">
+              <span className="text-xs font-medium text-neutre-600">
                 Vendable à la pièce
               </span>
             </label>
             {row.canSellByPiece && (
               <div className="mt-2">
-                <label className="text-xs font-medium text-gray-600 mb-1 block">
+                <label className="text-xs font-medium text-neutre-600 mb-1 block">
                   Prix par pièce (€) *
                 </label>
                 <input
@@ -659,12 +656,12 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                   placeholder="Ex: 0.80 €/pièce"
                   className={`w-full h-9 px-3 text-sm border rounded-lg focus:ring-2 focus:outline-none ${
                     row.errors.pricePerPiece
-                      ? "border-red-300 bg-red-50 focus:ring-red-500"
-                      : "border-gray-200 focus:ring-principale-500"
+                      ? "border-secondaire-300 bg-secondaire-50 focus:ring-secondaire-500"
+                      : "border-neutre-200 focus:ring-principale-500"
                   }`}
                 />
                 {row.errors.pricePerPiece && (
-                  <p className="text-xs text-red-500 mt-0.5">
+                  <p className="text-xs text-secondaire-500 mt-0.5">
                     {row.errors.pricePerPiece}
                   </p>
                 )}
@@ -693,7 +690,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
             <h1 className="text-2xl font-bold text-principale-800">
               Ajout rapide
             </h1>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-neutre-500">
               Ajoutez plusieurs produits en une fois. Les prix par marché se
               configurent ensuite.
             </p>
@@ -702,21 +699,21 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
       </div>
 
       {/* Barre d'actions sticky */}
-      <div className="sticky top-2 ml-auto z-10 bg-white w-[80%] lg:w-full  rounded-xl p-3 sm:p-4 shadow-sm border border-gray-100 mb-4">
+      <div className="sticky top-2 ml-auto z-10 bg-white w-[80%] lg:w-full  rounded-xl p-3 sm:p-4 shadow-sm border border-neutre-100 mb-4">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-wrap min-w-0">
-            <span className="text-sm text-gray-600 whitespace-nowrap">
+            <span className="text-sm text-neutre-600 whitespace-nowrap">
               {filledRows.length} ligne{filledRows.length > 1 ? "s" : ""}
             </span>
             {validated && (
               <>
                 {validCount > 0 && (
-                  <Badge className="bg-green-100 text-green-800">
+                  <Badge className="bg-principale-100 text-principale-800">
                     {validCount} valide{validCount > 1 ? "s" : ""}
                   </Badge>
                 )}
                 {errorCount > 0 && (
-                  <Badge className="bg-red-100 text-red-800">
+                  <Badge className="bg-secondaire-100 text-secondaire-800">
                     {errorCount} erreur{errorCount > 1 ? "s" : ""}
                   </Badge>
                 )}
@@ -756,9 +753,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                 Enregistrer{validCount > 0 ? ` ${validCount}` : ""} produit
                 {validCount !== 1 ? "s" : ""}
               </span>
-              <span className="sm:hidden">
-                Enregistrer
-              </span>
+              <span className="sm:hidden">Enregistrer</span>
             </Button>
           </div>
         </div>
@@ -777,59 +772,59 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
       </div>
 
       {/* Vue desktop - Tableau */}
-      <div className="hidden lg:block bg-white rounded-xl shadow-sm border border-gray-100">
+      <div className="hidden lg:block bg-white rounded-xl shadow-sm border border-neutre-100">
         <div className="overflow-x-auto rounded-xl">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-neutre-50 border-b border-neutre-100">
               <tr>
-                <th className="px-2 py-3 text-center text-xs font-medium text-gray-400 uppercase w-10">
+                <th className="px-2 py-3 text-center text-xs font-medium text-neutre-400 uppercase w-10">
                   #
                 </th>
-                <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-50">
+                <th className="px-2 py-3 text-left text-xs font-medium text-neutre-500 uppercase tracking-wider min-w-50">
                   Nom *
                 </th>
-                <th className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-14">
+                <th className="px-2 py-3 text-center text-xs font-medium text-neutre-500 uppercase tracking-wider w-14">
                   Photo
                 </th>
-                <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-40">
+                <th className="px-2 py-3 text-left text-xs font-medium text-neutre-500 uppercase tracking-wider min-w-40">
                   Description
                 </th>
-                <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-48">
+                <th className="px-2 py-3 text-left text-xs font-medium text-neutre-500 uppercase tracking-wider w-48">
                   Catégorie *
                 </th>
-                <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-36">
+                <th className="px-2 py-3 text-left text-xs font-medium text-neutre-500 uppercase tracking-wider w-36">
                   Unité *
                 </th>
-                <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-28">
+                <th className="px-2 py-3 text-left text-xs font-medium text-neutre-500 uppercase tracking-wider w-28">
                   Prix (€) *
                 </th>
-                <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-36">
+                <th className="px-2 py-3 text-left text-xs font-medium text-neutre-500 uppercase tracking-wider w-36">
                   Prix/pièce
                 </th>
-                <th className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-14">
-                  <Leaf className="w-3.5 h-3.5 text-green-600 mx-auto" />
+                <th className="px-2 py-3 text-center text-xs font-medium text-neutre-500 uppercase tracking-wider w-14">
+                  <Leaf className="w-3.5 h-3.5 text-principale-600 mx-auto" />
                 </th>
-                <th className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-14">
-                  <MapPin className="w-3.5 h-3.5 text-blue-600 mx-auto" />
+                <th className="px-2 py-3 text-center text-xs font-medium text-neutre-500 uppercase tracking-wider w-14">
+                  <MapPin className="w-3.5 h-3.5 text-tertiaire-600 mx-auto" />
                 </th>
                 <th className="px-2 py-3 w-10"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-neutre-50">
               {rows.map((row, index) => (
                 <tr
                   key={row.id}
                   className={`transition-colors ${
                     row.status === "error"
-                      ? "bg-red-50/50"
+                      ? "bg-secondaire-50/50"
                       : row.status === "valid"
-                        ? "bg-green-50/30"
-                        : "hover:bg-gray-50/50"
+                        ? "bg-principale-50/30"
+                        : "hover:bg-neutre-50/50"
                   }`}
                 >
                   {/* Numéro */}
                   <td className="px-2 py-1.5 text-center">
-                    <span className="text-xs text-gray-400">{index + 1}</span>
+                    <span className="text-xs text-neutre-400">{index + 1}</span>
                   </td>
 
                   {/* Nom */}
@@ -837,9 +832,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                     <div>
                       <input
                         ref={
-                          index === rows.length - 1
-                            ? lastRowNameRef
-                            : undefined
+                          index === rows.length - 1 ? lastRowNameRef : undefined
                         }
                         type="text"
                         maxLength={100}
@@ -856,12 +849,12 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         placeholder="Nom du produit"
                         className={`w-full h-8 px-2 text-sm border rounded focus:ring-2 focus:outline-none ${
                           row.errors.name
-                            ? "border-red-300 bg-red-50 focus:ring-red-500"
-                            : "border-gray-200 focus:ring-principale-500 focus:border-principale-500"
+                            ? "border-secondaire-300 bg-secondaire-50 focus:ring-secondaire-500"
+                            : "border-neutre-200 focus:ring-principale-500 focus:border-principale-500"
                         }`}
                       />
                       {row.errors.name && (
-                        <p className="text-[11px] text-red-500 mt-0.5 leading-tight">
+                        <p className="text-[11px] text-secondaire-500 mt-0.5 leading-tight">
                           {row.errors.name}
                         </p>
                       )}
@@ -877,7 +870,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         className={`w-9 h-9 rounded-lg border-2 border-dashed flex items-center justify-center overflow-hidden transition-colors ${
                           row.imagePreview
                             ? "border-principale-300"
-                            : "border-gray-200 hover:border-principale-300 hover:bg-principale-50/50"
+                            : "border-neutre-200 hover:border-principale-300 hover:bg-principale-50/50"
                         }`}
                         tabIndex={-1}
                       >
@@ -888,14 +881,14 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                             className="w-full h-full object-cover rounded-md"
                           />
                         ) : (
-                          <ImagePlus className="w-4 h-4 text-gray-400" />
+                          <ImagePlus className="w-4 h-4 text-neutre-400" />
                         )}
                       </button>
                       {row.imagePreview && (
                         <button
                           type="button"
                           onClick={() => removeImage(row.id)}
-                          className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+                          className="absolute -top-1 -right-1 w-4 h-4 bg-secondaire-500 text-white rounded-full flex items-center justify-center hover:bg-secondaire-600"
                           tabIndex={-1}
                         >
                           <X className="w-2.5 h-2.5" />
@@ -918,7 +911,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                       }
                       onKeyDown={(e) => handleKeyDown(e, index)}
                       placeholder="Description, origine..."
-                      className="w-full h-8 px-2 text-sm border border-gray-200 rounded focus:ring-2 focus:outline-none focus:ring-principale-500 focus:border-principale-500"
+                      className="w-full h-8 px-2 text-sm border border-neutre-200 rounded focus:ring-2 focus:outline-none focus:ring-principale-500 focus:border-principale-500"
                     />
                   </td>
 
@@ -933,8 +926,8 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         onKeyDown={(e) => handleKeyDown(e, index)}
                         className={`w-full h-8 px-1.5 text-sm border rounded focus:ring-2 focus:outline-none ${
                           row.errors.categoryId
-                            ? "border-red-300 bg-red-50 focus:ring-red-500"
-                            : "border-gray-200 focus:ring-principale-500 focus:border-principale-500"
+                            ? "border-secondaire-300 bg-secondaire-50 focus:ring-secondaire-500"
+                            : "border-neutre-200 focus:ring-principale-500 focus:border-principale-500"
                         }`}
                       >
                         <option value="">Catégorie...</option>
@@ -945,7 +938,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         ))}
                       </select>
                       {row.errors.categoryId && (
-                        <p className="text-[11px] text-red-500 mt-0.5 leading-tight">
+                        <p className="text-[11px] text-secondaire-500 mt-0.5 leading-tight">
                           {row.errors.categoryId}
                         </p>
                       )}
@@ -963,8 +956,8 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         onKeyDown={(e) => handleKeyDown(e, index)}
                         className={`w-full h-8 px-1.5 text-sm border rounded focus:ring-2 focus:outline-none ${
                           row.errors.unit
-                            ? "border-red-300 bg-red-50 focus:ring-red-500"
-                            : "border-gray-200 focus:ring-principale-500 focus:border-principale-500"
+                            ? "border-secondaire-300 bg-secondaire-50 focus:ring-secondaire-500"
+                            : "border-neutre-200 focus:ring-principale-500 focus:border-principale-500"
                         }`}
                       >
                         <option value="">Unité...</option>
@@ -979,7 +972,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         ))}
                       </select>
                       {row.errors.unit && (
-                        <p className="text-[11px] text-red-500 mt-0.5 leading-tight">
+                        <p className="text-[11px] text-secondaire-500 mt-0.5 leading-tight">
                           {row.errors.unit}
                         </p>
                       )}
@@ -1007,12 +1000,12 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         placeholder="0.00"
                         className={`w-full h-8 px-2 text-sm border rounded focus:ring-2 focus:outline-none ${
                           row.errors.basePrice
-                            ? "border-red-300 bg-red-50 focus:ring-red-500"
-                            : "border-gray-200 focus:ring-principale-500 focus:border-principale-500"
+                            ? "border-secondaire-300 bg-secondaire-50 focus:ring-secondaire-500"
+                            : "border-neutre-200 focus:ring-principale-500 focus:border-principale-500"
                         }`}
                       />
                       {row.errors.basePrice && (
-                        <p className="text-[11px] text-red-500 mt-0.5 leading-tight">
+                        <p className="text-[11px] text-secondaire-500 mt-0.5 leading-tight">
                           {row.errors.basePrice}
                         </p>
                       )}
@@ -1051,8 +1044,8 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                               placeholder="€/pièce"
                               className={`w-full h-7 px-2 text-sm border rounded focus:ring-2 focus:outline-none ${
                                 row.errors.pricePerPiece
-                                  ? "border-red-300 bg-red-50 focus:ring-red-500"
-                                  : "border-gray-200 focus:ring-principale-500 focus:border-principale-500"
+                                  ? "border-secondaire-300 bg-secondaire-50 focus:ring-secondaire-500"
+                                  : "border-neutre-200 focus:ring-principale-500 focus:border-principale-500"
                               }`}
                             />
                             <button
@@ -1060,14 +1053,14 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                               onClick={() =>
                                 toggleCanSellByPiece(row.id, false)
                               }
-                              className="shrink-0 text-gray-400 hover:text-red-500 transition-colors"
+                              className="shrink-0 text-neutre-400 hover:text-secondaire-500 transition-colors"
                               tabIndex={-1}
                             >
                               <X className="w-3.5 h-3.5" />
                             </button>
                           </div>
                           {row.errors.pricePerPiece && (
-                            <p className="text-[11px] text-red-500 mt-0.5 leading-tight">
+                            <p className="text-[11px] text-secondaire-500 mt-0.5 leading-tight">
                               {row.errors.pricePerPiece}
                             </p>
                           )}
@@ -1083,7 +1076,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                         </button>
                       )
                     ) : (
-                      <span className="text-xs text-gray-300 px-2">—</span>
+                      <span className="text-xs text-neutre-300 px-2">—</span>
                     )}
                   </td>
 
@@ -1112,7 +1105,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-7 w-7 text-gray-400 hover:text-red-500"
+                      className="h-7 w-7 text-neutre-400 hover:text-secondaire-500"
                       onClick={() => removeRow(row.id)}
                       tabIndex={-1}
                     >
@@ -1126,7 +1119,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
         </div>
 
         {/* Bouton ajouter une ligne */}
-        <div className="border-t border-gray-100 px-4 py-2">
+        <div className="border-t border-neutre-100 px-4 py-2">
           <button
             onClick={addRow}
             className="flex items-center gap-1.5 text-sm text-principale-600 hover:text-principale-700 transition-colors"
@@ -1149,7 +1142,7 @@ export function ProductsSpreadsheet({ categories }: ProductsSpreadsheetProps) {
             <DialogTitle>
               Choisir une photo
               {imagePickerRow?.name && (
-                <span className="font-normal text-gray-500">
+                <span className="font-normal text-neutre-500">
                   {" "}
                   — {imagePickerRow.name}
                 </span>

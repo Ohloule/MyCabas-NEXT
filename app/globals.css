@@ -9,7 +9,7 @@
   --principale-200: oklch(89% 0.065 175);
   --principale-300: oklch(80% 0.095 175);
   --principale-400: oklch(70% 0.12 175);
-  --principale-500: oklch(60% 0.115 175); /* Vert Signature - Très frais */
+  --principale-500: oklch(59% 0.11 175); /* Vert Signature - Très frais */
   --principale-600: oklch(48% 0.125 175);
   --principale-650: oklch(43% 0.115 175);
   --principale-700: oklch(38% 0.105 175);
@@ -29,6 +29,33 @@
   --secondaire-700: oklch(50% 0.095 60);
   --secondaire-800: oklch(38% 0.075 60);
   --secondaire-900: oklch(25% 0.055 60);
+
+  /*Bleu Tertiaire*/
+  /* Bleu Tertiaire - Teinte (h) autour de 298 */
+  --tertiaire-50: oklch(98.5% 0.02 298);
+  --tertiaire-100: oklch(95% 0.05 298);
+  --tertiaire-200: oklch(89% 0.10 298);
+  --tertiaire-300: oklch(80% 0.15 298);
+  --tertiaire-400: oklch(70% 0.19 298);
+  --tertiaire-500: oklch(57% 0.21 298); /* Ton original - Bleu Électrique */
+  --tertiaire-600: oklch(48% 0.21 298);
+  --tertiaire-650: oklch(43% 0.19 298);
+  --tertiaire-700: oklch(38% 0.17 298);
+  --tertiaire-800: oklch(28% 0.13 298);
+  --tertiaire-900: oklch(18% 0.09 298);
+
+/* Gris Saturés - Teinte (h) 175 - Plus de caractère */
+  --neutre-50:  oklch(99% 0.015 175);  /* Blanc cassé émeraude */
+  --neutre-100: oklch(96.981% 0.01272 172.86);  /* Fond très doux */
+  --neutre-200: oklch(91% 0.035 175);  /* Séparateurs visibles */
+  --neutre-300: oklch(83% 0.045 175);  /* Gris clair "Teal" */
+  --neutre-400: oklch(72% 0.05 175);   /* Gris moyen-clair */
+  --neutre-500: oklch(60% 0.05 175);   /* Gris moyen (équilibre parfait) */
+  --neutre-600: oklch(48% 0.045 175);  /* Gris sombre texturé */
+  --neutre-700: oklch(35% 0.04 175);   /* Ardoise profonde */
+  --neutre-800: oklch(24% 0.035 175);  /* Anthracite émeraude */
+  --neutre-900: oklch(14% 0.03 175);   /* Presque noir coloré */
+  --neutre-950: oklch(08% 0.025 175);  /* Noir profond organique */
 
   --blanc: oklch(100% 0.00011 271.152);
   --noir: oklch(0% 0 0);
@@ -95,6 +122,32 @@
   --color-secondaire-700: var(--secondaire-700);
   --color-secondaire-800: var(--secondaire-800);
   --color-secondaire-900: var(--secondaire-900);
+
+    --color-tertiaire-25: var(--tertiaire-25);
+  --color-tertiaire-50: var(--tertiaire-50);
+  --color-tertiaire-100: var(--tertiaire-100);
+  --color-tertiaire-200: var(--tertiaire-200);
+  --color-tertiaire-300: var(--tertiaire-300);
+  --color-tertiaire-400: var(--tertiaire-400);
+  --color-tertiaire-500: var(--tertiaire-500);
+  --color-tertiaire-550: var(--tertiaire-550);
+  --color-tertiaire-600: var(--tertiaire-600);
+  --color-tertiaire-700: var(--tertiaire-700);
+  --color-tertiaire-800: var(--tertiaire-800);
+  --color-tertiaire-900: var(--tertiaire-900);    
+  
+  --color-neutre-25: var(--neutre-25);
+  --color-neutre-50: var(--neutre-50);
+  --color-neutre-100: var(--neutre-100);
+  --color-neutre-200: var(--neutre-200);
+  --color-neutre-300: var(--neutre-300);
+  --color-neutre-400: var(--neutre-400);
+  --color-neutre-500: var(--neutre-500);
+  --color-neutre-550: var(--neutre-550);
+  --color-neutre-600: var(--neutre-600);
+  --color-neutre-700: var(--neutre-700);
+  --color-neutre-800: var(--neutre-800);
+  --color-neutre-900: var(--neutre-900);
 }
 
 body {

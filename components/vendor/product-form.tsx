@@ -222,7 +222,11 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
       toast.error("Le prix à la pièce est requis");
       return;
     }
-    if (!isContinuousUnit && ["barquette", "lot"].includes(unit) && !approxWeightPerPiece) {
+    if (
+      !isContinuousUnit &&
+      ["barquette", "lot"].includes(unit) &&
+      !approxWeightPerPiece
+    ) {
       toast.error("Le poids approximatif de l'unité est requis");
       return;
     }
@@ -288,9 +292,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-100 text-center">
+      <div className="bg-white rounded-xl p-12 shadow-sm border border-neutre-100 text-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-principale-600 mx-auto"></div>
-        <p className="mt-4 text-gray-500">Chargement...</p>
+        <p className="mt-4 text-neutre-500">Chargement...</p>
       </div>
     );
   }
@@ -346,8 +350,8 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         {/* Colonne principale */}
         <div className="lg:col-span-2 space-y-6">
           {/* Informations générales */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-neutre-100">
+            <h2 className="text-lg font-semibold text-neutre-900 mb-4">
               Informations générales
             </h2>
 
@@ -374,7 +378,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Description du produit (optionnel)"
                   rows={3}
-                  className="mt-1 w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500 resize-none"
+                  className="mt-1 w-full px-3 py-2 border border-neutre-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500 resize-none"
                 />
               </div>
 
@@ -386,7 +390,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                     id="category"
                     value={categoryId}
                     onChange={(e) => setCategoryId(e.target.value)}
-                    className="mt-1 w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500"
+                    className="mt-1 w-full px-3 py-2 border border-neutre-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500"
                   >
                     <option value="">Sélectionner une catégorie</option>
                     {categories.map((cat) => (
@@ -403,7 +407,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                     id="unit"
                     value={unit}
                     onChange={(e) => setUnit(e.target.value)}
-                    className="mt-1 w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500"
+                    className="mt-1 w-full px-3 py-2 border border-neutre-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500"
                   >
                     <optgroup label="Unités de poids / volume">
                       {UNITS.filter((u) => u.group === "continuous").map(
@@ -453,18 +457,18 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                       placeholder="0.00"
                       className="pr-16"
                     />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutre-500">
                       €/{unit}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-neutre-500 mt-1">
                     Ce prix sera utilisé par défaut pour tous les marchés
                   </p>
                 </div>
               </div>
               {/* ── Bloc quantités simplifié ── */}
-              <div className="border border-gray-100 rounded-lg p-4 bg-gray-50 space-y-4">
-                <p className="text-sm font-medium text-gray-700">
+              <div className="border border-neutre-100 rounded-lg p-4 bg-neutre-50 space-y-4">
+                <p className="text-sm font-medium text-neutre-700">
                   Conditionnement
                 </p>
 
@@ -482,13 +486,13 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                             setPricePerPiece("");
                           }
                         }}
-                        className="mt-0.5 w-4 h-4 rounded border-gray-300 text-principale-600 focus:ring-principale-500"
+                        className="mt-0.5 w-4 h-4 rounded border-neutre-300 text-principale-600 focus:ring-principale-500"
                       />
                       <div>
                         <span className="text-sm font-medium">
                           Ce produit se vend à la pièce
                         </span>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-neutre-500">
                           Ex : des pommes, des oranges… vendues au kg mais
                           comptées à la pièce
                         </p>
@@ -525,11 +529,11 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                               placeholder="0.150"
                               className="pr-10"
                             />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutre-500 text-sm">
                               {unit}
                             </span>
                           </div>
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-xs text-neutre-500 mt-1">
                             Ex : 0.150 kg pour une pomme de 150 g
                           </p>
                         </div>
@@ -564,11 +568,11 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                               placeholder="0.30"
                               className="pr-6"
                             />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutre-500 text-sm">
                               €
                             </span>
                           </div>
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-xs text-neutre-500 mt-1">
                             Renseigner l&apos;un calcule l&apos;autre
                             automatiquement
                           </p>
@@ -580,12 +584,12 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                     {canSellByPiece &&
                       previewWeightStr &&
                       previewWeightStr > 0 && (
-                        <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
-                          <p className="text-sm text-blue-700">
+                        <div className="bg-tertiaire-50 border border-tertiaire-100 rounded-lg px-4 py-3">
+                          <p className="text-sm text-tertiaire-700">
                             <span className="font-medium">Aperçu client :</span>{" "}
                             commande au <strong>{unit}</strong> ou à la{" "}
                             <strong>pièce</strong>
-                            <span className="text-blue-500">
+                            <span className="text-tertiaire-500">
                               {" "}
                               (1 pièce ≈ {previewWeightStr} {unit}
                               {pricePerPiece && parseFloat(pricePerPiece) > 0
@@ -598,8 +602,8 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                       )}
 
                     {!canSellByPiece && (
-                      <div className="bg-gray-100 rounded-lg px-4 py-3">
-                        <p className="text-sm text-gray-600">
+                      <div className="bg-neutre-100 rounded-lg px-4 py-3">
+                        <p className="text-sm text-neutre-600">
                           Les clients commanderont directement en{" "}
                           <strong>{unit}</strong>.
                         </p>
@@ -609,14 +613,16 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                 ) : (
                   /* Unité discontinue (pièce, botte, lot, barquette) */
                   <div className="space-y-3">
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-neutre-500">
                       Les clients commanderont par unité entière (1 {unit}, 2{" "}
                       {unit}s…).
                     </p>
                     <div>
                       <Label htmlFor="approxWeight">
                         Poids / contenu approximatif par {unit}{" "}
-                        {["barquette", "lot"].includes(unit) ? "*" : "(optionnel)"}
+                        {["barquette", "lot"].includes(unit)
+                          ? "*"
+                          : "(optionnel)"}
                       </Label>
                       <div className="mt-1 flex items-center gap-2">
                         <div className="relative w-32">
@@ -634,21 +640,23 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                           />
                         </div>
                         <select
-                          className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500"
+                          className="px-3 py-2 border border-neutre-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-principale-500"
                           disabled
                         >
                           <option>g</option>
                         </select>
-                        <span className="text-xs text-gray-400">(grammes)</span>
+                        <span className="text-xs text-neutre-400">
+                          (grammes)
+                        </span>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-neutre-500 mt-1">
                         Ex : 500 g pour une barquette de fraises de 500 g
                       </p>
                     </div>
 
                     {previewWeightStr && previewWeightStr > 0 && (
-                      <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
-                        <p className="text-sm text-blue-700">
+                      <div className="bg-tertiaire-50 border border-tertiaire-100 rounded-lg px-4 py-3">
+                        <p className="text-sm text-tertiaire-700">
                           <span className="font-medium">Aperçu client :</span> 1{" "}
                           {unit} ≈ <strong>{previewWeightStr} g</strong>
                         </p>
@@ -665,9 +673,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                     type="checkbox"
                     checked={isOrganic}
                     onChange={(e) => setIsOrganic(e.target.checked)}
-                    className="w-4 h-4 rounded border-gray-300 text-principale-600 focus:ring-principale-500"
+                    className="w-4 h-4 rounded border-neutre-300 text-principale-600 focus:ring-principale-500"
                   />
-                  <Leaf className="w-4 h-4 text-green-600" />
+                  <Leaf className="w-4 h-4 text-principale-600" />
                   <span className="text-sm">Produit bio</span>
                 </label>
 
@@ -676,9 +684,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                     type="checkbox"
                     checked={isLocal}
                     onChange={(e) => setIsLocal(e.target.checked)}
-                    className="w-4 h-4 rounded border-gray-300 text-principale-600 focus:ring-principale-500"
+                    className="w-4 h-4 rounded border-neutre-300 text-principale-600 focus:ring-principale-500"
                   />
-                  <MapPin className="w-4 h-4 text-blue-600" />
+                  <MapPin className="w-4 h-4 text-tertiaire-600" />
                   <span className="text-sm">Produit local</span>
                 </label>
               </div>
@@ -687,18 +695,18 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
 
           {/* Prix & Disponibilité par marché */}
           {markets.length > 0 ? (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="p-6 border-b border-gray-100">
-                <h2 className="text-lg font-semibold text-gray-900">
+            <div className="bg-white rounded-xl shadow-sm border border-neutre-100 overflow-hidden">
+              <div className="p-6 border-b border-neutre-100">
+                <h2 className="text-lg font-semibold text-neutre-900">
                   Prix & Disponibilité par marché
                 </h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-neutre-500 mt-1">
                   Configurez le prix et le stock pour chaque marché
                 </p>
               </div>
 
               {/* Onglets des marchés */}
-              <div className="border-b border-gray-100 overflow-x-auto">
+              <div className="border-b border-neutre-100 overflow-x-auto">
                 <div className="flex">
                   {markets.map((market) => {
                     const isActive = activeMarketTab === market.id;
@@ -713,15 +721,15 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                         className={`px-4 py-3 text-sm font-medium border-b-2 whitespace-nowrap transition-colors ${
                           isActive
                             ? "border-principale-600 text-principale-700 bg-principale-50"
-                            : "border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                            : "border-transparent text-neutre-600 hover:text-neutre-900 hover:bg-neutre-50"
                         }`}
                       >
                         <span className="flex items-center gap-2">
                           {market.name}
                           {isAvailable ? (
-                            <Check className="w-3 h-3 text-green-600" />
+                            <Check className="w-3 h-3 text-principale-600" />
                           ) : (
-                            <span className="w-2 h-2 rounded-full bg-gray-300" />
+                            <span className="w-2 h-2 rounded-full bg-neutre-300" />
                           )}
                         </span>
                       </button>
@@ -743,7 +751,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                           isAvailable: e.target.checked,
                         })
                       }
-                      className="w-5 h-5 rounded border-gray-300 text-principale-600 focus:ring-principale-500"
+                      className="w-5 h-5 rounded border-neutre-300 text-principale-600 focus:ring-principale-500"
                     />
                     <span className="text-sm font-medium">
                       Disponible sur ce marché
@@ -766,7 +774,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                                   price: null,
                                 })
                               }
-                              className="w-4 h-4 border-gray-300 text-principale-600 focus:ring-principale-500"
+                              className="w-4 h-4 border-neutre-300 text-principale-600 focus:ring-principale-500"
                             />
                             <span className="text-sm">
                               Utiliser le prix de référence ({basePrice || "0"}
@@ -783,7 +791,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                                   price: parseFloat(basePrice) || 0,
                                 })
                               }
-                              className="w-4 h-4 border-gray-300 text-principale-600 focus:ring-principale-500"
+                              className="w-4 h-4 border-neutre-300 text-principale-600 focus:ring-principale-500"
                             />
                             <span className="text-sm">Prix spécifique</span>
                           </label>
@@ -802,7 +810,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                                   }
                                   className="pr-12"
                                 />
-                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutre-500 text-sm">
                                   €/{unit}
                                 </span>
                               </div>
@@ -826,9 +834,9 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                                   quantity: null,
                                 })
                               }
-                              className="w-4 h-4 border-gray-300 text-principale-600 focus:ring-principale-500"
+                              className="w-4 h-4 border-neutre-300 text-principale-600 focus:ring-principale-500"
                             />
-                            <Infinity className="w-4 h-4 text-gray-500" />
+                            <Infinity className="w-4 h-4 text-neutre-500" />
                             <span className="text-sm">Stock illimité</span>
                           </label>
                           <label className="flex items-center gap-2 cursor-pointer">
@@ -842,7 +850,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                                   quantity: 0,
                                 })
                               }
-                              className="w-4 h-4 border-gray-300 text-principale-600 focus:ring-principale-500"
+                              className="w-4 h-4 border-neutre-300 text-principale-600 focus:ring-principale-500"
                             />
                             <span className="text-sm">Quantité limitée</span>
                           </label>
@@ -860,7 +868,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
                                   }
                                   className="pr-12"
                                 />
-                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutre-500 text-sm">
                                   {unit}
                                 </span>
                               </div>
@@ -874,7 +882,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
               )}
             </div>
           ) : (
-            <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg">
+            <div className="bg-secondaire-50 border border-secondaire-200 text-secondaire-800 px-4 py-3 rounded-lg">
               <p className="font-medium">Aucun marché configuré</p>
               <p className="text-sm mt-1">
                 Vous devez d&apos;abord vous inscrire à des marchés pour
@@ -887,16 +895,16 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
         {/* Colonne latérale */}
         <div className="space-y-6">
           {/* Image */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-neutre-100">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">Image</h2>
+              <h2 className="text-lg font-semibold text-neutre-900">Image</h2>
               {imageUrl && (
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
                   onClick={() => setImageUrl("")}
-                  className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                  className="text-secondaire-500 hover:text-secondaire-700 hover:bg-secondaire-50"
                 >
                   <Trash2 className="w-4 h-4 mr-1" />
                   Supprimer
@@ -904,7 +912,7 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
               )}
             </div>
 
-            <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden mb-4">
+            <div className="aspect-square bg-neutre-100 rounded-lg overflow-hidden mb-4">
               <Image
                 src={imageUrl || "/images/ingredients.jpg"}
                 alt="Aperçu du produit"
@@ -923,19 +931,21 @@ export function ProductForm({ productId, initialData }: ProductFormProps) {
           </div>
 
           {/* Statut */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Statut</h2>
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-neutre-100">
+            <h2 className="text-lg font-semibold text-neutre-900 mb-4">
+              Statut
+            </h2>
 
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                className="w-5 h-5 rounded border-gray-300 text-principale-600 focus:ring-principale-500"
+                className="w-5 h-5 rounded border-neutre-300 text-principale-600 focus:ring-principale-500"
               />
               <div>
                 <span className="text-sm font-medium">Produit actif</span>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-neutre-500">
                   Les produits inactifs ne sont pas visibles par les clients
                 </p>
               </div>

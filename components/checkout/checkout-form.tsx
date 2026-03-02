@@ -71,7 +71,7 @@ export default function CheckoutForm({
       />
 
       {error && (
-        <div className="bg-secondaire-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+        <div className="bg-secondaire-50 border border-secondaire-200 text-secondaire-700 px-4 py-3 rounded-lg text-sm">
           {error}
         </div>
       )}
@@ -87,7 +87,7 @@ export default function CheckoutForm({
           : `Autoriser ${totalEuros.toFixed(2)} €`}
       </Button>
 
-      <p className="text-xs text-gray-500 text-center">
+      <p className="text-xs text-neutre-500 text-center">
         Le montant sera pré-autorisé sur votre carte. Vous ne serez débité
         qu&apos;après confirmation du commerçant.
       </p>

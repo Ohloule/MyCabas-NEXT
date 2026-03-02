@@ -1,16 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowLeft,
-  Send,
-  CheckCheck,
-  ShieldCheck,
-  Store,
-} from "lucide-react";
+import { ArrowLeft, CheckCheck, Send, ShieldCheck, Store } from "lucide-react";
 import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 interface Sender {
@@ -48,7 +42,10 @@ export default function VendorConversationPage() {
   const fetchConversation = async () => {
     try {
       const res = await fetch(`/api/vendor/conversations/${id}`);
-      if (!res.ok) { router.push("/vendor/dashboard/messagerie"); return; }
+      if (!res.ok) {
+        router.push("/vendor/dashboard/messagerie");
+        return;
+      }
       const data = await res.json();
       setConversation(data.conversation);
     } finally {
@@ -58,7 +55,7 @@ export default function VendorConversationPage() {
 
   useEffect(() => {
     fetchConversation();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -81,14 +78,16 @@ export default function VendorConversationPage() {
       setReply("");
       await fetchConversation();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Erreur lors de l'envoi");
+      toast.error(
+        err instanceof Error ? err.message : "Erreur lors de l'envoi",
+      );
     } finally {
       setSending(false);
     }
   };
 
   if (loading) {
-    return <div className="text-center py-12 text-gray-400">Chargement…</div>;
+    return <div className="text-center py-12 text-neutre-400">Chargement…</div>;
   }
   if (!conversation) return null;
 
@@ -105,17 +104,17 @@ export default function VendorConversationPage() {
           <h1 className="text-lg font-bold text-principale-800 truncate">
             {conversation.subject}
           </h1>
-          <p className="text-sm text-gray-500">Équipe MyCabas</p>
+          <p className="text-sm text-neutre-500">Équipe MyCabas</p>
         </div>
         {conversation.status === "CLOSED" && (
-          <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200 flex items-center gap-1 shrink-0">
+          <span className="text-xs px-2 py-0.5 rounded-full bg-neutre-100 text-neutre-500 border border-neutre-200 flex items-center gap-1 shrink-0">
             <CheckCheck className="w-3 h-3" /> Clôturée
           </span>
         )}
       </div>
 
       {/* Messages */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 mb-4 space-y-4 max-h-[calc(100vh-300px)] overflow-y-auto">
+      <div className="bg-white rounded-xl border border-neutre-200 p-4 mb-4 space-y-4 max-h-[calc(100vh-300px)] overflow-y-auto">
         {conversation.messages.map((msg) => {
           const isVendor = msg.sender.role === "VENDOR";
           return (
@@ -126,13 +125,13 @@ export default function VendorConversationPage() {
               {/* Avatar */}
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                  isVendor ? "bg-principale-100" : "bg-amber-100"
+                  isVendor ? "bg-principale-100" : "bg-secondaire-100"
                 }`}
               >
                 {isVendor ? (
                   <Store className="w-4 h-4 text-principale-600" />
                 ) : (
-                  <ShieldCheck className="w-4 h-4 text-amber-600" />
+                  <ShieldCheck className="w-4 h-4 text-secondaire-600" />
                 )}
               </div>
 
@@ -141,13 +140,13 @@ export default function VendorConversationPage() {
                 className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${
                   isVendor
                     ? "bg-principale-700 text-white rounded-tr-sm"
-                    : "bg-gray-100 text-gray-800 rounded-tl-sm"
+                    : "bg-neutre-100 text-neutre-800 rounded-tl-sm"
                 }`}
               >
                 <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
                 <p
                   className={`text-xs mt-1 ${
-                    isVendor ? "text-principale-300" : "text-gray-400"
+                    isVendor ? "text-principale-300" : "text-neutre-400"
                   }`}
                 >
                   {isVendor ? "Vous" : "Équipe MyCabas"} ·{" "}
@@ -184,7 +183,7 @@ export default function VendorConversationPage() {
                 handleSend();
               }
             }}
-            className="flex-1 rounded-xl border border-gray-200 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-principale-300"
+            className="flex-1 rounded-xl border border-neutre-200 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-principale-300"
           />
           <Button
             className="self-end"
@@ -195,7 +194,7 @@ export default function VendorConversationPage() {
           </Button>
         </div>
       ) : (
-        <p className="text-center text-sm text-gray-400 py-3 bg-gray-50 rounded-xl border border-gray-200">
+        <p className="text-center text-sm text-neutre-400 py-3 bg-neutre-50 rounded-xl border border-neutre-200">
           Cette conversation a été clôturée par l'équipe MyCabas
         </p>
       )}

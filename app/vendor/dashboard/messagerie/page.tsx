@@ -1,17 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  MessageSquare,
-  Plus,
-  Clock,
-  CheckCheck,
-  X,
-} from "lucide-react";
+import { CheckCheck, Clock, MessageSquare, Plus, X } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface Conversation {
@@ -54,7 +48,10 @@ export default function VendorMessageriePage() {
       const res = await fetch("/api/vendor/conversations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ subject: subject.trim(), content: firstMessage.trim() }),
+        body: JSON.stringify({
+          subject: subject.trim(),
+          content: firstMessage.trim(),
+        }),
       });
       if (!res.ok) throw new Error();
       toast.success("Message envoyé !");
@@ -78,8 +75,10 @@ export default function VendorMessageriePage() {
             <MessageSquare className="w-6 h-6 text-principale-600" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-principale-800">Messagerie</h1>
-            <p className="text-sm text-gray-500">
+            <h1 className="text-2xl font-bold text-principale-800">
+              Messagerie
+            </h1>
+            <p className="text-sm text-neutre-500">
               Contactez l'équipe MyCabas
             </p>
           </div>
@@ -92,11 +91,11 @@ export default function VendorMessageriePage() {
 
       {/* Liste */}
       {loading ? (
-        <div className="text-center py-12 text-gray-400">Chargement…</div>
+        <div className="text-center py-12 text-neutre-400">Chargement…</div>
       ) : conversations.length === 0 ? (
         <div className="text-center py-12">
-          <MessageSquare className="w-12 h-12 text-gray-200 mx-auto mb-3" />
-          <p className="text-gray-400 mb-4">Aucun message pour l'instant</p>
+          <MessageSquare className="w-12 h-12 text-neutre-200 mx-auto mb-3" />
+          <p className="text-neutre-400 mb-4">Aucun message pour l'instant</p>
           <Button variant="outline" onClick={() => setShowNew(true)}>
             Envoyer un premier message
           </Button>
@@ -110,17 +109,17 @@ export default function VendorMessageriePage() {
               className={`block bg-white rounded-xl border p-4 hover:shadow-md transition-shadow ${
                 conv._count.messages > 0 && conv.status === "OPEN"
                   ? "border-principale-200"
-                  : "border-gray-200"
+                  : "border-neutre-200"
               }`}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-gray-800">
+                    <span className="font-semibold text-neutre-800">
                       {conv.subject}
                     </span>
                     {conv.status === "CLOSED" && (
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200 flex items-center gap-1">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-neutre-100 text-neutre-500 border border-neutre-200 flex items-center gap-1">
                         <CheckCheck className="w-3 h-3" /> Clôturée
                       </span>
                     )}
@@ -133,12 +132,12 @@ export default function VendorMessageriePage() {
                     )}
                   </div>
                   {conv.messages[0] && (
-                    <p className="text-sm text-gray-400 truncate">
+                    <p className="text-sm text-neutre-400 truncate">
                       {conv.messages[0].content}
                     </p>
                   )}
                 </div>
-                <p className="text-xs text-gray-400 shrink-0 flex items-center gap-1">
+                <p className="text-xs text-neutre-400 shrink-0 flex items-center gap-1">
                   <Clock className="w-3 h-3" />
                   {new Date(conv.updatedAt).toLocaleDateString("fr-FR")}
                 </p>
@@ -153,14 +152,14 @@ export default function VendorMessageriePage() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">
+              <h3 className="text-lg font-semibold text-neutre-800">
                 Nouveau message
               </h3>
               <button
                 onClick={() => setShowNew(false)}
-                className="p-1 rounded hover:bg-gray-100"
+                className="p-1 rounded hover:bg-neutre-100"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-neutre-500" />
               </button>
             </div>
 
@@ -186,7 +185,7 @@ export default function VendorMessageriePage() {
                   onChange={(e) => setFirstMessage(e.target.value)}
                   placeholder="Décrivez votre demande…"
                   rows={4}
-                  className="w-full rounded-lg border border-gray-200 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-principale-300"
+                  className="w-full rounded-lg border border-neutre-200 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-principale-300"
                 />
               </div>
             </div>

@@ -22,12 +22,15 @@ export default function Page() {
               1. Parrainez un Commerçant
             </h2>
             <p className="text-muted-foreground">
-              Faites découvrir <span className="font-mycabas text-xl">MyCabas</span> à votre commerçant de marché. Dès qu'il
-              atteint ses premiers paliers de vente (150 € de CA cumulé), vous
-              recevez 10 € de crédit sur votre compte.
+              Faites découvrir{" "}
+              <span className="font-mycabas text-xl">MyCabas</span> à votre
+              commerçant de marché. Dès qu'il atteint ses premiers paliers de
+              vente (150 € de CA cumulé), vous recevez 10 € de crédit sur votre
+              compte.
             </p>
             <p className="text-xl font-semibold text-principale-700">
-              🎁 10 € de crédit <span className="font-mycabas font-medium">MyCabas</span>
+              🎁 10 € de crédit{" "}
+              <span className="font-mycabas font-medium">MyCabas</span>
             </p>
             <p className="text-sm text-muted-foreground">
               Un bonus commerçant est aussi possible s’il est actif.
@@ -67,7 +70,9 @@ export default function Page() {
               🎁 5 € pour toi
             </p>
             <p className="text-muted-foreground">
-              Le petit plus : Si votre ami parraine à son tour, vous gagnez 2 € supplémentaires dès que son filleul valide ses 7 premières commandes.
+              Le petit plus : Si votre ami parraine à son tour, vous gagnez 2 €
+              supplémentaires dès que son filleul valide ses 7 premières
+              commandes.
             </p>
           </div>
         </section>
@@ -78,14 +83,14 @@ export default function Page() {
             <h2 className="text-2xl md:text-4xl font-bold font-special text-principale-700">
               3. Statut Ambassadeur
             </h2>
-            <p className="text-muted-foreground">
-              Vous avez un grand réseau ?
-            </p>
+            <p className="text-muted-foreground">Vous avez un grand réseau ?</p>
             <p className="text-xl font-semibold text-principale-700">
               🎉 Tu gagnes 10 €/mois + 1 €/commerçant supplémentaire.
             </p>
             <p className="text-xl font-semibold text-principale-700">
-              À partir de 10 commerçants parrainés et actifs (min. 100 € de ventes/mois), vous touchez une prime mensuelle de 10 € + 1 € par commerçant supplémentaire
+              À partir de 10 commerçants parrainés et actifs (min. 100 € de
+              ventes/mois), vous touchez une prime mensuelle de 10 € + 1 € par
+              commerçant supplémentaire
             </p>
             <p className="text-sm text-muted-foreground">
               Exemple : 50 commerçants actifs = 50 €/mois.
@@ -120,32 +125,44 @@ export default function Page() {
               </thead>
               <tbody>
                 <tr className="border-t">
-                  <td className="px-4 py-3 font-medium">Parrainer un commerçant</td>
-                  <td className="px-4 py-3">150 € de ventes cumulées (en 3 marchés minimum)</td>
+                  <td className="px-4 py-3 font-medium">
+                    Parrainer un commerçant
+                  </td>
+                  <td className="px-4 py-3">
+                    150 € de ventes cumulées (en 3 marchés minimum)
+                  </td>
                   <td className="px-4 py-3">10 € de crédit</td>
-                  <td className="px-4 py-3 text-green-600">✅ Très rentable</td>
+                  <td className="px-4 py-3 text-principale-600">
+                    ✅ Très rentable
+                  </td>
                 </tr>
                 <tr className="border-t">
                   <td className="px-4 py-3 font-medium">Parrainer un proche</td>
-                  <td className="px-4 py-3">5 commandes (min. 10 €/commande)</td>
+                  <td className="px-4 py-3">
+                    5 commandes (min. 10 €/commande)
+                  </td>
                   <td className="px-4 py-3">5 € de crédit</td>
-                  <td className="px-4 py-3 text-green-600">
+                  <td className="px-4 py-3 text-principale-600">
                     ✅ Rentable avec beaucoup d'amis
                   </td>
                 </tr>
                 <tr className="border-t">
                   <td className="px-4 py-3 font-medium">Parrainage indirect</td>
-                  <td className="px-4 py-3">7 commandes du "petit-filleul" (min. 10 €/commande)</td>
+                  <td className="px-4 py-3">
+                    7 commandes du "petit-filleul" (min. 10 €/commande)
+                  </td>
                   <td className="px-4 py-3">2 € de bonus</td>
-                  <td className="px-4 py-3 text-green-600">
+                  <td className="px-4 py-3 text-principale-600">
                     ✅ Parlez en autour de vous
                   </td>
                 </tr>
                 <tr className="border-t">
                   <td className="px-4 py-3 font-medium">Ambassadeur</td>
-                  <td className="px-4 py-3">10+ commerçants actifs (min. 100 € CA/mois)</td>
+                  <td className="px-4 py-3">
+                    10+ commerçants actifs (min. 100 € CA/mois)
+                  </td>
                   <td className="px-4 py-3">10€/mois + 1€/suppl.</td>
-                  <td className="px-4 py-3 text-green-600">
+                  <td className="px-4 py-3 text-principale-600">
                     ✅ Ultra rentable long terme
                   </td>
                 </tr>

@@ -33,7 +33,7 @@ export default function ConfirmationPage() {
         <HeadingPage title="Confirmation" />
         <div className="align-center py-24 flex flex-col items-center gap-4">
           <Loader taille={45} />
-          <p className="text-gray-600">Finalisation de votre commande...</p>
+          <p className="text-neutre-600">Finalisation de votre commande...</p>
         </div>
       </>
     );
@@ -51,9 +51,9 @@ export default function ConfirmationPage() {
           <CardContent className="p-8 text-center space-y-6">
             {isSuccess ? (
               <>
-                <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
+                <CheckCircle className="h-16 w-16 text-principale-500 mx-auto" />
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  <h2 className="text-2xl font-bold text-neutre-900 mb-2">
                     Commande confirmée !
                   </h2>
                   {orderNumber && (
@@ -62,14 +62,14 @@ export default function ConfirmationPage() {
                     </p>
                   )}
                 </div>
-                <p className="text-gray-600">
+                <p className="text-neutre-600">
                   Votre paiement a été pré-autorisé. Le commerçant va confirmer
                   votre commande avant le jour du marché. Vous ne serez débité
                   qu&apos;après sa confirmation.
                 </p>
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3 text-left">
-                  <Clock className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
-                  <div className="text-sm text-amber-800">
+                <div className="bg-secondaire-50 border border-secondaire-200 rounded-lg p-4 flex items-start gap-3 text-left">
+                  <Clock className="h-5 w-5 text-secondaire-600 shrink-0 mt-0.5" />
+                  <div className="text-sm text-secondaire-800">
                     <p className="font-medium">En attente de confirmation</p>
                     <p>
                       Le commerçant peut ajuster les quantités (ex: poids exact
@@ -94,12 +94,12 @@ export default function ConfirmationPage() {
               </>
             ) : isFailed ? (
               <>
-                <XCircle className="h-16 w-16 text-red-500 mx-auto" />
+                <XCircle className="h-16 w-16 text-secondaire-500 mx-auto" />
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  <h2 className="text-2xl font-bold text-neutre-900 mb-2">
                     Paiement échoué
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-neutre-600">
                     Le paiement n&apos;a pas pu être autorisé. Aucun montant
                     n&apos;a été prélevé. Vérifiez vos informations de carte et
                     réessayez.
@@ -114,7 +114,7 @@ export default function ConfirmationPage() {
             ) : (
               <>
                 <Loader taille={45} />
-                <p className="text-gray-600">
+                <p className="text-neutre-600">
                   Vérification du paiement en cours...
                 </p>
               </>

@@ -243,7 +243,9 @@ export default function MarketDetailPage() {
                   : "bg-principale-50 text-black hover:bg-secondaire-200"
               } ${favoriteLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
             >
-              <Heart className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`} />
+              <Heart
+                className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`}
+              />
               <span className="text-sm font-medium">
                 {isFavorite
                   ? `Favori le ${DAYS_FR[selectedDay]}`
@@ -316,8 +318,8 @@ export default function MarketDetailPage() {
             {selectedOpening ? (
               <span></span>
             ) : (
-              <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                <p className="text-sm text-amber-700">
+              <div className="mt-4 p-3 bg-secondaire-50 border border-secondaire-200 rounded-lg">
+                <p className="text-sm text-secondaire-700">
                   Sélectionnez un jour pour voir la liste des commerçants
                   présents.
                 </p>
@@ -353,7 +355,15 @@ export default function MarketDetailPage() {
                 {/* Liste des commerçants floutée */}
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 blur-sm pointer-events-none select-none">
                   {vendors.slice(0, 6).map((vendor) => (
-                    <VendorCard key={vendor.id} vendor={vendor} href={selectedDay ? `/markets/${marketId}/shop?day=${selectedDay.toLowerCase()}&vendorId=${vendor.id}` : undefined} />
+                    <VendorCard
+                      key={vendor.id}
+                      vendor={vendor}
+                      href={
+                        selectedDay
+                          ? `/markets/${marketId}/shop?day=${selectedDay.toLowerCase()}&vendorId=${vendor.id}`
+                          : undefined
+                      }
+                    />
                   ))}
                 </div>
 
@@ -391,7 +401,15 @@ export default function MarketDetailPage() {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {vendors.map((vendor) => (
-                  <VendorCard key={vendor.id} vendor={vendor} href={selectedDay ? `/markets/${marketId}/shop?day=${selectedDay.toLowerCase()}&vendorId=${vendor.id}` : undefined} />
+                  <VendorCard
+                    key={vendor.id}
+                    vendor={vendor}
+                    href={
+                      selectedDay
+                        ? `/markets/${marketId}/shop?day=${selectedDay.toLowerCase()}&vendorId=${vendor.id}`
+                        : undefined
+                    }
+                  />
                 ))}
               </div>
             )}

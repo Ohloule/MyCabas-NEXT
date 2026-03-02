@@ -50,13 +50,13 @@ export default function OrdersClosedPage() {
       <Card>
         <CardContent className="pt-6">
           <div className="text-center py-12">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Package className="h-8 w-8 text-gray-300" />
+            <div className="w-16 h-16 bg-neutre-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Package className="h-8 w-8 text-neutre-300" />
             </div>
-            <h3 className="font-semibold text-gray-700 mb-2">
+            <h3 className="font-semibold text-neutre-700 mb-2">
               Aucune commande terminée
             </h3>
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-sm text-neutre-500 mb-4">
               Vos commandes terminées et récupérées apparaîtront ici.
             </p>
             <Link href="/search">
@@ -94,7 +94,7 @@ export default function OrdersClosedPage() {
                       </span>
                       <OrderStatusBadge status={order.status} />
                     </div>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-neutre-500">
                       <span className="flex items-center gap-1">
                         <MapPin className="h-3.5 w-3.5" />
                         {order.market.name}
@@ -112,13 +112,13 @@ export default function OrdersClosedPage() {
                       </span>
                     </div>
                   </div>
-                  <p className="font-bold text-lg text-gray-600">
+                  <p className="font-bold text-lg text-neutre-600">
                     {total.toFixed(2)} €
                   </p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
-                  <Store className="h-3.5 w-3.5 text-gray-400" />
+                <div className="flex flex-wrap items-center gap-2 text-sm text-neutre-600">
+                  <Store className="h-3.5 w-3.5 text-neutre-400" />
                   {vendorNames.join(", ")} — {order.items.length} article
                   {order.items.length > 1 ? "s" : ""}
                 </div>
