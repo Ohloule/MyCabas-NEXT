@@ -2,7 +2,15 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Check, ChevronLeft, ChevronRight, Search, Upload } from "lucide-react";
+import {
+  Camera,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  ImageIcon,
+  Search,
+  Upload,
+} from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Loader from "./Loader";
 
@@ -25,8 +33,11 @@ export default function IngredientImagePicker({
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [hoveredImg, setHoveredImg] = useState<string | null>(null);
+  const [showImportMenu, setShowImportMenu] = useState(false);
   const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const importMenuRef = useRef<HTMLDivElement>(null);
 
   const handleMouseEnter = (url: string) => {
     hoverTimerRef.current = setTimeout(() => setHoveredImg(url), 500);
@@ -99,8 +110,24 @@ export default function IngredientImagePicker({
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
+      if (cameraInputRef.current) cameraInputRef.current.value = "";
     }
   };
+
+  // Fermer le menu import au clic extérieur
+  useEffect(() => {
+    if (!showImportMenu) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        importMenuRef.current &&
+        !importMenuRef.current.contains(e.target as Node)
+      ) {
+        setShowImportMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showImportMenu]);
 
   const translateToEnglish = async (text: string): Promise<string> => {
     try {
@@ -190,6 +217,7 @@ export default function IngredientImagePicker({
             className="pl-10"
           />
         </div>
+        {/* Input galerie (pas de capture = sélecteur natif fichiers/galerie) */}
         <input
           ref={fileInputRef}
           type="file"
@@ -197,21 +225,58 @@ export default function IngredientImagePicker({
           className="hidden"
           onChange={handleFileUpload}
         />
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          disabled={uploading}
-          onClick={() => fileInputRef.current?.click()}
-          className="shrink-0 h-9"
-        >
-          {uploading ? (
-            <Loader taille={16} />
-          ) : (
-            <Upload className="h-4 w-4 mr-1" />
+        {/* Input caméra (capture=environment = ouvre directement la caméra) */}
+        <input
+          ref={cameraInputRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="hidden"
+          onChange={handleFileUpload}
+        />
+        <div className="relative" ref={importMenuRef}>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={uploading}
+            onClick={() => setShowImportMenu((prev) => !prev)}
+            className="shrink-0 h-9"
+          >
+            {uploading ? (
+              <Loader taille={16} />
+            ) : (
+              <Upload className="h-4 w-4 mr-1" />
+            )}
+            Importer
+          </Button>
+          {showImportMenu && (
+            <div className="absolute right-0 top-full mt-1 z-50 bg-white rounded-lg shadow-lg border border-neu-200 py-1 min-w-[180px]">
+              <button
+                type="button"
+                className="flex items-center gap-2 w-full px-3 py-2.5 text-sm text-neu-700 hover:bg-neu-100 transition-colors"
+                onClick={() => {
+                  setShowImportMenu(false);
+                  fileInputRef.current?.click();
+                }}
+              >
+                <ImageIcon className="h-4 w-4 text-neu-500" />
+                Galerie photo
+              </button>
+              <button
+                type="button"
+                className="flex items-center gap-2 w-full px-3 py-2.5 text-sm text-neu-700 hover:bg-neu-100 transition-colors"
+                onClick={() => {
+                  setShowImportMenu(false);
+                  cameraInputRef.current?.click();
+                }}
+              >
+                <Camera className="h-4 w-4 text-neu-500" />
+                Prendre une photo
+              </button>
+            </div>
           )}
-          Importer
-        </Button>
+        </div>
       </div>
 
       {/* Grille d'images */}
