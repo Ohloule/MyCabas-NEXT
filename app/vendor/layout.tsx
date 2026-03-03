@@ -1,3 +1,4 @@
+import { VendorBottomTabBar } from "@/components/vendor/vendor-bottom-tab-bar";
 import { VendorSidebar } from "@/components/vendor/vendor-sidebar";
 import { VendorToaster } from "@/components/vendor/vendor-toaster";
 import { auth } from "@/lib/auth";
@@ -23,9 +24,10 @@ export default async function VendorLayout({
   return (
     <div className="flex min-h-screen bg-neu-50">
       <VendorSidebar user={session.user} />
-      <main className="flex-1 min-w-0 lg:ml-64 p-4 pt-16 lg:pt-8 lg:p-8">
+      <main className="flex-1 min-w-0 lg:ml-64 p-4 pb-20 lg:pb-8 lg:p-8">
         {children}
       </main>
+      <VendorBottomTabBar />
       <VendorToaster />
     </div>
   );
