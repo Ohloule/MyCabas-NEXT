@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/Loader";
 import { ProductForm } from "@/components/vendor/product-form";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
@@ -86,7 +87,8 @@ export default function EditProductPage({
   if (loading) {
     return (
       <div className="bg-neu-50 rounded-xl p-12 shadow-sm border border-neu-100 text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-prin-600 mx-auto"></div>
+        {/*     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-prin-600 mx-auto"></div> */}
+        <Loader taille={45} />
         <p className="mt-4 text-neu-500">Chargement du produit...</p>
       </div>
     );

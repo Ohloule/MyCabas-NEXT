@@ -10,6 +10,7 @@ const globalForPrisma = globalThis as unknown as {
 function createPrismaClient() {
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    max: process.env.NODE_ENV === "production" ? 5 : 2,
   });
 
   const adapter = new PrismaPg(pool);
