@@ -69,9 +69,9 @@ export default function VendorMessageriePage() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between gap-3 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-prin-100 rounded-lg">
+          <div className="p-3 bg-prin-100 rounded-lg shrink-0">
             <MessageSquare className="w-6 h-6 text-prin-600" />
           </div>
           <div>
@@ -79,7 +79,7 @@ export default function VendorMessageriePage() {
             <p className="text-sm text-neu-500">Contactez l'équipe MyCabas</p>
           </div>
         </div>
-        <Button onClick={() => setShowNew(true)} className="shrink-0">
+        <Button onClick={() => setShowNew(true)} className="w-full sm:w-auto shrink-0">
           <Plus className="w-4 h-4" />
           Nouveau message
         </Button>
