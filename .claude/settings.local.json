@@ -44,7 +44,11 @@
       "Bash(find:*)",
       "Bash(xargs grep -l \"import.*dialog\\\\|importProducts\\\\|ImportProducts\")",
       "Bash(xargs grep -l \"reset\\\\|forgot\")",
-      "mcp__chrome-devtools__list_pages"
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__fill_form",
+      "mcp__chrome-devtools__wait_for",
+      "mcp__chrome-devtools__emulate",
+      "mcp__chrome-devtools__evaluate_script"
     ]
   }
 }

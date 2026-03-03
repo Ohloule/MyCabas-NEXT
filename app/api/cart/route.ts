@@ -29,6 +29,9 @@ export async function GET() {
                 minOrderQty: true,
                 stepIncrement: true,
                 basePrice: true,
+                canSellByPiece: true,
+                approxWeightPerPiece: true,
+                pricePerPiece: true,
                 vendor: {
                   select: { id: true, stallName: true },
                 },
@@ -72,31 +75,37 @@ export async function POST(request: NextRequest) {
     if (quantity > 0) {
       const product = await prisma.product.findUnique({
         where: { id: productId },
-        select: { minOrderQty: true, stepIncrement: true },
+        select: { minOrderQty: true, stepIncrement: true, canSellByPiece: true, approxWeightPerPiece: true },
       });
 
       if (product && product.minOrderQty > 0) {
-        const min = product.minOrderQty;
-        const step = product.stepIncrement || min;
+        // Si le produit peut être vendu à la pièce, accepter les multiples de approxWeightPerPiece
+        const isByPiece = product.canSellByPiece && product.approxWeightPerPiece &&
+          Math.abs(Math.round(quantity / product.approxWeightPerPiece) * product.approxWeightPerPiece - quantity) < 0.001;
 
-        if (quantity < min - 0.001) {
-          return NextResponse.json(
-            { error: `La quantité minimale est de ${min}`, validQuantity: min },
-            { status: 400 }
-          );
-        }
+        if (!isByPiece) {
+          const min = product.minOrderQty;
+          const step = product.stepIncrement || min;
 
-        const decimals = Math.max(
-          (min.toString().split(".")[1] || "").length,
-          (step.toString().split(".")[1] || "").length,
-        );
-        const stepsAboveMin = Math.round((quantity - min) / step);
-        const validQty = parseFloat((min + stepsAboveMin * step).toFixed(decimals));
-        if (Math.abs(quantity - validQty) > 0.001) {
-          return NextResponse.json(
-            { error: `La quantité doit être un multiple de ${step} à partir de ${min}`, validQuantity: validQty },
-            { status: 400 }
+          if (quantity < min - 0.001) {
+            return NextResponse.json(
+              { error: `La quantité minimale est de ${min}`, validQuantity: min },
+              { status: 400 }
+            );
+          }
+
+          const decimals = Math.max(
+            (min.toString().split(".")[1] || "").length,
+            (step.toString().split(".")[1] || "").length,
           );
+          const stepsAboveMin = Math.round((quantity - min) / step);
+          const validQty = parseFloat((min + stepsAboveMin * step).toFixed(decimals));
+          if (Math.abs(quantity - validQty) > 0.001) {
+            return NextResponse.json(
+              { error: `La quantité doit être un multiple de ${step} à partir de ${min}`, validQuantity: validQty },
+              { status: 400 }
+            );
+          }
         }
       }
     }

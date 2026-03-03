@@ -14,6 +14,9 @@ interface CartItemData {
     minOrderQty: number;
     stepIncrement: number;
     basePrice: number;
+    canSellByPiece: boolean;
+    approxWeightPerPiece: number | null;
+    pricePerPiece: number | null;
     vendor: {
       id: string;
       stallName: string;

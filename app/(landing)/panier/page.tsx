@@ -40,21 +40,23 @@ export default function PanierPage() {
   const [recapView, setRecapView] = useState<"vendor" | "category">("vendor");
 
   const handleUpdateQuantity = async (
-    item: {
-      id: string;
-      quantity: number;
-      product: { id: string; minOrderQty: number; stepIncrement: number };
-    },
+    item: CartItem,
     direction: "up" | "down",
   ) => {
-    const min = item.product.minOrderQty || 1;
-    const step = item.product.stepIncrement || min;
+    const piece = isPieceMode(item);
+    const step = piece
+      ? item.product.approxWeightPerPiece!
+      : item.product.stepIncrement || item.product.minOrderQty || 1;
+    const min = piece
+      ? item.product.approxWeightPerPiece!
+      : item.product.minOrderQty || 1;
+
     const newQuantity =
       direction === "up" ? item.quantity + step : item.quantity - step;
     setUpdatingItems((prev) => new Set(prev).add(item.id));
 
     try {
-      if (newQuantity <= min) {
+      if (newQuantity < min - 0.001) {
         await removeItem(item.id);
       } else {
         const decimals = Math.max(
@@ -104,11 +106,34 @@ export default function PanierPage() {
     }
   };
 
-  const total =
-    cart?.items.reduce(
-      (sum, item) => sum + item.product.basePrice * item.quantity,
-      0,
-    ) ?? 0;
+  type CartItem = NonNullable<typeof cart>["items"][number];
+
+  // Détecte si un item doit s'afficher en pièces (produit vendable à la pièce)
+  const isPieceMode = (item: CartItem) =>
+    item.product.canSellByPiece &&
+    item.product.approxWeightPerPiece &&
+    item.product.approxWeightPerPiece > 0;
+
+  // Nombre de pièces pour un item en mode pièce
+  const getPieceCount = (item: CartItem) =>
+    item.product.approxWeightPerPiece
+      ? Math.round(item.quantity / item.product.approxWeightPerPiece)
+      : 0;
+
+  // Prix total d'un item
+  const getItemTotal = (item: CartItem) =>
+    isPieceMode(item) && item.product.pricePerPiece
+      ? getPieceCount(item) * item.product.pricePerPiece
+      : item.product.basePrice * item.quantity;
+
+  // Formate une quantité avec conversion auto kg→g / litre→mL si < 1
+  const formatQty = (qty: number, unit: string) => {
+    if (qty > 0 && qty < 1 && unit === "kg") return `${Math.round(qty * 1000)} g`;
+    if (qty > 0 && qty < 1 && unit === "litre") return `${Math.round(qty * 1000)} mL`;
+    return `${parseFloat(qty.toFixed(2))} ${unit}`;
+  };
+
+  const total = cart?.items.reduce((sum, item) => sum + getItemTotal(item), 0) ?? 0;
 
   const itemCount = cart?.items.length ?? 0;
 
@@ -302,8 +327,18 @@ export default function PanierPage() {
                             {item.product.name}
                           </h3>
                           <p className="text-xs sm:text-sm text-neu-500">
-                            {item.product.basePrice.toFixed(2)} € /{" "}
-                            {item.product.unit}
+                            {isPieceMode(item) && item.product.pricePerPiece ? (
+                              <>
+                                {item.product.pricePerPiece.toFixed(2)} € / pièce
+                                <span className="text-neu-400 ml-1">
+                                  ({item.product.basePrice.toFixed(2)} € / {item.product.unit})
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                {item.product.basePrice.toFixed(2)} € / {item.product.unit}
+                              </>
+                            )}
                           </p>
                         </div>
 
@@ -327,23 +362,32 @@ export default function PanierPage() {
                             disabled={updatingItems.has(item.id)}
                             className="w-8 h-8 rounded-full border border-neu-300 flex items-center justify-center hover:bg-neu-100 cursor-pointer disabled:opacity-50"
                           >
-                            {item.quantity <=
-                            (item.product.minOrderQty || 1) ? (
+                            {(isPieceMode(item)
+                              ? getPieceCount(item) <= 1
+                              : item.quantity <= (item.product.minOrderQty || 1)
+                            ) ? (
                               <Trash2 className="h-3 w-3" />
                             ) : (
                               <Minus className="h-3 w-3" />
                             )}
                           </button>
-                          <span className="w-12 text-center font-medium">
+                          <div className="w-16 text-center font-medium text-sm">
                             {updatingItems.has(item.id) ? (
                               <Loader2
-                                className="animate-spin text-prin-800"
+                                className="animate-spin text-prin-800 mx-auto"
                                 size={20}
                               />
+                            ) : isPieceMode(item) ? (
+                              <>
+                                <span>{getPieceCount(item)} pc</span>
+                                <p className="text-xs text-neu-400 font-normal leading-tight">
+                                  ≈ {formatQty(item.quantity, item.product.unit)}
+                                </p>
+                              </>
                             ) : (
-                              item.quantity
+                              <>{formatQty(item.quantity, item.product.unit)}</>
                             )}
-                          </span>
+                          </div>
                           <button
                             onClick={() => handleUpdateQuantity(item, "up")}
                             disabled={updatingItems.has(item.id)}
@@ -356,10 +400,7 @@ export default function PanierPage() {
                         {/* Prix total item */}
                         <div className="text-right shrink-0 min-w-24 ">
                           <p className="font-semibold text-neu-900">
-                            {(item.product.basePrice * item.quantity).toFixed(
-                              2,
-                            )}{" "}
-                            €
+                            {getItemTotal(item).toFixed(2)} €
                           </p>
                         </div>
 
@@ -418,7 +459,7 @@ export default function PanierPage() {
                   {recapView === "vendor"
                     ? Object.values(itemsByVendor).map(({ vendor, items }) => {
                         const subtotal = items.reduce(
-                          (s, i) => s + i.product.basePrice * i.quantity,
+                          (s, i) => s + getItemTotal(i),
                           0,
                         );
                         return (
@@ -438,13 +479,13 @@ export default function PanierPage() {
                                 className="flex justify-between text-neu-500 pl-4"
                               >
                                 <span className="truncate mr-2">
-                                  {item.product.name} x{item.quantity}
+                                  {item.product.name} x
+                                  {isPieceMode(item)
+                                    ? `${getPieceCount(item)} pc`
+                                    : formatQty(item.quantity, item.product.unit)}
                                 </span>
                                 <span className="shrink-0">
-                                  {(
-                                    item.product.basePrice * item.quantity
-                                  ).toFixed(2)}{" "}
-                                  €
+                                  {getItemTotal(item).toFixed(2)} €
                                 </span>
                               </div>
                             ))}
@@ -453,7 +494,7 @@ export default function PanierPage() {
                       })
                     : Object.values(itemsByCategory).map(({ name, items }) => {
                         const subtotal = items.reduce(
-                          (s, i) => s + i.product.basePrice * i.quantity,
+                          (s, i) => s + getItemTotal(i),
                           0,
                         );
                         return (
@@ -473,13 +514,13 @@ export default function PanierPage() {
                                 className="flex justify-between text-neu-500 pl-4"
                               >
                                 <span className="truncate mr-2">
-                                  {item.product.name} x{item.quantity}
+                                  {item.product.name} x
+                                  {isPieceMode(item)
+                                    ? `${getPieceCount(item)} pc`
+                                    : formatQty(item.quantity, item.product.unit)}
                                 </span>
                                 <span className="shrink-0">
-                                  {(
-                                    item.product.basePrice * item.quantity
-                                  ).toFixed(2)}{" "}
-                                  €
+                                  {getItemTotal(item).toFixed(2)} €
                                 </span>
                               </div>
                             ))}

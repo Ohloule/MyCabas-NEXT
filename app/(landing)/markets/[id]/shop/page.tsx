@@ -255,7 +255,7 @@ export default function ShopPage() {
       </HeadingPage>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <Link href={`/markets/${marketId}?day=${selectedDay?.toLowerCase()}`}>
             <Button variant="ghost" size="sm">
               <ArrowLeft className="mr-2 h-4 w-4" />
@@ -315,7 +315,7 @@ export default function ShopPage() {
 
             {/* Filtres par catégorie */}
             {allCategories.length > 0 && (
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 <button
                   onClick={() => setSelectedCategory(null)}
                   className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${

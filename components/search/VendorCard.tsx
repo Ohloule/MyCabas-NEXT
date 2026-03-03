@@ -153,9 +153,9 @@ export default function VendorCard({
   ) : null;
 
   const vendorHeader = (
-    <div className="flex items-start gap-4 flex-1 min-w-0">
+    <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
       {/* Logo du vendor */}
-      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-neu-50 shadow-sm shrink-0">
+      <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden bg-neu-50 shadow-sm shrink-0">
         {vendor.logoUrl ? (
           <Image
             src={vendor.logoUrl}
@@ -165,23 +165,37 @@ export default function VendorCard({
           />
         ) : (
           <div className="flex items-center justify-center h-full bg-prin-100">
-            <Store className="w-8 h-8 text-prin-500" />
+            <Store className="w-6 h-6 sm:w-8 sm:h-8 text-prin-500" />
           </div>
         )}
       </div>
 
       {/* Infos vendor */}
       <div className="flex-1 min-w-0">
-        <h3 className="text-xl font-bold text-neu-900 truncate">
-          {vendor.stallName}
-        </h3>
-        <p className="text-sm text-neu-600">
-          {vendor.user.firstName} {vendor.user.lastName}
-        </p>
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <h3 className="text-base sm:text-xl font-bold text-neu-900 truncate">
+              {vendor.stallName}
+            </h3>
+            <p className="text-xs sm:text-sm text-neu-600">
+              {vendor.user.firstName} {vendor.user.lastName}
+            </p>
+          </div>
+
+          {/* Nombre de produits */}
+          <div className="text-right shrink-0">
+            <span className="text-xl sm:text-2xl font-bold text-prin-600">
+              {products.length}
+            </span>
+            <p className="text-xs text-neu-500">
+              produit{products.length > 1 ? "s" : ""}
+            </p>
+          </div>
+        </div>
 
         {/* Labels */}
         {vendor.labels && vendor.labels.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2">
+          <div className="flex flex-wrap gap-1 mt-1.5 sm:mt-2">
             {vendor.labels.map((label) => {
               const config = labelConfig[label];
               if (!config) return null;
@@ -199,31 +213,21 @@ export default function VendorCard({
 
         {/* Description (dans le header accordéon) */}
         {collapsible && vendor.description && (
-          <p className="text-sm text-neu-600 mt-2 line-clamp-2">
+          <p className="text-xs sm:text-sm text-neu-600 mt-1.5 sm:mt-2 line-clamp-2">
             {vendor.description}
           </p>
         )}
-      </div>
 
-      {/* Sélecteur de marché+jour + compteur de produits */}
-      <div className="flex items-center gap-4 shrink-0">
-        {marketSelector}
-
-        {/* Nombre de produits */}
-        <div className="text-right">
-          <span className="text-2xl font-bold text-prin-600">
-            {products.length}
-          </span>
-          <p className="text-xs text-neu-500">
-            produit{products.length > 1 ? "s" : ""}
-          </p>
-        </div>
+        {/* Sélecteur de marché+jour (sous les labels sur mobile) */}
+        {marketSelector && (
+          <div className="mt-2">{marketSelector}</div>
+        )}
       </div>
     </div>
   );
 
   const productGrid = (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3">
       {products.map((product) => (
         <ProductCard
           key={product.id}
@@ -239,11 +243,11 @@ export default function VendorCard({
     return (
       <AccordionItem value={vendor.id} className="border-0">
         <Card className="overflow-hidden border-2 border-neu-100">
-          <AccordionTrigger className="px-6 py-4 bg-linear-to-r from-prin-50 to-neu-50 hover:no-underline hover:from-prin-100 [&>svg]:shrink-0 [&>svg]:mt-1 [&>svg]:ml-3">
+          <AccordionTrigger className="px-3 sm:px-6 py-3 sm:py-4 bg-linear-to-r from-prin-50 to-neu-50 hover:no-underline hover:from-prin-100 [&>svg]:shrink-0 [&>svg]:mt-1 [&>svg]:ml-2 sm:[&>svg]:ml-3">
             {vendorHeader}
           </AccordionTrigger>
           <AccordionContent className="pb-0">
-            <div className="px-6 pb-6 pt-4">{productGrid}</div>
+            <div className="px-3 sm:px-6 pb-4 sm:pb-6 pt-3 sm:pt-4">{productGrid}</div>
           </AccordionContent>
         </Card>
       </AccordionItem>
@@ -252,18 +256,18 @@ export default function VendorCard({
 
   return (
     <Card className="overflow-hidden border-2 border-neu-100">
-      <CardHeader className="bg-linear-to-r from-prin-50 to-neu-50 pb-4">
+      <CardHeader className="bg-linear-to-r from-prin-50 to-neu-50 pb-3 sm:pb-4 px-3 sm:px-6">
         {vendorHeader}
 
         {/* Description */}
         {vendor.description && (
-          <p className="text-sm text-neu-600 mt-3 line-clamp-2">
+          <p className="text-xs sm:text-sm text-neu-600 mt-2 sm:mt-3 line-clamp-2">
             {vendor.description}
           </p>
         )}
       </CardHeader>
 
-      <CardContent className="pt-4">{productGrid}</CardContent>
+      <CardContent className="pt-3 sm:pt-4 px-3 sm:px-6">{productGrid}</CardContent>
     </Card>
   );
 }

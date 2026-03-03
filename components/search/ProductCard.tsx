@@ -101,8 +101,8 @@ export default function ProductCard({
   // Le panier stocke toujours la quantité dans l'unité native du produit (kg, pièce…)
   const quantity = getQuantity(product.id);
 
-  const min = 1;
-  const step = 1;
+  const min = product.minOrderQty;
+  const step = product.stepIncrement;
 
   // Mode d'affichage : "weight" (unité native) ou "piece" (pièces)
   // Disponible uniquement pour les produits continus + canSellByPiece
@@ -318,9 +318,9 @@ export default function ProductCard({
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      <Card className="overflow-hidden hover:shadow-md transition-shadow flex flex-col min-h-82.5 min-w-50 ">
+      <Card className="overflow-hidden hover:shadow-md transition-shadow flex flex-col min-h-72 sm:min-h-82.5">
         {/* Image du produit */}
-        <div className="relative h-32 bg-neu-100">
+        <div className="relative h-28 sm:h-32 bg-neu-100">
           {product.imageUrl ? (
             <Image
               src={product.imageUrl}
@@ -351,40 +351,40 @@ export default function ProductCard({
           </div>
         </div>
 
-        <CardContent className="p-3 flex flex-col  flex-1">
+        <CardContent className="p-2 sm:p-3 flex flex-col flex-1">
           {/* Nom + toggle weight/piece sur la même ligne */}
-          <div className="flex items-center gap-1.5 min-w-0">
+          <div className="flex items-center gap-1 sm:gap-1.5 min-w-0">
             <h4
-              className="font-medium text-neu-900 truncate flex-1"
+              className="font-medium text-neu-900 truncate flex-1 text-sm sm:text-base"
               title={product.name}
             >
               {product.name}
             </h4>
             {canToggle && (
-              <div className="flex items-center gap-1 shrink-0">
+              <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
                 <button
                   type="button"
                   onClick={() => handleModeChange("weight")}
                   title={`Commander en ${product.unit}`}
-                  className={`flex items-center justify-center w-6 h-6 rounded-full border transition-colors cursor-pointer ${
+                  className={`flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full border transition-colors cursor-pointer ${
                     displayMode === "weight"
                       ? "bg-prin-600 border-prin-600 text-neu-50"
                       : "bg-neu-50 border-neu-200 text-neu-400 hover:border-prin-300"
                   }`}
                 >
-                  <Weight className="w-3 h-3" />
+                  <Weight className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                 </button>
                 <button
                   type="button"
                   onClick={() => handleModeChange("piece")}
                   title="Commander à la pièce"
-                  className={`flex items-center justify-center w-6 h-6 rounded-full border transition-colors cursor-pointer ${
+                  className={`flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full border transition-colors cursor-pointer ${
                     displayMode === "piece"
                       ? "bg-prin-600 border-prin-600 text-neu-50"
                       : "bg-neu-50 border-neu-200 text-neu-400 hover:border-prin-300"
                   }`}
                 >
-                  <Carrot className="w-3 h-3" />
+                  <Carrot className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                 </button>
               </div>
             )}
@@ -392,29 +392,29 @@ export default function ProductCard({
 
           {/* Catégorie */}
           <Badge
-            className={`mt-1 w-fit text-xs font-normal ${CATEGORY_COLORS[product.category.name] ?? "bg-neu-100 text-neu-700 hover:bg-neu-100"}`}
+            className={`mt-1 w-fit text-[10px] sm:text-xs font-normal ${CATEGORY_COLORS[product.category.name] ?? "bg-neu-100 text-neu-700 hover:bg-neu-100"}`}
           >
             {product.category.name}
           </Badge>
 
           {/* Description */}
           {product.description && (
-            <p className="text-xs text-neu-500 mt-1.5 line-clamp-2">
+            <p className="text-[11px] sm:text-xs text-neu-500 mt-1 sm:mt-1.5 line-clamp-2">
               {product.description}
             </p>
           )}
           {/* Prix */}
           <div className="mt-auto pt-2 flex justify-between gap-1 flex-1 items-start">
-            <div className="flex items-baseline gap-1">
-              <span className="text-lg font-bold text-prin-600">
+            <div className="flex items-baseline gap-0.5 sm:gap-1">
+              <span className="text-base sm:text-lg font-bold text-prin-600">
                 {displayedPrice.toFixed(2)} €
               </span>
-              <span className="text-xs text-neu-500">
+              <span className="text-[10px] sm:text-xs text-neu-500">
                 / {displayedPriceUnit}
               </span>
             </div>
             {quantity > 0 && (
-              <Badge className="text-sm font-bold bg-prin-300 text-prin-900 px-2.5 py-1">
+              <Badge className="text-xs sm:text-sm font-bold bg-prin-300 text-prin-900 px-1.5 sm:px-2.5 py-0.5 sm:py-1">
                 {(canToggle &&
                 displayMode === "piece" &&
                 product.pricePerPiece &&
@@ -429,7 +429,7 @@ export default function ProductCard({
           </div>
           {/* Poids/conditionnement + récapitulatif commande */}
           {getOrderLabel() && (
-            <p className="text-xs text-neu-400 mt-1">{getOrderLabel()}</p>
+            <p className="text-[10px] sm:text-xs text-neu-400 mt-0.5 sm:mt-1">{getOrderLabel()}</p>
           )}
 
           {/* Bouton Panier */}
@@ -438,7 +438,7 @@ export default function ProductCard({
               onClick={() => handleUpdate(displayedToUnit(displayedMin))}
               disabled={loading || cartLoading}
               size="sm"
-              className="w-16 h-9 self-end mt-3 gap-1.5 text-xs bg-prin-600 hover:bg-prin-500 transition-colors"
+              className="w-14 sm:w-16 h-8 sm:h-9 self-end mt-2 sm:mt-3 gap-1.5 text-xs bg-prin-600 hover:bg-prin-500 transition-colors"
             >
               {loading || cartLoading ? (
                 <Loader2 className="animate-spin" size={14} />
@@ -447,17 +447,17 @@ export default function ProductCard({
               )}
             </Button>
           ) : (
-            <div className="flex items-center justify-end mt-3 gap-1.5">
+            <div className="flex items-center justify-end mt-2 sm:mt-3 gap-1 sm:gap-1.5">
               {/* Bouton supprimer */}
               <button
                 onClick={() => handleUpdate(0)}
                 disabled={loading}
-                className="flex items-center justify-center w-8 h-8 rounded-full bg-sec-50 hover:bg-sec-100 text-sec-400 hover:text-sec-600 transition-colors disabled:opacity-50 cursor-pointer"
+                className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-sec-50 hover:bg-sec-100 text-sec-400 hover:text-sec-600 transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {loading ? (
-                  <Loader2 className="animate-spin" size={14} />
+                  <Loader2 className="animate-spin" size={12} />
                 ) : (
-                  <Trash2 className="w-3.5 h-3.5" />
+                  <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 )}
               </button>
 
@@ -476,13 +476,13 @@ export default function ProductCard({
                     );
                   }}
                   disabled={loading || displayedQty <= displayedMin}
-                  className="flex items-center justify-center w-9 h-9 bg-prin-600 hover:bg-prin-500 active:bg-neu-900 text-neu-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  className="flex items-center justify-center w-7 h-7 sm:w-9 sm:h-9 bg-prin-600 hover:bg-prin-500 active:bg-neu-900 text-neu-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  <Minus className="w-4 h-4" />
+                  <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
                 </button>
 
                 {/* Input quantité + unité */}
-                <div className="flex items-center justify-center h-9 bg-neu-50 border-x border-neu-200 px-2 gap-1 min-w-0">
+                <div className="flex items-center justify-center h-7 sm:h-9 bg-neu-50 border-x border-neu-200 px-1 sm:px-2 gap-0.5 sm:gap-1 min-w-0">
                   <input
                     type="text"
                     inputMode={canToggle || useSubUnit ? "numeric" : "decimal"}
@@ -519,9 +519,9 @@ export default function ProductCard({
                         );
                       }
                     }}
-                    className="w-10 bg-transparent text-sm font-bold text-neu-800 text-center outline-none"
+                    className="w-8 sm:w-10 bg-transparent text-xs sm:text-sm font-bold text-neu-800 text-center outline-none"
                   />
-                  <span className="text-xs text-neu-400 shrink-0 font-normal">
+                  <span className="text-[10px] sm:text-xs text-neu-400 shrink-0 font-normal">
                     {inputUnit}
                   </span>
                 </div>
@@ -540,12 +540,12 @@ export default function ProductCard({
                     )
                   }
                   disabled={loading}
-                  className="flex items-center justify-center w-9 h-9 bg-prin-600 hover:bg-prin-500 active:bg-prin-700 text-neu-50 transition-colors disabled:opacity-50 cursor-pointer"
+                  className="flex items-center justify-center w-7 h-7 sm:w-9 sm:h-9 bg-prin-600 hover:bg-prin-500 active:bg-prin-700 text-neu-50 transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   {loading ? (
-                    <Loader2 className="animate-spin text-prin-100" size={20} />
+                    <Loader2 className="animate-spin text-prin-100" size={16} />
                   ) : (
-                    <Plus className="w-4 h-4" />
+                    <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
                   )}
                 </button>
               </div>
