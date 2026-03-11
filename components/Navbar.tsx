@@ -77,10 +77,20 @@ export default function Navbar() {
   const mobileFavRef = useRef<HTMLDivElement>(null);
 
   const cartTotal =
-    cart?.items.reduce(
-      (sum, item) => sum + item.quantity * item.product.basePrice,
-      0,
-    ) ?? 0;
+    cart?.items.reduce((sum, item) => {
+      if (
+        item.product.canSellByPiece &&
+        item.product.approxWeightPerPiece &&
+        item.product.approxWeightPerPiece > 0 &&
+        item.product.pricePerPiece
+      ) {
+        const pieceCount = Math.round(
+          item.quantity / item.product.approxWeightPerPiece,
+        );
+        return sum + pieceCount * item.product.pricePerPiece;
+      }
+      return sum + item.quantity * item.product.basePrice;
+    }, 0) ?? 0;
   const cartTotalLabel =
     cartTotal > 0
       ? cartTotal.toLocaleString("fr-FR", {

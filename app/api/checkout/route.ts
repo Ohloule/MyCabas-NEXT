@@ -21,7 +21,9 @@ function generateOrderNumber(marketDate: Date): string {
 
 /**
  * POST /api/checkout
- * Crée une commande à partir du panier et un PaymentIntent Stripe (capture manuelle).
+ * Valide le panier, crée un PaymentIntent Stripe (capture manuelle)
+ * et une CheckoutSession temporaire. La commande réelle est créée
+ * uniquement après confirmation du paiement (via webhook Stripe).
  */
 export async function POST() {
   const session = await auth();
@@ -294,73 +296,50 @@ export async function POST() {
 
   const applicationFeeCents = eurosToCents(totalCommissionEuros);
 
-  // 8. Créer la commande et le PaymentIntent dans une transaction
-  const result = await prisma.$transaction(async (tx) => {
-    const orderNumber = generateOrderNumber(nextDate!);
+  // 8. Générer le numéro de commande et créer le PaymentIntent + CheckoutSession
+  const orderNumber = generateOrderNumber(nextDate!);
 
-    const order = await tx.order.create({
-      data: {
-        orderNumber,
-        userId: session.user.id,
-        marketId: resolvedMarketId,
-        marketDay: nextOpening.day,
-        marketDate: nextDate,
-        subtotalEuros,
-        totalEuros,
-        commissionsByVendor,
-        captureDeadline,
-        items: {
-          create: orderItems.map((item) => ({
-            productName: item.productName,
-            productUnit: item.productUnit,
-            productImageUrl: item.productImageUrl,
-            unitPriceEuros: item.unitPriceEuros,
-            quantity: item.quantity,
-            totalEuros: item.totalEuros,
-            productId: item.productId,
-            vendorId: item.vendorId,
-          })),
-        },
-      },
-    });
-
-    // Créer le PaymentIntent Stripe (capture manuelle)
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amountCents,
-      currency: "eur",
-      capture_method: "manual",
-      // Application fee = commission MyCabas (prélevée au moment du transfer)
-      metadata: {
-        orderId: order.id,
-        orderNumber: order.orderNumber,
-        userId: session.user.id,
-        marketId: resolvedMarketId,
-        applicationFeeCents: applicationFeeCents.toString(),
-      },
-      automatic_payment_methods: {
-        enabled: true,
-      },
-    });
-
-    // Créer le Payment en DB
-    await tx.payment.create({
-      data: {
-        stripePaymentIntentId: paymentIntent.id,
-        stripeClientSecret: paymentIntent.client_secret,
-        amountCents,
-        applicationFeeCents,
-        orderId: order.id,
-      },
-    });
-
-    return {
-      orderId: order.id,
-      orderNumber: order.orderNumber,
-      clientSecret: paymentIntent.client_secret,
-      totalEuros,
-      subtotalEuros,
-    };
+  // Créer le PaymentIntent Stripe (capture manuelle)
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: amountCents,
+    currency: "eur",
+    capture_method: "manual",
+    metadata: {
+      orderNumber,
+      userId: session.user.id,
+      marketId: resolvedMarketId,
+      applicationFeeCents: applicationFeeCents.toString(),
+    },
+    automatic_payment_methods: {
+      enabled: true,
+    },
   });
 
-  return NextResponse.json(result);
+  // Stocker les données de la future commande dans une CheckoutSession
+  // La commande réelle sera créée par le webhook après paiement
+  await prisma.checkoutSession.create({
+    data: {
+      orderNumber,
+      userId: session.user.id,
+      marketId: resolvedMarketId,
+      marketDay: nextOpening!.day,
+      marketDate: nextDate!,
+      captureDeadline,
+      subtotalEuros,
+      totalEuros,
+      commissionsByVendor,
+      items: orderItems,
+      stripePaymentIntentId: paymentIntent.id,
+      amountCents,
+      applicationFeeCents,
+      expiresAt: new Date(Date.now() + 2 * 60 * 60 * 1000), // 2h
+    },
+  });
+
+  return NextResponse.json({
+    orderNumber,
+    clientSecret: paymentIntent.client_secret,
+    totalEuros,
+    subtotalEuros,
+  });
 }

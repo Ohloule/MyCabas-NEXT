@@ -97,6 +97,7 @@ export default function LoginPage() {
                 <Label htmlFor="password">Mot de passe</Label>
                 <Link
                   href="/forgot-password"
+                  tabIndex={-1}
                   className="text-sm text-primary hover:underline"
                 >
                   Mot de passe oublié ?

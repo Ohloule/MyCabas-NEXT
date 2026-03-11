@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import stripe from "@/lib/stripe";
-import { eurosToCents } from "@/lib/money";
+import { eurosToCents, distributeProportionally } from "@/lib/money";
 import { NextRequest, NextResponse } from "next/server";
 import type Stripe from "stripe";
 
@@ -69,56 +69,114 @@ export async function POST(req: NextRequest) {
 
 /**
  * Paiement pré-autorisé avec succès.
+ * Crée la commande réelle + le Payment depuis la CheckoutSession.
  */
 async function handleAuthorized(paymentIntent: Stripe.PaymentIntent) {
-  const payment = await prisma.payment.findUnique({
+  // Idempotent : si un Payment existe déjà pour ce PI, on ne recrée rien
+  const existingPayment = await prisma.payment.findUnique({
     where: { stripePaymentIntentId: paymentIntent.id },
-    include: { order: true },
+  });
+  if (existingPayment) return;
+
+  // Récupérer la CheckoutSession
+  const checkoutSession = await prisma.checkoutSession.findUnique({
+    where: { stripePaymentIntentId: paymentIntent.id },
   });
 
-  if (!payment || payment.status !== "PENDING") return; // Idempotent
+  if (!checkoutSession) {
+    console.error(
+      `No CheckoutSession found for PaymentIntent ${paymentIntent.id}`
+    );
+    return;
+  }
 
-  await prisma.$transaction([
-    prisma.payment.update({
-      where: { id: payment.id },
+  const items = checkoutSession.items as {
+    productId: string;
+    productName: string;
+    productUnit: string;
+    productImageUrl: string | null;
+    unitPriceEuros: number;
+    quantity: number;
+    totalEuros: number;
+    vendorId: string;
+  }[];
+
+  // Créer Order + Payment dans une transaction
+  await prisma.$transaction(async (tx) => {
+    const order = await tx.order.create({
       data: {
+        orderNumber: checkoutSession.orderNumber,
+        userId: checkoutSession.userId,
+        marketId: checkoutSession.marketId,
+        marketDay: checkoutSession.marketDay,
+        marketDate: checkoutSession.marketDate,
+        subtotalEuros: checkoutSession.subtotalEuros,
+        totalEuros: checkoutSession.totalEuros,
+        commissionsByVendor: checkoutSession.commissionsByVendor!,
+        captureDeadline: checkoutSession.captureDeadline,
+        status: "AUTHORIZED",
+        items: {
+          create: items.map((item) => ({
+            productName: item.productName,
+            productUnit: item.productUnit,
+            productImageUrl: item.productImageUrl,
+            unitPriceEuros: item.unitPriceEuros,
+            quantity: item.quantity,
+            totalEuros: item.totalEuros,
+            productId: item.productId,
+            vendorId: item.vendorId,
+          })),
+        },
+      },
+    });
+
+    await tx.payment.create({
+      data: {
+        stripePaymentIntentId: paymentIntent.id,
+        stripeClientSecret: paymentIntent.client_secret,
+        amountCents: checkoutSession.amountCents,
+        applicationFeeCents: checkoutSession.applicationFeeCents,
         status: "AUTHORIZED",
         authorizedAt: new Date(),
+        orderId: order.id,
       },
-    }),
-    prisma.order.update({
-      where: { id: payment.orderId },
-      data: { status: "AUTHORIZED" },
-    }),
-  ]);
+    });
+
+    // Supprimer la CheckoutSession (plus nécessaire)
+    await tx.checkoutSession.delete({
+      where: { id: checkoutSession.id },
+    });
+  });
 }
 
 /**
- * Paiement échoué.
+ * Paiement échoué — nettoyer la CheckoutSession si pas encore de commande.
  */
 async function handleFailed(paymentIntent: Stripe.PaymentIntent) {
+  // Cas 1 : Order déjà créée (paiement échoué après autorisation)
   const payment = await prisma.payment.findUnique({
     where: { stripePaymentIntentId: paymentIntent.id },
   });
 
-  if (!payment || payment.status === "FAILED") return; // Idempotent
+  if (payment) {
+    if (payment.status === "FAILED") return; // Idempotent
+    await prisma.$transaction([
+      prisma.payment.update({
+        where: { id: payment.id },
+        data: { status: "FAILED", failedAt: new Date() },
+      }),
+      prisma.order.update({
+        where: { id: payment.orderId },
+        data: { status: "CANCELLED", cancelledAt: new Date() },
+      }),
+    ]);
+    return;
+  }
 
-  await prisma.$transaction([
-    prisma.payment.update({
-      where: { id: payment.id },
-      data: {
-        status: "FAILED",
-        failedAt: new Date(),
-      },
-    }),
-    prisma.order.update({
-      where: { id: payment.orderId },
-      data: {
-        status: "CANCELLED",
-        cancelledAt: new Date(),
-      },
-    }),
-  ]);
+  // Cas 2 : Pas de commande, juste nettoyer la CheckoutSession
+  await prisma.checkoutSession.deleteMany({
+    where: { stripePaymentIntentId: paymentIntent.id },
+  });
 }
 
 /**
@@ -150,6 +208,33 @@ async function handleCaptured(paymentIntent: Stripe.PaymentIntent) {
   const order = payment.order;
   const commissions = order.commissionsByVendor as Record<string, number>;
 
+  // Récupérer les frais Stripe réels via la balance_transaction
+  const chargeId =
+    typeof paymentIntent.latest_charge === "string"
+      ? paymentIntent.latest_charge
+      : paymentIntent.latest_charge?.id;
+
+  let stripeFeeCents = 0;
+
+  if (chargeId) {
+    try {
+      const charge = await stripe.charges.retrieve(chargeId, {
+        expand: ["balance_transaction"],
+      });
+      const balanceTransaction =
+        charge.balance_transaction as Stripe.BalanceTransaction;
+      if (balanceTransaction && typeof balanceTransaction.fee === "number") {
+        stripeFeeCents = balanceTransaction.fee;
+      }
+    } catch (err) {
+      console.error(
+        `Failed to retrieve Stripe fee for charge ${chargeId}:`,
+        err
+      );
+      // Fallback : MyCabas absorbe les frais si on ne peut pas les récupérer
+    }
+  }
+
   // Calculer le montant à transférer à chaque vendor
   const vendorTotals = new Map<string, { total: number; stripeAccountId: string }>();
 
@@ -167,11 +252,20 @@ async function handleCaptured(paymentIntent: Stripe.PaymentIntent) {
     }
   }
 
+  // Répartir les frais Stripe proportionnellement entre les vendors
+  const vendorShares = Array.from(vendorTotals.entries()).map(
+    ([vendorId, { total }]) => ({ key: vendorId, amount: total })
+  );
+  const feeDistribution = distributeProportionally(vendorShares, stripeFeeCents);
+
   // Créer les transfers vers chaque vendor — best-effort, ne bloque pas le status update
   for (const [vendorId, { total, stripeAccountId }] of vendorTotals) {
     const commission = commissions[vendorId] || 0;
-    const transferAmountEuros = total - commission;
-    const transferAmountCents = eurosToCents(transferAmountEuros);
+    const proportionalFeeCents = feeDistribution.get(vendorId) || 0;
+    const proportionalFeeEuros = proportionalFeeCents / 100;
+
+    const transferAmountEuros = total - commission - proportionalFeeEuros;
+    const transferAmountCents = Math.max(0, eurosToCents(transferAmountEuros));
 
     if (transferAmountCents > 0 && stripeAccountId) {
       try {
@@ -185,6 +279,7 @@ async function handleCaptured(paymentIntent: Stripe.PaymentIntent) {
             orderNumber: order.orderNumber,
             vendorId,
             commissionEuros: commission.toString(),
+            stripeFeeEuros: proportionalFeeEuros.toString(),
           },
         });
       } catch (err) {
@@ -196,13 +291,15 @@ async function handleCaptured(paymentIntent: Stripe.PaymentIntent) {
     }
   }
 
-  // Mettre à jour les statuts
+  // Mettre à jour les statuts + stocker les frais Stripe
   await prisma.$transaction([
     prisma.payment.update({
       where: { id: payment.id },
       data: {
         status: "CAPTURED",
         capturedAt: new Date(),
+        stripeFeeCents,
+        stripeFeeByVendor: Object.fromEntries(feeDistribution),
       },
     }),
     prisma.order.update({
@@ -219,28 +316,30 @@ async function handleCaptured(paymentIntent: Stripe.PaymentIntent) {
  * PaymentIntent annulé (autorisation expirée ou annulation manuelle).
  */
 async function handleCanceled(paymentIntent: Stripe.PaymentIntent) {
+  // Cas 1 : Order existe
   const payment = await prisma.payment.findUnique({
     where: { stripePaymentIntentId: paymentIntent.id },
   });
 
-  if (!payment || payment.status === "CANCELLED") return; // Idempotent
+  if (payment) {
+    if (payment.status === "CANCELLED") return; // Idempotent
+    await prisma.$transaction([
+      prisma.payment.update({
+        where: { id: payment.id },
+        data: { status: "CANCELLED", cancelledAt: new Date() },
+      }),
+      prisma.order.update({
+        where: { id: payment.orderId },
+        data: { status: "EXPIRED", cancelledAt: new Date() },
+      }),
+    ]);
+    return;
+  }
 
-  await prisma.$transaction([
-    prisma.payment.update({
-      where: { id: payment.id },
-      data: {
-        status: "CANCELLED",
-        cancelledAt: new Date(),
-      },
-    }),
-    prisma.order.update({
-      where: { id: payment.orderId },
-      data: {
-        status: "EXPIRED",
-        cancelledAt: new Date(),
-      },
-    }),
-  ]);
+  // Cas 2 : Pas de commande, nettoyer la CheckoutSession
+  await prisma.checkoutSession.deleteMany({
+    where: { stripePaymentIntentId: paymentIntent.id },
+  });
 }
 
 /**

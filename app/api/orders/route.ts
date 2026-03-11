@@ -17,7 +17,6 @@ export async function GET(req: NextRequest) {
   const active = searchParams.get("active");
 
   const activeStatuses = [
-    "PENDING_PAYMENT",
     "AUTHORIZED",
     "CONFIRMED",
     "ADJUSTED",

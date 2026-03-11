@@ -101,9 +101,10 @@ model User {
   sessions        Session[]
   favoriteMarkets FavoriteMarket[]
 
-  cart            Cart?
-  orders          Order[]
-  sentMessages    Message[]
+  cart              Cart?
+  orders            Order[]
+  checkoutSessions  CheckoutSession[]
+  sentMessages      Message[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -587,6 +588,10 @@ model Payment {
   // Commission totale (somme de toutes les commissions vendors)
   applicationFeeCents     Int?
 
+  // Frais Stripe réels (récupérés après capture via balance_transaction)
+  stripeFeeCents          Int?          // Frais Stripe totaux en centimes
+  stripeFeeByVendor       Json?         // Répartition par vendor { vendorId: feeCents }
+
   // Timestamps Stripe
   authorizedAt            DateTime?
   capturedAt              DateTime?
@@ -602,6 +607,40 @@ model Payment {
 
   @@index([stripePaymentIntentId])
   @@map("payments")
+}
+
+// ============================================
+// SESSION DE CHECKOUT (pré-commande temporaire)
+// ============================================
+
+model CheckoutSession {
+  id                    String   @id @default(cuid())
+
+  // Données de la future commande
+  orderNumber           String   @unique
+  marketId              String
+  marketDay             Day
+  marketDate            DateTime
+  captureDeadline       DateTime
+  subtotalEuros         Float
+  totalEuros            Float
+  commissionsByVendor   Json     // { vendorId: commissionEuros }
+  items                 Json     // Snapshot des items du panier avec prix résolus
+
+  // Stripe
+  stripePaymentIntentId String   @unique
+  amountCents           Int
+  applicationFeeCents   Int
+
+  // Relation
+  userId                String
+  user                  User     @relation(fields: [userId], references: [id])
+
+  createdAt             DateTime @default(now())
+  expiresAt             DateTime // Nettoyage automatique des sessions abandonnées
+
+  @@index([stripePaymentIntentId])
+  @@map("checkout_sessions")
 }
 
 // ============================================

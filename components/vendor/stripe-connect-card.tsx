@@ -7,6 +7,7 @@ import {
   CheckCircle,
   CreditCard,
   ExternalLink,
+  Loader2,
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -141,7 +142,7 @@ export default function StripeConnectCard() {
               className="bg-prin-500 hover:bg-prin-600 gap-2"
             >
               {connecting ? (
-                <Loader taille={45} />
+                <Loader2 className="animate-spin h-3 w-3" />
               ) : (
                 <ExternalLink className="h-4 w-4" />
               )}
@@ -162,7 +163,7 @@ export default function StripeConnectCard() {
               className="bg-prin-500 hover:bg-prin-600 gap-2"
             >
               {connecting ? (
-                <Loader taille={45} />
+                <Loader2 className="animate-spin h-3 w-3" />
               ) : (
                 <CreditCard className="h-4 w-4" />
               )}

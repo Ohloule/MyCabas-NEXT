@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface CheckoutData {
-  orderId: string;
   orderNumber: string;
   clientSecret: string;
   totalEuros: number;
