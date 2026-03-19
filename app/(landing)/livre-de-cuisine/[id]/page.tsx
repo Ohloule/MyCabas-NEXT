@@ -1,28 +1,24 @@
 import HeadingPage from "@/components/HeadingPage";
-import RecipeSearch from "@/components/recipes/RecipeSearch";
+import RecipeDetail from "@/components/recipes/RecipeDetail";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-interface LivreDeCuisinePageProps {
-  searchParams: Promise<{
-    q?: string;
-  }>;
+interface RecipeDetailPageProps {
+  params: Promise<{ id: string }>;
 }
 
-export default async function LivreDeCuisinePage({
-  searchParams,
-}: LivreDeCuisinePageProps) {
+export default async function RecipeDetailPage({
+  params,
+}: RecipeDetailPageProps) {
   const session = await auth();
-  const params = await searchParams;
-  const query = params.q || "";
+  const { id } = await params;
 
   // Rediriger vers login si non connecté
   if (!session?.user?.id) {
-    const callbackUrl = query
-      ? `/livre-de-cuisine?q=${encodeURIComponent(query)}`
-      : "/livre-de-cuisine";
-    redirect(`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`);
+    redirect(
+      `/login?callbackUrl=${encodeURIComponent(`/livre-de-cuisine/${id}`)}`,
+    );
   }
 
   // Vérifier si l'utilisateur a au moins un marché favori
@@ -36,10 +32,10 @@ export default async function LivreDeCuisinePage({
 
   return (
     <>
-      <HeadingPage title="Mes idées recettes" />
+      <HeadingPage title="Recette" />
       <div className="min-h-screen bg-neu-50">
         <div className="container mx-auto px-4 py-8">
-          <RecipeSearch initialQuery={query} />
+          <RecipeDetail recipeId={id} />
         </div>
       </div>
     </>
