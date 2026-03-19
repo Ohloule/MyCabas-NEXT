@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Camera, Upload, Loader2, AlertCircle, RotateCcw } from "lucide-react";
+import { Camera, Upload, Loader2, AlertCircle, RotateCcw, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReceiptResults from "./ReceiptResults";
+import ReceiptHistory from "./ReceiptHistory";
 import type { ReceiptScanResult } from "@/lib/ai/scan-receipt";
 
 export default function ReceiptScanner() {
@@ -12,6 +13,7 @@ export default function ReceiptScanner() {
   const [result, setResult] = useState<ReceiptScanResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showHistory, setShowHistory] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
@@ -62,8 +64,27 @@ export default function ReceiptScanner() {
     }
   }
 
+  if (showHistory) {
+    return <ReceiptHistory onClose={() => setShowHistory(false)} />;
+  }
+
   return (
     <div className="w-full max-w-2xl mx-auto space-y-6">
+      {/* Bouton historique */}
+      {!preview && !result && (
+        <div className="flex justify-end">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowHistory(true)}
+            className="gap-2"
+          >
+            <History className="w-4 h-4" />
+            Mes tickets scannés
+          </Button>
+        </div>
+      )}
+
       {/* Zone d'upload */}
       {!preview && (
         <button

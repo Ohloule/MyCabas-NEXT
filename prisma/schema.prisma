@@ -106,6 +106,7 @@ model User {
   checkoutSessions  CheckoutSession[]
   sentMessages      Message[]
   aiUsages          AiUsage[]
+  receipts          Receipt[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -705,4 +706,36 @@ model AiUsage {
 
   @@unique([userId, year, month])
   @@map("ai_usages")
+}
+
+// ============================================
+// RECEIPTS (Tickets de caisse scannés)
+// ============================================
+
+model Receipt {
+  id          String        @id @default(cuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  storeName   String?
+  date        String?
+  totalAmount Float?
+  items       ReceiptItem[]
+  createdAt   DateTime      @default(now())
+
+  @@map("receipts")
+}
+
+model ReceiptItem {
+  id          String  @id @default(cuid())
+  receiptId   String
+  receipt     Receipt @relation(fields: [receiptId], references: [id], onDelete: Cascade)
+  receiptName String
+  genericName String
+  category    String
+  quantity    Float
+  unit        String
+  price       Float
+  unitPrice   Float?
+
+  @@map("receipt_items")
 }

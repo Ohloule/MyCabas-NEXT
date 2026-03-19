@@ -21,10 +21,22 @@ export interface RecipeStep {
   step: string;
 }
 
+export interface Nutrient {
+  name: string;
+  amount: number;
+  unit: string;
+  percentOfDailyNeeds: number;
+}
+
+export interface RecipeNutrition {
+  nutrients: Nutrient[];
+}
+
 export interface RecipeDetail extends RecipeSummary {
   ingredients: RecipeIngredient[];
   instructions: RecipeStep[];
   sourceUrl: string;
   cuisines: string[];
   dishTypes: string[];
+  nutrition?: RecipeNutrition;
 }

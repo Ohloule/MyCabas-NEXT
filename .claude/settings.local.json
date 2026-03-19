@@ -51,7 +51,8 @@
       "mcp__chrome-devtools__evaluate_script",
       "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")",
       "Bash(grep -E \"\\\\.\\(ts|tsx\\)$\")",
-      "WebSearch"
+      "WebSearch",
+      "Bash(npm ls:*)"
     ]
   }
 }

@@ -16,7 +16,8 @@ const CATEGORY_COLORS: Record<string, string> = {
   "Autre": "bg-gray-100 text-gray-600",
 };
 
-function formatPrice(price: number) {
+function formatPrice(price: number | null) {
+  if (price == null) return "— €";
   return price.toFixed(2).replace(".", ",") + " €";
 }
 

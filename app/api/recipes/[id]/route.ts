@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { translateRecipeDetail } from "@/lib/ai/translate-recipe";
-import type { RecipeDetail, RecipeIngredient, RecipeStep } from "@/types/recipe";
+import type { RecipeDetail, RecipeIngredient, RecipeNutrition, RecipeStep } from "@/types/recipe";
 import { NextRequest, NextResponse } from "next/server";
 
 const SPOONACULAR_BASE = "https://api.spoonacular.com/recipes";
@@ -32,7 +32,7 @@ export async function GET(
   try {
     const urlParams = new URLSearchParams({
       apiKey,
-      includeNutrition: "false",
+      includeNutrition: "true",
     });
 
     const response = await fetch(
@@ -71,6 +71,20 @@ export async function GET(
         }),
       ) ?? [];
 
+    // Nutrition
+    const nutrition: RecipeNutrition | undefined = r.nutrition?.nutrients
+      ? {
+          nutrients: (r.nutrition.nutrients as Record<string, unknown>[]).map(
+            (n) => ({
+              name: (n.name as string) ?? "",
+              amount: (n.amount as number) ?? 0,
+              unit: (n.unit as string) ?? "",
+              percentOfDailyNeeds: (n.percentOfDailyNeeds as number) ?? 0,
+            }),
+          ),
+        }
+      : undefined;
+
     // Sans traduction : retour rapide
     if (!translate) {
       const recipe: RecipeDetail = {
@@ -85,6 +99,7 @@ export async function GET(
         sourceUrl: r.sourceUrl ?? "",
         cuisines: r.cuisines ?? [],
         dishTypes: r.dishTypes ?? [],
+        nutrition,
       };
       return NextResponse.json(recipe);
     }
@@ -119,6 +134,7 @@ export async function GET(
       sourceUrl: r.sourceUrl ?? "",
       cuisines: r.cuisines ?? [],
       dishTypes: r.dishTypes ?? [],
+      nutrition,
     };
 
     return NextResponse.json(recipe);

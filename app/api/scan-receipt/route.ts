@@ -2,8 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { scanReceipt } from "@/lib/ai/scan-receipt";
 import { checkAndIncrementUsage } from "@/lib/ai/rate-limit";
+import prisma from "@/lib/prisma";
+import sharp from "sharp";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+// Claude API limit is 5MB for base64. Base64 is ~4/3 the raw size.
+const MAX_RAW_SIZE_FOR_BASE64 = Math.floor((5 * 1024 * 1024) * 3 / 4); // ~3.75 MB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 export async function POST(req: NextRequest) {
@@ -53,9 +57,23 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
+    let buffer: Buffer = Buffer.from(await file.arrayBuffer());
+    let mediaType = file.type as "image/jpeg" | "image/png" | "image/webp";
+
+    // Compress image if base64 would exceed Claude's 5MB limit
+    if (buffer.length > MAX_RAW_SIZE_FOR_BASE64) {
+      let quality = 80;
+      do {
+        buffer = await sharp(buffer)
+          .resize({ width: 2048, height: 2048, fit: "inside", withoutEnlargement: true })
+          .jpeg({ quality })
+          .toBuffer();
+        quality -= 10;
+      } while (buffer.length > MAX_RAW_SIZE_FOR_BASE64 && quality >= 30);
+      mediaType = "image/jpeg";
+    }
+
     const base64 = buffer.toString("base64");
-    const mediaType = file.type as "image/jpeg" | "image/png" | "image/webp";
 
     const result = await scanReceipt(base64, mediaType);
 
@@ -65,6 +83,27 @@ export async function POST(req: NextRequest) {
         { status: 500 }
       );
     }
+
+    // Save receipt to database
+    await prisma.receipt.create({
+      data: {
+        userId: session.user.id,
+        storeName: result.storeName,
+        date: result.date,
+        totalAmount: result.totalAmount,
+        items: {
+          create: result.products.map((p) => ({
+            receiptName: p.receiptName,
+            genericName: p.genericName,
+            category: p.category,
+            quantity: p.quantity,
+            unit: p.unit,
+            price: p.price,
+            unitPrice: p.unitPrice,
+          })),
+        },
+      },
+    });
 
     return NextResponse.json(result);
   } catch (error) {

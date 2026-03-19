@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import IngredientChip from "./IngredientChip";
 import IngredientSearchDialog from "./IngredientSearchDialog";
+import NutritionTabs from "./NutritionTabs";
 
 interface RecipeDetailProps {
   recipeId: string;
@@ -209,24 +210,29 @@ export default function RecipeDetail({ recipeId }: RecipeDetailProps) {
 
       {/* Ingrédients + Préparation : côte à côte sur desktop, empilé sur mobile */}
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8">
-        {/* Instructions */}
-        {recipe.instructions.length > 0 && (
-          <section>
-            <h2 className="text-3xl font-bold text-neu-900 mb-4 font-special">Préparation</h2>
-            <ol className="space-y-4">
-              {recipe.instructions.map((step) => (
-                <li key={step.number} className="flex gap-3">
-                  <span className="flex items-center justify-center w-7 h-7 rounded-full bg-prin-100 text-prin-700 text-sm font-bold shrink-0 mt-0.5">
-                    {step.number}
-                  </span>
-                  <p className="text-sm text-neu-700 leading-relaxed pt-1 text-justify">
-                    {step.step}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </section>
-        )}
+        {/* Instructions + Nutrition */}
+        <div>
+          {recipe.instructions.length > 0 && (
+            <section>
+              <h2 className="text-3xl font-bold text-neu-900 mb-4 font-special">Préparation</h2>
+              <ol className="space-y-4">
+                {recipe.instructions.map((step) => (
+                  <li key={step.number} className="flex gap-3">
+                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-prin-100 text-prin-700 text-sm font-bold shrink-0 mt-0.5">
+                      {step.number}
+                    </span>
+                    <p className="text-sm text-neu-700 leading-relaxed pt-1 text-justify">
+                      {step.step}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
+          {/* Nutrition */}
+          {recipe.nutrition && <NutritionTabs nutrition={recipe.nutrition} />}
+        </div>
 
         {/* Ingredients */}
         <section>
