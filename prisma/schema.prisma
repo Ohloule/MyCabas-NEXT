@@ -105,6 +105,7 @@ model User {
   orders            Order[]
   checkoutSessions  CheckoutSession[]
   sentMessages      Message[]
+  aiUsages          AiUsage[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -686,4 +687,22 @@ model Message {
 
   @@index([conversationId])
   @@map("messages")
+}
+
+// ============================================
+// AI USAGE (Rate limiting scans IA)
+// ============================================
+
+model AiUsage {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  year      Int
+  month     Int
+  count     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, year, month])
+  @@map("ai_usages")
 }
