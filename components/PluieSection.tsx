@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function PluieSection() {
   return (
@@ -63,6 +64,15 @@ export default function PluieSection() {
             🌧️ Pluie ou soleil, votre marché vous attend sur{" "}
             <span className="font-mycabas text-xl">MyCabas</span>.
           </p>
+
+          <div className="flex flex-wrap gap-4 justify-center mt-6">
+            <Link href="/markets" className="text-neu-700 hover:text-neu-900 underline underline-offset-4 font-medium">
+              Trouvez votre marché →
+            </Link>
+            <Link href="/about" className="text-neu-700 hover:text-neu-900 underline underline-offset-4 font-medium">
+              Comment ça marche ? →
+            </Link>
+          </div>
         </div>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function TransparenceSection() {
   return (
@@ -46,6 +47,15 @@ export default function TransparenceSection() {
             🍅 Acheter local, sans surprise, c’est aussi ça l’esprit{" "}
             <span className="font-mycabas text-xl">MyCabas</span>.
           </p>
+
+          <div className="flex flex-wrap gap-4 justify-center mt-6">
+            <Link href="/pricing" className="text-prin-700 hover:text-prin-900 underline underline-offset-4 font-medium">
+              Voir nos tarifs en détail →
+            </Link>
+            <Link href="/faq" className="text-prin-700 hover:text-prin-900 underline underline-offset-4 font-medium">
+              Questions fréquentes sur les frais →
+            </Link>
+          </div>
         </div>
         {/* Illustration ou visuel */}
         <div className="w-full h-full flex justify-center items-center">

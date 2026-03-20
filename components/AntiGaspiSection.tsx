@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AntiGaspiSection() {
   return (
@@ -45,6 +46,15 @@ export default function AntiGaspiSection() {
           <p className="text-lg font-medium text-sec-100 bg-sec-700 py-4 text-center rounded-full mt-6">
             🌿 Commander malin, c'est déjà consommer responsable.
           </p>
+
+          <div className="flex flex-wrap gap-4 justify-center mt-6">
+            <Link href="/about" className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium">
+              Découvrez le fonctionnement →
+            </Link>
+            <Link href="/livre-de-cuisine" className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium">
+              Idées recettes pour cuisiner malin →
+            </Link>
+          </div>
         </div>
 
         {/* Visuel */}

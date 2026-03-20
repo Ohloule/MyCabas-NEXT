@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ParrainageSection() {
   return (
@@ -54,6 +55,15 @@ export default function ParrainageSection() {
             <br />
             <strong>Plus vous partagez, plus vous économisez.</strong>
           </p>
+        </div>
+
+        <div className="flex flex-wrap gap-4 justify-center mt-6 col-span-full">
+          <Link href="/sponsorship" className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium">
+            En savoir plus sur le programme →
+          </Link>
+          <Link href="/register" className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium">
+            Inscrivez-vous pour parrainer →
+          </Link>
         </div>
       </div>
     </section>

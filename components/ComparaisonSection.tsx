@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ComparaisonSection() {
   return (
@@ -56,7 +57,7 @@ export default function ComparaisonSection() {
             qualité du circuit court. Sans les compromis.
           </p>
 
-           <p className="text-lg font-medium text-neu-100 bg-neu-700 p-4  text-center rounded-full mt-6">
+           <p className="text-lg font-medium text-neu-100 bg-neu-700 p-4 md:p-4 text-center rounded-full mt-1">
             🛒 Le meilleur des deux mondes, sans abonnement, sans surprise.
           </p>
         </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AccessibiliteSection() {
   return (
@@ -47,6 +48,15 @@ export default function AccessibiliteSection() {
           <p className="text-lg font-medium text-sec-100 bg-sec-700 py-4 text-center rounded-full mt-6">
             💛 Le marché pour tous, sans barrière, sans contrainte.
           </p>
+
+          <div className="flex flex-wrap gap-4 justify-center mt-6">
+            <Link href="/register" className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium">
+              Créez votre compte →
+            </Link>
+            <Link href="/contact" className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium">
+              Besoin d'aide ? Contactez-nous →
+            </Link>
+          </div>
         </div>
 
         {/* Visuel */}

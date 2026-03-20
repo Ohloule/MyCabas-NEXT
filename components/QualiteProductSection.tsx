@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function QualiteProductSection() {
   return (
@@ -39,6 +40,15 @@ export default function QualiteProductSection() {
           <p className="text-lg font-medium text-sec-100 bg-sec-700 py-4 text-center rounded-full mt-6">
             🌱 Frais. Local. Engagé. Et ça se sent dans l’assiette.
           </p>
+
+          <div className="flex flex-wrap gap-4 justify-center mt-6">
+            <Link href="/markets" className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium">
+              Découvrez les marchés près de chez vous →
+            </Link>
+            <Link href="/search" className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium">
+              Parcourez nos produits →
+            </Link>
+          </div>
         </div>
         {/* Visuel ou illustration */}
         <div className="w-full h-full flex justify-center items-center">
