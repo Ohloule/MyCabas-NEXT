@@ -6,6 +6,9 @@ import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import ParrainageSection from "@/components/ParrainageSection";
 import QualiteProductSection from "@/components/QualiteProductSection";
+import AccessibiliteSection from "@/components/AccessibiliteSection";
+import AntiGaspiSection from "@/components/AntiGaspiSection";
+import ComparaisonSection from "@/components/ComparaisonSection";
 import PluieSection from "@/components/PluieSection";
 import TransparenceSection from "@/components/TransparenceSection";
 
@@ -25,6 +28,9 @@ export default function HomePage() {
       <ParrainageSection />
       <TransparenceSection />
       <PluieSection />
+      <AntiGaspiSection />
+      <ComparaisonSection />
+      <AccessibiliteSection />
       <Footer />
     </>
     /*     <div className="min-h-screen">

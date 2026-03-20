@@ -17,7 +17,7 @@ export default function PluieSection() {
 
         {/* Texte */}
         <div className="order-1 lg:order-2">
-          <h2 className="text-4xl lg:text-5xl font-special text-neu-700 mb-6">
+          <h2 className="text-4xl lg:text-5xl font-special text-neu-700 mb-6 text-center">
             Et quand il pleut&nbsp;?
           </h2>
 
@@ -59,7 +59,7 @@ export default function PluieSection() {
             une journée rentable et une journée pour rien.
           </p>
 
-          <p className="text-lg font-medium text-neu-100 bg-neu-700 py-4 text-center rounded-full mt-6">
+          <p className="text-lg font-medium text-neu-100 bg-neu-700 p-4  text-center rounded-full mt-6">
             🌧️ Pluie ou soleil, votre marché vous attend sur{" "}
             <span className="font-mycabas text-xl">MyCabas</span>.
           </p>

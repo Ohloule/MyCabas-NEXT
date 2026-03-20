@@ -6,7 +6,7 @@ export default function TransparenceSection() {
       <div className="align-center grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Texte explicatif */}
         <div>
-          <h2 className="text-4xl lg:text-6xl font-special text-prin-700-700 mb-6">
+          <h2 className="text-4xl lg:text-6xl font-special text-prin-700-700 mb-6 text-center">
             Le même prix qu&apos;au marché !
           </h2>
           <p className="text-lg mb-4 text-justify">

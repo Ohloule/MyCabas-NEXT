@@ -6,7 +6,7 @@ export default function QualiteProductSection() {
       <div className="align-center grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Texte qualitatif */}
         <div>
-          <h2 className="text-4xl lg:text-5xl font-special text-sec-700 mb-6">
+          <h2 className="text-4xl lg:text-5xl font-special text-sec-700 mb-6  text-center">
             Des produits que vous pouvez regarder dans les yeux
           </h2>
 
