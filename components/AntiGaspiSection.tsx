@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function AntiGaspiSection() {
   return (
-    <section className="py-16 md:px-6 bg-sec-200 selection:bg-sec-300">
+    <section className="flex items-center py-16 md:px-6 bg-sec-200 selection:bg-sec-300">
       <div className="align-center grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Texte */}
         <div>

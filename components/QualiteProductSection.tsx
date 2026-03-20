@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function QualiteProductSection() {
   return (
-    <section className="py-16 md:px-6 bg-sec-200 selection:bg-sec-300">
+    <section className="py-16 md:px-6 bg-sec-200 selection:bg-sec-300 flex items-center ">
       <div className="align-center grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Texte qualitatif */}
         <div>
@@ -42,10 +42,16 @@ export default function QualiteProductSection() {
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mt-6">
-            <Link href="/markets" className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium">
+            <Link
+              href="/markets"
+              className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium"
+            >
               Découvrez les marchés près de chez vous →
             </Link>
-            <Link href="/search" className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium">
+            <Link
+              href="/search"
+              className="text-sec-700 hover:text-sec-900 underline underline-offset-4 font-medium"
+            >
               Parcourez nos produits →
             </Link>
           </div>
