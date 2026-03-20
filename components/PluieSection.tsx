@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function PluieSection() {
   return (
-    <section className="py-16 md:px-6 bg-neu-100 selection:bg-neu-300">
+    <section className="py-16 md:px-6 bg-pluie-100 selection:bg-neu-300">
       <div className="align-center grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Visuel */}
         <div className="w-full h-full flex justify-center items-center order-2 lg:order-1">

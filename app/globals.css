@@ -44,6 +44,8 @@
   --ter-800: oklch(28% 0.13 298);
   --ter-900: oklch(18% 0.09 298);
 
+  --pluie-100: #ecf5fc;
+
   /* Gris Saturés - Teinte (h) 175 - Plus de caractère */
   --neu-50: oklch(99% 0.015 175); /* Blanc cassé émeraude */
   --neu-100: oklch(96.981% 0.01272 172.86); /* Fond très doux */
@@ -135,6 +137,8 @@
   --color-ter-700: var(--ter-700);
   --color-ter-800: var(--ter-800);
   --color-ter-900: var(--ter-900);
+
+  --color-pluie-100: var(--pluie-100);
 
   --color-neu-25: var(--neu-25);
   --color-neu-50: var(--neu-50);
