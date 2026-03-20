@@ -64,7 +64,7 @@ export default function AccessibiliteSection() {
           <Image
             src="/images/old.jpg"
             alt="Marché accessible à tous"
-            className="max-h-[400px] object-contain rounded-2xl brightness-110"
+            className="max-h-[400px] object-contain rounded-2xl"
             width={500}
             height={400}
           />
