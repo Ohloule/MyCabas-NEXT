@@ -156,7 +156,7 @@ export default function ReceiptHistory({ onClose }: { onClose: () => void }) {
                               {item.category}
                             </Badge>
                           </div>
-                          <p className="text-neu-500 text-sm mt-0.5 truncate">
+                          <p className="text-neu-500 text-sm mt-0.5 truncate text-left">
                             {item.receiptName}
                           </p>
                           <div className="flex items-center gap-3 mt-1 text-sm text-neu-600">

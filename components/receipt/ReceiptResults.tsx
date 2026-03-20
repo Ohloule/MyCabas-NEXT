@@ -82,7 +82,7 @@ export default function ReceiptResults({
                     {product.category}
                   </Badge>
                 </div>
-                <p className="text-neu-500 text-sm mt-0.5 truncate">
+                <p className="text-neu-500 text-sm mt-0.5 truncate text-left">
                   {product.receiptName}
                 </p>
                 <div className="flex items-center gap-3 mt-1 text-sm text-neu-600">

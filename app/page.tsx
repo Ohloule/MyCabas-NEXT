@@ -6,6 +6,7 @@ import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import ParrainageSection from "@/components/ParrainageSection";
 import QualiteProductSection from "@/components/QualiteProductSection";
+import PluieSection from "@/components/PluieSection";
 import TransparenceSection from "@/components/TransparenceSection";
 
 export default function HomePage() {
@@ -23,6 +24,7 @@ export default function HomePage() {
       <QualiteProductSection />
       <ParrainageSection />
       <TransparenceSection />
+      <PluieSection />
       <Footer />
     </>
     /*     <div className="min-h-screen">
