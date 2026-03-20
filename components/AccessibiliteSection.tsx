@@ -45,7 +45,7 @@ export default function AccessibiliteSection() {
             <strong>un passage éclair suffit</strong>.
           </p>
 
-          <p className="text-lg font-medium text-sec-100 bg-sec-700 py-4 text-center rounded-full mt-6">
+          <p className="text-lg font-medium text-sec-100 bg-sec-700 p-4 text-center rounded-full mt-6">
             💛 Le marché pour tous, sans barrière, sans contrainte.
           </p>
 
