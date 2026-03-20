@@ -37,7 +37,7 @@ export default function QualiteProductSection() {
             à vos achats.
           </p>
 
-          <p className="text-lg font-medium text-sec-100 bg-sec-700 py-4 text-center rounded-full mt-6">
+          <p className="text-lg font-medium text-sec-100 bg-sec-700 p-4 text-center rounded-full mt-6">
             🌱 Frais. Local. Engagé. Et ça se sent dans l’assiette.
           </p>
 
