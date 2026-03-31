@@ -2,7 +2,7 @@
 
 import { useState, useEffect, type ReactNode } from "react";
 
-const BETA_PASSWORD = "MyCabas2026!BetaAccess";
+const BETA_PASSWORD = "Barthélémy!2025";
 const STORAGE_KEY = "mycabas_beta_access";
 const ACCESS_TOKEN = "beta_granted_2026_v1";
 
@@ -43,7 +43,14 @@ export function BetaGateProvider({ children }: { children: ReactNode }) {
     return (
       <>
         {/* Overlay mot de passe */}
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[var(--sec-25)]">
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-[var(--sec-25)]"
+          style={{
+            backgroundImage: `url("/patterns/food2.svg")`,
+            backgroundRepeat: "repeat",
+            backgroundSize: "300px",
+          }}
+        >
           <div className="mx-4 w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl">
             {/* Logo */}
             <div className="mb-6 flex justify-center">
