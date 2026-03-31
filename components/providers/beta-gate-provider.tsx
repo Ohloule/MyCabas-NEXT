@@ -46,9 +46,10 @@ export function BetaGateProvider({ children }: { children: ReactNode }) {
         <div
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-[var(--sec-25)]"
           style={{
-            backgroundImage: `url("/patterns/food2.webp")`,
+            backgroundImage: `url("/patterns/food2.svg")`,
             backgroundRepeat: "repeat",
             backgroundSize: "300px",
+            contentVisibility: "auto",
           }}
         >
           <div className="mx-4 w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl">
