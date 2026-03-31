@@ -1,3 +1,4 @@
+import { BetaGateProvider } from "@/components/providers/beta-gate-provider";
 import { CartProvider } from "@/components/providers/cart-provider";
 import { SessionProvider } from "@/components/providers/session-provider";
 import type { Metadata } from "next";
@@ -56,9 +57,11 @@ export default function RootLayout({
         className={`${nunito.className} ${MarkoOne.variable} antialiased`}
         suppressHydrationWarning={true}
       >
-        <SessionProvider>
-          <CartProvider>{children}</CartProvider>
-        </SessionProvider>
+        <BetaGateProvider>
+          <SessionProvider>
+            <CartProvider>{children}</CartProvider>
+          </SessionProvider>
+        </BetaGateProvider>
       </body>
     </html>
   );
