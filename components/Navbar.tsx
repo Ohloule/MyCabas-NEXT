@@ -204,14 +204,14 @@ export default function Navbar() {
             )}
             {session ? (
               <Link href="/panier">
-                <Button className="bg-sec-500 hover:bg-sec-600 gap-2">
+                <Button className="bg-sec-600 hover:bg-sec-700 text-white gap-2">
                   <ShoppingCart className="h-4 w-4" />
                   {cartTotalLabel ? `${cartTotalLabel}` : "Mon Panier"}
                 </Button>
               </Link>
             ) : (
               <Link href="/register">
-                <Button className="bg-sec-500 hover:bg-sec-600">
+                <Button className="bg-sec-600 hover:bg-sec-700 text-white">
                   Inscription Gratuite
                 </Button>
               </Link>
@@ -451,14 +451,14 @@ export default function Navbar() {
           <div className="p-4 border-t mt-auto">
             {session ? (
               <Link href="/panier" onClick={closeMobileMenu}>
-                <Button className="w-full bg-sec-500 hover:bg-sec-600 gap-2">
+                <Button className="w-full bg-sec-600 hover:bg-sec-700 text-white gap-2">
                   <ShoppingCart className="h-4 w-4" />
                   {cartTotalLabel ? `${cartTotalLabel}` : "Mon Panier"}
                 </Button>
               </Link>
             ) : (
               <Link href="/register" onClick={closeMobileMenu}>
-                <Button className="w-full bg-sec-500 hover:bg-sec-600 gap-2">
+                <Button className="w-full bg-sec-600 hover:bg-sec-700 text-white gap-2">
                   <UserPlus className="h-4 w-4" />
                   Inscription Gratuite
                 </Button>

@@ -25,7 +25,7 @@ export default function Footer() {
 
         {/* Découvrir */}
         <div>
-          <h4 className="font-semibold mb-2">Découvrir</h4>
+          <h2 className="font-semibold mb-2 text-base">Découvrir</h2>
           <ul className="text-sm space-y-1">
             <li>
               <Link href="/about" className="hover:underline">
@@ -52,7 +52,7 @@ export default function Footer() {
 
         {/* Commerçants */}
         <div>
-          <h4 className="font-semibold mb-2">Pour les commerçants</h4>
+          <h2 className="font-semibold mb-2 text-base">Pour les commerçants</h2>
           <ul className="text-sm space-y-1">
             <li>
               <Link href={`/register?role=vendor`} className="hover:underline">
@@ -79,7 +79,7 @@ export default function Footer() {
 
         {/* Infos pratiques */}
         <div>
-          <h4 className="font-semibold mb-2">Infos pratiques</h4>
+          <h2 className="font-semibold mb-2 text-base">Infos pratiques</h2>
           <ul className="text-sm space-y-1">
             <li>
               <Link href="/about" className="hover:underline">

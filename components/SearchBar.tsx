@@ -68,6 +68,7 @@ export default function SearchBar({ className }: SearchBarProps) {
         <Button
           type="submit"
           disabled={isLoading}
+          aria-label="Rechercher"
           className="h-10 px-6 rounded-r-full bg-prin-400 hover:bg-prin-500 text-neu-50"
         >
           {isLoading ? (
