@@ -10,7 +10,7 @@ export default function PluieSection() {
           <Image
             src="/images/pluie.png"
             alt="Marché sous la pluie"
-            className="max-h-[400px] object-contain rounded-2xl brightness-110"
+            className="max-h-[400px] object-contain rounded-2xl"
             width={500}
             height={400}
           />
@@ -46,8 +46,8 @@ export default function PluieSection() {
             , vous faites votre marché{" "}
             <strong>la veille, depuis votre canapé</strong>, avec tout le
             catalogue du commerçant sous les yeux — pas seulement ce qui tient
-            sur l'étal. La météo du lendemain n'y change rien : votre panier
-            est déjà prêt.
+            sur l'étal. La météo du lendemain n'y change rien : votre panier est
+            déjà prêt.
           </p>
 
           <p className="text-lg mb-4 text-justify">
@@ -66,10 +66,16 @@ export default function PluieSection() {
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mt-6">
-            <Link href="/markets" className="text-neu-700 hover:text-neu-900 underline underline-offset-4 font-medium">
+            <Link
+              href="/markets"
+              className="text-neu-700 hover:text-neu-900 underline underline-offset-4 font-medium"
+            >
               Trouvez votre marché →
             </Link>
-            <Link href="/about" className="text-neu-700 hover:text-neu-900 underline underline-offset-4 font-medium">
+            <Link
+              href="/about"
+              className="text-neu-700 hover:text-neu-900 underline underline-offset-4 font-medium"
+            >
               Comment ça marche ? →
             </Link>
           </div>

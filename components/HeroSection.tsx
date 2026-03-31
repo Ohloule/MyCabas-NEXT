@@ -1,7 +1,8 @@
 "use client";
 
-import { Search, Store } from "lucide-react"; // Pense à installer lucide-react si ce n'est pas fait
+import { Search, Store } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
 
@@ -10,9 +11,16 @@ export default function HeroSection() {
 
   return (
     <section
-      className="flex-1 relative  min-h-125 w-full overflow-visible bg-cover bg-bottom flex items-center"
-      style={{ backgroundImage: "url('/images/bg-HeroSection.jpg')" }}
+      className="flex-1 relative min-h-125 w-full overflow-hidden flex items-center"
     >
+      <Image
+        src="/images/bg-HeroSection.jpg"
+        alt="Marché local"
+        fill
+        priority
+        className="object-cover object-bottom"
+        sizes="100vw"
+      />
       {/* Overlay pour améliorer la lisibilité si l'image est trop claire */}
       <div className="absolute inset-0 bg-neu-900/10" />
 

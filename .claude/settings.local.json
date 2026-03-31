@@ -53,7 +53,8 @@
       "Bash(grep -E \"\\\\.\\(ts|tsx\\)$\")",
       "WebSearch",
       "Bash(npm ls:*)",
-      "Bash(grep -E \"\\\\.\\(jpg|png|svg\\)$\")"
+      "Bash(grep -E \"\\\\.\\(jpg|png|svg\\)$\")",
+      "Bash(grep -E '\\\\.\\(jpg|png|svg|webp\\)$')"
     ]
   }
 }

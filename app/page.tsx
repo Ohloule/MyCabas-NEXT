@@ -1,11 +1,11 @@
 import dynamic from "next/dynamic";
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 
 const DriveSection = dynamic(() => import("@/components/DriveSection"));
 const CardSection = dynamic(() => import("@/components/CardSection"));
+const Footer = dynamic(() => import("@/components/Footer"));
 const QualiteProductSection = dynamic(() => import("@/components/QualiteProductSection"));
 const ParrainageSection = dynamic(() => import("@/components/ParrainageSection"));
 const TransparenceSection = dynamic(() => import("@/components/TransparenceSection"));

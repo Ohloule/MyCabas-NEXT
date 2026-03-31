@@ -62,7 +62,7 @@ export default function AccessibiliteSection() {
         {/* Visuel */}
         <div className="w-full h-full flex justify-center items-center">
           <Image
-            src="/images/old.jpg"
+            src="/images/old.png"
             alt="Marché accessible à tous"
             className="max-h-[400px] object-contain rounded-2xl"
             width={500}

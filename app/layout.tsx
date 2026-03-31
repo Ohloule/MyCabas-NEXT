@@ -59,7 +59,6 @@ export default function RootLayout({
           href="https://use.typekit.net/sxt2uac.css"
         />
         <link rel="stylesheet" href="https://use.typekit.net/sxt2uac.css" />
-        <link rel="preload" as="image" href="/images/bg-HeroSection.jpg" />
       </head>
       {/* On utilise nunito.className ici */}
       <body
