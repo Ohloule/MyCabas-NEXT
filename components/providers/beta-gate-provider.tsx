@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, type ReactNode } from "react";
 
 const BETA_PASSWORD = "Barthélémy!2025";
@@ -48,10 +49,13 @@ export function BetaGateProvider({ children }: { children: ReactNode }) {
           <div className="mx-4 w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl">
             {/* Logo */}
             <div className="mb-6 flex justify-center">
-              <img
+              <Image
                 src="/images/Logo2_Plan de travail 3.svg"
                 alt="MyCabas"
-                className="h-16"
+                width={64}
+                height={64}
+                className="h-16 w-auto"
+                priority
               />
             </div>
 
