@@ -14,11 +14,13 @@ import "./globals.css";
 const nunito = Nunito({
   subsets: ["latin"],
   variable: "--font-nunito",
+  display: "swap",
 });
 const MarkoOne = Kaushan_Script({
   weight: "400",
   subsets: ["latin"],
-  variable: "--font-MarkoOne", // C'est cette variable qu'on va lier à Tailwind
+  variable: "--font-MarkoOne",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -50,7 +52,14 @@ export default function RootLayout({
     // ou des scripts qui modifient le DOM au chargement
     <html lang="fr" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://use.typekit.net" crossOrigin="anonymous" />
+        <link
+          rel="preload"
+          as="style"
+          href="https://use.typekit.net/sxt2uac.css"
+        />
         <link rel="stylesheet" href="https://use.typekit.net/sxt2uac.css" />
+        <link rel="preload" as="image" href="/images/bg-HeroSection.jpg" />
       </head>
       {/* On utilise nunito.className ici */}
       <body

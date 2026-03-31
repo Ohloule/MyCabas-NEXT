@@ -49,6 +49,7 @@ export function BetaGateProvider({ children }: { children: ReactNode }) {
             backgroundImage: `url("/patterns/food2.svg")`,
             backgroundRepeat: "repeat",
             backgroundSize: "300px",
+            contentVisibility: "auto",
           }}
         >
           <div className="mx-4 w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl">

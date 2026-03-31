@@ -1,16 +1,18 @@
-import AccessibiliteSection from "@/components/AccessibiliteSection";
-import AntiGaspiSection from "@/components/AntiGaspiSection";
-import CardSection from "@/components/CardSection";
-import ComparaisonSection from "@/components/ComparaisonSection";
-import DriveSection from "@/components/DriveSection";
+import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
-import ParrainageSection from "@/components/ParrainageSection";
-import PluieSection from "@/components/PluieSection";
-import QualiteProductSection from "@/components/QualiteProductSection";
-import TransparenceSection from "@/components/TransparenceSection";
+
+const DriveSection = dynamic(() => import("@/components/DriveSection"));
+const CardSection = dynamic(() => import("@/components/CardSection"));
+const QualiteProductSection = dynamic(() => import("@/components/QualiteProductSection"));
+const ParrainageSection = dynamic(() => import("@/components/ParrainageSection"));
+const TransparenceSection = dynamic(() => import("@/components/TransparenceSection"));
+const PluieSection = dynamic(() => import("@/components/PluieSection"));
+const AntiGaspiSection = dynamic(() => import("@/components/AntiGaspiSection"));
+const ComparaisonSection = dynamic(() => import("@/components/ComparaisonSection"));
+const AccessibiliteSection = dynamic(() => import("@/components/AccessibiliteSection"));
 
 export default function HomePage() {
   return (
